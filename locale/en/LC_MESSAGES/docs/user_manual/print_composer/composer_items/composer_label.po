@@ -181,6 +181,3 @@ msgid ""
 " formats in one name by line:"
 msgstr ""
 
-#~ msgid "Or, if an ref:`attributes relation <vector_relations>` is set:"
-#~ msgstr ""
-

@@ -659,9 +659,3 @@ msgid ""
 "prevents the background to be drawn when the table frame has no contents."
 msgstr ""
 
-#~ msgid ""
-#~ "by defining the :guilabel:`Horizontal "
-#~ "alignment` and the :guilabel:`Vertical "
-#~ "alignment`"
-#~ msgstr ""
-
