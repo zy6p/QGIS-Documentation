@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: QGIS Documentation 3.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-13 09:01+0100\n"
+"POT-Creation-Date: 2021-05-12 02:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:2
 msgid "|LS| Creating a New Vector Dataset"
@@ -36,6 +36,10 @@ msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:12
 msgid "|basic| |FA| The Layer Creation Dialog"
+msgstr ""
+
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:390
+msgid "basic"
 msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:14
@@ -172,8 +176,16 @@ msgstr ""
 msgid "Click on |dataSourceManager| :sup:`Data Source Manager` button."
 msgstr ""
 
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:395
+msgid "dataSourceManager"
+msgstr ""
+
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:104
 msgid "Select |raster| :guilabel:`Raster` on the left side."
+msgstr ""
+
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:398
+msgid "raster"
 msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:105
@@ -208,6 +220,10 @@ msgstr ""
 msgid ""
 "Click on the |zoomIn| :sup:`Zoom In` button, and zoom to the area "
 "highlighted in blue below:"
+msgstr ""
+
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:411
+msgid "zoomIn"
 msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:130
@@ -248,6 +264,10 @@ msgstr ""
 msgid "Click on the |toggleEditing| :sup:`Toggle Editing` button."
 msgstr ""
 
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:405
+msgid "toggleEditing"
+msgstr ""
+
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:151
 msgid ""
 "If you can't find this button, check that the :guilabel:`Digitizing` "
@@ -265,8 +285,16 @@ msgstr ""
 msgid "|capturePolygon| :sup:`Capture Polygon`"
 msgstr ""
 
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:393
+msgid "capturePolygon"
+msgstr ""
+
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:159
 msgid "|vertexToolActiveLayer| :sup:`Vertex Tool`"
+msgstr ""
+
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:409
+msgid "vertexToolActiveLayer"
 msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:161
@@ -354,6 +382,10 @@ msgid ""
 "Edits` button."
 msgstr ""
 
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:400
+msgid "saveEdits"
+msgstr ""
+
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:215
 msgid ""
 "Remember, if you've made a mistake while digitizing a feature, you can "
@@ -390,6 +422,10 @@ msgid ""
 " or :kbd:`Ctrl+Z`."
 msgstr ""
 
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:407
+msgid "undo"
+msgstr ""
+
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:234
 msgid ""
 "Remember to save your changes by clicking the |saveEdits| :sup:`Save "
@@ -406,6 +442,10 @@ msgstr ""
 msgid ""
 "Click on the |selectRectangle| :sup:`Select Features` button in the "
 "Attributes Toolbar."
+msgstr ""
+
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:403
+msgid "selectRectangle"
 msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:239
@@ -455,6 +495,10 @@ msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:273
 msgid "|moderate| |FA| Using Vertex Editor Table"
+msgstr ""
+
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:397
+msgid "moderate"
 msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:275
@@ -553,6 +597,10 @@ msgstr ""
 msgid ""
 "Since you are working with a line feature, click on the |captureLine| "
 ":sup:`Add Line` button to initiate line digitizing mode."
+msgstr ""
+
+#: ../../docs/training_manual/create_vector_data/create_new_vector.rst:391
+msgid "captureLine"
 msgstr ""
 
 #: ../../docs/training_manual/create_vector_data/create_new_vector.rst:347

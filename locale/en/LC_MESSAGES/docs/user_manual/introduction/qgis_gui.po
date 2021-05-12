@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: QGIS Documentation 3.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-13 09:01+0100\n"
+"POT-Creation-Date: 2021-05-12 02:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:8
 msgid "QGIS GUI"
@@ -210,6 +210,10 @@ msgstr ""
 msgid "|fileNew| :guilabel:`New`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2814
+msgid "fileNew"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:103
 msgid ":kbd:`Ctrl+N`"
 msgstr ""
@@ -246,6 +250,10 @@ msgstr ""
 msgid "|fileOpen| :guilabel:`Open...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2816
+msgid "fileOpen"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:111
 msgid ":kbd:`Ctrl+O`"
 msgstr ""
@@ -280,12 +288,20 @@ msgstr ""
 msgid "|fileSave| :guilabel:`Save`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2818
+msgid "fileSave"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:135
 msgid ":kbd:`Ctrl+S`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:138
 msgid "|fileSaveAs| :guilabel:`Save As...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2820
+msgid "fileSaveAs"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:139
@@ -334,6 +350,10 @@ msgstr ""
 msgid ":menuselection:`-->` |saveMapAsImage| :guilabel:`Export Map to Image...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2994
+msgid "saveMapAsImage"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:178
 #: ../../docs/user_manual/introduction/qgis_gui.rst:183
 msgid ":ref:`exportingmapcanvas`"
@@ -341,6 +361,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:179
 msgid ":menuselection:`-->` |saveAsPDF| :guilabel:`Export Map to PDF...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2992
+msgid "saveAsPDF"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:184
@@ -363,6 +387,10 @@ msgstr ""
 msgid "|newLayout| :guilabel:`New Print Layout...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2902
+msgid "newLayout"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:193
 msgid ":kbd:`Ctrl+P`"
 msgstr ""
@@ -377,12 +405,20 @@ msgstr ""
 msgid "|newReport| :guilabel:`New Report...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2906
+msgid "newReport"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:199
 msgid ":ref:`create-reports`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:200
 msgid "|layoutManager| :guilabel:`Layout Manager...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2860
+msgid "layoutManager"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:204
@@ -393,6 +429,10 @@ msgstr ""
 msgid "|fileExit| :guilabel:`Exit QGIS`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2813
+msgid "fileExit"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:209
 msgid ":kbd:`Ctrl+Q`"
 msgstr ""
@@ -401,6 +441,10 @@ msgstr ""
 msgid ""
 "Under |osx| macOS, the :guilabel:`Exit QGIS` command corresponds to "
 ":menuselection:`QGIS --> Quit QGIS` (:kbd:`Cmd+Q`)."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2930
+msgid "osx"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:218
@@ -416,6 +460,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:233
 msgid "|undo| :guilabel:`Undo`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3064
+msgid "undo"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:234
@@ -456,12 +504,20 @@ msgstr ""
 msgid "|redo| :guilabel:`Redo`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2970
+msgid "redo"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:238
 msgid ":kbd:`Ctrl+Shift+Z`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:241
 msgid "|editCut| :guilabel:`Cut Features`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2797
+msgid "editCut"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:242
@@ -478,12 +534,20 @@ msgstr ""
 msgid "|editCopy| :guilabel:`Copy Features`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2795
+msgid "editCopy"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:246
 msgid ":kbd:`Ctrl+C`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:249
 msgid "|editPaste| :guilabel:`Paste Features`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2799
+msgid "editPaste"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:250
@@ -537,6 +601,10 @@ msgstr ""
 msgid ":menuselection:`-->` |selectRectangle| :guilabel:`Select Feature(s)`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3008
+msgid "selectRectangle"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:272
 #: ../../docs/user_manual/introduction/qgis_gui.rst:277
 #: ../../docs/user_manual/introduction/qgis_gui.rst:282
@@ -556,18 +624,34 @@ msgid ""
 "Polygon`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3004
+msgid "selectPolygon"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:279
 msgid ""
 ":menuselection:`-->` |selectFreehand| :guilabel:`Select Features by "
 "Freehand`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3002
+msgid "selectFreehand"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:284
 msgid ":menuselection:`-->` |selectRadius| :guilabel:`Select Features by Radius`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3006
+msgid "selectRadius"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:289
 msgid ":menuselection:`-->` |formSelect| :guilabel:`Select Features by Value...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2826
+msgid "formSelect"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:291
@@ -580,6 +664,10 @@ msgid ""
 "Expression...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2809
+msgid "expressionSelect"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:296
 msgid ":kbd:`Ctrl+F3`"
 msgstr ""
@@ -590,6 +678,10 @@ msgid ""
 "Layers`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2791
+msgid "deselectAll"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:301
 msgid ":kbd:`Ctrl+Alt+A`"
 msgstr ""
@@ -598,6 +690,10 @@ msgstr ""
 msgid ""
 ":menuselection:`-->` |deselectActiveLayer| :guilabel:`Deselect Features "
 "from the Current Active Layer`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2789
+msgid "deselectActiveLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:306
@@ -612,6 +708,10 @@ msgstr ""
 msgid ":menuselection:`-->` |selectAll| :guilabel:`Select All Features`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3000
+msgid "selectAll"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:315
 msgid ":kbd:`Ctrl+A`"
 msgstr ""
@@ -622,8 +722,16 @@ msgid ""
 "Selection`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2852
+msgid "invertSelection"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:323
 msgid "|newTableRow| :guilabel:`Add Record`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2910
+msgid "newTableRow"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:324
@@ -635,6 +743,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:327
 msgid "|capturePoint| :guilabel:`Add Point Feature`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2751
+msgid "capturePoint"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:330
@@ -651,8 +763,16 @@ msgstr ""
 msgid "|capturePolygon| :guilabel:`Add Polygon Feature`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2753
+msgid "capturePolygon"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:339
 msgid "|circularStringCurvePoint| :guilabel:`Add Circular String`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2767
+msgid "circularStringCurvePoint"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:341
@@ -689,6 +809,10 @@ msgstr ""
 msgid "|circularStringRadius| :guilabel:`Add Circular String by Radius`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2769
+msgid "circularStringRadius"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:347
 msgid ":menuselection:`Add Circle -->`"
 msgstr ""
@@ -706,8 +830,16 @@ msgstr ""
 msgid ":menuselection:`-->` |circle2Points| :guilabel:`Add Circle from 2 Points`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2757
+msgid "circle2Points"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:356
 msgid ":menuselection:`-->` |circle3Points| :guilabel:`Add Circle from 3 Points`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2761
+msgid "circle3Points"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:361
@@ -716,16 +848,28 @@ msgid ""
 "Tangents`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2763
+msgid "circle3Tangents"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:366
 msgid ""
 ":menuselection:`-->` |circle2TangentsPoint| :guilabel:`Add Circle from 2 "
 "Tangents and a Point`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2759
+msgid "circle2TangentsPoint"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:372
 msgid ""
 ":menuselection:`-->` |circleCenterPoint| :guilabel:`Add Circle by a "
 "Center Point and Another Point`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2765
+msgid "circleCenterPoint"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:378
@@ -746,10 +890,18 @@ msgid ""
 "Extent`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2968
+msgid "rectangleExtent"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:387
 msgid ""
 ":menuselection:`-->` |rectangleCenter| :guilabel:`Add Rectangle from "
 "Center and a Point`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2966
+msgid "rectangleCenter"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:393
@@ -758,10 +910,18 @@ msgid ""
 " from 3 Points (Distance from 2nd and 3rd point)`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2964
+msgid "rectangle3PointsProjected"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:400
 msgid ""
 ":menuselection:`-->` |rectangle3PointsDistance| :guilabel:`Add Rectangle "
 "from 3 Points (Distance from projected point on segment p1 and p2)`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2962
+msgid "rectangle3PointsDistance"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:407
@@ -781,16 +941,28 @@ msgid ""
 "Polygon from Center and a Point`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2978
+msgid "regularPolygonCenterPoint"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:417
 msgid ""
 ":menuselection:`-->` |regularPolygonCenterCorner| :guilabel:`Add Regular "
 "Polygon from Center and a Corner`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2976
+msgid "regularPolygonCenterCorner"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:423
 msgid ""
 ":menuselection:`-->` |regularPolygon2Points| :guilabel:`Add Regular "
 "Polygon from 2 Points`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2974
+msgid "regularPolygon2Points"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:429
@@ -811,18 +983,34 @@ msgid ""
 "Center and 2 Points`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2801
+msgid "ellipseCenter2Points"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:439
 msgid ""
 ":menuselection:`-->` |ellipseCenterPoint| :guilabel:`Add Ellipse from "
 "Center and a Point`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2803
+msgid "ellipseCenterPoint"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:445
 msgid ":menuselection:`-->` |ellipseExtent| :guilabel:`Add Ellipse from Extent`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2805
+msgid "ellipseExtent"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:450
 msgid ":menuselection:`-->` |ellipseFoci| :guilabel:`Add Ellipse from Foci`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2807
+msgid "ellipseFoci"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:455
@@ -839,6 +1027,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:459
 msgid "|textAnnotation| :menuselection:`--> Text Annotation`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3044
+msgid "textAnnotation"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:461
@@ -860,16 +1052,32 @@ msgstr ""
 msgid "|formAnnotation| :menuselection:`--> Form Annotation`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2824
+msgid "formAnnotation"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:467
 msgid "|htmlAnnotation| :menuselection:`--> HTML Annotation`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2844
+msgid "htmlAnnotation"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:471
 msgid "|svgAnnotation| :menuselection:`--> SVG Annotation`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3040
+msgid "svgAnnotation"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:475
 msgid "|moveFeature| :guilabel:`Move Feature(s)`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2882
+msgid "moveFeature"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:477
@@ -903,8 +1111,16 @@ msgstr ""
 msgid "|moveFeatureCopy| :guilabel:`Copy and Move Feature(s)`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2884
+msgid "moveFeatureCopy"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:483
 msgid "|deleteSelectedFeatures| :guilabel:`Delete Selected`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2787
+msgid "deleteSelectedFeatures"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:486
@@ -915,12 +1131,20 @@ msgstr ""
 msgid "|multiEdit| :guilabel:`Modify Attributes of Selected Features`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2894
+msgid "multiEdit"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:490
 msgid ":ref:`calculate_fields_values`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:491
 msgid "|rotateFeature| :guilabel:`Rotate Feature(s)`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2988
+msgid "rotateFeature"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:494
@@ -931,12 +1155,20 @@ msgstr ""
 msgid "|simplifyFeatures| :guilabel:`Simplify Feature`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3028
+msgid "simplifyFeatures"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:498
 msgid ":ref:`simplify_feature`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:499
 msgid "|addRing| :guilabel:`Add Ring`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2733
+msgid "addRing"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:502
@@ -947,12 +1179,20 @@ msgstr ""
 msgid "|addPart| :guilabel:`Add Part`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2727
+msgid "addPart"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:506
 msgid ":ref:`add_part`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:507
 msgid "|fillRing| :guilabel:`Fill Ring`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2822
+msgid "fillRing"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:510
@@ -963,12 +1203,20 @@ msgstr ""
 msgid "|deleteRing| :guilabel:`Delete Ring`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2785
+msgid "deleteRing"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:514
 msgid ":ref:`delete_ring`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:515
 msgid "|deletePart| :guilabel:`Delete Part`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2783
+msgid "deletePart"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:518
@@ -979,12 +1227,20 @@ msgstr ""
 msgid "|reshape| :guilabel:`Reshape Features`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2984
+msgid "reshape"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:522
 msgid ":ref:`reshape_feature`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:523
 msgid "|offsetCurve| :guilabel:`Offset Curve`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2922
+msgid "offsetCurve"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:526
@@ -995,12 +1251,20 @@ msgstr ""
 msgid "|splitFeatures| :guilabel:`Split Features`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3030
+msgid "splitFeatures"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:530
 msgid ":ref:`split_feature`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:531
 msgid "|splitParts| :guilabel:`Split Parts`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3032
+msgid "splitParts"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:534
@@ -1011,6 +1275,10 @@ msgstr ""
 msgid "|mergeFeatures| :guilabel:`Merge Selected Features`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2876
+msgid "mergeFeatures"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:538
 msgid ":ref:`mergeselectedfeatures`"
 msgstr ""
@@ -1019,12 +1287,20 @@ msgstr ""
 msgid "|mergeFeatAttributes| :guilabel:`Merge Attributes of Selected Features`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2874
+msgid "mergeFeatAttributes"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:543
 msgid ":ref:`mergeattributesfeatures`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:544
 msgid "|vertexTool| :guilabel:`Vertex Tool (All Layers)`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3066
+msgid "vertexTool"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:547
@@ -1036,8 +1312,16 @@ msgstr ""
 msgid "|vertexToolActiveLayer| :guilabel:`Vertex Tool (Current Layer)`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3068
+msgid "vertexToolActiveLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:552
 msgid "|rotatePointSymbols| :guilabel:`Rotate Point Symbols`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2990
+msgid "rotatePointSymbols"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:555
@@ -1048,6 +1332,10 @@ msgstr ""
 msgid "|offsetPointSymbols| :guilabel:`Offset Point Symbols`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2924
+msgid "offsetPointSymbols"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:559
 msgid ":ref:`offset_symbol`"
 msgstr ""
@@ -1056,12 +1344,20 @@ msgstr ""
 msgid "|reverseLine| :guilabel:`Reverse Line`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2986
+msgid "reverseLine"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:563
 msgid ":ref:`reverse_line`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:564
 msgid "|trimExtend| :guilabel:`Trim/extend Feature`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3060
+msgid "trimExtend"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:567
@@ -1094,8 +1390,16 @@ msgstr ""
 msgid "|moveFeaturePoint|"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2892
+msgid "moveFeaturePoint"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:583
 msgid "|moveFeatureLine|"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2890
+msgid "moveFeatureLine"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:584
@@ -1110,8 +1414,16 @@ msgstr ""
 msgid "|moveFeatureCopyPoint|"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2888
+msgid "moveFeatureCopyPoint"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:587
 msgid "|moveFeatureCopyLine|"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2886
+msgid "moveFeatureCopyLine"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:588
@@ -1180,6 +1492,10 @@ msgstr ""
 msgid "|newMap| :guilabel:`New Map View`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2904
+msgid "newMap"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:630
 msgid ":kbd:`Ctrl+M`"
 msgstr ""
@@ -1192,6 +1508,10 @@ msgstr ""
 msgid "|new3DMap| :guilabel:`New 3D Map View`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2896
+msgid "new3DMap"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:634
 msgid ":kbd:`Ctrl+Alt+M`"
 msgstr ""
@@ -1202,6 +1522,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:637
 msgid "|pan| :guilabel:`Pan Map`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2932
+msgid "pan"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:639
@@ -1230,8 +1554,16 @@ msgstr ""
 msgid "|panToSelected| :guilabel:`Pan Map to Selection`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2934
+msgid "panToSelected"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:645
 msgid "|zoomIn| :guilabel:`Zoom In`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3074
+msgid "zoomIn"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:646
@@ -1242,12 +1574,20 @@ msgstr ""
 msgid "|zoomOut| :guilabel:`Zoom Out`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3080
+msgid "zoomOut"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:650
 msgid ":kbd:`Ctrl+Alt+-`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:653
 msgid "|identify| :guilabel:`Identify Features`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2846
+msgid "identify"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:654
@@ -1273,12 +1613,20 @@ msgstr ""
 msgid ":menuselection:`-->` |measure| :guilabel:`Measure Line`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2868
+msgid "measure"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:663
 msgid ":kbd:`Ctrl+Shift+M`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:666
 msgid ":menuselection:`-->` |measureArea| :guilabel:`Measure Area`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2872
+msgid "measureArea"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:668
@@ -1289,8 +1637,16 @@ msgstr ""
 msgid ":menuselection:`-->` |measureAngle| :guilabel:`Measure Angle`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2870
+msgid "measureAngle"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:676
 msgid "|sum| :guilabel:`Statistical Summary`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3038
+msgid "sum"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:679
@@ -1302,12 +1658,20 @@ msgstr ""
 msgid "|zoomFullExtent| :guilabel:`Zoom Full`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3072
+msgid "zoomFullExtent"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:681
 msgid ":kbd:`Ctrl+Shift+F`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:684
 msgid "|zoomToSelected| :guilabel:`Zoom To Selection`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3084
+msgid "zoomToSelected"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:685
@@ -1318,16 +1682,32 @@ msgstr ""
 msgid "|zoomToLayer| :guilabel:`Zoom To Layer`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3082
+msgid "zoomToLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:692
 msgid "|zoomActual| :guilabel:`Zoom To Native Resolution (100%)`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3070
+msgid "zoomActual"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:696
 msgid "|zoomLast| :guilabel:`Zoom Last`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3076
+msgid "zoomLast"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:700
 msgid "|zoomNext| :guilabel:`Zoom Next`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3078
+msgid "zoomNext"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:704
@@ -1346,12 +1726,20 @@ msgstr ""
 msgid ":menuselection:`-->` |addGrid| :guilabel:`Grid...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2713
+msgid "addGrid"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:712
 msgid ":ref:`grid_decoration`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:713
 msgid ":menuselection:`-->` |scaleBar| :guilabel:`Scale Bar...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2996
+msgid "scaleBar"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:717
@@ -1362,12 +1750,20 @@ msgstr ""
 msgid ":menuselection:`-->` |addImage| :guilabel:`Image...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2715
+msgid "addImage"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:722
 msgid ":ref:`image_decoration`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:723
 msgid ":menuselection:`-->` |northArrow| :guilabel:`North Arrow...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2916
+msgid "northArrow"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:727
@@ -1378,6 +1774,10 @@ msgstr ""
 msgid ":menuselection:`-->` |titleLabel| :guilabel:`Title Label...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3050
+msgid "titleLabel"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:732
 msgid ":ref:`title_label_decoration`"
 msgstr ""
@@ -1386,12 +1786,20 @@ msgstr ""
 msgid ":menuselection:`-->` |copyrightLabel| :guilabel:`Copyright Label...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2773
+msgid "copyrightLabel"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:737
 msgid ":ref:`copyright_decoration`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:738
 msgid ":menuselection:`-->` |addMap| :guilabel:`Layout Extents...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2717
+msgid "addMap"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:742
@@ -1426,12 +1834,20 @@ msgstr ""
 msgid "|mapTips| :guilabel:`Show Map Tips`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2866
+msgid "mapTips"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:770
 msgid ":ref:`maptips`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:771
 msgid "|newBookmark| :guilabel:`New Spatial Bookmark...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2898
+msgid "newBookmark"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:772
@@ -1449,6 +1865,10 @@ msgstr ""
 msgid "|showBookmarks| :guilabel:`Show Spatial Bookmarks`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3012
+msgid "showBookmarks"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:776
 msgid ":kbd:`Ctrl+Shift+B`"
 msgstr ""
@@ -1461,12 +1881,20 @@ msgstr ""
 msgid "|refresh| :guilabel:`Refresh`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2972
+msgid "refresh"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:784
 msgid ":kbd:`F5`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:787
 msgid "|showAllLayers| :guilabel:`Show All Layers`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3010
+msgid "showAllLayers"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:788
@@ -1488,6 +1916,10 @@ msgstr ""
 msgid "|hideAllLayers| :guilabel:`Hide All Layers`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2838
+msgid "hideAllLayers"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:792
 msgid ":kbd:`Ctrl+Shift+H`"
 msgstr ""
@@ -1496,12 +1928,24 @@ msgstr ""
 msgid "|showSelectedLayers| :guilabel:`Show Selected Layers`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3022
+msgid "showSelectedLayers"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:799
 msgid "|hideSelectedLayers| :guilabel:`Hide Selected Layers`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2842
+msgid "hideSelectedLayers"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:803
 msgid "|toggleSelectedLayers| :guilabel:`Toggle Selected Layers`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3054
+msgid "toggleSelectedLayers"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:807
@@ -1510,6 +1954,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:811
 msgid "|hideDeselectedLayers| :guilabel:`Hide Deselected Layers`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2840
+msgid "hideDeselectedLayers"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:815
@@ -1773,6 +2221,10 @@ msgid ""
 " in the :menuselection:`Settings` menu."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2854
+msgid "kde"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:982
 msgid "Layer"
 msgstr ""
@@ -1817,6 +2269,10 @@ msgstr ""
 msgid "|dataSourceManager| :guilabel:`Data Source Manager`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2779
+msgid "dataSourceManager"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1014
 msgid ":kbd:`Ctrl+L`"
 msgstr ""
@@ -1848,6 +2304,10 @@ msgid ""
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2900
+msgid "newGeoPackageLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1023
 msgid ":kbd:`Ctrl+Shift+N`"
 msgstr ""
@@ -1860,6 +2320,10 @@ msgstr ""
 msgid ":menuselection:`-->` |newVectorLayer| :guilabel:`New Shapefile Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2912
+msgid "newVectorLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1030
 msgid ":ref:`vector_create_shapefile`"
 msgstr ""
@@ -1868,6 +2332,10 @@ msgstr ""
 msgid ""
 ":menuselection:`-->` |newSpatiaLiteLayer| :guilabel:`New SpatiaLite "
 "Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2908
+msgid "newSpatiaLiteLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1035
@@ -1880,12 +2348,20 @@ msgid ""
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2775
+msgid "createMemory"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1040
 msgid ":ref:`vector_new_scratch_layer`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1041
 msgid ":menuselection:`-->` |newVirtualLayer| :guilabel:`New Virtual Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2914
+msgid "newVirtualLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1045
@@ -1903,6 +2379,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1050
 msgid ":menuselection:`-->` |addOgrLayer| :guilabel:`Add Vector Layer......`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2723
+msgid "addOgrLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1052
@@ -1936,12 +2416,20 @@ msgstr ""
 msgid ":menuselection:`-->` |addRasterLayer| :guilabel:`Add Raster Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2731
+msgid "addRasterLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1057
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1060
 msgid ":menuselection:`-->` |addMeshLayer| :guilabel:`Add Mesh Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2719
+msgid "addMeshLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1064
@@ -1954,6 +2442,10 @@ msgid ""
 "Text Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2711
+msgid "addDelimitedTextLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1067
 msgid ":kbd:`Ctrl+Shift+T`"
 msgstr ""
@@ -1964,6 +2456,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1070
 msgid ":menuselection:`-->` |addPostgisLayer| :guilabel:`Add PostGIS Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2729
+msgid "addPostgisLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1072
@@ -1983,6 +2479,10 @@ msgid ""
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2735
+msgid "addSpatiaLiteLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1077
 msgid ":kbd:`Ctrl+Shift+L`"
 msgstr ""
@@ -1997,14 +2497,26 @@ msgid ""
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2721
+msgid "addMssqlLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1085
 msgid ""
 ":menuselection:`-->` |addOracleLayer| :guilabel:`Add Oracle Spatial "
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2725
+msgid "addOracleLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1090
 msgid ":menuselection:`-->` |addDb2Layer| :guilabel:`Add DB2 Spatial Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2709
+msgid "addDb2Layer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1092
@@ -2017,8 +2529,16 @@ msgid ""
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2739
+msgid "addVirtualLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1100
 msgid ":menuselection:`-->` |addWmsLayer| :guilabel:`Add WMS/WMTS Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2745
+msgid "addWmsLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1102
@@ -2033,6 +2553,10 @@ msgstr ""
 msgid ":menuselection:`-->` |addXyzLayer| :guilabel:`Add XYZ Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2747
+msgid "addXyzLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1109
 msgid ":ref:`xyz_tile`"
 msgstr ""
@@ -2043,8 +2567,16 @@ msgid ""
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2707
+msgid "addAmsLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1115
 msgid ":menuselection:`-->` |addWcsLayer| :guilabel:`Add WCS Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2741
+msgid "addWcsLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1119
@@ -2053,6 +2585,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1120
 msgid ":menuselection:`-->` |addWfsLayer| :guilabel:`Add WFS Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2743
+msgid "addWfsLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1124
@@ -2065,10 +2601,18 @@ msgid ""
 "Layer...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2703
+msgid "addAfsLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1130
 msgid ""
 ":menuselection:`-->` |addVectorTileLayer| :guilabel:`Add Vector Tile "
 "Layer...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2737
+msgid "addVectorTileLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1135
@@ -2113,12 +2657,20 @@ msgstr ""
 msgid "|openTable| :guilabel:`Open Attribute Table`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2926
+msgid "openTable"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1160
 msgid ":kbd:`F6`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1163
 msgid "|toggleEditing| :guilabel:`Toggle Editing`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3052
+msgid "toggleEditing"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1167
@@ -2138,6 +2690,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1171
 msgid "|allEdits| :menuselection:`Current Edits -->`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2749
+msgid "allEdits"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1175
@@ -2180,12 +2736,20 @@ msgstr ""
 msgid "|removeLayer| :guilabel:`Remove Layer/Group`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2982
+msgid "removeLayer"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1208
 msgid ":kbd:`Ctrl+D`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1211
 msgid "|duplicateLayer| :guilabel:`Duplicate Layer(s)`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2793
+msgid "duplicateLayer"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1215
@@ -2238,6 +2802,10 @@ msgstr ""
 msgid "|labeling| :guilabel:`Labeling`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2858
+msgid "labeling"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1240
 msgid ":ref:`vector_labels_tab`"
 msgstr ""
@@ -2246,12 +2814,24 @@ msgstr ""
 msgid "|inOverview| :guilabel:`Show in Overview`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2848
+msgid "inOverview"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1245
 msgid "|addAllToOverview| :guilabel:`Show All in Overview`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2705
+msgid "addAllToOverview"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1249
 msgid "|removeAllOVerview| :guilabel:`Hide All from Overview`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2980
+msgid "removeAllOVerview"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1256
@@ -2285,12 +2865,20 @@ msgstr ""
 msgid "|styleManager| :guilabel:`Style Manager...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3034
+msgid "styleManager"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1273
 msgid ":ref:`vector_style_manager`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1274
 msgid "|customProjection| :guilabel:`Custom Projections...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2777
+msgid "customProjection"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1275
@@ -2301,6 +2889,10 @@ msgstr ""
 msgid "|keyboardShortcuts| :guilabel:`Keyboard Shortcuts...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2856
+msgid "keyboardShortcuts"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1277
 msgid ":ref:`shortcuts`"
 msgstr ""
@@ -2309,12 +2901,20 @@ msgstr ""
 msgid "|interfaceCustomization| :guilabel:`Interface Customization...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2850
+msgid "interfaceCustomization"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1280
 msgid ":ref:`sec_customization`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1281
 msgid "|options| :guilabel:`Options...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2928
+msgid "options"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1282
@@ -2336,12 +2936,20 @@ msgstr ""
 msgid "|showPluginManager| :guilabel:`Manage and Install Plugins...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3018
+msgid "showPluginManager"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1303
 msgid ":ref:`managing_plugins`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1304
 msgid "\"|pythonFile| :guilabel:`Python Console`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2954
+msgid "pythonFile"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1305
@@ -2377,6 +2985,10 @@ msgstr ""
 msgid "|coordinateCapture| :guilabel:`Coordinate Capture`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2771
+msgid "coordinateCapture"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1330
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1338
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1342
@@ -2391,12 +3003,20 @@ msgstr ""
 msgid "|geometryChecker| :guilabel:`Check Geometries...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2828
+msgid "geometryChecker"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1335
 msgid ":ref:`geometry_checker`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1336
 msgid "|gpsImporter| :guilabel:`GPS Tools`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2832
+msgid "gpsImporter"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1337
@@ -2410,6 +3030,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1340
 msgid "|topologyChecker| :guilabel:`Topology Checker`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3056
+msgid "topologyChecker"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1343
@@ -2818,6 +3442,10 @@ msgstr ""
 msgid "|showRasterCalculator| :guilabel:`Raster calculator...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3020
+msgid "showRasterCalculator"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1564
 msgid ":ref:`label_raster_calc`"
 msgstr ""
@@ -2832,6 +3460,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1569
 msgid "|georefRun| :guilabel:`Georeferencer`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2830
+msgid "georefRun"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1570
@@ -3144,6 +3776,10 @@ msgid ""
 "Project...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2918
+msgid "offlineEditingCopy"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1747
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1752
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1756
@@ -3154,8 +3790,16 @@ msgstr ""
 msgid ":menuselection:`-->` |offlineEditingSync| :guilabel:`Synchronize`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2920
+msgid "offlineEditingSync"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1754
 msgid "|dbManager| :guilabel:`DB Manager...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2781
+msgid "dbManager"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1757
@@ -3191,6 +3835,10 @@ msgstr ""
 msgid ":menuselection:`-->` |metasearch| :guilabel:`Metasearch`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2880
+msgid "metasearch"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1785
 msgid ":guilabel:`Web`"
 msgstr ""
@@ -3213,6 +3861,10 @@ msgstr ""
 msgid "|showMeshCalculator| :menuselection:`Mesh Calculator...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3016
+msgid "showMeshCalculator"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1818
 msgid "Processing"
 msgstr ""
@@ -3221,12 +3873,20 @@ msgstr ""
 msgid "|processing| :guilabel:`Toolbox`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2944
+msgid "processing"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1829
 msgid ":kbd:`Ctrl+Alt+T`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1832
 msgid "|processingModel| :guilabel:`Graphical Modeler...`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2948
+msgid "processingModel"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1833
@@ -3241,6 +3901,10 @@ msgstr ""
 msgid "|processingHistory| :guilabel:`History...`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2946
+msgid "processingHistory"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1837
 msgid ":kbd:`Ctrl+Alt+H`"
 msgstr ""
@@ -3251,6 +3915,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1840
 msgid "|processingResult| :guilabel:`Results Viewer`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2950
+msgid "processingResult"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1841
@@ -3265,6 +3933,10 @@ msgstr ""
 msgid "|processSelected| :guilabel:`Edit Features In-Place`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2942
+msgid "processSelected"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1847
 msgid ":ref:`processing_inplace_edit`"
 msgstr ""
@@ -3275,6 +3947,10 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1862
 msgid "|helpContents| :guilabel:`Help Contents`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2834
+msgid "helpContents"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1863
@@ -3305,6 +3981,10 @@ msgstr ""
 msgid "|qgisHomePage| :guilabel:`QGIS Home Page`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2956
+msgid "qgisHomePage"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1883
 msgid ":kbd:`Ctrl+H`"
 msgstr ""
@@ -3313,12 +3993,24 @@ msgstr ""
 msgid "|success| :guilabel:`Check QGIS Version`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3036
+msgid "success"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1890
 msgid "|logo| :guilabel:`About`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2864
+msgid "logo"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1894
 msgid "|helpSponsors| :guilabel:`QGIS Sustaining Members`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2836
+msgid "helpSponsors"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:1901
@@ -3616,6 +4308,10 @@ msgid ""
 "will follow the :guilabel:`Layers` panel changes."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3014
+msgid "showMapTheme"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2097
 msgid "|options| :sup:`View settings` to configure the map view:"
 msgstr ""
@@ -3628,10 +4324,18 @@ msgid ""
 "center."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2960
+msgid "radioButtonOn"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2103
 msgid ""
 "|radioButtonOff| :guilabel:`Synchronize view to selection`: same as zoom "
 "to selection"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2958
+msgid "radioButtonOff"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2105
@@ -3653,8 +4357,16 @@ msgid ""
 " which is e.g. always 2x the scale of the main canvas."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3062
+msgid "unchecked"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2111
 msgid "|checkbox| :guilabel:`Show annotations`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2755
+msgid "checkbox"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2112
@@ -3896,6 +4608,10 @@ msgid ""
 "navigation widget (that is meant to ease controlling of the map view)"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2701
+msgid "3dNavigation"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2263
 msgid ""
 "|identify| :sup:`Identify`: returns information on the clicked point of "
@@ -3915,6 +4631,10 @@ msgid ""
 "<create_animation>` widget"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2936
+msgid "play"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2268
 msgid ""
 "|saveMapAsImage| :sup:`Save as image...`: exports the current view to an "
@@ -3929,6 +4649,10 @@ msgid ""
 "The export settings, overriding the layers :ref:`properties "
 "<sec_3_d_view>` or map view :ref:`configuration <scene_configuration>`, "
 "include:"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2699
+msgid "3d"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2276
@@ -3988,6 +4712,14 @@ msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2298
 msgid "Press the |tiltUp| :sup:`Tilt up` and |tiltDown| :sup:`Tilt down` tools"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3048
+msgid "tiltUp"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3046
+msgid "tiltDown"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2299
@@ -4119,6 +4851,10 @@ msgid ""
 "now displays the time set."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3026
+msgid "signPlus"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2354
 msgid ""
 "Using the navigation tools, move the camera to the position to associate "
@@ -4155,6 +4891,14 @@ msgid ""
 "view will automatically update the associated position. You can also "
 "|symbologyEdit| :sup:`Edit keyframe` (time only) or |signMinus| "
 ":sup:`Remove keyframe`."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3042
+msgid "symbologyEdit"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3024
+msgid "signMinus"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2372
@@ -4541,6 +5285,10 @@ msgid ""
 ":menuselection:`Settings --> Options...` menu."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2998
+msgid "search"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2603
 msgid "Reporting actions"
 msgstr ""
@@ -4575,6 +5323,14 @@ msgid ""
 "bottom-left and top-right corners of the map view in map units."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:3058
+msgid "tracking"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2811
+msgid "extents"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2626
 msgid ""
 "Next to the coordinate display you will find the :guilabel:`Scale` "
@@ -4597,6 +5353,10 @@ msgid ""
 "small symbols."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2862
+msgid "lockedGray"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2648
 msgid ""
 "To the right of the magnifier tool you can define a current clockwise "
@@ -4616,6 +5376,10 @@ msgid ""
 ":guilabel:`EPSG:code` button showing the current project CRS. Clicking on"
 " this opens the :guilabel:`Project Properties` dialog and lets you apply "
 "another CRS to the map view."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2952
+msgid "projectionEnabled"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2664
@@ -4651,11 +5415,23 @@ msgid ""
 "processes (QGIS startup, plugins loading, processing tools...)"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2878
+msgid "messageLog"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_gui.rst:2686
 msgid ""
 "Depending on the :ref:`Plugin Manager settings <setting_plugins>`, the "
 "status bar can sometimes show icons to the right to inform you about the "
 "availability of new (|pluginNew|) or  upgradeable (|pluginUpgrade|) "
 "plugins. Click the icon to open the Plugin Manager dialog."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2938
+msgid "pluginNew"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_gui.rst:2940
+msgid "pluginUpgrade"
 msgstr ""
 

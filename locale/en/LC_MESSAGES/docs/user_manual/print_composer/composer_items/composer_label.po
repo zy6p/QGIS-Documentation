@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: QGIS Documentation 3.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 09:55+0000\n"
+"POT-Creation-Date: 2021-05-12 02:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: ../../docs/user_manual/print_composer/composer_items/composer_label.rst:5
 msgid "The Label Item"
@@ -30,6 +30,10 @@ msgid ""
 " :guilabel:`Add Label` tool following :ref:`items creation instructions "
 "<create_layout_item>` and manipulate it the same way as exposed in "
 ":ref:`interact_layout_item`."
+msgstr ""
+
+#: ../../docs/user_manual/print_composer/composer_items/composer_label.rst:174
+msgid "label"
 msgstr ""
 
 #: ../../docs/user_manual/print_composer/composer_items/composer_label.rst:19
@@ -63,6 +67,10 @@ msgid ""
 "that links to a web page or something more complex."
 msgstr ""
 
+#: ../../docs/user_manual/print_composer/composer_items/composer_label.rst:172
+msgid "checkbox"
+msgstr ""
+
 #: ../../docs/user_manual/print_composer/composer_items/composer_label.rst:41
 msgid ""
 "You can also use :ref:`expressions <expression_builder>`: click on "
@@ -89,6 +97,10 @@ msgstr ""
 msgid ""
 "which will render: **Check out the new logo for** `QGIS 3.0 "
 "<https://www.qgis.org>`_ **:** |logo|"
+msgstr ""
+
+#: ../../docs/user_manual/print_composer/composer_items/composer_label.rst:176
+msgid "logo"
 msgstr ""
 
 #: ../../docs/user_manual/print_composer/composer_items/composer_label.rst:63

@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: QGIS Documentation 3.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-13 09:01+0100\n"
+"POT-Creation-Date: 2021-05-12 02:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:3
 msgid "QGIS Configuration"
@@ -34,10 +34,18 @@ msgid ""
 ":ref:`symbols, styles and color ramps <vector_style_manager>`."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1988
+msgid "styleManager"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:16
 msgid ""
 "|customProjection| :guilabel:`Custom Projections...`: create your own "
 ":ref:`coordinate reference systems <sec_custom_projections>`."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1938
+msgid "customProjection"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:18
@@ -48,11 +56,19 @@ msgid ""
 "<project_properties>` (accessible under :menuselection:`Project` menu)."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1954
+msgid "keyboardShortcuts"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:22
 msgid ""
 "|interfaceCustomization| :guilabel:`Interface Customization...`: "
 "configure the :ref:`application interface <sec_customization>`, hiding "
 "dialogs or tools you may not need."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1950
+msgid "interfaceCustomization"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:25
@@ -61,6 +77,10 @@ msgid ""
 " to apply in different areas of the software. These preferences are saved"
 " in the active :ref:`User profile <user_profiles>` settings and applied "
 "by default whenever you open a new project with this profile."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1960
+msgid "options"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:35
@@ -123,6 +143,10 @@ msgstr ""
 msgid "|checkbox| :guilabel:`Show group (thousand) separator`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1932
+msgid "checkbox"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:76
 msgid ""
 "A summary of the selected settings and how they would be interpreted is "
@@ -146,6 +170,10 @@ msgid ""
 "It can be 'default', 'Night Mapping', or 'Blend of Gray'"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1980
+msgid "selectString"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:86
 msgid "Define the :guilabel:`Icon size` |selectString|"
 msgstr ""
@@ -156,12 +184,20 @@ msgid ""
 "|radioButtonOn| :guilabel:`Qt default` or a user-defined one"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1968
+msgid "radioButtonOn"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:89
 msgid "Change the :guilabel:`Timeout for timed messages or dialogs`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:90
 msgid "|unchecked| :guilabel:`Hide splash screen at startup`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1992
+msgid "unchecked"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:91
@@ -274,6 +310,10 @@ msgid ""
 "|radioButtonOff| :guilabel:`QGS Project saved in a clear text, does not "
 "embed auxiliary data`: the auxiliary data is stored in a separate "
 ":file:`.qgd` file along with the project file."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1966
+msgid "radioButtonOff"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:148
@@ -495,6 +535,10 @@ msgid ""
 "to a project or reprojecting a layer."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1990
+msgid "transformation"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:291
 msgid "**Default datum transformations**"
 msgstr ""
@@ -567,6 +611,10 @@ msgid ""
 "makes it possible to save the last loaded N attribute rows so that "
 "working with the attribute table will be quicker. The cache will be "
 "deleted when closing the attribute table."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1978
+msgid "selectNumber"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:330
@@ -785,6 +833,10 @@ msgstr ""
 msgid ""
 "|doubleSpinBox| :guilabel:`Magnification level` (see the :ref:`magnifier "
 "<magnifier>`)"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1940
+msgid "doubleSpinBox"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:450
@@ -1034,6 +1086,14 @@ msgid ""
 "list."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1986
+msgid "signPlus"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1984
+msgid "signMinus"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:591
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:598
 msgid "Colors Settings"
@@ -1096,11 +1156,27 @@ msgstr ""
 msgid "|editCopy| :guilabel:`Copy` or |editPaste| :guilabel:`Paste` color"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1942
+msgid "editCopy"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1944
+msgid "editPaste"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:623
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1344
 msgid ""
 "|fileOpen| :guilabel:`Import` or |fileSave| :guilabel:`Export` the set of"
 " colors from/to :file:`.gpl` file."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1946
+msgid "fileOpen"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1948
+msgid "fileSave"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:626
@@ -1254,6 +1330,10 @@ msgid ""
 " :ref:`sec_advanced_edit`. Through the various settings, it is possible "
 "to influence the shape of the line offset. These options are possible "
 "starting from GEOS 3.3."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1958
+msgid "offsetCurve"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:702
@@ -1617,6 +1697,10 @@ msgid ""
 "filters (with prefix) to use:"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1972
+msgid "search"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:944
 msgid "Locator Settings in QGIS"
 msgstr ""
@@ -1642,6 +1726,10 @@ msgid ""
 "Active layer features (``f``): searches for matching attributes in any "
 "field from the current active layer and zooms to the selected feature. "
 "Press |settings| to configure the maximum number of results."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1982
+msgid "settings"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:955
@@ -1793,6 +1881,10 @@ msgid ""
 " framework. More information at :ref:`label_processing`."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1964
+msgid "processing"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1053
 msgid "Processing Settings tab in QGIS"
 msgstr ""
@@ -1809,6 +1901,10 @@ msgid ""
 ":ref:`project macros <project_macros>`, :ref:`custom expressions "
 "<function_editor>`, ...). It can also be accessed using the |options| "
 ":sup:`Options...` button from:"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1970
+msgid "runConsole"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1066
@@ -1918,6 +2014,10 @@ msgid ""
 "console and editor, expression widget and function editor, ...)."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1934
+msgid "codeEditor"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1129
 msgid "Code Editor Settings tab"
 msgstr ""
@@ -2009,6 +2109,10 @@ msgid ""
 "usually something like :file:`C:\\\\Users\\\\(user)`."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1994
+msgid "win"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1174
 msgid "and ``<UserProfiles>`` represents the main profiles folder, i.e.:"
 msgstr ""
@@ -2017,12 +2121,20 @@ msgstr ""
 msgid "|nix| :file:`.local/share/QGIS/QGIS3/profiles/`"
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1956
+msgid "nix"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1177
 msgid "|win| :file:`AppData\\\\Roaming\\\\QGIS\\\\QGIS3\\\\profiles\\\\`"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1178
 msgid "|osx| :file:`Library/Application Support/QGIS/QGIS3/profiles/`"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1962
+msgid "osx"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1180
@@ -2231,6 +2343,10 @@ msgstr ""
 msgid ""
 "The |crs| :guilabel:`CRS` tab helps you set the coordinate reference "
 "system to use in this project. It can be:"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1936
+msgid "crs"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1296
@@ -2581,6 +2697,10 @@ msgid ""
 "their name or label."
 msgstr ""
 
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1974
+msgid "select"
+msgstr ""
+
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1530
 msgid ""
 "Once you setup your configuration, click :guilabel:`Apply` or "
@@ -2612,6 +2732,10 @@ msgstr ""
 msgid ""
 "unchecking |checkbox| :guilabel:`Enable customization` option in the "
 "Customization dialog or click the |selectAllTree| :sup:`Check All` button"
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1976
+msgid "selectAllTree"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1548
@@ -2955,6 +3079,10 @@ msgid ""
 " panel can be enabled by right-clicking a space in the toolbars or using "
 "the :menuselection:`View --> Panels` (:menuselection:`Settings --> "
 "Panels` in |kde| Linux KDE)."
+msgstr ""
+
+#: ../../docs/user_manual/introduction/qgis_configuration.rst:1952
+msgid "kde"
 msgstr ""
 
 #: ../../docs/user_manual/introduction/qgis_configuration.rst:1816
