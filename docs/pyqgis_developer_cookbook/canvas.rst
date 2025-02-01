@@ -22,6 +22,8 @@ Using the Map Canvas
 
     from qgis.PyQt.QtCore import Qt, QRectF
 
+    from qgis.PyQt.QtWidgets import QMenu
+
     from qgis.core import (
         QgsVectorLayer,
         QgsPoint,
@@ -29,12 +31,14 @@ Using the Map Canvas
         QgsProject,
         QgsGeometry,
         QgsMapRendererJob,
+        QgsWkbTypes,
     )
 
     from qgis.gui import (
         QgsMapCanvas,
         QgsVertexMarker,
         QgsMapCanvasItem,
+        QgsMapMouseEvent,
         QgsRubberBand,
     )
 
@@ -119,7 +123,7 @@ layers for the canvas.
 
 .. testcode:: canvas
 
-  vlayer = QgsVectorLayer('testdata/airports.shp', "Airports layer", "ogr")
+  vlayer = QgsVectorLayer("testdata/data/data.gpkg|layername=airports", "Airports layer", "ogr")
   if not vlayer.isValid():
       print("Layer failed to load!")
 
@@ -131,7 +135,6 @@ layers for the canvas.
 
   # set the map canvas layer set
   canvas.setLayers([vlayer])
-
 
 After executing these commands, the canvas should show the layer you have
 loaded.
@@ -153,7 +156,7 @@ To show a polyline:
 
 .. testcode:: canvas
 
-  r = QgsRubberBand(canvas, False)  # False = not a polygon
+  r = QgsRubberBand(canvas, QgsWkbTypes.LineGeometry)  # line
   points = [QgsPoint(-100, 45), QgsPoint(10, 60), QgsPoint(120, 45)]
   r.setToGeometry(QgsGeometry.fromPolyline(points), None)
 
@@ -161,7 +164,7 @@ To show a polygon
 
 .. testcode:: canvas
 
-  r = QgsRubberBand(canvas, True)  # True = a polygon
+  r = QgsRubberBand(canvas, QgsWkbTypes.PolygonGeometry)  # polygon
   points = [[QgsPointXY(-100, 35), QgsPointXY(10, 50), QgsPointXY(120, 35)]]
   r.setToGeometry(QgsGeometry.fromPolygonXY(points), None)
 
@@ -317,6 +320,28 @@ for asking to the user to select a feature that will be sent to a callback funct
   # activation of the map tool
   canvas.setMapTool(feature_identifier)
 
+Add items to map canvas contextual menu
+----------------------------------------
+
+Interaction with map canvas can also be done through entries you may add to
+its contextual menu using the :attr:`contextMenuAboutToShow
+<qgis.gui.QgsMapCanvas.contextMenuAboutToShow>` signal.
+
+The following code adds :menuselection:`My menu --> My Action` action next to
+default entries when you right-click over the map canvas.
+
+.. testcode:: canvas
+
+    # a slot to populate the context menu
+    def populateContextMenu(menu: QMenu, event: QgsMapMouseEvent):
+        subMenu = menu.addMenu('My Menu')
+        action = subMenu.addAction('My Action')
+        action.triggered.connect(lambda *args:
+                                 print(f'Action triggered at {event.x()},{event.y()}'))
+
+    canvas.contextMenuAboutToShow.connect(populateContextMenu)
+    canvas.show()
+
 
 .. index:: Map canvas; Custom map tools
 
@@ -342,7 +367,7 @@ described before to show the selected rectangle as it is being defined.
     def __init__(self, canvas):
       self.canvas = canvas
       QgsMapToolEmitPoint.__init__(self, self.canvas)
-      self.rubberBand = QgsRubberBand(self.canvas, True)
+      self.rubberBand = QgsRubberBand(self.canvas, QgsWkbTypes.PolygonGeometry)
       self.rubberBand.setColor(Qt.red)
       self.rubberBand.setWidth(1)
       self.reset()
@@ -350,7 +375,7 @@ described before to show the selected rectangle as it is being defined.
     def reset(self):
       self.startPoint = self.endPoint = None
       self.isEmittingPoint = False
-      self.rubberBand.reset(True)
+      self.rubberBand.reset(QgsWkbTypes.PolygonGeometry)
 
     def canvasPressEvent(self, e):
       self.startPoint = self.toMapCoordinates(e.pos())
@@ -374,14 +399,14 @@ described before to show the selected rectangle as it is being defined.
       self.showRect(self.startPoint, self.endPoint)
 
     def showRect(self, startPoint, endPoint):
-      self.rubberBand.reset(QGis.Polygon)
+      self.rubberBand.reset(QgsWkbTypes.PolygonGeometry)
       if startPoint.x() == endPoint.x() or startPoint.y() == endPoint.y():
         return
 
-      point1 = QgsPoint(startPoint.x(), startPoint.y())
-      point2 = QgsPoint(startPoint.x(), endPoint.y())
-      point3 = QgsPoint(endPoint.x(), endPoint.y())
-      point4 = QgsPoint(endPoint.x(), startPoint.y())
+      point1 = QgsPointXY(startPoint.x(), startPoint.y())
+      point2 = QgsPointXY(startPoint.x(), endPoint.y())
+      point3 = QgsPointXY(endPoint.x(), endPoint.y())
+      point4 = QgsPointXY(endPoint.x(), startPoint.y())
 
       self.rubberBand.addPoint(point1, False)
       self.rubberBand.addPoint(point2, False)

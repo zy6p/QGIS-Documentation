@@ -46,7 +46,7 @@ functionalities:
 * |moveItemContent| :sup:`Interactively edit map extent`: pan and
   zoom interactively
   within the map item
-* |labeling| :sup:`Labeling settings`: control feature label behaviour
+* |labelingSingle| :sup:`Labeling settings`: control feature label behaviour
   (placement, visibility...) in the layout map item extent:
 
   * set a :guilabel:`Margin from map edges`, a data definable distance from the
@@ -88,8 +88,8 @@ functionalities:
       their geometry.
 
     You can |checkbox| :guilabel:`Force labels inside atlas feature`.
-    If you don't want to |radiobuttonoff| :guilabel:`Clip all layers` to the
-    atlas feature you can use the |radiobuttonon| :guilabel:`Clip selected layers`
+    If you don't want to |radioButtonOff| :guilabel:`Clip all layers` to the
+    atlas feature you can use the |radioButtonOn| :guilabel:`Clip selected layers`
     option.
   * |checkbox| :guilabel:`Clip to item`: it is possible to change the shape of the
     map item by using a :ref:`shape <layout_basic_shape_item>` or :ref:`polygon
@@ -98,6 +98,12 @@ functionalities:
     in the combobox. Again, the above mentioned clipping modes are available and
     labels can be forced to display only inside the clipping shape.
 
+    .. _figure_layout_mapclipitem:
+
+    .. figure:: img/map_cliptoitem.*
+       :align: center
+
+       Clipping a layout map item to shapes
 
 .. _`layout_main_properties`:
 
@@ -159,7 +165,7 @@ You can prevent this by using :guilabel:`Lock styles for layers`.
 
 Instead of using the current map canvas, you can also lock the layers of the
 map item to those of an existing map theme: select a map theme from the
-|showMapTheme| :sup:`Set layer list from a map theme` drop-down button, and the
+|showPresets| :sup:`Set layer list from a map theme` drop-down button, and the
 |checkbox| :guilabel:`Lock layers` is activated. The set of visible layers in
 the map theme is from now on used for the map item until you select another map
 theme or uncheck the |checkbox| :guilabel:`Lock layers` option. You then may
@@ -172,7 +178,7 @@ the map item will not be refreshed even if the map theme is updated (using the
 replace theme function) in QGIS' main window.
 
 Locked layers in the map item can also be :ref:`data-defined <data_defined>`,
-using the |dataDefined| icon beside the option. When used, this overrides the
+using the |dataDefine| icon beside the option. When used, this overrides the
 selection set in the drop-down list. You need to pass a list of layers
 separated by ``|`` character.
 The following example locks the map item to use only layers ``layer 1`` and
@@ -208,6 +214,21 @@ item content` tool: click-and-drag within the map item to modify its current
 view, keeping the same scale. With the |moveItemContent| tool enabled, use the
 mouse wheel to zoom in or out, modifying the scale of the shown map. Combine
 the movement with :kbd:`Ctrl` key pressed to have a smaller zoom.
+
+.. index:: Elevation Range, Print layout
+.. _mapitem_elevationrange:
+
+Elevation range
+---------------
+The :guilabel:`Elevation range` setting in the map item properties allows you to filter
+the content of certain layers based on a specific elevation range.
+While all layers remain visible, those that support elevation filtering
+(currently point clouds and raster DEMs) will have their data filtered.
+Only the parts of these layers that fall within the elevation range
+set by the :guilabel:`Lower` and :guilabel:`Upper` values will be displayed.
+
+The :guilabel:`Elevation range` can be data-defined. This means you can set different
+elevation ranges for different features in the :ref:`atlas <atlas_generation>` or :ref:`report <create-reports>`.
 
 .. index:: Temporal, Print layout
 .. _mapitem_temporalrange:
@@ -256,15 +277,13 @@ feature following:
 Grids
 -----
 
-With grids, you can add, over your map, information relative to its extent or
-coordinates, either in the map item projection or a different one. The
-:guilabel:`Grids` group provides the possibility to add several grids to a
-map item.
+With grids, you can add, over your map, information relative to its extent
+or coordinates, either in the map item projection or a different one.
+The :guilabel:`Grids` group provides the possibility to add several grids to a map item.
 
-* With the |signPlus| and |signMinus| buttons you can add or remove a selected
-  grid;
-* With the |arrowUp| and |arrowDown| buttons you can move up and down a grid in
-  the list, hence move it on top or bottom of another one, over the map item.
+* With the |symbologyAdd| and |symbologyRemove| buttons you can add or remove a selected grid;
+* With the |arrowUp| and |arrowDown| buttons you can move up and down a grid in the list,
+  hence move it on top or bottom of another one, over the map item.
 
 Double-click the added grid to rename it.
 
@@ -276,8 +295,9 @@ Double-click the added grid to rename it.
    Map Grids Dialog
 
 To modify a grid, select it and press the :guilabel:`Modify Grid...` button
-to open the :guilabel:`Map Grid Properties` panel and access its
-configuration options.
+to open the :guilabel:`Map Grid Properties` panel and access its configuration options.
+
+.. _grid_appearance:
 
 Grid Appearance
 ...............
@@ -287,36 +307,34 @@ In the :guilabel:`Map Grid Properties` panel, check |checkbox|
 
 As grid type, you can specify to use a:
 
-* *Solid*: shows a line across the grid frame. The :guilabel:`Line style` can
-  be customized using :ref:`color <color-selector>` and :ref:`symbol
-  <symbol-selector>` selector widget;
-* *Cross*: displays segment at the grid lines intersection for which you can
+* **Solid**: shows a line across the grid frame.
+  The :guilabel:`Line style` can be customized using :ref:`color <color-selector>`
+  and :ref:`symbol <symbol-selector>` selector widget;
+* **Cross**: displays segment at the grid lines intersection for which you can
   set the :guilabel:`Line style` and the :guilabel:`Cross width`;
-* *Markers*: only displays customizable markers symbol at grid lines
-  intersection;
-* or *Frame and annotations only*.
+* **Markers**: only displays customizable markers symbol at grid lines intersection;
+* or **Frame and annotations only**.
 
 Other than the grid type, you can define: 
 
-* the :guilabel:`CRS` of the grid. If not changed, it will follow the Map CRS.
-  The :guilabel:`Change` button lets you set it to a different CRS.
-  Once set, it can be changed back to default by selecting any group heading
-  (e.g **Geographic Coordinate System**) under
-  :guilabel:`Predefined Coordinate Reference Systems` in the CRS
-  selection dialog.
-* the :guilabel:`Interval` type to use for the grid references. Available
-  options are ``Map Unit``, ``Fit Segment Width``, ``Millimeter`` or ``Centimeter``:
+* the :guilabel:`CRS` of the grid: by default, it will follow the map item CRS.
+  Press |setProjection| :sup:`Select CRS` button to set it to a different CRS.
+* the :guilabel:`Interval` type to use for the grid references:
 
-  * choosing ``Fit Segment Width`` will dynamically select the grid interval based 
-    on the map extent to a "pretty" interval. When selected, the ``Minimum`` and 
-    ``Maximum`` intervals can be set.
-  * the other options allow you to set the distance between two consecutive grid
-    references in the ``X`` and ``Y`` directions.
+  * **Map Units**: you set a distance within the map (in the unit of the grid CRS)
+    between consecutive grid references in the :guilabel:`X` and :guilabel:`Y` directions.
+    The number of grid ticks will vary depending on the map scale.
+  * choosing **Fit Segment Width** will dynamically select the grid interval based
+    on the map extent to a "pretty" interval.
+    That optimal interval is calculated within a range of distances
+    whose :guilabel:`Minimum` and :guilabel:`Maximum` values can be customized.
+  * With **Millimeters** or **Centimeters**, you set a distance on the paper
+    between consecutive grid references in the :guilabel:`X` and :guilabel:`Y` directions.
+    The number of grid ticks will be the same whatever the map scale.
 
-* the :guilabel:`Offset` from the map item edges, in the ``X`` and/or the ``Y``
-  direction
-* and the :guilabel:`Blend mode` of the grid (see :ref:`blend-modes`) when
-  compatible.
+* the :guilabel:`Offset` from the map item edges, in the :guilabel:`X`
+  and/or the :guilabel:`Y` direction
+* and the :guilabel:`Blend mode` of the grid (see :ref:`blend-modes`) when compatible.
 
 .. _Figure_layout_map_grid_draw:
 
@@ -342,6 +360,25 @@ section you can prevent a mix of latitude/Y and longitude/X coordinates showing
 on each side when working with rotated maps or reprojected grids.
 Also you can choose to set visible or not each side of the grid frame.
 
+When the map item extent is rotated (from the :guilabel:`Main properties` group)
+or the grid has a different CRS applied, grid lines may not be orthogonal to the map item sides.
+This can result in bad looking of the grid when styled with interior and/or exterior ticks.
+Checking |checkbox| :guilabel:`Follow grid rotation` will align the ticks with grid lines.
+Moreover, you can adjust some more properties:
+
+* :guilabel:`Ticks alignment`: The interior and/or exterior ticks will be parallel
+  to their corresponding grid line.
+  Their alignment can be:
+
+  * **Orthogonal**: ticks on the same side end at one line, parallel to the side.
+    This can result e.g. in some ticks getting longer when with a low angle to the frame.
+  * **Fixed length**: all ticks have the same length, so they may not align
+* :guilabel:`Skip below angle`: prevents displaying ticks for grid lines intersecting the frame border
+  below a specified threshold
+* :guilabel:`Margin from map corner`: prevents displaying ticks too close to the map corners,
+  because they could overlap and/or be out of bounds.
+
+
 .. _Figure_layout_map_frame:
 
 .. figure:: img/map_grid_frame.png
@@ -353,18 +390,43 @@ Coordinates
 ...........
 
 The |checkbox| :guilabel:`Draw coordinates` checkbox allows you to add
-coordinates to the map frame. You can choose the annotation numeric format,
+coordinates to the map frame.
+Displayed values relate to the chosen :ref:`grid interval <grid_appearance>` unit.
+You can choose the annotation numeric format,
 the options range from decimal to degrees, minute and seconds, with or without
 suffix, aligned or not and a custom format using the expression dialog.
 
-You can choose which annotation to show. The options are: show all, latitude
-only, longitude only, or disable(none). This is useful when the map is rotated.
-The annotation can be drawn inside or outside the map frame. The annotation
-direction can be defined as horizontal, vertical ascending or vertical
-descending.
+For each of the :guilabel:`Left`, :guilabel:`Right`, :guilabel:`Top`
+and :guilabel:`Bottom` sides of the grid frame, you can indicate:
 
-Finally, you can define the annotation font, font color, distance from the map
-frame and the precision of the drawn coordinates.
+* whether to render the coordinates: **Show all**, **Show latitude/Y only**,
+  **Show longitude/X only**, **Disabled**.
+  Showing only Latitude/Y or Longitude/X values in the divisions
+  helps prevent a mix of latitude/Y and longitude/X coordinates showing
+  on each side when working with rotated maps or reprojected grids.
+* the relative position of the text to the grid frame:
+  **Outside frame** or **Inside frame**
+* the placement and orientation of the annotation:
+
+  * **Horizontal**
+  * **Vertical ascending**, **Vertical descending**
+  * **Boundary direction**
+  * **Above tick**, **On tick**, **Under tick** when a tick-based frame is used
+
+You can also define the :guilabel:`Font` :ref:`properties <text_format>` (font, size, color, buffer,...)
+the :guilabel:`Distance to the map frame` and the :guilabel:`Coordinate precision`
+(number of decimals) for the drawn annotations.
+
+|unchecked| :guilabel:`Follow grid rotation`: available when the map extent is rotated
+or the grid is reprojected, it helps you adjust the annotations placement.
+Depending on the selected placement mode, the annotations are also rotated:
+
+* :guilabel:`Annotations alignment`: it can be **Orthogonal** or of **Fixed length**
+* :guilabel:`Skip below angle`: prevents displaying annotations for grid lines
+  intersecting the frame border below a specified threshold
+* :guilabel:`Margin from map corner`: prevents displaying annotations too close to the map corners,
+  because they could overlap and/or be out of bounds.
+
 
 .. _figure_layout_map_coord:
 
@@ -396,14 +458,14 @@ between two different maps extent and provides the following functionalities:
 
 To create an overview, select the map item on which you want to show the other
 map item's extent and expand the :guilabel:`Overviews` option in the
-:guilabel:`Item Properties` panel. Then press the |signPlus| button to add
+:guilabel:`Item Properties` panel. Then press the |symbologyAdd| button to add
 an overview.
 
 Initially this overview is named 'Overview 1' (see :numref:`Figure_layout_map_overview`).
 You can:
 
 * Rename it with a double-click
-* With the |signPlus| and |signMinus| buttons, add or remove overviews
+* With the |symbologyAdd| and |symbologyRemove| buttons, add or remove overviews
 * With the |arrowUp| and |arrowDown| buttons, move an overview up and down in
   the list, placing it above or below other overviews in the map item
   (when they are at the same :ref:`stack position <overview_stack_position>`).
@@ -458,11 +520,11 @@ of the overview on the selected map frame. You can customize it with:
    :width: 1.5em
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
-.. |clip| image:: /static/common/clip.png
+.. |clip| image:: /static/common/mAlgorithmClip.png
    :width: 1.5em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em
-.. |labeling| image:: /static/common/labelingSingle.png
+.. |labelingSingle| image:: /static/common/labelingSingle.png
    :width: 1.5em
 .. |moveItemContent| image:: /static/common/mActionMoveItemContent.png
    :width: 1.5em
@@ -472,19 +534,21 @@ of the overview on the selected map frame. You can customize it with:
    :width: 1.5em
 .. |refresh| image:: /static/common/mActionRefresh.png
    :width: 1.5em
+.. |setProjection| image:: /static/common/mActionSetProjection.png
+   :width: 1.5em
 .. |setToCanvasExtent| image:: /static/common/mActionSetToCanvasExtent.png
    :width: 1.5em
 .. |setToCanvasScale| image:: /static/common/mActionSetToCanvasScale.png
    :width: 1.5em
 .. |showBookmarks| image:: /static/common/mActionShowBookmarks.png
    :width: 1.5em
-.. |showMapTheme| image:: /static/common/mActionShowPresets.png
+.. |showPresets| image:: /static/common/mActionShowPresets.png
    :width: 1.5em
-.. |signMinus| image:: /static/common/symbologyRemove.png
+.. |symbologyAdd| image:: /static/common/symbologyAdd.png
    :width: 1.5em
-.. |signPlus| image:: /static/common/symbologyAdd.png
+.. |symbologyRemove| image:: /static/common/symbologyRemove.png
    :width: 1.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em
 .. |viewExtentInCanvas| image:: /static/common/mActionViewExtentInCanvas.png
    :width: 1.5em

@@ -80,9 +80,9 @@ Advanced parameters
        * 0 -- Nearest Neighbour (``nearest``)
        * 1 -- Average (``average``)
        * 2 -- Gaussian (``gauss``)
-       * 3 -- Cubic Convolution (``cubic``)
-       * 4 -- B-Spline Convolution (``cubicspline``)
-       * 5 -- Lanczos Windowed Sinc (``lanczos``)
+       * 3 -- Cubic (4x4 kernel) (``cubic``)
+       * 4 -- Cubic B-Spline (4x4 kernel) (``cubicspline``)
+       * 5 -- Lanczos (6x6 kernel) (``lanczos``)
        * 6 -- Average MP (``average_mp``)
        * 7 -- Average in Mag/Phase Space (``average_magphase``)
        * 8 -- Mode (``mode``)
@@ -240,24 +240,24 @@ Advanced parameters
      - [enumeration]
 
        Default: 0
-     - The resampling algorithm to be used
+     - The `resampling algorithm <https://gdal.org/programs/gdalwarp.html#cmdoption-gdalwarp-r>`_ to use.
        Options:
 
        * 0 --- Nearest Neighbour (``nearest``)
-       * 1 --- Bilinear (``bilinear``)
-       * 2 --- Cubic Convolution (``cubic``)
-       * 3 --- B-Spline Convolution (``cubicspline``)
-       * 4 --- Lanczos Windowed Sinc (``lanczos``)
+       * 1 --- Bilinear (2x2 kernel) (``bilinear``)
+       * 2 --- Cubic (4x4 kernel) (``cubic``)
+       * 3 --- Cubic B-Spline (4x4 kernel) (``cubicspline``)
+       * 4 --- Lanczos (6x6 kernel) (``lanczos``)
        * 5 --- Average (``average``)
        * 6 --- Mode (``mode``)
-   * - **Nodata value(s) for input bands (space separated)**
+   * - **NoData value(s) for input bands (space separated)**
 
        Optional
      - ``SRC_NODATA``
      - [string]
 
        Default: None
-     - Space separated Nodata value(s) for input band(s)
+     - Space separated NoData value(s) for input band(s)
    * - **Additional command-line parameters**
      - ``EXTRA``
      - [string]
@@ -301,7 +301,7 @@ Generates a directory with small tiles and metadata, following the
 `OSGeo Tile Map Service Specification <https://wiki.osgeo.org/wiki/Tile_Map_Service_Specification>`_.
 See also the
 `OpenGIS Web Map Tile Service Implementation Standard
-<https://www.opengeospatial.org/standards/wmts>`_.
+<https://www.ogc.org/standards/wmts>`_.
 Simple web pages with viewers based on Google Maps, OpenLayers and
 Leaflet are generated as well.
 To explore your maps on-line in the web browser, you only need to
@@ -388,8 +388,12 @@ Basic parameters
      - ``OUTPUT``
      - [folder]
 
-       Default: ``[Save to temporary file]``
-     - Specify the output folder for the tiles.
+       Default: ``[Save to temporary folder]``
+     - Specify the output folder for the tiles. One of:
+
+       .. include:: ../algs_include.rst
+          :start-after: **directory_output_types**
+          :end-before: **end_directory_output_types**
 
 Advanced parameters
 ^^^^^^^^^^^^^^^^^^^
@@ -407,15 +411,15 @@ Advanced parameters
      - [enumeration]
 
        Default: 0
-     - The resampling algorithm to be used
+     - The resampling algorithm to use.
        Options:
 
        * 0 --- Average (``average``)
-       * 1 --- Nearest neighbour (``near``)
-       * 2 --- Bilinear (``bilinear``)
-       * 3 --- Cubic (``cubic``)
-       * 4 --- Cubic spline (``cubicspline``)
-       * 5 --- Lanczos Windowed sinc (``lanczos``)
+       * 1 --- Nearest Neighbour (``near``)
+       * 2 --- Bilinear (2x2 kernel) (``bilinear``)
+       * 3 --- Cubic (4x4 kernel) (``cubic``)
+       * 4 --- Cubic B-Spline (4x4 kernel) (``cubicspline``)
+       * 5 --- Lanczos (6x6 kernel) (``lanczos``)
        * 6 --- Antialias (``antialias``)
 
    * - **The spatial reference system used for the source input data**
@@ -556,17 +560,9 @@ Basic parameters
      - Defines the format of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
    * - **Merged**
      - ``OUTPUT``
@@ -591,7 +587,7 @@ Advanced parameters
      - Name
      - Type
      - Description
-   * - **Input pixel value to treat as "nodata"**
+   * - **Input pixel value to treat as "NoData"**
 
        Optional
      - ``NODATA_INPUT``
@@ -599,14 +595,14 @@ Advanced parameters
 
        Default: None
      - Ignores pixels from files being merged in with this pixel value
-   * - **Assign specified "nodata" value to output**
+   * - **Assign specified "NoData" value to output**
 
        Optional
      - ``NODATA_OUTPUT``
      - [number]
 
        Default: None
-     - Assigns the specified nodata value to output bands.
+     - Assigns the specified NoData value to output bands.
    * - **Additional creation options**
 
        Optional
@@ -620,7 +616,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
      - ``EXTRA``
@@ -715,14 +711,14 @@ Advanced parameters
      - [enumeration]
 
        Default: 2
-     - The resampling algorithm to be used
+     - The `resampling algorithm <https://gdal.org/programs/gdalwarp.html#cmdoption-gdalwarp-r>`_ to use.
        Options:
 
        * 0 --- Nearest Neighbour (``nearest``)
-       * 1 --- Bilinear (``bilinear``)
-       * 2 --- Cubic (``cubic``)
-       * 3 --- Cubic Spline (``cubicspline``)
-       * 4 --- Lanczos Windowed Sinc (``lanczos``)
+       * 1 --- Bilinear (2x2 kernel) (``bilinear``)
+       * 2 --- Cubic (4x4 kernel) (``cubic``)
+       * 3 --- Cubic B-Spline (4x4 kernel) (``cubicspline``)
+       * 4 --- Lanczos (6x6 kernel) (``lanczos``)
        * 5 --- Average (``average``)
 
    * - **Additional creation options**
@@ -738,7 +734,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -789,7 +785,7 @@ dimensions, but no projection checking is performed.
 See the
 `GDAL Raster Calculator utility docs <https://gdal.org/programs/gdal_calc.html>`_.
 
-.. seealso:: :ref:`qgisrastercalculator`
+.. seealso:: :ref:`qgisrastercalc`, :ref:`qgisvirtualrastercalc`
 
 Parameters
 ..........
@@ -904,29 +900,48 @@ Basic parameters
        * ``sqrt(A*A+B*B)`` --- Outputs the square root of the sum of
          the value of A squared and the value of B squared.
 
-   * - **Set output nodata value**
+   * - **Set output NoData value**
 
        Optional
      - ``NO_DATA``
      - [number]
 
        Default: None
-     - Value to use for nodata
+     - Value to use for NoData
+   * - **Handling of extent differences**
+     - ``EXTENT_OPT``
+     - [enumeration]
+
+       Default: 0
+     - Determines how to handle rasters with different extents. Only available with GDAL 3.3+.
+       `Supported options <https://gdal.org/programs/gdal_calc.html#cmdoption-extent>`_ are:
+
+       * 0 --- Ignore
+       * 1 --- Fail
+       * 2 --- Union
+       * 3 --- Intersect
+   * - **Output extent**
+
+       Optional
+     - ``INPUT``
+     - [extent]
+     - Custom extent of the output raster. Only available with GDAL 3.3+.
+
+       .. include:: ../algs_include.rst
+          :start-after: **extent_options**
+          :end-before: **end_extent_options**
+
    * - **Output raster type**
      - ``RTYPE``
      - [enumeration]
 
        Default: 5
-     - Defines the format of the output raster file.
+     - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
    * - **Calculated**
      - ``OUTPUT``
@@ -964,7 +979,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1225,14 +1240,14 @@ Advanced parameters
      - [enumeration]
 
        Default: 0
-     - The resampling algorithm to be used
+     - The `resampling algorithm <https://gdal.org/programs/gdalwarp.html#cmdoption-gdalwarp-r>`_ to use.
        Options:
 
        * 0 --- Nearest Neighbour (``nearest``)
-       * 1 --- Bilinear (``bilinear``)
-       * 2 --- Cubic (``cubic``)
-       * 3 --- Cubic Spline (``cubicspline``)
-       * 4 --- Lanczos Windowed Sinc (``lanczos``)
+       * 1 --- Bilinear (2x2 kernel) (``bilinear``)
+       * 2 --- Cubic (4x4 kernel) (``cubic``)
+       * 3 --- Cubic B-Spline (4x4 kernel) (``cubicspline``)
+       * 4 --- Lanczos (6x6 kernel) (``lanczos``)
 
    * - **Column delimiter used in the CSV file**
 
@@ -1256,7 +1271,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1274,17 +1289,9 @@ Advanced parameters
      - Defines the format of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
    * - **Build only the pyramids**
      - ``ONLY_PYRAMIDS``
@@ -1558,7 +1565,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
      - ``EXTRA``
@@ -1591,4 +1598,3 @@ Python code
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
   :end-before: **end_algorithm_code_section**
-

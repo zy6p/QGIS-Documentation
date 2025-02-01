@@ -19,7 +19,7 @@ GIS data processing and exchange.
 Describing a basic data model for geographic features, an increasing number
 of specifications are developed by OGC to serve specific needs for interoperable
 location and geospatial technology, including GIS. Further information
-can be found at https://www.opengeospatial.org/.
+can be found at https://www.ogc.org/.
 
 .. index:: WMS, WFS, WCS, CAT, SFS, GML
 
@@ -80,11 +80,11 @@ server understands HTTP as the data transport mechanism.
 
 Additionally, QGIS will cache your WMS responses (i.e. images) for 24h as long
 as the GetCapabilities request is not triggered. The GetCapabilities request is
-triggered everytime the :guilabel:`Connect` button in the :guilabel:`Add Layer(s) from WMS(T) Server`
+triggered every time the :guilabel:`Connect` button in the :guilabel:`WMS/WMTS`
 dialog is used to retrieve the WMS server capabilities. This is an automatic
 feature meant to optimize project loading time. If a project is saved with a WMS layer,
 the corresponding WMS tiles will be loaded from the cache the next time the project is opened
-as long as they are no older than 24H.
+as long as they are not older than 24h.
 
 Overview of WMTS Support
 ------------------------
@@ -121,12 +121,11 @@ them to QGIS differently.
 
      "?SERVICE=WMTS&REQUEST=GetCapabilities"
 
-   An example of this type of address is
+   An example of this type of address is:
 
    ::
 
-      https://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?\
-        service=WMTS&request=GetCapabilities
+      https://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?service=WMTS&request=GetCapabilities
 
    For testing the topo2 layer in this WMTS works nicely. Adding this string indicates
    that a WMTS web service is to be used instead of a WMS service.
@@ -140,8 +139,11 @@ them to QGIS differently.
 
    This format helps you to recognize that it is a RESTful address. A RESTful WMTS is
    accessed in QGIS by simply adding its address in the WMS setup in the URL field of
-   the form. An example of this type of address for the case of an Austrian basemap is
-   https://maps.wien.gv.at/basemap/1.0.0/WMTSCapabilities.xml.
+   the form. An example of this type of address for the case of an Austrian basemap is:
+
+   ::
+
+     https://maps.wien.gv.at/basemap/1.0.0/WMTSCapabilities.xml
 
 .. note:: You can still find some old services called WMS-C. These services are quite similar
    to WMTS (i.e., same purpose but working a little bit differently). You can manage
@@ -156,7 +158,7 @@ them to QGIS differently.
 Selecting WMS/WMTS Servers
 --------------------------
 
-The first time you use the WMS feature in QGIS, there are no servers defined.
+The first time you use the WMS/WMTS feature in QGIS, there are no servers defined.
 
 You then need to create connections to the server you are targeting:
 
@@ -205,30 +207,45 @@ You then need to create connections to the server you are targeting:
       tab will keep unprotected credentials in the connection configuration.
       Those **credentials will be visible** if, for instance, you shared the
       project file with someone. Therefore, it's advisable to save your
-      credentials in a *Authentication configuration* instead
-      (:guilabel:`configurations` tab).
+      credentials in an *Authentication configuration* instead
+      (:guilabel:`Configurations` tab).
       See :ref:`authentication_index` for more details.
 
    * HTTP :guilabel:`Referer`
-   * :guilabel:`DPI-Mode`: Available options are **all**, **off**, **QGIS**,
+   * :guilabel:`WMS DPI-Mode`: Available options are **all**, **off**, **QGIS**,
      **UMN** and **GeoServer**
-   * |unchecked| :guilabel:`Ignore GetMap/GetTile URI reported in capabilities`:
+   * :guilabel:`WMTS server-side tile pixel ratio`:  When rendering WMTS layers,
+     allows to scale up or down the tiles based on the device screen DPI.
+     Available options are :guilabel:`Undefined (not scaled)`,
+     :guilabel:`Standard (96 DPI)` and :guilabel:`High (192 DPI)`.
+
+   .. _max_feature_count:
+
+   * :guilabel:`Maximum number of GetFeatureInfo results`: specifies a default value
+     for the maximum number of results returned per layer by a GetFeatureInfo request
+     using this connection (see :ref:`FEATURE_COUNT <wms_featurecount>` parameter).
+     Default value is ``10``.
+     Set to ``0`` to use server default value (usually ``1``): no FEATURE_COUNT parameter will be added to the request.
+
+   * |unchecked| :guilabel:`Ignore GetMap/GetTile/GetLegendGraphic URI reported in capabilities`:
      if checked, use given URI from the :guilabel:`URL` field above.
    * |unchecked| :guilabel:`Ignore GetFeatureInfo URI reported in capabilities`:
      if checked, use given URI from the :guilabel:`URL` field above.
-   * |unchecked| :guilabel:`Ignore axis orientation (WMS 1.3/WMTS)`
    * |unchecked| :guilabel:`Ignore reported layer extents`: because the extent
      reported by raster layers may be smaller than the actual area which can
      be rendered (notably for WMS servers with symbology which takes more space
      than the data extent), check this option to avoid cropping raster layers
      to their reported extents, resulting in truncated symbols on the borders
      of these layers.
+   * |unchecked| :guilabel:`Ignore axis orientation (WMS 1.3/WMTS)`
    * |unchecked| :guilabel:`Invert axis orientation`
    * |unchecked| :guilabel:`Smooth pixmap transformation`
 #. Press :guilabel:`OK`
 
-Once the new WMS server connection has been created, it will be preserved for
+Once the new WMS/WMTS server connection has been created, it will be preserved for
 future QGIS sessions.
+Note that it is also possible to :guilabel:`Load` the connection parameters
+from a :file:`.XML` file or :guilabel:`Save` them to a :file:`.XML` file. 
 
 .. index:: Proxy, Proxy server
 
@@ -300,12 +317,16 @@ You can define:
 
 * :guilabel:`Tile size` if you want to set tile sizes (e.g., 256x256)
   to split up the WMS request into multiple requests.
-* The :guilabel:`Request step size`
-* The :guilabel:`Maximum number of GetFeatureInfo results` from the server
+* :guilabel:`Request step size`: if you want to reduce the effect of cut labels at tile borders,
+  increasing the step size creates larger requests, fewer tiles and fewer borders.
+  The default value is 2000.
+* The :guilabel:`Maximum number of GetFeatureInfo results`: specifies the maximum number of results
+  returned by a GetFeatureInfo request, for the layer(s) being loaded.
+  Allows to override the :ref:`connection's default value <max_feature_count>` for specific layers.
 
 * Each WMS layer can be presented in multiple CRSs, depending on the capability of
-  the WMS server. If you select a WMS from the list, a field with the default projection 
-  provided by the web server appears. Press the : |setProjection| :sup:`Select CRS` widget
+  the WMS server. If you select a WMS from the list, a field with the default projection
+  provided by the web server appears. Press the |setProjection| :sup:`Select CRS` widget
   to replace the default projection of the WMS with another CRS supported by the WMS server.
 
   A dialog similar to the one shown in :numref:`figure_projection_custom` will appear.
@@ -325,7 +346,8 @@ This name will appear in the :guilabel:`Layers` panel after you pressed the
 You can select several layers at once, but only one image style per layer.
 When several layers are selected, they will be combined at the WMS server
 and transmitted to QGIS in one go, as a single layer.
-The default name is a slash (`/`) separated list of their original title.
+The default name is a slash (``/``) separated list of their original title.
+You can however opt to |checkbox| :guilabel:`Load as separate layers`.
 
 **Layer Order**
 
@@ -345,7 +367,6 @@ The :guilabel:`Global transparency` setting from the
 :guilabel:`Layer Properties` is hard coded to be always on, where available.
 
 
-
 .. _tilesets:
 
 Tilesets
@@ -353,16 +374,23 @@ Tilesets
 
 .. index:: WMS tiles, WMS-C, WMTS
 
-When using WMTS (Cached WMS) services like
+When using WMTS (Cached WMS) services you are able to browse through
+the :guilabel:`Tilesets` tab given by the server.
+Additional information like tile size, formats and supported CRS are listed in
+this table.
 
 ::
 
-  https://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?\
-    service=WMTS&request=GetCapabilities
+  # example of WMTS service
 
-you are able to browse through the :guilabel:`Tilesets` tab given by the server.
-Additional information like tile size, formats and supported CRS are listed in
-this table. In combination with this feature, you can use the tile scale slider
+  https://opencache.statkart.no/gatekeeper/gk/gk.open_wmts?service=WMTS&request=GetCapabilities
+
+Selecting a layer to load, it is also possible to apply an
+:ref:`Interpretation method <interpretation>`, converting it into a raster layer
+of single band float type, ready for styling using QGIS usual
+:ref:`raster renderers <raster_rendering>`.
+
+In combination with this feature, you can use the tile scale slider
 by selecting :menuselection:`View --> Panels` ( or |kde| :menuselection:`Settings
 --> Panels`), then choosing :guilabel:`Tile Scale Panel`. This gives you the
 available scales from the tile server with a nice slider docked in.
@@ -414,7 +442,7 @@ UMN Mapserver below to support GetFeatureInfo in GML format.
   # in WEB METADATA define formats (example):
   "wms_getfeatureinfo_formatlist" "application/vnd.ogc.gml,text/html"
 
-  # b) using OGR (output is generated by OGR, it is send as multipart and contains XSD)
+  # b) using OGR (output is generated by OGR, it is sent as multipart and contains XSD)
   # in MAP define OUTPUTFORMAT (example):
   OUTPUTFORMAT
       NAME "OGRGML"
@@ -426,28 +454,37 @@ UMN Mapserver below to support GetFeatureInfo in GML format.
   # in WEB METADATA define formats (example):
   "wms_getfeatureinfo_formatlist" "OGRGML,text/html"
 
-.. _`ogc-wms-properties`:
-
-**Viewing Properties**
 
 .. index::
    single: WMS; Properties
+.. _`ogc-wms-properties`:
+
+Viewing Properties
+------------------
 
 Once you have added a WMS server, you can view its properties by right-clicking
 on it in the legend and selecting :menuselection:`Properties`.
+The WMS/WMTS layer properties is much like the raster layer properties
+so you will find detailed description at :ref:`raster_properties_dialog`.
+However, there are some differences, which will be explained below.
 
 .. _`ogc-wms-properties-metadata`:
+
+Information properties
+......................
+
+.. todo: Review information in this section, whether they are still provided
 
 **Metadata Tab**
 
 .. index::
    pair: WMS; Metadata
 
-The tab :guilabel:`Metadata` displays a wealth of information about the WMS
-server, generally collected from the capabilities statement returned from
-that server. Many definitions can be gleaned by reading the WMS standards (see
-OPEN-GEOSPATIAL-CONSORTIUM in :ref:`literature_and_web`), but here are a few handy
-definitions:
+The tab :guilabel:`Metadata` displays a wealth of information about the WMS server,
+generally collected from the capabilities statement returned from that server.
+Many definitions can be gleaned by reading the WMS standards
+(see OPEN-GEOSPATIAL-CONSORTIUM in :ref:`literature_and_web`),
+but here are a few handy definitions:
 
 * **Server Properties**
 
@@ -491,6 +528,81 @@ definitions:
   - **Available in style** --- The image styles that this layer can be rendered
     in by the WMS server.
 
+.. _wmts_temporal:
+
+Temporal properties
+...................
+
+Raster :ref:`temporal properties <raster_temporal>` (namely :guilabel:`Dynamic Temporal Control`)
+can be set for WMS and WMTS layers.
+By default, when a time-dimension enabled WMS or WMTS layer is added to the project,
+it is indicated in the :guilabel:`Layers` panel
+with the |indicatorTemporal| :sup:`Temporal Layer` icon next to it.
+Its :guilabel:`Temporal` properties default to the :guilabel:`Automatic` temporal mode,
+meaning that the layer will follow the temporal controller's current time range by default.
+
+You can then opt to show a specific static time value for the layer
+by unchecking :guilabel:`Dynamic Temporal Control`
+and picking an option under :guilabel:`Static WMS-T Temporal Range`:
+
+* :guilabel:`Server default`
+* :guilabel:`Predefined date` with a server exposing data for non-contiguous temporal ranges
+  or :guilabel:`Predefined range` with a server exposing a range of available dates.
+  A :guilabel:`Start date` and :guilabel:`End date` are necessary in the latter case.
+  Their expected formatting can be deduced from the reference time option (see below).
+  depending on whether the provider has data for contiguous period or not
+* :guilabel:`Follow project's temporal range` as defined in the project's properties dialog
+
+.. _figure_wmts_temporal:
+
+.. figure:: img/temporal_properties.png
+   :align: center
+
+   Temporal properties of a WMTS layer
+
+
+Whatever temporal data control is in use, there are some :guilabel:`WMS-T Settings`
+to help display the correct temporal data:
+
+* :guilabel:`Time slice mode` which can be:
+
+  * :guilabel:`Use whole temporal range`
+  * :guilabel:`Match to start of range`
+  * :guilabel:`Match to end of range`
+  * :guilabel:`Closest match to start of range`
+  * :guilabel:`Closest match to end of range`
+
+* :guilabel:`Ignore time components (use dates only)`:
+  If checked, the time component of temporal queries will be discarded
+  and only the date component will be used in server requests.
+
+You can also |checkbox| :guilabel:`Use Specific WMS-T Reference Time`
+picked from times reported in the layer's capabilities.
+Convenient for servers which expose a non-contiguous set of date time instances
+(instead of a range of dates).
+
+.. _`wms_server_properties`:
+
+QGIS Server properties
+......................
+
+In addition to the raster layer :ref:`properties <raster_server>`,
+publishing a WMS/WMTS layer with QGIS Server will display following options:
+
+* :guilabel:`WMS Print layer`: Allows to set alternative WMS layer
+  that should be used for printing (in the :ref:`GetProjectSettings <wms_getprojectsettings>` reply).
+  Convenient for WMTS layers that are generally not suitable for printing.
+* |checkbox| :guilabel:`Publish WMS/WMTS data source uri`:
+  Allows a web client to fetch the WMS/WMTS data directly
+* |checkbox| :guilabel:`Advertise as background layer`
+
+.. _figure_wms_server:
+
+.. figure:: img/server_properties.png
+   :align: center
+
+   QGIS Server properties of a WMS/WMTS layer
+
 .. _`ogc-wms-legend`:
 
 Show WMS legend graphic in table of contents and layout
@@ -516,42 +628,6 @@ The legend will display contextual information based on your current scale. The
 WMS legend will be shown only if the WMS server has GetLegendGraphic capability
 and the layer has getCapability url specified, so you have to select a styling.
 
-.. _`ogc-wms-limits`:
-
-WMS Client Limitations
-----------------------
-
-Not all possible WMS client functionality had been included in this version
-of QGIS. Some of the more noteworthy exceptions follow.
-
-**Editing WMS Layer Settings**
-
-Once you've completed the |addWmsLayer| :sup:`Add WMS layer` procedure,
-there is no way to change the settings. A work-around is to delete the layer
-completely and start again.
-
-**WMS Servers Requiring Authentication**
-
-Currently, publicly accessible and secured WMS services are supported. The secured
-WMS servers can be accessed by public authentication. You can add the (optional)
-credentials when you add a WMS server. See section :ref:`ogc-wms-servers` for
-details.
-
-.. index:: InteProxy, Secured OGC Authentication
-
-.. tip:: **Accessing secured OGC-layers**
-
-   If you need to access secured layers with secured methods other than basic
-   authentication, you can use InteProxy as a transparent proxy, which does
-   support several authentication methods. More information can be found in the
-   InteProxy manual at https://inteproxy.wald.intevation.org.
-
-.. index:: Mapserver
-
-.. tip:: **QGIS WMS Mapserver**
-
-   Since Version 1.7.0, QGIS has its own implementation of a WMS 1.3.0 Mapserver.
-   Read more about this in :ref:`QGIS-Server-manual`.
 
 .. _`ogc-wcs`:
 
@@ -575,14 +651,66 @@ network settings (especially proxy). It is also possible to select cache mode
 ('always cache', 'prefer cache', 'prefer network', 'always network'), and the provider also
 supports selection of time position, if temporal domain is offered by the server.
 
-.. warning::
+**Loading a WCS Layer**
 
-   Entering **username** and **password** in the :guilabel:`Authentication` tab
-   will keep unprotected credentials in the connection configuration. Those
-   **credentials will be visible** if, for instance, you shared the project file
-   with someone. Therefore, it's advisable to save your credentials in a
-   *Authentication configuration* instead (:guilabel:`configurations` tab).
-   See :ref:`authentication_index` for more details.
+To be able to load a WCS Layer, first create a connection to the WCS server:
+
+#. Open the :guilabel:`Data Source Manager` dialog by pressing the
+   |dataSourceManager| :sup:`Open Data Source Manager` button
+#. Enable the |addWcsLayer| :guilabel:`WCS` tab
+#. Click on :guilabel:`New...` to open the :guilabel:`Create a New WCS
+   Connection` dialog
+
+   .. _figure_OGC_create_wcs_connection:
+
+   .. figure:: img/add_connection_wcs.png
+      :align: center
+
+      Creating a connection to a WCS server
+
+   * :guilabel:`Name`: A name for the connection. This name will be used in
+     the Server Connections drop-down box so that you can distinguish it from
+     other WCS servers.
+   * :guilabel:`URL`: URL of the server providing the data. This must be a
+     resolvable host name -- the same format as you would use to open a telnet
+     connection or ping a host, i.e. the base URL only.
+     For example, you shouldn't have fragments such as ``request=GetCapabilities``
+     or ``version=1.0.0`` in your URL.
+   * :guilabel:`Authentication` (optional): using a :ref:`stored configuration
+     <authentication_workflow>` or a basic authentication with
+     :guilabel:`Username` and :guilabel:`Password`.
+
+     .. warning::
+
+      Entering **username** and **password** in the :guilabel:`Authentication`
+      tab will keep unprotected credentials in the connection configuration.
+      Those **credentials will be visible** if, for instance, you shared the
+      project file with someone. Therefore, it's advisable to save your
+      credentials in an *Authentication configuration* instead
+      (:guilabel:`Configurations` tab).
+      See :ref:`authentication_index` for more details.
+
+   * HTTP :guilabel:`Referer`
+   * |unchecked| :guilabel:`Ignore GetCoverage URI reported in capabilities`:
+     if checked, use given URI from the :guilabel:`URL` field above.
+   * |unchecked| :guilabel:`Ignore reported layer extents`: because the extent
+     reported by raster layers may be smaller than the actual area which can
+     be rendered (notably for WCS servers with symbology which takes more space
+     than the data extent), check this option to avoid cropping raster layers
+     to their reported extents, resulting in truncated symbols on the borders
+     of these layers.
+   * |unchecked| :guilabel:`Ignore axis orientation`
+   * |unchecked| :guilabel:`Invert axis orientation`
+   * |unchecked| :guilabel:`Smooth pixmap transformation`
+
+#. Press :guilabel:`OK` to create the connection.
+
+Note that any proxy settings you may have set in your preferences are also recognized.
+Also note that it is possible to :guilabel:`Load` the connection parameters
+from a :file:`.XML` file or :guilabel:`Save` them to a :file:`.XML` file. 
+
+Now we are ready to load WCS layers from the above connection.
+
 
 .. _`ogc-wfs`:
 
@@ -593,8 +721,17 @@ WFS and WFS-T Client
 
 In QGIS, a WFS layer behaves pretty much like any other vector layer.
 You can identify and select features, and view the attribute table.
-QGIS supports WFS 1.0.0, 1.1.0, 2.0 and WFS3 (OGC API - Features),
+QGIS supports WFS 1.0.0, 1.1.0, 2.0 and OGC API - Features (OAPIF),
 including editing (through WFS-T).
+QGIS also supports background download and progressive rendering,
+on-disk caching of downloaded features and version autodetection.
+
+Layers of servers implementing `OGC API - Features - Part 4: Create, Replace,
+Update and Delete <https://docs.ogc.org/DRAFTS/20-002.html>`_ can be turned into 
+editing mode to allow creating, modifying and deleting features. Note that each 
+created/modified/deleted feature requires a dedicated network request, so 
+performance might suffer in case of simultaneous modification of hundreds or 
+more features at a time.
 
 In general, adding a WFS layer is very similar to the procedure used with WMS.
 There are no default servers defined, so you have to add your own.
@@ -606,13 +743,16 @@ and some not.
 **Loading a WFS Layer**
 
 As an example, we use the Gateway Geomatics WFS server and display a layer.
-https://demo.gatewaygeomatics.com/cgi-bin/wfs_gateway?REQUEST=GetCapabilities&VERSION=1.0.0&SERVICE=WFS
+
+::
+
+  https://demo.gatewaygeomatics.com/cgi-bin/wfs_gateway?REQUEST=GetCapabilities&VERSION=1.0.0&SERVICE=WFS
 
 To be able to load a WFS Layer, first create a connection to the WFS server:
 
 #. Open the :guilabel:`Data Source Manager` dialog by pressing the
    |dataSourceManager| :sup:`Open Data Source Manager` button
-#. Enable the |addWfsLayer| :guilabel:`WFS/OGC API-Features` tab
+#. Enable the |addWfsLayer| :guilabel:`WFS / OGC API - Features` tab
 #. Click on :guilabel:`New...` to open the :guilabel:`Create a New WFS
    Connection` dialog
 #. Enter ``Gateway Geomatics`` as name
@@ -622,26 +762,27 @@ To be able to load a WFS Layer, first create a connection to the WFS server:
 
    .. figure:: img/add_connection_wfs.png
       :align: center
-   
+
       Creating a connection to a WFS server
 
-   .. note:: In case of an OGC API - Features (WFS3), the URL to provide should
-     be the :ref:`landing page <wfs3_endpoints>`, ie the main page from which
+   .. note:: In case of an OGC API - Features (OAPIF), the URL to provide should
+     be the :ref:`landing page <oapif_endpoints>`, ie the main page from which
      it is possible to navigate to all the available service endpoints.
 
 #. In the WFS settings dialog, you can:
 
-   * Indicate the WFS version of the server. If unknown, press the
-     :guilabel:`Detect` button to automatically retrieve it.
-   * Define the :guilabel:`maximum number of features` retrieved in a single
-     GetFetFeature request. If empty, no limit is set.
-   * :guilabel:`Invert axis orientation`.
-   * And depending on the WFS version:
+   * Indicate the WFS version of the server.
+     If unknown, press the :guilabel:`Detect` button to automatically retrieve it.
+   * Define the :guilabel:`maximum number of features` retrieved in a single GetFetFeature request.
+     If empty, no limit is set.
+   * And depending on the WFS version, indicate whether to:
 
-     * Force to :guilabel:`Ignore axis orientation (WFS 1.1/WFS 2.0)`
      * :guilabel:`Enable feature paging` and specify the maximum number of features
-       to retrieve with :guilabel:`Page size`. If no limit is defined, then the
-       server default is applied.
+       to retrieve with :guilabel:`Page size`.
+       If no limit is defined, then the server default is applied.
+     * Force to :guilabel:`Ignore axis orientation (WFS 1.1/WFS 2.0)`
+     * :guilabel:`Invert axis orientation`.
+     * :guilabel:`Use GML2 encoding for transactions`.
 
    .. warning::
 
@@ -656,11 +797,12 @@ To be able to load a WFS Layer, first create a connection to the WFS server:
 #. Press :guilabel:`OK` to create the connection.
 
 Note that any proxy settings you may have set in your preferences are also recognized.
+Also note that it is possible to :guilabel:`Load` the connection parameters
+from a :file:`.XML` file or :guilabel:`Save` them to a :file:`.XML` file. 
 
 Now we are ready to load WFS layers from the above connection.
-   
-#. Choose 'Gateway Geomatics' from the :guilabel:`Server Connections`
-   |selectString| drop-down list.
+
+#. Choose 'Gateway Geomatics' from the :guilabel:`Server Connections` drop-down list.
 #. Click :guilabel:`Connect`
 #. Select the :guilabel:`Parks` layer in the list
 #. You can also choose whether to:
@@ -669,13 +811,19 @@ Now we are ready to load WFS layers from the above connection.
      title as defined on the server in the :guilabel:`Layers` panel instead of
      its :guilabel:`Name`
    * |checkbox| :guilabel:`Only request features overlapping the view extent`
-   * |unchecked| :guilabel:`Change` the layer's CRS
-   * or :guilabel:`Build query` to specify particular features to retrieve,
-     by either using the corresponding button or double-clicking the target
-     layer.
-   
-#. Click :guilabel:`Add` to add the layer to the map.
+   * :guilabel:`Change...` the layer's CRS to any other supported by the service
+   * or build a query to specify particular features to retrieve from the service:
+     double-click on the row of the layer to open the :guilabel:`SQL Query Composer` dialog.
+     That dialog provides widgets to write an advanced SQL query relying on available
+     tables and columns of the service, with sorting and filtering
+     and a bunch of SQL functions, spatial predicates and operators.
 
+     The query you build will appear after validation in the :guilabel:`SQL` column
+     within the :guilabel:`WFS / OGC API - Features` table, and the filtered layer will display
+     the |indicatorFilter| icon next to it in the :guilabel:`Layers` panel.
+     It is thus possibe to adjust the query at any moment.
+
+#. Click :guilabel:`Add` to add the layer to the map.
 
 .. _figure_OGC_add_wfs:
 
@@ -688,12 +836,6 @@ You'll notice the download progress is visualized in the lower left of the QGIS
 main window. Once the layer is loaded, you can identify and select a couple of
 features and view the attribute table.
 
-.. note::
-
-  QGIS supports different versions of the WFS protocol, with background
-  download and progressive rendering, on-disk caching of downloaded features
-  and version autodetection.
-
 
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE
    This will be automatically updated by the find_set_subst.py script.
@@ -701,6 +843,8 @@ features and view the attribute table.
    please add it also to the substitutions.txt file in the
    source folder.
 
+.. |addWcsLayer| image:: /static/common/mActionAddWcsLayer.png
+   :width: 1.5em
 .. |addWfsLayer| image:: /static/common/mActionAddWfsLayer.png
    :width: 1.5em
 .. |addWmsLayer| image:: /static/common/mActionAddWmsLayer.png
@@ -711,15 +855,19 @@ features and view the attribute table.
    :width: 1.5em
 .. |identify| image:: /static/common/mActionIdentify.png
    :width: 1.5em
+.. |indicatorFilter| image:: /static/common/mIndicatorFilter.png
+   :width: 1.5em
+.. |indicatorTemporal| image:: /static/common/mIndicatorTemporal.png
+   :width: 1.5em
 .. |kde| image:: /static/common/kde.png
    :width: 1.5em
 .. |search| image:: /static/common/search.png
    :width: 1.5em
-.. |setProjection| image:: /static/common/mActionSetProjection.png
-   :width: 1.5em
 .. |selectString| image:: /static/common/selectstring.png
    :width: 2.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |setProjection| image:: /static/common/mActionSetProjection.png
+   :width: 1.5em
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em
 .. |wcs| image:: /static/common/mIconWcs.png
    :width: 1.5em

@@ -1,42 +1,59 @@
-
-
-
-
 name: "Set Issue Label for issues from main QGIS repo"
 on:
   issues:
     types: [opened]
 
+permissions:
+  contents: read
+
 jobs:
   test:
+    permissions:
+      issues: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      BODY: "${{ github.event.issue.body }}"
+      MILESTONE: 19 # See https://api.github.com/repos/qgis/QGIS-Documentation/milestones
     runs-on: ubuntu-latest
     steps:
-      - uses: Naturalclar/issue-action@v1.0.0
+      - name: Harden Runner
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4
         with:
-          keywords: '["QGIS Version: 3.16"]'
-          labels: '["3.16"]'
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
-      - uses: Naturalclar/issue-action@v1.0.0
-        with:
-          keywords: '["QGIS Version: 3.22"]'
-          labels: '["3.22"]'
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - id: find_version_label
+        name: Find Target version
+        run: |
+          LABEL=$(echo "${{ env.BODY }}" | sed -n -r "s/.*QGIS version: ([[:digit:]]\.[[:digit:]]+).*/\1/p")
+          echo "label: ${LABEL}"
+          if [[ -n "${LABEL}" ]]; then
+            echo "label=${LABEL}" >> $GITHUB_OUTPUT
+          else
+            echo "no version found so no automatic labeling"
+          fi
 
-      - uses: Naturalclar/issue-action@v1.0.0
+      - id: assign_version
+        name: Assign version Label
+        if: ${{ steps.find_version_label.outputs.label }}
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
-          keywords: '["QGIS Version: 3.24"]'
-          labels: '["3.24"]'
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ["${{ steps.find_version_label.outputs.label }}"]
+              })
 
-      - uses: Naturalclar/issue-action@v1.0.0
+      - id: assign_milestone
+        name: Assign milestone
+        if: ${{ steps.find_version_label.outputs.label }}
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         with:
-          keywords: '["QGIS Version: 3.26"]'
-          labels: '["3.26"]'
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - uses: Naturalclar/issue-action@v1.0.0
-        with:
-          keywords: '["QGIS Version: 3.28"]'
-          labels: '["3.28"]'
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            github.rest.issues.update({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              milestone: ${{ env.MILESTONE }}
+            })

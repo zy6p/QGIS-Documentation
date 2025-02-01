@@ -16,7 +16,7 @@ Another option in the settings allows to define if the
 numeric thousands separator has to be used.
 
 All these features are implemented through the
-`QLocale <https://doc.qt.io/qt-5/qlocale.htm>`_
+`QLocale <https://doc.qt.io/qt-5/qlocale.html>`_
 QT class which provides a very complete support for numeric
 and date types representation.
 
@@ -62,7 +62,7 @@ Converting user input strings to numbers
 When converting strings from user input to numbers do not use
 ``QVariant::toDouble()``, ``QString::toDouble()`` or other ``::toDouble()``
 methods available in QT classes because these methods ignore locale settings.
-The same consideration applies to integral types and ``::toInt()`` ot
+The same consideration applies to integral types and ``::toInt()`` or
 ``::toLongLong()`` methods.
 
 ``QLocale().toDouble()`` or ``QLocale().toInt()`` and the others ``QLocale()``

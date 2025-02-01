@@ -32,7 +32,7 @@ Returns an array containing all the values passed as parameter.
 array_all
 .........
 
-Returns true if an array contains all the values of a given array.
+Returns TRUE if an array contains all the values of a given array.
 
 .. list-table::
    :widths: 15 85
@@ -43,8 +43,8 @@ Returns true if an array contains all the values of a given array.
      - * **array_a** - an array
        * **array_b** - the array of values to search
    * - Examples
-     - * ``array_all(array(1,2,3),array(2,3))`` → true
-       * ``array_all(array(1,2,3),array(1,2,4))`` → false
+     - * ``array_all(array(1,2,3),array(2,3))`` → TRUE
+       * ``array_all(array(1,2,3),array(1,2,4))`` → FALSE
 
 
 .. end_array_all_section
@@ -95,7 +95,7 @@ Returns an array containing all the given arrays concatenated.
 array_contains
 ..............
 
-Returns true if an array contains the given value.
+Returns TRUE if an array contains the given value.
 
 .. list-table::
    :widths: 15 85
@@ -106,7 +106,7 @@ Returns true if an array contains the given value.
      - * **array** - an array
        * **value** - the value to search
    * - Examples
-     - * ``array_contains(array(1,2,3),2)`` → true
+     - * ``array_contains(array(1,2,3),2)`` → TRUE
 
 
 .. end_array_contains_section
@@ -233,10 +233,11 @@ Returns an array with the given expression evaluated on each item.
      - array_foreach(array, expression)
    * - Arguments
      - * **array** - an array
-       * **expression** - an expression to evaluate on each item. The variable `@element` will be replaced by the current value.
+       * **expression** - an expression to evaluate on each item. The variable `@element` will be replaced by the current value and the variable `@counter` by the current index (starting with 0).
    * - Examples
      - * ``array_foreach(array('a','b','c'),upper(@element))`` → [ 'A', 'B', 'C' ]
        * ``array_foreach(array(1,2,3),@element + 10)`` → [ 11, 12, 13 ]
+       * ``array_foreach(array(1,2,3),@element + @counter)`` → [ 1, 3, 5 ]
 
 
 .. end_array_foreach_section
@@ -252,10 +253,10 @@ Returns the Nth value (0 for the first one) or the last -Nth value (-1 for the l
    :widths: 15 85
 
    * - Syntax
-     - array_get(array, index)
+     - array_get(array, pos)
    * - Arguments
      - * **array** - an array
-       * **index** - the index to get (0 based)
+       * **pos** - the index to get (0 based)
    * - Examples
      - * ``array_get(array('a','b','c'),1)`` → 'b'
        * ``array_get(array('a','b','c'),-1)`` → 'c'
@@ -290,7 +291,7 @@ Returns an array with the given value added at the given position.
 array_intersect
 ...............
 
-Returns true if at least one element of array1 exists in array2.
+Returns TRUE if at least one element of array1 exists in array2.
 
 .. list-table::
    :widths: 15 85
@@ -301,7 +302,7 @@ Returns true if at least one element of array1 exists in array2.
      - * **array1** - an array
        * **array2** - another array
    * - Examples
-     - * ``array_intersect(array(1,2,3,4),array(4,0,2,5))`` → true
+     - * ``array_intersect(array(1,2,3,4),array(4,0,2,5))`` → TRUE
 
 
 .. end_array_intersect_section
@@ -370,7 +371,7 @@ Returns the most common values in an array.
          * any: Returns one of the most common values.
          * median: Returns the median of the most common values. Non arithmetic values are ignored.
          * real_majority: Returns the value which occurs more than half the size of the array.
-         
+
 
    * - Examples
      - * ``array_majority(array(0,1,42,42,43), 'all')`` → [ 42 ]
@@ -490,7 +491,7 @@ Returns the less common values in an array.
          * any: Returns one of the less common values.
          * median: Returns the median of the less common values. Non arithmetic values are ignored.
          * real_minority: Returns values which occur less than half the size of the array.
-         
+
 
    * - Examples
      - * ``array_minority(array(0,42,42), 'all')`` → [ 0 ]
@@ -573,7 +574,7 @@ Returns an array with all the entries of the given value removed.
 array_remove_at
 ...............
 
-Returns an array with the given index removed.
+Returns an array with the item at the given index removed. Supports positive (0 for the first element) and negative (the last -Nth value, -1 for the last element) index.
 
 .. list-table::
    :widths: 15 85
@@ -584,7 +585,8 @@ Returns an array with the given index removed.
      - * **array** - an array
        * **pos** - the position to remove (0 based)
    * - Examples
-     - * ``array_remove_at(array(1,2,3),1)`` → [ 1, 3 ]
+     - * ``array_remove_at(array(1, 2, 3), 1)`` → [1, 3 ]
+       * ``array_remove_at(array(1, 2, 3), -1)`` → [1, 2 ]
 
 
 .. end_array_remove_at_section
@@ -775,6 +777,29 @@ Creates an array containing a sequence of numbers.
 
 
 .. end_generate_series_section
+
+.. _expression_function_Arrays_geometries_to_array:
+
+geometries_to_array
+...................
+
+Splits a geometry into simpler geometries in an array.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - geometries_to_array(geometry)
+   * - Arguments
+     - * **geometry** - the input geometry
+   * - Examples
+     - * ``geometries_to_array(geom_from_wkt('MultiPoint (1 2, 5 21)'))`` → An array containing 'Point (1 2)' and 'Point (5 21)'
+       * ``geometries_to_array(geom_from_wkt('GeometryCollection (Polygon ((5 8, 4 1, 3 2, 5 8)),LineString (3 2, 4 2))'))`` → an array of a polygon and a line geometries
+       * ``geom_to_wkt(geometries_to_array(geom_from_wkt('GeometryCollection (Polygon ((5 8, 4 1, 3 2, 5 8)),LineString (3 2, 4 2))'))[0])`` → 'Polygon ((5 8, 4 1, 3 2, 5 8))'
+       * ``geometries_to_array(geom_from_wkt('MULTIPOLYGON(((5 5,0 0,0 10,5 5)),((5 5,10 10,10 0,5 5))'))`` → an array of two polygon geometries
+
+
+.. end_geometries_to_array_section
 
 .. _expression_function_Arrays_regexp_matches:
 

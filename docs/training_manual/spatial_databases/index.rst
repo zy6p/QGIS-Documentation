@@ -1,5 +1,5 @@
 *******************************************************************************
-|MOD| Spatial Database Concepts with PostGIS
+Module: Spatial Database Concepts with PostGIS
 *******************************************************************************
 
 Spatial Databases allow the storage of the geometries of records inside a
@@ -11,15 +11,15 @@ into the database and make use of the geographic functions that PostGIS offers.
 While working through this section, you may want to keep a copy of the **PostGIS
 cheat sheet**  available
 from `Boston GIS user group <https://www.bostongis.com/postgis_quickguide.bqg>`_.
-Another useful resource is the `online <https://postgis.net/docs/>`_ PostGIS
+Another useful resource is the `online <https://postgis.net/documentation/>`_ PostGIS
 documentation.
 
 There are also some more extensive tutorials on PostGIS and Spatial Databases
-available from Boundless Geo:
+created by Boundless that are now hosted on the PostGIS's website:
 
-* `Introduction to PostGIS <http://workshops.boundlessgeo.com/postgis-intro/>`_
-* `Spatial Database Tips and Tricks
-  <http://workshops.boundlessgeo.com/postgis-spatialdbtips/>`_
+* `Introduction to PostGIS <https://postgis.net/workshops/postgis-intro/>`_
+* `PostGIS Database Tips and Tricks
+  <https://postgis.net/documentation/tips/>`_
 
 See also `PostGIS In Action <https://www.postgis.us>`_.
 
@@ -31,12 +31,3 @@ See also `PostGIS In Action <https://www.postgis.us>`_.
    import_export
    spatial_queries
    geometry
-
-
-.. Substitutions definitions - AVOID EDITING PAST THIS LINE
-   This will be automatically updated by the find_set_subst.py script.
-   If you need to create a new substitution manually,
-   please add it also to the substitutions.txt file in the
-   source folder.
-
-.. |MOD| replace:: Module:

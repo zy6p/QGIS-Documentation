@@ -25,8 +25,7 @@ From :menuselection:`Plugins --> Manage and Install plugins…`, install:
 * *First Aid*: This will add a Python console and local debugger
   to inspect variables when an exception is raised from a plugin.
 
-
-.. warning:: |outofdate|
+.. warning:: Despite our constant efforts, information beyond this line may not be updated for QGIS 3.
 
 A note on configuring your IDE on Linux and Windows
 ====================================================
@@ -116,7 +115,7 @@ you should also create a batch file and use it to start Eclipse:
 
      call "C:\OSGeo4W\bin\o4w_env.bat"
      set PATH=%PATH%;C:\path\to\your\qgis_core.dll\parent\folder
-     C:\path\to\your\eclipse.exe
+     start /B C:\path\to\your\eclipse.exe
 
 Setting up Eclipse
 ------------------
@@ -337,4 +336,3 @@ following these steps.
 
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
-.. |outofdate| replace:: `Despite our constant efforts, information beyond this line may not be updated for QGIS 3. Refer to https://qgis.org/pyqgis/master for the python API documentation or, give a hand to update the chapters you know about. Thanks.`

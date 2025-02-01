@@ -6,6 +6,8 @@ Vector geometry
    .. contents::
       :local:
       :depth: 1
+      :class: toc-columns
+
 
 .. _qgisexportaddgeometrycolumns:
 
@@ -112,7 +114,11 @@ Z and M values (if present) can be translated and scaled.
 .. figure:: img/affinetransform.png
    :align: center
 
-   Vector point layer (green dots) before (left), and after (rigth) an affine transformation (translation). 
+   Vector point layer (green dots) before (left), and after (right) an affine transformation (translation). 
+
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgistranslategeometry` 
 
@@ -134,55 +140,55 @@ Parameters
      - Input vector layer
    * - **Translation (x-axis)**
      - ``DELTA_X``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0
      - Displacement to apply on the X axis.
    * - **Translation (y-axis)**
      - ``DELTA_Y``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0
      - Displacement to apply on the Y axis.
    * - **Translation (z-axis)**
      - ``DELTA_Z``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0
      - Displacement to apply on the Z axis.
    * - **Translation (m-values)**
      - ``DELTA_M``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0
      - Offset to apply on m values.
    * - **Scale factor (x-axis)**
      - ``SCALE_X``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - Scaling value (expansion or contraction) to apply on the X axis. 
    * - **Scale factor (y-axis)**
      - ``SCALE_Y``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - Scaling value (expansion or contraction) to apply on the Y axis.
    * - **Scale factor (z-axis)**
      - ``SCALE_Z``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - Scaling value (expansion or contraction) to apply on the Z axis.
    * - **Scale factor (m-values)**
      - ``SCALE_M``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - Scaling value (expansion or contraction) to apply on m values.
    * - **Rotation around z-axis (degrees counter-clockwise)**
      - ``ROTATION_Z``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0
      - Angle of the rotation in degrees.	
@@ -297,41 +303,55 @@ Parameters
        For each of the fields you'd like to retrieve information from,
        you need to define the following:
 
-       ``Input expression`` [expression] (``input``)
+       :guilabel:`Input expression` (``input``) [expression]
          Field or expression from the input layer.
 
-       ``Aggregate function`` [enumeration] (``aggregate``)
-         :ref:`Function <aggregates_function>` to use on the input
-         expression to return the aggregated value.
+       :guilabel:`Aggregate function` (``aggregate``) [enumeration]
+         Function to use on the input expression to return the aggregated value.
+         These are mainly the :ref:`aggregates_function`, plus dedicated
+         "first_value" and "last_value" functions for ordered list items.
 
          Default: *concatenate* (for string data type), *sum* (for
          numeric data type)
 
-       ``Delimiter`` [string] (``delimiter``)
+       :guilabel:`Delimiter` (``delimiter``) [string]
          Text string to separate aggregated values, for example in
          case of concatenation.
 
          Default: *,*
 
-       ``Output field name`` [string] (``name``)
+       :guilabel:`Output field name` (``name``) [string]
          Name of the aggregated field in the output layer.
          By default input field name is kept.
 
-       ``Type`` [enumeration] (``type``)
-         Data type of the output field. One of:
+       :guilabel:`Type` (``type``) [enumeration]
+         Data type of the output field.
+         Available types may not be compatible with the output layer provider.
+         One of:
 
-         * 1 --- Boolean
-         * 2 --- Integer
-         * 4 --- Integer64
-         * 6 --- Double
-         * 10 --- String
-         * 14 --- Date
-         * 16 --- DateTime
+         .. attention:: For certain field types, e.g. lists,
+          an extra ``sub_type`` parameter helps refine the specific type of the data.
+          It is automatically set in the GUI but may be needed
+          if you're running the algorithm in Python or from the command line.
 
-       ``Length`` [number] (``length``)
+         .. include:: ../algs_include.rst
+            :start-after: **vector_field_types**
+            :end-before: **end_vector_field_types**
+
+       :guilabel:`Sub-type` (``sub_type``) [enumeration]
+         For certain field types, e.g. lists, this parameter helps refine the specific ``type`` of the data.
+         It is automatically set in the GUI but may be needed
+         if you're running the algorithm in Python or from the command line.
+         One of:
+
+         .. include:: ../algs_include.rst
+            :start-after: **vector_field_subtypes**
+            :end-before: **end_vector_field_subtypes**
+
+       :guilabel:`Length` (``length``) [number]
          Length of the output field.
 
-       ``Precision`` [number] (``precision``)
+       :guilabel:`Precision` (``precision``) [number]
          Precision of the output field.
 
    * - **Load fields from layer**
@@ -350,7 +370,6 @@ Parameters
        .. include:: ../algs_include.rst
           :start-after: **layer_output_types**
           :end-before: **end_layer_output_types**
-
 
 Outputs
 .......
@@ -469,7 +488,8 @@ Polygon and line geometries are supported.
    Black lines represent the bounding boxes of each polygon feature
 
 |checkbox| Allows
-:ref:`features in-place modification <processing_inplace_edit>`
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
 
 .. seealso:: :ref:`qgisminimumboundinggeometry`
 
@@ -514,7 +534,9 @@ Outputs
    * - **Bounds**
      - ``OUTPUT``
      - [vector: polygon]
-     - Bounding boxes of input layer
+     - Bounding boxes of input layer.
+       Other than the input attributes, the output layer also contains following fields:
+       ``width``, ``height``, ``area`` and ``perimeter`` of the generated polygon.
 
 Python code
 ...........
@@ -531,7 +553,7 @@ Python code
 Buffer
 ------
 Computes a buffer area for all the features in an input layer, using
-a fixed distance.
+a fixed or data defined distance.
 
 It is possible to use a negative distance for polygon input layers.
 In this case the buffer will result in a smaller polygon (setback).
@@ -539,10 +561,12 @@ In this case the buffer will result in a smaller polygon (setback).
 .. figure:: img/buffer.png
    :align: center
 
-   Buffer (in yellow) of points, line and polygon
+   Buffer (in yellow) of points, line, polygon with positive buffer, 
+   and polygon with negative buffer 
 
 |checkbox| Allows
-:ref:`features in-place modification <processing_inplace_edit>`
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
 
 **Default menu**: :menuselection:`Vector --> Geoprocessing Tools`
 
@@ -551,6 +575,9 @@ In this case the buffer will result in a smaller polygon (setback).
 
 Parameters
 ..........
+
+Basic parameters
+^^^^^^^^^^^^^^^^
 
 .. list-table::
    :header-rows: 1
@@ -567,14 +594,13 @@ Parameters
      - Input vector layer
    * - **Distance**
      - ``DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 10.0
      - Buffer distance (from the boundary of each feature).
        You can use the Data Defined button on the right to choose
        a field from which the radius will be calculated.
-       This way you can have different radius for each feature
-       (see :ref:`qgisvariabledistancebuffer`).
+       This way you can have different radius for each feature.
    * - **Segments**
      - ``SEGMENTS``
      - [number]
@@ -603,7 +629,7 @@ Parameters
      - ``JOIN_STYLE``
      - [enumeration]
 
-       Default: *0*
+       Default: 0
      - Specifies whether round, miter or beveled joins should be
        used when offsetting corners in a line.
        Options are:
@@ -612,28 +638,39 @@ Parameters
        * 1 --- Miter
        * 2 --- Bevel
 
+       .. figure:: img/buffer_join_style.png
+          :align: center
+          :width: 100%
+
+          Round, miter, and bevel join styles
    * - **Miter limit**
      - ``MITER_LIMIT``
      - [number]
 
        Default: 2.0
-     - Controls the maximum distance from the offset curve to use
-       when creating a mitered join (only applicable for miter
+     - Sets the maximum distance from the offset geometry to use
+       when creating a mitered join as a factor of the offset distance (only applicable for miter
        join styles).
-       Minimum: 1.
+       Minimum: 1.0
+              
+       .. figure:: img/buffer_miter_limit.png
+          :align: center
+          :width: 100%
+         
+          A 10m buffer with a limit of 2 and a 10m buffer with a limit of 1
    * - **Dissolve result**
      - ``DISSOLVE``
      - [boolean]
 
        Default: False
      - Dissolve the final buffer. If ``True`` (checked), overlapping
-       buffers will be dissolved (combined) into a new feature.
+       buffers will be dissolved (combined) into a single multipart feature.
 
        .. figure:: img/buffer_dissolve.png
           :align: center
           :width: 100%
 
-          Standard and dissolved buffer
+          Standard (three single part features - left), dissolved (1 multipart feature with 2 parts - right)
    * - **Buffered**
      - ``OUTPUT``
      - [vector: polygon]
@@ -645,6 +682,31 @@ Parameters
        .. include:: ../algs_include.rst
           :start-after: **layer_output_types_append**
           :end-before: **end_layer_output_types_append**
+
+Advanced parameters
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Keep disjoint features separate**
+     - ``SEPARATE_DISJOINT``
+     - [boolean]
+
+       Default: False
+     - If ``True`` (checked) and dissolved is checked, features that do not overlap or touch will be exported as 
+       separate features
+       (instead of parts of a multipart feature).
+
+       .. figure:: img/buffer_disjoint.png
+          :align: center
+
+          Results in 2 single part features
 
 Outputs
 .......
@@ -694,6 +756,7 @@ as for the original features.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point features
 
 **Default menu**: :menuselection:`Vector --> Geometry Tools`
 
@@ -716,7 +779,7 @@ Parameters
      - Input vector layer
    * - **Create centroid for each part**
      - ``ALL_PARTS``
-     - [boolean |dataDefined|]
+     - [boolean |dataDefine|]
 
        Default: False
      - If True (checked), a centroid will be created for each part
@@ -793,7 +856,7 @@ additional information (number of errors found and types of error):
 **Default menu**: :menuselection:`Vector --> Geometry Tools`
 
 .. seealso:: :ref:`qgisfixgeometries` and the core plugin
-   :ref:`geometry_checker`
+   :ref:`geometry_checker`, :ref:`qgiscoveragevalidate`
 
 Parameters
 ..........
@@ -1134,9 +1197,9 @@ Python code
 
 .. _qgisconcavehull:
 
-Concave hull (alpha shapes)
----------------------------
-Computes the concave hull of the features in an input point layer.
+Concave hull
+------------
+Computes the concave hull of the features from an input point layer.
 
 .. figure:: img/concave_hull_threshold.png
     :align: center
@@ -1144,7 +1207,7 @@ Computes the concave hull of the features in an input point layer.
     Concave hulls with different thresholds (0.3, 0.6, 0.9)
 
 
-.. seealso:: :ref:`qgisconvexhull`, :ref:`qgisknearestconcavehull`
+.. seealso:: :ref:`qgisconvexhull`
 
 Parameters
 ..........
@@ -1178,7 +1241,7 @@ Parameters
      - ``NO_MULTIGEOMETRY``
      - [boolean]
 
-       Default: True
+       Default: False
      - Check if you want to have singlepart geometries
        instead of multipart ones.
    * - **Concave hull**
@@ -1212,104 +1275,7 @@ Outputs
 Python code
 ...........
 
-**Algorithm ID**: ``qgis:concavehull``
-
-.. include:: ../algs_include.rst
-  :start-after: **algorithm_code_section**
-  :end-before: **end_algorithm_code_section**
-
-
-.. _qgisknearestconcavehull:
-
-Concave hull (k-nearest neighbor)
----------------------------------
-Generates a concave hull polygon from a set of points.
-If the input layer is a line or polygon layer, it will use the
-vertices.
-
-The number of neighbors to consider determines the concaveness of the
-output polygon.
-A lower number will result in a concave hull that follows the points
-very closely, while a higher number will have a smoother shape.
-The minimum number of neighbor points to consider is 3.
-A value equal to or greater than the number of points will result in
-a convex hull.
-
-If a field is selected, the algorithm will group the features in the
-input layer using unique values in that field and generate individual
-polygons in the output layer for each group.
-
-.. seealso:: :ref:`qgisconcavehull`
-
-Parameters
-..........
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 20 40
-
-   * - Label
-     - Name
-     - Type
-     - Description
-   * - **Input layer**
-     - ``INPUT``
-     - [vector: any]
-     - Input vector layer
-   * - **Number of neighboring points to consider (a lower number is more concave, a higher number is smoother)**
-     - ``KNEIGHBORS``
-     - [number]
-
-       Default: 3
-     - Determines the concaveness of the output polygon.
-       A small number will result in a concave hull that follows the
-       points very closely, while a high number will make the polygon
-       look more like the convex hull (if the number is equal to or
-       larger than the number of features, the result will be the
-       convex hull).
-       Minimum value: 3.
-   * - **Field**
-
-       Optional
-     - ``FIELD``
-     - [tablefield: any]
-
-       Default: None
-     - If specified, one concave hull polygon is generated for each
-       unique value of the field (by selecting features using this
-       value).
-   * - **Concave hull**
-     - ``OUTPUT``
-     - [vector: polygon]
-
-       Default: ``[Create temporary layer]``
-     - Specify the output vector layer. One of:
-
-       .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
-
-
-Outputs
-.......
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 20 40
-
-   * - Label
-     - Name
-     - Type
-     - Description
-   * - **Concave hull**
-     - ``OUTPUT``
-     - [vector: polygon]
-     - The output vector layer
-
-Python code
-...........
-
-**Algorithm ID**: ``qgis:knearestconcavehull``
+**Algorithm ID**: ``native:concavehull``
 
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
@@ -1410,6 +1376,10 @@ Converts a geometry into its curved geometry equivalent.
 
 Already curved geometries will be retained without change.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
+
 Parameters
 ..........
 
@@ -1497,6 +1467,7 @@ features.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
 
 **Default menu**: :menuselection:`Vector --> Geoprocessing Tools`
 
@@ -1732,13 +1703,13 @@ Parameters
      - Input point vector layer
    * - **Azimuth (degrees from North)**
      - ``AZIMUTH``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Angle (in degrees) as the middle value of the wedge
    * - **Wedge width (in degrees)**
      - ``WIDTH``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 45.0
      - Width (in degrees) of the buffer.
@@ -1752,7 +1723,7 @@ Parameters
 
    * - **Outer radius**
      - ``OUTER_RADIUS``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - The outer *size* (length) of the wedge:
@@ -1762,7 +1733,7 @@ Parameters
 
        Optional
      - ``INNER_RADIUS``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Inner radius value.
@@ -1833,6 +1804,21 @@ Parameters
      - ``INPUT``
      - [vector: point]
      - Input point vector layer
+   * - **Tolerance**
+
+       Optional
+     - ``TOLERANCE``
+     - [number]
+
+       Default: 0.0
+     - Specifies an optional snapping tolerance which can be used to improve the robustness of the triangulation.
+   * - **Add point IDs to output**
+     - ``ADD_ATTRIBUTES``
+     - [boolean]
+
+       Default: True
+     - Specifies whether fields storing involved point features ID should be added to the output.
+       If False, an ``id`` field is used to identify the polygons.
    * - **Delaunay triangulation**
      - ``OUTPUT``
      - [vector: polygon]
@@ -1864,7 +1850,7 @@ Outputs
 Python code
 ...........
 
-**Algorithm ID**: ``qgis:delaunaytriangulation``
+**Algorithm ID**: ``native:delaunaytriangulation``
 
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
@@ -1891,6 +1877,7 @@ are smaller than a specified area threshold. Leaving this parameter at
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
 
 Parameters
 ..........
@@ -1911,7 +1898,7 @@ Parameters
 
        Optional
      - ``MIN_AREA``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Only holes with an area less than this threshold will be
@@ -1974,6 +1961,7 @@ input parameter.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
 
 **Default menu**: :menuselection:`Vector --> Geometry Tools`
 
@@ -2066,6 +2054,7 @@ at 2.5 increments allows them to be evenly spaced over the segment.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
 
 .. seealso:: :ref:`qgisdensifygeometries`
 
@@ -2086,7 +2075,7 @@ Parameters
      - Input line or polygon vector layer
    * - **Interval between vertices to add**
      - ``INTERVAL``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Maximum distance between two consecutive vertices
@@ -2140,23 +2129,30 @@ feature.
 All output geometries will be converted to multi geometries.
 In case the input is a polygon layer, common boundaries of adjacent
 polygons being dissolved will get erased.
+If enabled, the optional "Keep disjoint features separate" setting will
+cause features and parts that do not overlap or touch to be exported as 
+separate features (instead of parts of a single multipart feature).
 
 The resulting attribute table will have the same fields as the input
 layer.
 The values in the output layer's fields are the ones of the first
 input feature that happens to be processed.
 
+
 .. figure:: img/dissolve.png
    :align: center
 
-   Dissolve the polygon layer on a common attribute
+   Dissolving a layer into a single multipart feature
 
 **Default menu**: :menuselection:`Vector --> Geoprocessing Tools`
 
-.. seealso:: :ref:`qgisaggregate`, :ref:`qgiscollect`
+.. seealso:: :ref:`qgiscoverageunion`, :ref:`qgisaggregate`, :ref:`qgiscollect`
 
 Parameters
 ..........
+
+Basic parameters
+^^^^^^^^^^^^^^^^
 
 .. list-table::
    :header-rows: 1
@@ -2184,6 +2180,12 @@ Parameters
        If no field is provided then all the
        features are dissolved, resulting in a
        single (multipart) feature.
+
+       .. figure:: img/dissolve_field.png
+          :align: center
+
+          Dissolve the polygon layer on a common attribute (2 multipart features)
+
    * - **Dissolved**
      - ``OUTPUT``
      - [same as input]
@@ -2194,6 +2196,35 @@ Parameters
        .. include:: ../algs_include.rst
           :start-after: **layer_output_types**
           :end-before: **end_layer_output_types**
+
+Advanced parameters
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Keep disjoint features separate**
+     - ``SEPARATE_DISJOINT``
+     - [boolean]
+
+       Default: False
+     - Parts of dissolved features are exported as separate features
+       (instead of parts of a multipart feature).
+
+       .. figure:: img/dissolve_disjoint.png
+          :align: center
+
+          source (left), dissolve all (3 distinct features - right)
+
+       .. figure:: img/dissolve_disjoint_field.png
+          :align: center
+
+          source (left), dissolve on field (5 distinct features - right)
 
 Outputs
 .......
@@ -2234,6 +2265,10 @@ the new value.
 If no Z values exist, the geometry will be upgraded to include the Z
 dimension.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with Z enabled
+
 .. seealso:: :ref:`qgissetmfromraster`, :ref:`qgissetzvalue`
 
 Parameters
@@ -2262,20 +2297,27 @@ Parameters
 
        Default: 1
      - The raster band to take the Z values from
-   * - **Value for nodata or non-intersecting vertices**
+   * - **Value for NoData or non-intersecting vertices**
      - ``NODATA``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0
      - Value to use in case the vertex does not intersect
        (a valid pixel of) the raster
    * - **Scale factor**
      - ``SCALE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Scaling value: the band values are multiplied
        by this value.
+   * - **Offset**
+     - ``OFFSET``
+     - [number |dataDefine|]
+
+       Default: 0.0
+     - Offset value: it is algebraically added to the band
+       values after applying the "Scale factor".
    * - **Updated**
      - ``OUTPUT``
      - [same as input]
@@ -2482,6 +2524,13 @@ line.
 Each line in the resulting layer contains only a start and an end
 point, with no intermediate vertices between them.
 
+If the input layer consists of CircularStrings or CompoundCurves,
+the output layer will be of the same type and contain only single curve segments.
+
+.. note::
+
+ * This algorithm drops existing primary keys or FID values and regenerates them in output layers.
+ * This algorithm does not require valid geometries as input.
 
 .. figure:: img/explode_lines.png
    :align: center
@@ -2490,6 +2539,7 @@ point, with no intermediate vertices between them.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 .. seealso:: :ref:`qgissubdivide`, :ref:`qgislinesubstring`
 
@@ -2564,6 +2614,7 @@ the line.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 .. seealso:: :ref:`qgislinesubstring`
 
@@ -2584,12 +2635,12 @@ Parameters
      - Input line vector layer
    * - **Start distance**
      - ``START_DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
      - Distance by which to extend the first segment of the line
        (starting point)
    * - **End distance**
      - ``END_DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
      - Distance by which to extend the last segment of the line
        (ending point)
    * - **Extended**
@@ -2753,6 +2804,10 @@ vertex’s part and its index within the part (as well as its ring for
 polygons), distance along the original geometry and bisector angle of
 vertex for the original geometry.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point features
+
 .. seealso:: :ref:`qgisextractvertices`, :ref:`qgisfilterverticesbym`,
    :ref:`qgisfilterverticesbyz`
 
@@ -2835,6 +2890,10 @@ geometry and bisector angle of vertex for original geometry.
    :align: center
 
    Vertices extracted for line and polygon layer
+
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point features
 
 **Default menu**: :menuselection:`Vector --> Geometry Tools`
 
@@ -3012,6 +3071,10 @@ the minimum value is tested.
 
    The red line represents the black line with only vertices whose M
    value is <=10.
+   
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line and polygon features with M enabled
 
 .. note:: Depending on the input geometry attributes and the filters
    used, the resultant geometries created by this algorithm may no
@@ -3033,14 +3096,14 @@ Parameters
      - Description
    * - **Input layer**
      - ``INPUT``
-     - [vector: line, polygon]
-     - Input line or polygon vector layer
+     - [vector: any]
+     - Input vector layer
        to remove vertices from
    * - **Minimum**
 
        Optional
      - ``MIN``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: *Not set*
      - Minimum of M values allowed
@@ -3048,7 +3111,7 @@ Parameters
 
        Optional
      - ``MAX``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: *Not set*
      - Maximum of M values allowed
@@ -3108,6 +3171,10 @@ the minimum value is tested.
 
    The red line represents the black line with only vertices whose Z
    value is <=10.
+   
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line and polygon features with Z enabled
 
 .. note:: Depending on the input geometry attributes and the filters
    used, the resultant geometries created by this algorithm may no
@@ -3131,14 +3198,14 @@ Parameters
      - Description
    * - **Input layer**
      - ``INPUT``
-     - [vector: line, polygon]
-     - Input line or polygon vector layer
+     - [vector: any]
+     - Input vector layer
        to remove vertices from
    * - **Minimum**
 
        Optional
      - ``MIN``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: *Not set*
      - Minimum of Z values allowed
@@ -3146,7 +3213,7 @@ Parameters
 
        Optional
      - ``MAX``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: *Not set*
      - Maximum of Z values allowed
@@ -3197,10 +3264,11 @@ without losing any of the input vertices.
 Already valid geometries are returned without further intervention.
 Always outputs multi-geometry layer.
 
-.. note:: M values will be dropped from the output.
-
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features without M enabled
+
+.. note:: M values will be dropped from the output.
 
 .. seealso:: :ref:`qgischeckvalidity`
 
@@ -3219,6 +3287,20 @@ Parameters
      - ``INPUT``
      - [vector: any]
      - Input vector layer
+   * - **Repair method**
+     - ``METHOD``
+     - [enumeration]
+
+       Default: 1
+     - Method used to repair the geometries. One of:
+
+       * 0 --- ``Linework``: combines all rings into a set of noded lines and
+         then extracts valid polygons from that linework
+       * 1 --- ``Structure``: first makes all rings valid and then merges shells
+         and subtracts holes from shells to generate valid result.
+         Assumes that holes and shells are correctly categorized.
+         Requires QGIS version built with GEOS 3.10 or later
+         (check :menuselection:`Help --> About` menu).
    * - **Fixed geometries**
      - ``OUTPUT``
      - [same as input]
@@ -3265,6 +3347,10 @@ Forces polygon geometries to respect the Right-Hand-Rule, in which
 the area that is bounded by a polygon is to the right of the boundary.
 In particular, the exterior ring is oriented in a clockwise
 direction and any interior rings in a counter-clockwise direction.
+
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
 
 Parameters
 ..........
@@ -3339,6 +3425,10 @@ this breakpoint.
 
 If the input geometry contains M or Z values, these will be linearly
 interpolated for the new vertices created at the antimeridian.
+
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 Parameters
 ..........
@@ -3534,7 +3624,7 @@ Parameters
      - Input line or polygon vector layer
    * - **Distance**
      - ``DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Distance from the beginning of the line
@@ -3671,6 +3761,7 @@ considered when calculating the substring.
    ending distance at 250 meters.
 
 |checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 .. seealso:: :ref:`qgisextendlines`
 
@@ -3691,12 +3782,12 @@ Parameters
      - Input line vector layer
    * - **Start distance**
      - ``START_DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
      - Distance along the input line to the start point of
        the output feature
    * - **End distance**
      - ``END_DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
      - Distance along the input line to the end point of
        the output feature
    * - **Substring**
@@ -3815,6 +3906,7 @@ any lines which could be merged and any non-connected line parts.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 Parameters
 ..........
@@ -3981,6 +4073,7 @@ layer.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
 
 .. seealso:: :ref:`qgisminimumboundinggeometry`
 
@@ -3999,12 +4092,12 @@ Parameters
      - ``INPUT``
      - [vector: any]
      - Input vector layer
-   * - **Number of segment in circles**
+   * - **Number of segments in circles**
      - ``SEGMENTS``
      - [number]
 
        Default: 72
-     - The number of segment used to approximate a circle.
+     - The number of segments used to approximate a circle.
        Minimum 8, maximum 100000.
    * - **Minimum enclosing circles**
      - ``OUTPUT``
@@ -4057,6 +4150,7 @@ input layer, using a fixed or dynamic distance and number of rings.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
 
 .. seealso:: :ref:`qgisbuffer`,
    :ref:`qgisvariabledistancebuffer`,
@@ -4081,7 +4175,7 @@ Parameters
      - Input vector layer
    * - **Number of rings**
      - ``RINGS``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - The number of rings.
@@ -4090,7 +4184,7 @@ Parameters
        rings depends on feature values).
    * - **Distance between rings**
      - ``DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Distance between the rings.
@@ -4152,6 +4246,7 @@ but divided into single features.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 **Default menu**: :menuselection:`Vector --> Geometry Tools`
 
@@ -4224,6 +4319,7 @@ distances will offset them to the right.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 .. seealso:: :ref:`qgisarrayoffsetlines`, :ref:`qgistranslategeometry`
 
@@ -4246,7 +4342,7 @@ Parameters
      - Input line vector layer
    * - **Distance**
      - ``DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 10.0
      - Offset distance.
@@ -4265,7 +4361,7 @@ Parameters
      - ``JOIN_STYLE``
      - [enumeration]
 
-       Default: *0*
+       Default: 0
      - Specifies whether round, miter or beveled joins should be
        used when offsetting corners in a line.
        Options are:
@@ -4274,15 +4370,26 @@ Parameters
        * 1 --- Miter
        * 2 --- Bevel
 
+       .. figure:: img/buffer_join_style.png
+          :align: center
+          :width: 100%
+
+          Round, miter, and bevel join styles
    * - **Miter limit**
      - ``MITER_LIMIT``
      - [number]
 
        Default: 2.0
-     - Controls the maximum distance from the offset curve to use
-       when creating a mitered join (only applicable for miter
+     - Sets the maximum distance from the offset geometry to use
+       when creating a mitered join as a factor of the offset distance (only applicable for miter
        join styles).
-       Minimum: 1.
+       Minimum: 1.0              
+
+       .. figure:: img/buffer_miter_limit.png
+          :align: center
+          :width: 100%
+         
+          A 10m buffer with a limit of 2 and a 10m buffer with a limit of 1
    * - **Offset**
      - ``OUTPUT``
      - [vector: line]
@@ -4335,6 +4442,7 @@ input layer.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
 
 .. seealso:: :ref:`qgisminimumboundinggeometry`
 
@@ -4407,6 +4515,7 @@ every angle in the geometry either a right angle or a straight line.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
 
 Parameters
 ..........
@@ -4489,6 +4598,7 @@ guaranteed to lie on the surface of the feature geometry.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point features
 
 .. seealso:: :ref:`qgiscentroids`
 
@@ -4509,7 +4619,7 @@ Parameters
      - Input vector layer
    * - **Create point on surface for each part**
      - ``ANGLE_TOLERANCE``
-     - [boolean |dataDefined|]
+     - [boolean |dataDefine|]
      - If checked, a point will be created for each part of the
        geometry.
    * - **Point**
@@ -4586,20 +4696,20 @@ Parameters
      - Input line or polygon vector layer
    * - **Distance**
      - ``DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Distance between two consecutive points along the line
    * - **Start offset**
      - ``START_OFFSET``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Distance from the beginning of the input line, representing the
        position of the first point.
    * - **End offset**
      - ``END_OFFSET``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Distance from the end of the input line, representing the
@@ -4838,8 +4948,6 @@ Parameters
      - [vector: line]
      - Input line vector layer
    * - **Keep fields from the input layer**
-
-       Optional
      - ``KEEP_FIELDS``
      - [boolean]
 
@@ -4961,6 +5069,7 @@ Projects point geometries by a specified distance and bearing (azimuth).
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point features
 
 Parameters
 ..........
@@ -4980,13 +5089,13 @@ Parameters
      - Input point vector layer
    * - **Bearing (degrees from North)**
      - ``BEARING``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Clockwise angle starting from North, in degree (°) unit
    * - **Distance**
      - ``DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Distance to offset geometries, in layer units
@@ -5043,6 +5152,7 @@ features.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgisaggregate`, :ref:`qgiscollect`
 
@@ -5140,13 +5250,13 @@ Parameters
 
    * - **Width**
      - ``WIDTH``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Width of the buffer shape
    * - **Height**
      - ``HEIGHT``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Height of the buffer shape
@@ -5154,11 +5264,11 @@ Parameters
 
        Optional
      - ``ROTATION``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: None
      - Rotation of the buffer shape
-   * - **Number of segment**
+   * - **Number of segments**
      - ``SEGMENTS``
      - [number]
 
@@ -5219,11 +5329,12 @@ If the :guilabel:`Use Z Value` parameter is true, then the Z values
 are also tested and vertices with the same X and Y but different Z
 will be maintained.
 
+|checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+
 .. note:: Duplicate vertices are not tested between different parts
    of a multipart geometry, e.g. a multipoint geometry with
    overlapping points will not be changed by this method.
-
-|checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
 
 .. seealso:: :ref:`qgisextractvertices`,
    :ref:`qgisextractspecificvertices`,
@@ -5247,14 +5358,14 @@ Parameters
      - Input vector layer
    * - **Tolerance**
      - ``TOLERANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.000001
      - Vertices closer than the specified distance are considered
        duplicates
    * - **Use Z value**
      - ``USE_Z_VALUE``
-     - [boolean |dataDefined|]
+     - [boolean |dataDefine|]
 
        Default: False
      - If the :guilabel:`Use Z Value` parameter is true, then the Z
@@ -5406,6 +5517,7 @@ Inverts the direction of a line layer.
    Before and after the direction inversion
 
 |checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 Parameters
 ..........
@@ -5470,6 +5582,7 @@ around a unique preset point.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgistranslategeometry`, :ref:`qgisswapxy`
 
@@ -5490,7 +5603,7 @@ Parameters
      - Input vector layer
    * - **Rotation (degrees clockwise)**
      - ``ANGLE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Angle of the rotation in degrees
@@ -5543,6 +5656,77 @@ Python code
   :end-before: **end_algorithm_code_section**
 
 
+.. _qgisroundness:
+
+Roundness
+---------
+
+Calculates the roundness of each feature and stores it as a new field. The input vector layer must contain polygons.
+
+The roundness of a polygon is defined as 4π × polygon area / perimeter².
+The roundness value varies between 0 and 1. A perfect circle has a roundness of 1,
+while a completely flat polygon has a roundness of 0.
+
+.. note:: The algorithm returns NULL for multipart polygon features.
+
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
+
+
+Parameters
+..........
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Input layer**
+     - ``INPUT``
+     - [vector: polygon]
+     - Input vector layer
+   * - **Roundness**
+     - ``OUTPUT``
+     - [vector: polygon]
+
+       Default: ``[Create temporary layer]``
+     - Specify the output vector layer (with roundness field).
+       One of:
+
+       .. include:: ../algs_include.rst
+          :start-after: **layer_output_types_append**
+          :end-before: **end_layer_output_types_append**
+
+Outputs
+.......
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Rotated**
+     - ``OUTPUT``
+     - [same as input]
+     - The output vector layer with roundness value in a field
+
+Python code
+...........
+
+**Algorithm ID**: ``native:roundness``
+
+.. include:: ../algs_include.rst
+  :start-after: **algorithm_code_section**
+  :end-before: **end_algorithm_code_section**
+
+
 .. _qgissegmentizebymaxangle:
 
 Segmentize by maximum angle
@@ -5576,7 +5760,7 @@ Parameters
      - Input line or polygon vector layer
    * - **Maximum angle between vertices (degrees)**
      - ``ANGLE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 5.0
      - Maximum allowed radius angle between vertices
@@ -5651,7 +5835,7 @@ Parameters
      - Input line or polygon vector layer
    * - **Maximum offset distance**
      - ``DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Maximum allowed offset distance between the
@@ -5706,6 +5890,10 @@ with the new value.
 If no M values exist, the geometry will be upgraded to include M
 values and the specified value used as the initial M value for all
 geometries.
+    
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with M enabled
 
 .. tip:: Use the |identify|:sup:`Identify Features` button to check
    the added M value: the results are available in the
@@ -5731,7 +5919,7 @@ Parameters
      - Input vector layer
    * - **M Value**
      - ``M_VALUE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - M value to assign to the feature geometries
@@ -5788,6 +5976,10 @@ the new value.
 If no M values exist, the geometry will be upgraded to include M
 values.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with M enabled
+
 .. seealso:: :ref:`qgissetzfromraster`, :ref:`qgissetmvalue`
 
 Parameters
@@ -5816,19 +6008,26 @@ Parameters
 
        Default: 1
      - The raster band from which the M values are taken
-   * - **Value for nodata or non-intersecting vertices**
+   * - **Value for NoData or non-intersecting vertices**
      - ``NODATA``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
+
        Default: 0.0
      - Value to use in case the vertex does not intersect
        (a valid pixel of) the raster
    * - **Scale factor**
      - ``SCALE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
-     - Scaling value: the band values are multiplied
-       by this value.
+     - Scaling value: the band values are multiplied by this value.
+   * - **Offset**
+     - ``OFFSET``
+     - [number |dataDefine|]
+
+       Default: 0.0
+     - Offset value: it is algebraically added to the band
+       values after applying the "Scale factor".
    * - **Updated**
      - ``OUTPUT``
      - [same as input]
@@ -5878,6 +6077,10 @@ with the new value.
 If no Z values exist, the geometry will be upgraded to include Z
 values and the specified value used as the initial Z value for all
 geometries.
+ 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features with Z enabled
 
 .. tip:: Use the |identify|:sup:`Identify Features` button to check
  the added Z value: the results are available in the
@@ -5903,7 +6106,7 @@ Parameters
      - Input vector layer
    * - **Z Value**
      - ``Z_VALUE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Z value to assign to the feature geometries
@@ -5959,14 +6162,14 @@ distance based (the "Douglas-Peucker" algorithm), area based
 .. figure:: img/simplify_geometries.png
    :align: center
 
-   Clockwise from top left: source layer and increasing
-   simplification tolerances
+   From left to right, source layer and increasing simplification tolerances
 
 |checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
 
 **Default menu**: :menuselection:`Vector --> Geometry Tools`
 
-.. seealso:: :ref:`qgissmoothgeometry`, :ref:`qgisdensifygeometries`,
+.. seealso:: :ref:`qgiscoveragesimplify`, :ref:`qgissmoothgeometry`, :ref:`qgisdensifygeometries`,
  :ref:`qgisdensifygeometriesgivenaninterval`
 
 Parameters
@@ -5998,7 +6201,7 @@ Parameters
 
    * - **Tolerance**
      - ``TOLERANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Threshold tolerance (in units of the layer):
@@ -6084,6 +6287,8 @@ Parameters
    * - **Side**
      - ``SIDE``
      - [enumeration]
+  
+       Default: 0
      - Which side to create the buffer on.
        One of:
 
@@ -6100,6 +6305,8 @@ Parameters
    * - **Join style**
      - ``JOIN_STYLE``
      - [enumeration]
+
+       Default: 0
      - Specifies whether round, miter or beveled joins should be
        used when offsetting corners in a line.
        Options are:
@@ -6107,16 +6314,27 @@ Parameters
        * 0 --- Round
        * 1 --- Miter
        * 2 --- Bevel
+  
+       .. figure:: img/buffer_join_style.png
+          :align: center
+          :width: 100%
 
+          Round, miter, and bevel join styles
    * - **Miter limit**
      - ``MITER_LIMIT``
      - [number]
 
        Default: 2.0
-     - Controls the maximum distance from the offset curve to use
-       when creating a mitered join (only applicable for miter
+     - Sets the maximum distance from the offset geometry to use
+       when creating a mitered join as a factor of the offset distance (only applicable for miter
        join styles).
        Minimum: 1.0
+                     
+       .. figure:: img/buffer_miter_limit.png
+          :align: center
+          :width: 100%
+         
+          A 10m buffer with a limit of 2 and a 10m buffer with a limit of 1
    * - **Buffer**
      - ``OUTPUT``
      - [vector: polygon]
@@ -6190,10 +6408,10 @@ this will not be smoothed. For example, setting the maximum angle to
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of line and polygon features
 
-.. seealso:: :ref:`qgissimplifygeometries`,
-   :ref:`qgisdensifygeometries`,
-   :ref:`qgisdensifygeometriesgivenaninterval`
+.. seealso:: :ref:`qgissimplifygeometries`, :ref:`qgiscoveragesimplify`,
+   :ref:`qgisdensifygeometries`, :ref:`qgisdensifygeometriesgivenaninterval`
 
 Parameters
 ..........
@@ -6213,21 +6431,21 @@ Parameters
      - Input line or polygon vector layer
    * - **Iterations**
      - ``ITERATIONS``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - Increasing the number of iterations will give smoother
        geometries (and more vertices).
    * - **Offset**
      - ``OFFSET``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.25
      - Increasing values will *move* the smoothed lines / boundaries
        further away from the input lines / boundaries.
    * - **Maximum node angle to smooth**
      - ``MAX_ANGLE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 180.0
      - Every node below this value will be smoothed
@@ -6279,6 +6497,10 @@ another layer, or to geometries within the same layer.
 Matching is done based on a tolerance distance, and vertices will be
 inserted or removed as required to make the geometries match the
 reference geometries.
+
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgissnappointstogrid`
 
@@ -6411,11 +6633,12 @@ the feature's geometry will be cleared.
 Snapping can be performed on the X, Y, Z or M axis. A grid spacing of
 0 for any axis will disable snapping for that axis.
 
-.. note:: Snapping to grid may generate an invalid geometry in some
-   corner cases.
-
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
+
+.. note:: Snapping to grid may generate an invalid geometry in some
+   corner cases.
 
 .. seealso:: :ref:`qgissnapgeometries`
 
@@ -6437,25 +6660,25 @@ Parameters
      - Input vector layer
    * - **X Grid Spacing**
      - ``HSPACING``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Grid spacing on the X axis
    * - **Y Grid Spacing**
      - ``VSPACING``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Grid spacing on the Y axis
    * - **Z Grid Spacing**
      - ``ZSPACING``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Grid spacing on the Z axis
    * - **M Grid Spacing**
      - ``MSPACING``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Grid spacing on the M axis
@@ -6506,6 +6729,10 @@ multiple parts, where each part is of a specified maximum length.
 Z and M values at the start and end of the new line substrings are
 linearly interpolated from existing values.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>`
+of line features
+
 Parameters
 ..........
 
@@ -6523,7 +6750,7 @@ Parameters
      - The input line vector layer
    * - **Maximum line length**
      - ``LENGTH``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 10.0
      - The maximum length of a line in the output.
@@ -6587,11 +6814,12 @@ Curved geometries will be segmentized before subdivision.
    Left the input layer, middle maximum nodes value is 100 and right
    maximum value is 200
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point, line, and polygon features
+
 .. note:: Subdividing a geometry can generate geometry parts that may
    not be valid and may contain self-intersections.
-
-|checkbox| Allows
-:ref:`features in-place modification <processing_inplace_edit>`
 
 .. seealso:: :ref:`qgisexplodelines`, :ref:`qgislinesubstring`
 
@@ -6613,7 +6841,7 @@ Parameters
      - The input vector layer
    * - **Maximum nodes in parts**
      - ``MAX_NODES``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 256
      - Maximum number of vertices each new
@@ -6669,6 +6897,7 @@ latitude and longitude values reversed.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgistranslategeometry`, :ref:`qgisrotatefeatures`
 
@@ -6760,21 +6989,21 @@ Parameters
      - Input line vector layer
    * - **Start width**
      - ``START_WIDTH``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Represents the radius of the buffer applied
        at the start point of the line feature
    * - **End width**
      - ``END_WIDTH``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Represents the radius of the buffer applied
        at the end point of the line feature.
    * - **Segments**
      - ``SEGMENTS``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 16
      - Controls the number of line segments to use to approximate
@@ -6835,6 +7064,7 @@ component polygons.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of polygon features
 
 Parameters
 ..........
@@ -6932,13 +7162,13 @@ Parameters
      - Input line vector layer
    * - **Length of the transect**
      - ``LENGTH``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 5.0
      - Length in map unit of the transect
    * - **Angle in degrees from the original line at the vertices**
      - ``ANGLE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 90.0
      - Change the angle of the transect
@@ -7005,6 +7235,7 @@ Z and M values present in the geometry can also be translated.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgisarraytranslatedfeatures`,
    :ref:`qgisoffsetline`, :ref:`qgisrotatefeatures`, :ref:`qgisswapxy`
@@ -7027,25 +7258,25 @@ Parameters
      - Input vector layer
    * - **Offset distance (x-axis)**
      - ``DELTA_X``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on the X axis
    * - **Offset distance (y-axis)**
      - ``DELTA_Y``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on the Y axis
    * - **Offset distance (z-axis)**
      - ``DELTA_Z``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on the Z axis
    * - **Offset distance (m values)**
      - ``DELTA_M``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on the M axis
@@ -7119,7 +7350,7 @@ Parameters
      - Input line vector layer
    * - **Segments**
      - ``SEGMENTS``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 16
      - Number of the buffer segments per quarter circle.
@@ -7204,6 +7435,21 @@ Parameters
        Default: 0.0
      - The extent of the output layer will be this much
        bigger than the extent of the input layer
+   * - **Tolerance**
+
+       Optional
+     - ``TOLERANCE``
+     - [number]
+
+       Default: 0.0
+     - Specifies an optional snapping tolerance which can be used to improve the robustness of the voronoi.
+   * - **Copy attributes from input features**
+     - ``COPY_ATTRIBUTES``
+     - [boolean]
+
+       Default: True
+     - Specifies whether fields storing involved point features ID should be added to the output.
+       If False, an ``id`` field is created to identify the polygons.
    * - **Voronoi polygons**
      - ``OUTPUT``
      - [vector: polygon]
@@ -7235,7 +7481,7 @@ Outputs
 Python code
 ...........
 
-**Algorithm ID**: ``qgis:voronoipolygons``
+**Algorithm ID**: ``native:voronoipolygons``
 
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
@@ -7256,7 +7502,7 @@ Python code
    :width: 1.3em
 .. |clearText| image:: /static/common/mIconClearText.png
    :width: 1.5em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em
 .. |deleteAttribute| image:: /static/common/mActionDeleteAttribute.png
    :width: 1.5em

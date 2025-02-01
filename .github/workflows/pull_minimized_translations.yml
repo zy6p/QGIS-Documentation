@@ -1,0 +1,70 @@
+name: Pull translations
+# Download partially translated files from Transifex
+
+on:
+  schedule: #run every 2 weeks, on sunday
+    - cron: '0 */336 * * 0'
+
+  workflow_dispatch:
+
+permissions:  # added using https://github.com/step-security/secure-repo
+  contents: read
+
+jobs:
+  pull_translation:
+
+    permissions:
+      contents: write  # for Git to git push
+    if: github.repository_owner == 'qgis'
+    runs-on: ubuntu-latest
+    env:
+      # only pull to the branch we translate
+      TARGET_BRANCH: "release_3.34"
+
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4
+      with:
+        egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+    - name: Check out repository
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      with:
+        fetch-depth: 1
+        ref: ${{ env.TARGET_BRANCH }}
+
+    - name: Install Transifex client
+      run: |
+          curl -o- https://raw.githubusercontent.com/transifex/cli/master/install.sh | bash
+          mv tx LICENSE -t /usr/local/bin/
+
+    - shell: bash
+      name: create .transifexrc file
+      env:
+        TRANSIFEX_PASSWORD: ${{ secrets.TRANSIFEX_PASSWORD }}
+      run: |
+        sudo echo -e "[https://app.transifex.com]\nrest_hostname = https://rest.api.transifex.com\ntoken = $TRANSIFEX_PASSWORD" > ~/.transifexrc
+
+    - name: Download and sanitize files and folders
+      run: bash ./scripts/minimize_translation.sh
+
+    # - name: Show changes
+    #   run: echo `git status`
+
+    - name: Load translations if any
+      run: |
+        git config --global user.name 'Transifex update'
+        git config --global user.email 'tx-update@users.noreply.github.com'
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        if git add locale/* && git commit -m "Loading new translations"; then
+          git push
+        else
+         echo "No new translations"
+        fi
+
+
+    # - name: Pull source file using transifex client
+    #   uses: transifex/cli-action@bc67c0ab1369ef941f0963d902c45d11688c8bc9 # v1
+    #   with:
+    #       token: ${{ secrets.TRANSIFEX_PASSWORD }}
+    #       args: pull --force --mode onlytranslated -l fr

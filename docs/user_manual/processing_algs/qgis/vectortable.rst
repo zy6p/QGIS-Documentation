@@ -140,11 +140,9 @@ Add field to attributes table
 -----------------------------
 Adds a new field to a vector layer.
 
-The name and characteristics of the attribute are defined as
-parameters.
+The name and characteristics of the attribute are defined as parameters.
 
-The new attribute is not added to the input layer but a new layer is
-generated instead.
+The new attribute is not added to the input layer but a new layer is generated instead.
 
 Parameters
 ..........
@@ -174,9 +172,17 @@ Parameters
        Default: 0
      - Type of the new field. You can choose between:
        
-       * 0 --- Integer
-       * 1 --- Float
-       * 2 --- String
+       * 0 --- Integer (32 bit)
+       * 1 --- Decimal (double)
+       * 2 --- Text (string)
+       * 3 --- Boolean
+       * 4 --- Date
+       * 5 --- Time
+       * 6 --- Date & Time
+       * 7 --- Binary Object (BLOB)
+       * 8 --- String List
+       * 9 --- Integer List
+       * 10 --- Decimal (double) List
        
    * - **Field length**
      - ``FIELD_LENGTH``
@@ -190,6 +196,18 @@ Parameters
        
        Default: 0
      - Precision of the field. Useful with Float field type.
+   * - **Field alias**
+
+       Optional
+     - ``FIELD_ALIAS``
+     - [string]
+     - Set a name to use as alias for the field. Not supported by all format types.
+   * - **Field comment**
+
+       Optional
+     - ``FIELD_COMMENT``
+     - [string]
+     - Store a comment describing the field. Not supported by all format types.
    * - **Added**
      - ``OUTPUT``
      - [same as input]
@@ -336,6 +354,10 @@ The X/Y fields can be calculated in a different CRS to the layer
 (e.g. creating latitude/longitude fields for a layer in a projected
 CRS).
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point features
+
 Parameters
 ..........
 
@@ -443,9 +465,17 @@ Parameters
        Default: 0
      - Type of the new field. One of:
        
-       * 0 --- Integer
-       * 1 --- Float
-       * 2 --- String
+       * 0 --- Integer (32 bit)
+       * 1 --- Decimal (double)
+       * 2 --- Text (string)
+       * 3 --- Boolean
+       * 4 --- Date
+       * 5 --- Time
+       * 6 --- Date & Time
+       * 7 --- Binary Object (BLOB)
+       * 8 --- String List
+       * 9 --- Integer List
+       * 10 --- Decimal (double) List
        
    * - **Field length**
      - ``FIELD_LENGTH``
@@ -597,9 +627,8 @@ and the HStore field is updated.
 By default, all unique keys are added.
 
 The PostgreSQL `HStore <https://www.postgresql.org/docs/10/hstore.html>`_
-is a simple key-value store used in PostgreSQL and OGR (when reading
-an
-`OSM file <https://gdal.org/drivers/vector/osm.html#other-tags-field>`_
+is a simple key-value store used in PostgreSQL and GDAL (when reading
+an `OSM file <https://gdal.org/drivers/vector/osm.html#other-tags-field>`_
 with the ``other_tags`` field.
 
 Parameters
@@ -777,10 +806,17 @@ Parameters
        Default: 0
      - The type of the field.  One of:
        
-       * 0 --- Float
-       * 1 --- Integer
-       * 2 --- String
+       * 0 --- Decimal (double)
+       * 1 --- Integer (32 bit)
+       * 2 --- Text (string)
        * 3 --- Date
+       * 4 --- Time
+       * 5 --- Date & Time
+       * 6 --- Boolean
+       * 7 --- Binary Object (BLOB)
+       * 8 --- String List
+       * 9 --- Integer List
+       * 10 --- Decimal (double) List
        
    * - **Output field width**
      - ``FIELD_LENGTH``
@@ -893,17 +929,16 @@ Parameters
      - ``FIELDS_MAPPING``
      - [list]
      - List of output fields with their definitions.
-       The embedded table lists all the fields of the source
-       layer and allows you to edit them:
+       The embedded table lists all the fields of the source layer
+       and allows you to edit them:
 
        * Click |newAttribute| to create a new field.
        * Click |deleteAttribute| to remove a field.
-       * Use |arrowUp| and |arrowDown| to change the selected field
-	 order.
+       * Use |arrowUp| and |arrowDown| to change the selected field order.
        * Click |clearText| to reset to the default view.
+       * Click |invertSelection| to invert the selection in the fields list.
 
-       For each of the fields you'd like to reuse, you need to
-       fill the following options:
+       For each of the fields you'd like to reuse, you need to fill the following options:
 
        :guilabel:`Source expression` (``expression``) [expression]
          Field or expression from the input layer.
@@ -914,7 +949,27 @@ Parameters
 
        :guilabel:`Type` (``type``) [enumeration]
          Data type of the output field.
-         Available types depend on the output layer provider.
+         Available types may not be compatible with the output layer provider.
+         One of:
+
+         .. attention:: For certain field types, e.g. lists,
+          an extra ``sub_type`` parameter helps refine the the specific type of the data.
+          It is automatically set in the GUI but may be needed
+          if you're running the algorithm in Python or from the command line.
+
+         .. include:: ../algs_include.rst
+            :start-after: **vector_field_types**
+            :end-before: **end_vector_field_types**
+
+       :guilabel:`Sub-type` (``sub_type``) [enumeration]
+         For certain field types, e.g. lists, this parameter helps refine the specific ``type`` of the data.
+         It is automatically set in the GUI but may be needed
+         if you're running the algorithm in Python or from the command line.
+         One of:
+
+         .. include:: ../algs_include.rst
+            :start-after: **vector_field_subtypes**
+            :end-before: **end_vector_field_subtypes**
 
        :guilabel:`Length` (``length``) [number]
          Length of the output field.
@@ -925,6 +980,14 @@ Parameters
        :guilabel:`Constraints` (``constraints``) [string]
          When using a template layer, indicates whether there are constraints
          applied to the template field. Hover over the cell to display the constraints.
+
+       :guilabel:`Field alias` (``field_alias``) [string]
+         Set a name to use as alias for the field. Not supported by all format types.
+         Existing aliases are displayed and will be copied to the destination layer if supported.
+
+       :guilabel:`Field comment` (``field_comment``) [string]
+         Store a comment describing the field. Not supported by all format types.
+         Existing comments are displayed and will be copied to the destination layer if supported.
 
        :guilabel:`Load fields from template layer`
          Allows to select a layer from the current project as a template
@@ -1070,7 +1133,7 @@ Parameters
      - The input vector layer
    * - **Fields to retain**
      - ``FIELDS``
-     - [tablefield: any][list]
+     - [tablefield: any] [list]
      - List of fields to keep in the layer
    * - **Retained fields**
      - ``OUTPUT``
@@ -1192,9 +1255,13 @@ Python code
    :width: 1.5em
 .. |arrowUp| image:: /static/common/mActionArrowUp.png
    :width: 1.5em
+.. |checkbox| image:: /static/common/checkbox.png
+   :width: 1.3em
 .. |clearText| image:: /static/common/mIconClearText.png
    :width: 1.5em
 .. |deleteAttribute| image:: /static/common/mActionDeleteAttribute.png
+   :width: 1.5em
+.. |invertSelection| image:: /static/common/mActionInvertSelection.png
    :width: 1.5em
 .. |newAttribute| image:: /static/common/mActionNewAttribute.png
    :width: 1.5em

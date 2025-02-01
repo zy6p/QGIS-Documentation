@@ -27,8 +27,7 @@ Translated versions of this document can be browsed and downloaded
 via the documentation area of the QGIS project as well.
 
 For more information about contributing to this document and about
-translation, please visit
-https://qgis.org/en/site/getinvolved/index.html.
+translation, please read :ref:`QGIS-documentation-guidelines`.
 
 **Links in this Document**
 
@@ -61,9 +60,12 @@ What is new in QGIS |version|
 
 This release of QGIS includes hundreds of bug fixes and many new
 features and enhancements, compared to |QGIS_CURRENT|_.
-We recommend that you use this version over previous releases.
-For a list of new features, visit the visual changelogs at
-https://qgis.org/en/site/forusers/visualchangelogs.html.
+For a list of new features, visit the `visual changelogs
+<https://qgis.org/project/visual-changelogs/>`_.
 
-.. |QGIS_CURRENT| replace:: QGIS 3.10
-.. _QGIS_CURRENT: https://docs.qgis.org/3.10/en/docs/
+.. only:: not testing and not outdated
+
+  We recommend that you use this version over previous releases.
+
+.. |QGIS_CURRENT| replace:: QGIS 3.40
+.. _QGIS_CURRENT: https://docs.qgis.org/3.40/en/docs/

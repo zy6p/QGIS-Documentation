@@ -141,6 +141,14 @@ You can use tags to emphasize items.
 
      ``label``
 
+* **Layer names**
+
+  When referring to layers, format as inline code:
+
+  .. code-block:: rst
+
+     ``layer name``
+
 
 .. _my_anchor:
 
@@ -443,7 +451,7 @@ within normal text:
 
 .. code-block:: rst
 
-   QGIS can load several :index:`Vector formats` supported by GDAL/OGR ...
+   QGIS can load several :index:`Vector formats` supported by GDAL ...
 
 Or you can use the ``.. index::`` block-level markup which links to the
 beginning of the next paragraph. Because of the rules mentioned above, it
@@ -526,8 +534,8 @@ is located in the same folder as the referencing :file:`.rst` file.
 * You can find some prepared QGIS-projects that are used to create screenshots
   in the :file:`./qgis-projects` folder of this repository.
   This makes it easier to reproduce screenshots for the next version of QGIS.
-  These projects use the QGIS `Sample Data <https://qgis.org/downloads/data/>`_
-  (aka Alaska Dataset), which should be placed in the same folder
+  These projects use the QGIS `Sample Data <https://github.com/qgis/QGIS-Sample-Data/archive/master.zip>`_
+  (aka Alaska Dataset), which should be unzipped and placed in the same folder
   as the QGIS-Documentation Repository.
 * Reduce the window to the minimal space needed to show the feature (taking the
   whole screen for a small modal window > overkill)
@@ -673,6 +681,7 @@ guidelines:
   LayoutItem                                ``layoutitem``
   Color                                     ``color``
   Scale                                     ``scale``
+  Map theme                                 ``map theme``
   ========================================  =========================  ====================
 
 

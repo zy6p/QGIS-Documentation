@@ -52,8 +52,19 @@ You can enter any word or phrase on the text box. Notice that, as you type, the
 number of algorithms, models or scripts in the toolbox is reduced to just those
 that contain the text you have entered in their names or keywords.
 
-.. note:: At the top of the list of algorithms are displayed the most recent
- used tools; handy if you want to reexecute any.
+The top of the algorithm list shows the most |processingHistory| :sup:`Recently Used` tools and the |favorites| :sup:`Favorites` tools,
+making it convenient to reexecute them. The |processingHistory| :sup:`Recently Used` list is there by default, showing the algorithms you have recently executed.
+The |favorites| :sup:`Favorites` list is created when you manually add an algorithm to it.
+
+You can right-click on any algorithm in the toolbox and choose from the contextual menu to:
+
+* :guilabel:`Execute...` to run the algorithm.
+* :guilabel:`Execute as Batch Process...` to run the algorithm in batch mode.
+* :guilabel:`Edit Rendering Styles for Outputs...` to customize the rendering styles for the algorithm's outputs.
+* :guilabel:`Add to Favorites` to add the algorithm to the Favorites list.
+* :guilabel:`Remove from Favorites` to remove the algorithm from the Favorites list.
+
+Unlike the Recently Used list, the Favorites list remains static and is not affected by which algorithms were executed.
 
 .. _figure_toolbox_search:
 
@@ -65,12 +76,15 @@ that contain the text you have entered in their names or keywords.
 
 To execute a tool, just double-click on its name in the toolbox.
 
+.. _algorithm_widgets:
+
 The algorithm dialog
 --------------------
 
-Once you double-click on the name of the algorithm that you want to execute, a
-dialog similar to that in the :numref:`figure_parameters_dialog` below is shown
-(in this case, the dialog corresponds to the ``Centroids`` algorithm).
+Once you double-click on the name of the algorithm that you want to execute,
+a dialog similar to that in the :numref:`figure_parameters_dialog` below is shown
+(in this case, the dialog corresponds to the ``Centroids`` algorithm). Dialog title will include the group
+name from which the algorithm originates.
 
 .. _figure_parameters_dialog:
 
@@ -79,65 +93,101 @@ dialog similar to that in the :numref:`figure_parameters_dialog` below is shown
 
    Algorithm Dialog - Parameters
 
-The dialog shows two tabs (:guilabel:`Parameters` and :guilabel:`Log`)
-on the left part, the algorithm description on the right, and a set of
-buttons at the bottom.
+The dialog shows two tabs (:guilabel:`Parameters` and :guilabel:`Log`) on the left part,
+the algorithm description on the right, and a set of buttons at the bottom.
 
-The :guilabel:`Parameters` tab is used to set the input values that the algorithm needs to be
-executed. It shows a list of input values and configuration parameters to
-be set. It of course has a different content, depending on the requirements of
-the algorithm to be executed, and is created automatically based on those
-requirements.
+.. _alg_parameter_types:
 
-Although the number and type of parameters depend on the characteristics of the
-algorithm, the structure is similar for all of them. The parameters found in the
-table can be of one of the following types.
+Parameter types
+...............
 
-* A **raster layer**, to select from a list of all such layers available
-  (currently opened) in QGIS. The selector contains as well a button on its
-  right-hand side, to let you select filenames that represent layers currently
-  not loaded in QGIS.
-* A **vector layer**, to select from a list of all vector layers available in
-  QGIS. Layers not loaded in QGIS can be selected as well, as in the case of raster
-  layers, but only if the algorithm does not require a table field selected from
-  the attributes table of the layer. In that case, only opened layers can be
-  selected, since they need to be open so as to retrieve the list of field names
-  available.
+The :guilabel:`Parameters` tab is used to set the input values that the algorithm needs to be executed.
+It shows a list of input values and configuration parameters to be set.
+It of course has a different content, depending on the requirements of the algorithm to be executed,
+and is created automatically based on those requirements.
 
-  You will see an iterator button by each vector layer selector, as shown in the
-  figure below.
+.. tip:: **Setting your own default values for algorithm parameters**
+
+   Algorithm dialogs open with some parameters prefilled with values from QGIS installation.
+   It is however possible to set :ref:`your own default values <deploying_organization>`
+   for specific algorithm parameters so that they are used at algorithm startup.
+
+Although the number and type of parameters depend on the characteristics of the algorithm,
+the structure is similar for all of them.
+The parameters found in the table can be of one of the following types.
+
+
+.. _vector_widget:
+
+* A **vector layer**, to select from a list of all vector layers available (currently opened) in QGIS.
+  You can also use unloaded layers: press the :guilabel:`...` button on the widget right-hand side,
+  and select:
+
+  * :guilabel:`Select file...`: selects file on disk using the Operating System file explorer
+  * :guilabel:`Browse for layer...`: opens the :ref:`Browser panel <label_browserpanel>`,
+    allowing to take the layers directly from database sources (PostgreSQL, SQL Server, Oracle, ...),
+    web services (WFS, AFS, ...) or files on disk.
 
   .. _figure_vector_iterator:
 
   .. figure:: img/vector_iterator.png
      :align: center
 
-     Vector iterator button
+     Vector input widget
 
-  If the algorithm contains several of them, you will be able to toggle just
-  one of them. If the button corresponding to a vector input is toggled, the
-  algorithm will be executed iteratively on each one of its features, instead
-  of just once for the whole layer, producing as many outputs as times the
-  algorithm is executed. This allows for automating the process when all
-  features in a layer have to be processed separately.
+  .. note::
 
-.. note::
+     By default, the layer widget shows the CRS of the layer along with its name.
+     If you do not want to see this additional information,
+     you can disable this functionality in the Processing Settings dialog,
+     unchecking the :menuselection:`General --> Show layer CRS definition in selection boxes` option.
 
- By default, the parameters dialog will show a description of the CRS of each layer along with
- its name. If you do not want to see this additional information, you can
- disable this functionality in the Processing Settings dialog, unchecking the
- :menuselection:`General --> Show layer CRS definition in selection boxes` option.
+  The vector input widget also has following features:
 
-* A **table**, to select from a list of all available in QGIS. Non-spatial
-  tables are loaded into QGIS like vector layers, and in fact they are treated as
-  such by the program. Currently, the list of available tables that you will see
-  when executing an algorithm that needs one of them is restricted to
-  tables coming from files in dBase (:file:`.dbf`) or Comma-Separated Values
-  (:file:`.csv`) formats.
+  * an iterator |iterate| button:
+    If toggled, the algorithm will be executed iteratively on each one of its features,
+    instead of just once for the whole layer, producing as many outputs as times the algorithm is executed.
+    This allows for automating the process when all features in a layer have to be processed separately.
+    If the algorithm contains several input vectors you can iterate over,
+    the iteration will be processed only on the first toggled parameter,
+    in the order parameters are declared in the algorithm.
+
+  * |options| :sup:`Advanced options` button to adjust settings to use for that specific parameter.
+    These settings concern:
+
+    * :guilabel:`Invalid feature filtering`: allows the :ref:`default method <processing_general_settings>`
+      for handling features with invalid geometries to be overridden
+    * :guilabel:`Limit features processed`: optional limit on number of features processed from the source
+    * :guilabel:`Feature filter`: allows to enter an expression to subset the layer dynamically
+      when running the tool, avoiding the need for separate steps to set layer filters
+      or create layer subsets.
+
+    .. _figure_vector_input_parameters:
+
+    .. figure:: img/vector_input_parameters.png
+       :align: center
+
+       Advanced options for vector input widget
+
+  * It is also possible to limit the algorithm execution on the vector layer
+    to its :guilabel:`Selected features only`.
+* A **table**, to select from a list of all available in QGIS.
+  Non-spatial tables are loaded into QGIS like vector layers, and use the :ref:`same widget <vector_widget>`.
+* A **raster layer**, to select from a list of all raster layers available in QGIS.
+  The selector contains as well a :guilabel:`...` button on its right-hand side,
+  to let you select filenames that represent layers currently not loaded in QGIS.
+
+  .. _figure_raster_input:
+
+  .. figure:: img/raster_input.png
+     :align: center
+
+     Raster input widget
+
 * An **option**, to choose from a selection list of possible options.
 * A **numerical value**, to be introduced in a spin box. In some contexts (when
   the parameter applies at the feature level and not at the layer's), you will
-  find a |dataDefined| :sup:`Data-defined override` button by its side, allowing
+  find a |dataDefine| :sup:`Data-defined override` button by its side, allowing
   you to open the :ref:`expression builder <vector_expressions>` and enter a
   mathematical expression to generate variable values for the parameter. Some useful
   variables related to data loaded into QGIS can be added to your expression, so
@@ -159,13 +209,18 @@ table can be of one of the following types.
   ones from the drop-down list or from the :ref:`CRS selection <crs_selector>`
   dialog that appears when you click on the button on the right-hand side.
 * An **extent**, a text box defining a rectangle through its corners coordinate
-  in the format ``xmin, xmax, ymin, ymax``. Clicking on the button on the
-  right-hand side of the value selector, a pop-up menu will appear,
-  giving you options to:
+  in the format ``xmin, xmax, ymin, ymax``. Press the |mapIdentification|
+  :sup:`Set to current map canvas extent` button to use the map canvas
+  extent. Clicking the arrow on the right-hand side of the value selector,
+  a pop-up menu will appear, giving you options to:
 
-  * :guilabel:`Calculate from layer`: fills the text box with the coordinates
+  * :menuselection:`Calculate from layer -->`: fills the text box with the coordinates
     of the bounding box of a layer to select among the loaded ones
-  * :guilabel:`Use map canvas extent`
+  * :menuselection:`Calculate from layout map -->`: fills the text box with the coordinates
+    of a map item selected from a layout in the current project
+  * :menuselection:`Calculate from bookmark -->`: fills the text box with the coordinates
+    of a saved bookmark
+  * |mapIdentification| :guilabel:`Use current map canvas extent`
   * :guilabel:`Draw on canvas`: the parameters window will hide itself, so you
     can click and drag onto the canvas. Once you have defined the extent
     rectangle, the dialog will reappear, containing the values in the extent text
@@ -209,17 +264,22 @@ table can be of one of the following types.
 .. _reference_layer_param:
 
 .. note:: Some algorithms require many parameters to run, e.g. in the
-  :ref:`qgisrastercalculator` you have to specify manually the cell size, the
-  extent and the CRS. You can avoid to choose all the parameters manually when
+  :ref:`qgisrastercalc` you have to specify manually the cell size, the extent and the CRS.
+  You can avoid to choose all the parameters manually when
   the algorithm has the ``Reference layers`` parameter. With this parameter you
   can choose the reference layer and all its properties (cell size, extent, CRS)
   will be used.
 
+Logging the execution
+.....................
+
 Along with the :guilabel:`Parameters` tab, there is another tab named
 :guilabel:`Log` (see :numref:`figure_alg_dialog_log` below).
 Information provided by the algorithm during its execution is written
-in this tab, and allow you to track the execution and be aware and have
-more details about the algorithm as it runs.
+in this tab, allowing you to track the execution as well as being aware and
+having more details about the algorithm as it runs. You can directly click on
+the names of output files, folders, or HTML files listed in the log. Doing so
+will open the folder containing the generated file and automatically select it.
 Information on algorithm execution is also output in the
 :menuselection:`View --> Panels --> Log Messages Panel`.
 
@@ -242,6 +302,9 @@ These are particularly handy when you have checked the
 :guilabel:`Keep dialog open after running algorithm` in the
 :guilabel:`General` part of the Processing options.
 
+Other tools
+............
+
 On the right hand side of the dialog you will find a short description of the
 algorithm, which will help you understand its purpose and its basic ideas.
 If such a description is not available, the description panel will not be shown.
@@ -252,9 +315,51 @@ bottom of the dialog bringing you to the :ref:`Processing algorithms
 documentation <processing_algs>` or to the provider documentation (for
 some third-party providers).
 
-The :guilabel:`Run as batch process` button triggers the :ref:`batch processing
+The :menuselection:`Advanced -->` menu provides functions to reuse
+the configuration defined in the dialog without running the algorithm:
+
+* |settings| :guilabel:`Algorithm Settings...`: allows to override processing settings
+  for the current algorithm execution. More details at :ref:`alg_override_setting`.
+* |pythonFile| :guilabel:`Copy as Python Command`: allows for easy copying of the equivalent
+  :ref:`PyQGIS command <processing_console>` to run the tool using the parameters defined in the dialog
+* |terminal| :guilabel:`Copy as qgis_process Command`: allows for easy generation of
+  :ref:`qgis_process command <processing_standalone>`, including its environment
+  settings like the distance units, area units, ellipsoid, and any tricky
+  parameter values like GeoPackage outputs with specific layers
+* |editCopy| :guilabel:`Copy as JSON`: all the settings of the command are copied in
+  a :file:`JSON` format, ready to be consumed by qgis_process.
+  This is a convenient way to see the expected format of the commands,
+  even for complex parameters (like TIN interpolation parameters).
+  You can store these easily and then restore them later by pasting the values.
+* |editPaste| :guilabel:`Paste Settings` in a :file:`JSON` format
+
+
+The :guilabel:`Run as Batch Process...` button triggers the :ref:`batch processing
 mode <processing_batch>` allowing to configure and run multiple instances of
 the algorithm with a variety of parameters.
+A :guilabel:`Run as Single Process...` helps you switch back from the batch mode.
+
+When an algorithm execution finishes (either successfully or not), a new button
+:guilabel:`Change Parameters` is shown as long as the :guilabel:`Log` tab is active.
+
+.. _alg_override_setting:
+
+Override algorithm settings
+............................
+
+Triggered from within the :guilabel:`Advanced` drop-down menu at the bottom of an algorithm dialog,
+the |settings| :guilabel:`Algorithm Settings...` shows a panel
+allowing users to control general processing settings which apply to that algorithm execution only.
+It is intended to be a place where a user can override their :ref:`global processing settings <processing_general_settings>`
+on an ad-hoc basis without having to change their usual default settings.
+
+Settings that can be overridden are:
+
+* :guilabel:`Invalid feature filtering`: unlike the existing per-parameter setting override for this,
+  setting the handling method here will apply to **ALL inputs** for the algorithm
+* :guilabel:`Calculation settings`, such as :guilabel:`Distance units` and :guilabel:`Area units`
+  to use for distance/area measurements
+* :guilabel:`Environment settings`, such as :guilabel:`Temporary folder` and :guilabel:`Number of threads to use`
 
 
 A note on projections
@@ -382,11 +487,19 @@ to a temporary file and deleted once you exit QGIS).
 
 .. |clearConsole| image:: /static/common/iconClearConsole.png
    :width: 1.5em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em
 .. |editCopy| image:: /static/common/mActionEditCopy.png
    :width: 1.5em
+.. |editPaste| image:: /static/common/mActionEditPaste.png
+   :width: 1.5em
+.. |favorites| image:: /static/common/mIconFavorites.png
+   :width: 1.5em
 .. |fileSave| image:: /static/common/mActionFileSave.png
+   :width: 1.5em
+.. |iterate| image:: /static/common/mIconIterate.png
+   :width: 1.5em
+.. |mapIdentification| image:: /static/common/mActionMapIdentification.png
    :width: 1.5em
 .. |options| image:: /static/common/mActionOptions.png
    :width: 1em
@@ -401,4 +514,8 @@ to a temporary file and deleted once you exit QGIS).
 .. |pythonFile| image:: /static/common/mIconPythonFile.png
    :width: 1.5em
 .. |search| image:: /static/common/search.png
+   :width: 1.5em
+.. |settings| image:: /static/common/settings.png
+   :width: 1.5em
+.. |terminal| image:: /static/common/mActionTerminal.png
    :width: 1.5em

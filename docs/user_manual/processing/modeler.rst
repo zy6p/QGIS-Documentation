@@ -1,6 +1,6 @@
 .. _`processing.modeler`:
 
-The graphical modeler
+The model designer
 =====================
 
 .. only:: html
@@ -8,20 +8,20 @@ The graphical modeler
    .. contents::
       :local:
 
-The *graphical modeler* allows you to create complex models using
+The *model designer* allows you to create complex models using
 a simple and easy-to-use interface.
 When working with a GIS, most analysis operations are not
 isolated, rather part of a chain of operations.
-Using the graphical modeler, that chain of operations can be wrapped
+Using the model designer, that chain of operations can be wrapped
 into a single process, making it convenient to execute later with a
 different set of inputs.
 No matter how many steps and different algorithms it involves, a
 model is executed as a single algorithm, saving time and effort.
 
-The graphical modeler can be opened from the Processing menu
-(:menuselection:`Processing --> Graphical Modeler`).
+The model designer can be opened from the Processing menu
+(:menuselection:`Processing --> Model Designer`).
 
-The graphical modeler interface
+The model designer interface
 -------------------------------
 
 .. _figure_modeler:
@@ -29,7 +29,7 @@ The graphical modeler interface
 .. figure:: img/modeler_canvas.png
    :align: center
 
-   Modeler
+   Model designer
 
 In its main part, the modeler has a working canvas where the structure
 of the model and the workflow it represents can be constructed.
@@ -61,6 +61,11 @@ Model menu
      -
      -
      - Sets the order in which inputs are presented to the user in the algorithm dialog.
+   * - :guilabel:`Reorder Output Layers...`
+     -
+     -
+     - Sets a specific order which the outputs from the model must use when loading the
+       results into a project.
    * - |fileOpen| :guilabel:`Open Model...`
      - :kbd:`Ctrl+O`
      - |checkbox|
@@ -188,7 +193,7 @@ View menu
    * - |checkbox| :guilabel:`Show Comments`
      -
      -
-     - Displays comments associated to every algorithm or input in the graphical designer
+     - Displays comments associated to every algorithm or input in the model designer
    * - |unchecked| :guilabel:`Enable Snapping`
      -
      -
@@ -258,60 +263,10 @@ Definition of inputs
 ....................
 
 The first step is to define the inputs for the model.
-The following elements are found in the :guilabel:`Inputs` panel on
-the left side of the modeler window:
-
-.. list-table:: List of parameter types for model building
-   :class: longtable
-
-   * - :class:`Annotation Layer <qgis.core.QgsProcessingParameterAnnotationLayer>`
-     - :class:`Authentication Configuration <qgis.core.QgsProcessingParameterAuthConfig>`
-     - :class:`Boolean <qgis.core.QgsProcessingParameterBoolean>`
-     - :class:`Color <qgis.core.QgsProcessingParameterColor>`
-     - :class:`Connection Name <qgis.core.QgsProcessingParameterProviderConnection>`
-   * - :class:`Coordinate Operation <qgis.core.QgsProcessingParameterCoordinateOperation>`
-     - :class:`CRS <qgis.core.QgsProcessingParameterCrs>`
-     - :class:`Database Schema <qgis.core.QgsProcessingParameterDatabaseSchema>`
-     - :class:`Database Table <qgis.core.QgsProcessingParameterDatabaseTable>`
-     - :class:`Datetime <qgis.core.QgsProcessingParameterDateTime>`
-   * - :class:`Distance <qgis.core.QgsProcessingParameterDistance>`
-     - :class:`Duration <qgis.core.QgsProcessingParameterDuration>`
-     - :class:`DXF Layers <qgis.core.QgsProcessingParameterDxfLayers>`
-     - :class:`Enum <qgis.core.QgsProcessingParameterEnum>`
-     - :class:`Expression <qgis.core.QgsProcessingParameterExpression>`
-   * - :class:`Extent <qgis.core.QgsProcessingParameterExtent>`
-     - :class:`Field Aggregates <qgis.core.QgsProcessingParameterAggregate>`
-     - :class:`Fields Mapper <qgis.core.QgsProcessingParameterFieldMapping>`
-     - :class:`File/Folder <qgis.core.QgsProcessingParameterFile>`
-     - :class:`Geometry <qgis.core.QgsProcessingParameterGeometry>`
-   * - :class:`Map Layer <qgis.core.QgsProcessingParameterMapLayer>`
-     - :class:`Map Theme <qgis.core.QgsProcessingParameterMapTheme>`
-     - :class:`Matrix <qgis.core.QgsProcessingParameterMatrix>`
-     - :class:`Mesh Dataset Groups <qgis.core.QgsProcessingParameterMeshDatasetGroups>`
-     - :class:`Mesh Dataset Time <qgis.core.QgsProcessingParameterMeshDatasetTime>`
-   * - :class:`Mesh Layer <qgis.core.QgsProcessingParameterMeshLayer>`
-     - :class:`Multiple Input <qgis.core.QgsProcessingParameterMultipleLayers>`
-     - :class:`Number <qgis.core.QgsProcessingParameterNumber>`
-     - :class:`Point <qgis.core.QgsProcessingParameterPoint>`
-     - :class:`Point Cloud Layer <qgis.core.QgsProcessingParameterPointCloudLayer>`
-   * - :class:`Print Layout <qgis.core.QgsProcessingParameterLayout>`
-     - :class:`Print Layout Item <qgis.core.QgsProcessingParameterLayoutItem>`
-     - :class:`Range <qgis.core.QgsProcessingParameterRange>`
-     - :class:`Raster Band <qgis.core.QgsProcessingParameterBand>`
-     - :class:`Raster Layer <qgis.core.QgsProcessingParameterRasterLayer>`
-   * - :class:`Scale <qgis.core.QgsProcessingParameterScale>`
-     - :class:`String <qgis.core.QgsProcessingParameterString>`
-     - :class:`TIN Creation Layers <qgis.core.QgsProcessingParameterTinInputLayers>`
-     - :class:`Vector Features <qgis.core.QgsProcessingParameterFeatureSource>`
-     - :class:`Vector Field <qgis.core.QgsProcessingParameterField>`
-   * - :class:`Vector Layer <qgis.core.QgsProcessingParameterVectorLayer>`
-     - :class:`Vector Tile Writer Layers <qgis.core.QgsProcessingParameterVectorTileWriterLayers>`
-     -
-     -
-     -
-
-.. note:: Hovering with the mouse over the inputs will show a tooltip with
-  additional information.
+They are found in the :guilabel:`Inputs` panel on the left side of the modeler window.
+Hovering with the mouse over the inputs will show a tooltip with additional information.
+For a full list of available parameters in modeler and their correspondance for scripting,
+please read :ref:`processing_algs_input_output`.
 
 When double-clicking on an element, a dialog is shown that lets
 you define its characteristics.
@@ -375,14 +330,12 @@ much in the same way as they are in the Processing toolbox.
    Model Inputs
 
 
-To add an algorithm to a model, double-click on its name or drag and
-drop it, just like for inputs. As for the inputs you can change the description
-of the algorithm and add a comment.
+To add an algorithm to a model, double-click on its name or drag and drop it, just like for inputs.
+As for the inputs you can change the description of the algorithm and add a comment.
 When adding an algorithm, an execution dialog will appear, with a content similar
-to the one found in the execution panel that is shown when executing the
-algorithm from the toolbox.
-The following picture shows both the ``Drape (set Z value from raster)`` and the
-``Climb along line`` algorithm dialogs.
+to the one found in the execution panel that is shown when executing the algorithm from the toolbox.
+The following picture shows both the ``Drape (set Z value from raster)``
+and the ``Climb along line`` algorithm dialogs.
 
 .. _figure_model_parameter_alg:
 
@@ -396,21 +349,34 @@ As you can see, there are however some differences.
 Each parameter has a drop-down menu next to it allowing to control
 how it will be served during the workflow:
 
-* |integer| ``Value``: allows you to set the parameter from a loaded
-  layer in the QGIS project or to browse a layer from a folder
-* |expression| ``Pre-calculated Value``: with this option you can open the
-  Expression Builder and define your own expression to fill the parameter. Model
-  inputs together with some other layer statistics are available as **variables**
-  and are listed at the top of the Search dialog of the Expression Builder
-* |processingModel| ``Model Input``: choose this option if the
-  parameter comes from an input of the model you have defined. Once clicked, this
-  option will list all the suitable inputs for the parameter
-* |processing| ``Algorithm Output``: is useful when the input
-  parameter of an algorithm is an output of another algorithm
-* **outputs parameters** have the addditional |processingOutput| ``Model Output``
-  option that makes the output of the algorithm available in the model.
-  If a layer generated by the algorithm is only to be used as input to another
-  algorithm, don't edit that text box.
+* |fieldInteger| :sup:`Value`: allows you to assign a static value to the parameter.
+  Depending on the parameter type, the widget will let you enter a number (``5.0``),
+  a string (``mytext``), select layer(s) loaded in the QGIS project or from a folder,
+  pick items from a list, ...
+* |expression| :sup:`Pre-calculated Value`: opens the :ref:`Expression Builder <vector_expressions>` dialog
+  and lets you define an expression to fill the parameter.
+  Model inputs together with some other layer statistics are available as **variables**
+  and are listed at the top of the Search dialog of the Expression Builder.
+  The expression is evaluated once before the child algorithm is executed
+  and used during the execution of that algorithm.
+* |processingModel| :sup:`Model Input`: allows to use an input added to the model as a parameter.
+  Once clicked, this option will list all the suitable inputs for the parameter.
+* |processingAlgorithm| :sup:`Algorithm Output`:
+  allows to use the output of another algorithm as an input of the current algorithm.
+  As of model inputs, this option will list all the suitable inputs for the parameter.
+* The **output parameter** also has the above options in its drop-down menu:
+
+  * add static outputs for child algorithms,
+    e.g. always saving a child algorithm's output to a predefined geopackage or postgres layer
+  * use an expression based output values for child algorithms,
+    e.g. generating an automatic file name based on today's date and saving outputs to that file
+  * use a model input,
+    e.g. the *File/Folder* model input to specify an output file or folder
+  * use another algorithm output,
+    e.g. the output of the *Create directory* algorithm (from *Modeler tools*)
+  * an addditional |modelOutput| :sup:`Model Output` option makes the output of the algorithm available in the model.
+    If a layer generated by the algorithm is only to be used as input to another algorithm,
+    don't edit that text box.
 
   In the following picture you can see the two input parameters defined as
   ``Model Input`` and the temporary output layer:
@@ -422,9 +388,8 @@ how it will be served during the workflow:
 
 You will also find an additional parameter named :guilabel:`Dependencies`
 that is not available when calling the algorithm from the toolbox.
-This parameter allows you to define the order in which algorithms are
-executed, by explicitly defining one algorithm as a *parent* of the current
-one.
+This parameter allows you to define the order in which algorithms are executed,
+by explicitly defining one algorithm as a *parent* of the current one.
 This will force the *parent* algorithm to be executed before the current one.
 
 When you use the output of a previous algorithm as the input of your
@@ -490,6 +455,22 @@ allowing you to change the order of the inputs:
 
    Reorder Model Inputs
 
+There is also the possibility to set a specific order which the outputs from
+the model must use when loading the results into a project. This gives the model
+creator a means of ensuring that layers are logically ordered on the canvas when
+running a model, such as placing a vector layer output over a raster layer output,
+or a point layer over a polygon layer.
+The model creator can also set an optional "Group name" for the outputs for 
+automatically grouping outputs within the layer tree using a new group name or by
+adding them to an existing group.
+In the ``Model`` menu you will find the ``Reorder Output Layers...`` entry and by
+clicking on it a new dialog pops up allowing you to change the order of the output
+layers:
+
+.. figure:: img/model_reorder_output_layers.png
+   :align: center
+
+   Reorder Output Layers
 
 Comments can also be added to inputs or algorithms present in the modeler.
 This can be done by going in the :guilabel:`Comment` tab of the item or with
@@ -512,7 +493,7 @@ Documenting your model
 ......................
 
 You need to document your model, and this can be done from the modeler itself.
-Click on the |processingHelp|:sup:`Edit model help` button, and a
+Click on the |editHelpContent|:sup:`Edit model help` button, and a
 dialog like the one shown next will appear.
 
 .. _figure_help_edition:
@@ -525,7 +506,8 @@ dialog like the one shown next will appear.
 On the right-hand side, you will see a simple HTML page, created using
 the description of the input parameters and outputs of the algorithm,
 along with some additional items like a general description of the
-model or its author.
+model or its author. Also, there is an Example section where you can
+input your own custom examples to help explain the usage of the model.
 The first time you open the help editor, all these descriptions are
 empty, but you can edit them using the elements on the left-hand side
 of the dialog.
@@ -685,9 +667,13 @@ it.
    :width: 1.5em
 .. |editCut| image:: /static/common/mActionEditCut.png
    :width: 1.5em
+.. |editHelpContent| image:: /static/common/mActionEditHelpContent.png
+   :width: 1.5em
 .. |editPaste| image:: /static/common/mActionEditPaste.png
    :width: 1.5em
 .. |expression| image:: /static/common/mIconExpression.png
+   :width: 1.5em
+.. |fieldInteger| image:: /static/common/mIconFieldInteger.png
    :width: 1.5em
 .. |fileOpen| image:: /static/common/mActionFileOpen.png
    :width: 1.5em
@@ -697,17 +683,13 @@ it.
    :width: 1.5em
 .. |helpContents| image:: /static/common/mActionHelpContents.png
    :width: 1.5em
-.. |integer| image:: /static/common/mIconFieldInteger.png
+.. |modelOutput| image:: /static/common/mIconModelOutput.png
    :width: 1.5em
 .. |play| image:: /static/common/mActionPlay.png
    :width: 1.5em
-.. |processing| image:: /static/common/processingAlgorithm.png
-   :width: 1.5em
-.. |processingHelp| image:: /static/common/mActionEditHelpContent.png
+.. |processingAlgorithm| image:: /static/common/processingAlgorithm.png
    :width: 1.5em
 .. |processingModel| image:: /static/common/processingModel.png
-   :width: 1.5em
-.. |processingOutput| image:: /static/common/mIconModelOutput.png
    :width: 1.5em
 .. |qgsProjectFile| image:: /static/common/mIconQgsProjectFile.png
    :width: 1.5em
@@ -729,7 +711,7 @@ it.
    :width: 1.5em
 .. |success| image:: /static/common/mIconSuccess.png
    :width: 1em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em
 .. |undo| image:: /static/common/mActionUndo.png
    :width: 1.5em

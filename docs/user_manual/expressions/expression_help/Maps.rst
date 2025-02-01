@@ -21,7 +21,7 @@ Loads a JSON formatted string.
    * - Arguments
      - * **string** - JSON string
    * - Examples
-     - * ``from_json('{"qgis":"rocks"}')`` → { 'qgis': 'rocks' }
+     - * ``from_json('{"1":"one","2":"two"}')`` → { '1': 'one', '2': 'two' }
        * ``from_json('[1,2,3]')`` → [1,2,3]
 
 
@@ -155,7 +155,7 @@ Returns a map with the given key and its corresponding value deleted.
 map_exist
 .........
 
-Returns true if the given key exists in the map.
+Returns TRUE if the given key exists in the map.
 
 .. list-table::
    :widths: 15 85
@@ -166,7 +166,7 @@ Returns true if the given key exists in the map.
      - * **map** - a map
        * **key** - the key to lookup
    * - Examples
-     - * ``map_exist(map('1','one','2','two'),'3')`` → false
+     - * ``map_exist(map('1','one','2','two'),'3')`` → FALSE
 
 
 .. end_map_exist_section
@@ -252,10 +252,50 @@ Merge map elements into a hstore-formatted string.
    * - Arguments
      - * **map** - the input map
    * - Examples
-     - * ``map_to_hstore(map('qgis','rocks'))`` → '"qgis"=>"rocks"'
+     - * ``map_to_hstore(map('1','one','2','two'))`` → '"1"=>"one"','"2"=>"two"'
 
 
 .. end_map_to_hstore_section
+
+.. _expression_function_Maps_map_to_html_dl:
+
+map_to_html_dl
+..............
+
+Merge map elements into a HTML definition list string.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - map_to_html_dl(map)
+   * - Arguments
+     - * **map** - the input map
+   * - Examples
+     - * ``map_to_html_dl(map('1','one','2','two'))`` → <dl><dt>1</dt><dd>one</dd><dt>2</dt><dd>two</dd></dl>
+
+
+.. end_map_to_html_dl_section
+
+.. _expression_function_Maps_map_to_html_table:
+
+map_to_html_table
+.................
+
+Merge map elements into a HTML table string.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - map_to_html_table(map)
+   * - Arguments
+     - * **map** - the input map
+   * - Examples
+     - * ``map_to_html_table(map('1','one','2','two'))`` → <table><thead><tr><th>1</th><th>2</th></tr></thead><tbody><tr><td>one</td><td>two</td></tr></tbody></table>
+
+
+.. end_map_to_html_table_section
 
 .. _expression_function_Maps_to_json:
 
@@ -272,7 +312,7 @@ Create a JSON formatted string from a map, array or other value.
    * - Arguments
      - * **value** - The input value
    * - Examples
-     - * ``to_json(map('qgis','rocks'))`` → {"qgis":"rocks"}
+     - * ``to_json(map('1','one','2','two'))`` → {"1":"one","2":"two"}
        * ``to_json(array(1,2,3))`` → [1,2,3]
 
 

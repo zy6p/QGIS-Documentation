@@ -57,6 +57,11 @@ are:
 * :guilabel:`Exclude item from exports` in the :ref:`item properties
   <layout_Rendering_Mode>` panel
 
+Moreover, a number of predefined checks are automatically applied to the layout.
+Currently these checks include testing that scalebars are correctly linked to map items,
+and that map overview items are also correctly linked to a map.
+If the checks fail, you are shown a nice warning advising you of the issue.
+
 
 .. _export_layout_image:
 
@@ -109,13 +114,16 @@ To export a layout as an image:
 
      The :guilabel:`Crop to content` dialog also lets you add margins around
      the cropped bounds.
+  
+   * By checking |checkbox| :guilabel:`Open file after exporting` the exported 
+     file will automatically open in the default image viewer. 
 
 .. _figure_layout_output_image:
 
 .. figure:: img/image_export_options.png
    :align: center
 
-   Image Export Options, output is resized to items extent
+   Image Export Options
 
 .. tip::
    **Use image formats that support transparency when items extend
@@ -181,6 +189,8 @@ To export a layout as SVG:
      Sometimes, this can cause visible "seams" in the rasters
      for generated files. Checking this option would fix that, at the cost of a
      higher memory usage during exports.
+   * By checking |checkbox| :guilabel:`Open file after exporting` the exported 
+     file will automatically open in the default SVG viewer. 
 
 .. _figure_layout_output_svg:
 
@@ -215,6 +225,13 @@ To export a layout as PDF:
      keep the objects as vectors with the risk that the appearance of the output
      file may not match the print layout preview (for more details, see
      :ref:`layout_export_settings`).
+
+     .. note:: **Mind opacity settings for vector layers**
+   
+      When you set a layer-wide opacity (or opacity for any vector symbology)
+      to less than 100%, it forces a rasterized rendering of those objects during PDF exports.
+      Depending on the size of the layer, this may considerably increase the PDF file size.
+      
    * |checkbox| :guilabel:`Append georeference information`: available only if
      the :ref:`reference map <reference_map>`, from which the information is taken,
      is on the first page.
@@ -234,8 +251,8 @@ To export a layout as PDF:
      * or :guilabel:`Lossless`, which creates bigger files in most cases, but is
        much more suitable for printing outputs or for post-production in external
        applications (requires Qt 5.13 or later).
-   * |unchecked| :guilabel:`Create Geospatial PDF (GeoPDF)`:
-     Generate a georeferenced PDF file (requires GDAL version 3 or later).
+   * |unchecked| :guilabel:`Create Geospatial PDF`:
+     Generate a georeferenced PDF file.
    * |unchecked| :guilabel:`Disable tiled raster layer exports`: When exporting
      files, QGIS uses tiled based rendering that saves memory.
      Sometimes, this can cause visible "seams" in the rasters for generated files.
@@ -248,6 +265,8 @@ To export a layout as PDF:
      than ``1/600 inch`` apart will be removed).
      This can reduce the size and complexity of the export file (very large
      files can fail to load in other applications).
+   * By checking |checkbox| :guilabel:`Open file after exporting` the exported 
+     file will automatically open in the default PDF viewer.
 
 
 .. _figure_layout_output_pdf:
@@ -257,16 +276,20 @@ To export a layout as PDF:
 
    PDF Export Options
 
-.. note:: Since QGIS 3.10, with GDAL 3, GeoPDF export is supported, and a number
-   of GeoPDF specific options are available:
+.. note:: Geospatial PDF export is supported, and a number of Geospatial PDF specific options
+   are available:
    
-   * :guilabel:`Format` (GeoPDF format - there are some GeoPDF variations),
+   * :guilabel:`Format` (Geospatial PDF format - there are some variations),
    * :guilabel:`Include multiple map themes` (specify map themes to include),
    * :guilabel:`Include vector feature information` (choose the layers and
      group them into logical PDF groups).
 
+     .. When expanding on the Geospatial PDF description,
+      mention also the "Geospatial PDF group" property of layout items?
+
 .. note:: Exporting a print layout to formats that supports georeferencing
    (e.g. ``PDF`` and ``TIFF``) creates a georeferenced output by default.
+
 
 .. index:: Atlas generation
 
@@ -395,7 +418,7 @@ generated atlas::
 Explore Data-defined override buttons with atlas
 ------------------------------------------------
 
-There are several places where you can use a |dataDefined|
+There are several places where you can use a |dataDefine|
 :sup:`Data defined override` button to override the selected setting.
 This is particularly useful with atlas generation.
 See :ref:`data_defined` for more details on this widget.
@@ -409,12 +432,12 @@ a label item.
 When the height (north-south) of a region extent is greater than its
 width (east-west), you should use *Portrait* instead of *Landscape*
 orientation to optimize the use of paper.
-With a |dataDefined| :sup:`Data Defined Override` button you can
+With a |dataDefine| :sup:`Data Defined Override` button you can
 dynamically set the paper orientation.
 
 Right-click on the page and select :guilabel:`Page Properties` to open the
 panel. We want to set the orientation dynamically, using an expression
-depending on the region geometry, so press the |dataDefined| button of
+depending on the region geometry, so press the |dataDefine| button of
 field :guilabel:`Orientation`, select :guilabel:`Edit...` to open the
 :guilabel:`Expression string builder` dialog and enter the following
 expression:
@@ -427,14 +450,14 @@ expression:
 Now if you :ref:`preview the atlas <atlas_preview>`, the paper orients itself
 automatically, but item placements may not be ideal. For each Region you need to
 reposition the location of the layout items as well. For the map item you can
-use the |dataDefined| button of its :guilabel:`Width` property to set it
+use the |dataDefine| button of its :guilabel:`Width` property to set it
 dynamic using the following expression:
 
 .. code::
 
    @layout_pagewidth - 20
 
-Likewise, use the |dataDefined| button of the :guilabel:`Height` property to
+Likewise, use the |dataDefine| button of the :guilabel:`Height` property to
 provide the following expression to constrain map item size:
 
 .. code::
@@ -619,7 +642,7 @@ the related child features following the parent's identifier.
    :width: 1.5em
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em
 .. |filePrint| image:: /static/common/mActionFilePrint.png
    :width: 1.5em
@@ -633,5 +656,5 @@ the related child features following the parent's identifier.
    :width: 1.5em
 .. |selectString| image:: /static/common/selectstring.png
    :width: 2.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em

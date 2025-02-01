@@ -1,9 +1,7 @@
-Sphinx
+pyYAML
+Sphinx==7.4.6
+sphinx_copybutton
 sphinx-intl
-sphinx_rtd_theme
-sphinx-intl[transifex]
-sphinxext-rediraffe
+sphinx_rtd_theme==2.0.0
 sphinx_togglebutton
-transifex-client
-PyYAML
-pdflatex
+sphinxext-rediraffe

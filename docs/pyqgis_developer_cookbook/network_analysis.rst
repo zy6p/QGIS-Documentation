@@ -383,6 +383,8 @@ uses the :meth:`shortestTree() <qgis.analysis.QgsGraphAnalyzer.shortestTree>` me
     vectorLayer = QgsVectorLayer('testdata/network.gpkg|layername=network_lines', 'lines')
     builder = QgsGraphBuilder(vectorLayer.sourceCrs())
     director = QgsVectorLayerDirector(vectorLayer, -1, '', '', '', QgsVectorLayerDirector.DirectionBoth)
+    strategy = QgsNetworkDistanceStrategy()
+    director.addStrategy(strategy)
 
     startPoint = QgsPointXY(1179661.925139,5419188.074362)
     endPoint = QgsPointXY(1180942.970617,5420040.097560)
@@ -517,7 +519,7 @@ Here is an example
     pStart = QgsPointXY(1179661.925139, 5419188.074362)
     delta = iface.mapCanvas().getCoordinateTransform().mapUnitsPerPixel() * 1
 
-    rb = QgsRubberBand(iface.mapCanvas(), True)
+    rb = QgsRubberBand(iface.mapCanvas())
     rb.setColor(Qt.green)
     rb.addPoint(QgsPointXY(pStart.x() - delta, pStart.y() - delta))
     rb.addPoint(QgsPointXY(pStart.x() + delta, pStart.y() - delta))
@@ -546,7 +548,7 @@ Here is an example
 
     for i in upperBound:
         centerPoint = graph.vertex(i).point()
-        rb = QgsRubberBand(iface.mapCanvas(), True)
+        rb = QgsRubberBand(iface.mapCanvas())
         rb.setColor(Qt.red)
         rb.addPoint(QgsPointXY(centerPoint.x() - delta, centerPoint.y() - delta))
         rb.addPoint(QgsPointXY(centerPoint.x() + delta, centerPoint.y() - delta))

@@ -30,7 +30,7 @@ Here are only some of the reasons:
   anything, you can turn to the extensive documentation, your fellow QGIS
   users, or even the developers.
 
-- *Cross-platform.* QGIS can be installed on MacOS, Windows and Linux.
+- *Cross-platform.* QGIS can be installed on macOS, Windows and Linux.
 
 Now that you know why you want to use QGIS, these exercises will make you
 know how.
@@ -117,14 +117,13 @@ of the core content and be published under the same license.
 
 Authors
 -------
-* Rüdiger Thiede (rudi@linfiniti.com) - Rudi has written the QGIS instructional
+* Rüdiger Thiede - Rudi has written the QGIS instructional
   materials and parts of the PostGIS materials.
-* Tim Sutton (tim@linfiniti.com) - Tim has overseen and guided the project and
-  co-authored the PostgreSQL and PostGIS parts. Tim also authored the custom
-  sphinx theme used for this manual.
+* Tim Sutton (tim@kartoza.com) - Tim has overseen and guided the project and
+  co-authored the PostgreSQL and PostGIS parts.
 * Horst Düster (horst.duester@kappasys.ch ) - Horst co-authored the PostgreSQL
   and PostGIS parts
-* Marcelle Sutton (marcelle@linfiniti.com) - Marcelle provided proof-reading
+* Marcelle Sutton - Marcelle provided proof-reading
   and editorial advice during the creation of this work.
 
 Individual Contributors

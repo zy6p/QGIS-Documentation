@@ -38,6 +38,28 @@ Parameters
        Default: The first band of the input layer
      - If the raster is multiband, choose the band you want to
        convert
+   * - **Source NoData**
+
+       Optional
+     - ``NODATA_INPUT``
+     - [number]
+
+       Default: None
+     - Input pixel value to treat as "NoData" (GDAL >= 3.7).
+   * - **Destination NoData**
+
+       Optional
+     - ``NODATA_OUTPUT``
+     - [number]
+
+       Default: None
+     - Assign specified "NoData" value to output (GDAL >= 3.7).
+   * - **Do not output NoData values**
+     - ``SKIP_NODATA``
+     - [boolean]
+
+       Default: False
+     - Do not output "NoData" values (GDAL >= 3.3).
    * - **Output comma-separated values**
      - ``CSV``
      - [boolean]
@@ -136,7 +158,7 @@ Parameters
        .. include:: ../algs_include.rst
           :start-after: **file_output_types**
           :end-before: **end_file_output_types**
-  
+
 Outputs
 .......
 
@@ -346,7 +368,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Output data type**
      - ``DATA_TYPE``
@@ -356,18 +378,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Use Input Layer Data Type
-       * 1 --- Byte
-       * 2 --- Int16
-       * 3 --- UInt16
-       * 4 --- UInt32
-       * 5 --- Int32
-       * 6 --- Float32
-       * 7 --- Float64
-       * 8 --- CInt16
-       * 9 --- CInt32
-       * 10 --- CFloat32
-       * 11 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types_extended**
+          :end-before: **end_raster_data_types_extended**
 
 Outputs
 .......
@@ -512,14 +525,14 @@ Basic parameters
      - ``TARGET_CRS``
      - [crs]
      - Specify a projection for the output file
-   * - **Assign a specified nodata value to output bands**
-       
+   * - **Assign a specified NoData value to output bands**
+
        Optional
      - ``NODATA``
      - [number]
 
        Default: Not set
-     - Defines the value to use for nodata in the output raster
+     - Defines the value to use for NoData in the output raster
    * - **Copy all subdatasets of this file to individual output files**
      - ``COPY_SUBDATASETS``
      - [boolean]
@@ -562,13 +575,13 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
        Optional
      - ``EXTRA``
-     - [string]   
+     - [string]
 
        Default: None
      - Add extra GDAL command line options
@@ -580,18 +593,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Use Input Layer Data Type
-       * 1 --- Byte
-       * 2 --- Int16
-       * 3 --- UInt16
-       * 4 --- UInt32
-       * 5 --- Int32
-       * 6 --- Float32
-       * 7 --- Float64
-       * 8 --- CInt16
-       * 9 --- CInt32
-       * 10 --- CFloat32
-       * 11 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types_extended**
+          :end-before: **end_raster_data_types_extended**
 
 Outputs
 .......

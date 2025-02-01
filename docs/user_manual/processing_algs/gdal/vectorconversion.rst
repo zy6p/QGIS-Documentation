@@ -36,6 +36,13 @@ Basic parameters
      - ``INPUT``
      - [vector: any]
      - Input vector layer
+   * - **Convert all layers from dataset**
+     - ``CONVERT_ALL_LAYERS``
+     - [boolean]
+
+       Default: False
+     - Converts the whole dataset.
+       Supported output formats for this option are :file:`GPKG` and :file:`GML`.
    * - **Converted**
      - ``OUTPUT``
      - [same as input]
@@ -334,8 +341,6 @@ Basic parameters
        Default: 0.0
      - A fixed value to burn into a band for all features.
    * - **Burn value extracted from the "Z" values of the feature**
-
-       Optional
      - ``USE_Z``
      - [boolean]
 
@@ -371,6 +376,8 @@ Basic parameters
        resolution (if size units is "Georeferenced units") of the
        output raster.
    * - **Output extent**
+
+       Optional
      - ``EXTENT``
      - [extent]
      - Extent of the output raster layer.
@@ -381,14 +388,14 @@ Basic parameters
           :start-after: **extent_options**
           :end-before: **end_extent_options**
 
-   * - **Assign a specified nodata value to output bands**
+   * - **Assign a specified NoData value to output bands**
 
        Optional
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - Assigns a specified nodata value to output bands
+     - Assigns a specified NoData value to output bands
    * - **Rasterized**
      - ``OUTPUT``
      - [raster]
@@ -430,7 +437,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Output data type**
      - ``DATA_TYPE``
@@ -441,17 +448,9 @@ Advanced parameters
 
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
    * - **Pre-initialize the output image with value**
 
@@ -459,7 +458,7 @@ Advanced parameters
      - ``INIT``
      - [number]
      - Pre-initializes the output image bands with this value.
-       Not marked as the nodata value in the output file.
+       Not marked as the NoData value in the output file.
        The same value is used in all the bands.
    * - **Invert rasterization**
      - ``INVERT``
@@ -469,6 +468,14 @@ Advanced parameters
      - Burns the fixed burn value, or the burn value associated
        with the first feature into all parts of the image not
        inside the provided polygon.
+   *  - **Additional command-line parameters**
+
+        Optional
+      - ``EXTRA``
+      - [string]
+
+        Default: ''
+      - Add extra GDAL command line options
 
 Outputs
 .......

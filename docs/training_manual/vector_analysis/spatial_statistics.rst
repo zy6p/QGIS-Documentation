@@ -1,4 +1,4 @@
-|LS| Spatial Statistics
+Lesson: Spatial Statistics
 ======================================================================
 
 .. note:: Lesson developed by Linfiniti and S Motala (Cape Peninsula
@@ -11,7 +11,7 @@ QGIS includes many useful tools for statistical analysis.
 **The goal for this lesson:** To know how to use QGIS' spatial
 statistics tools within the :guilabel:`Processing Toolbox`.
 
-|basic| |FA| Create a Test Dataset
+:abbr:`★☆☆ (Basic level)` Follow Along: Create a Test Dataset
 ----------------------------------------------------------------------
 
 We will create a random set of points, to get a dataset to work with.
@@ -101,7 +101,7 @@ that red points are at a higher altitude.
 You will be using this sample layer for the rest of the statistical
 exercises.
 
-|basic| |FA| Basic Statistics
+:abbr:`★☆☆ (Basic level)` Follow Along: Basic Statistics
 ----------------------------------------------------------------------
 
 Now get the basic statistics for this layer.
@@ -168,8 +168,8 @@ Missing (null) values
   The number of missing values.
 
 
-|basic| |FA| Compute statistics on distances between points
-----------------------------------------------------------------------
+:abbr:`★☆☆ (Basic level)` Follow Along: Compute statistics on distances between points
+---------------------------------------------------------------------------------------
 
 #. Create a new temporary point layer.
 #. Enter edit mode, and digitize three points somewhere among the
@@ -184,15 +184,17 @@ To generate statistics on the distances between points in the two
 layers:
 
 #. Open the :menuselection:`Vector Analysis --> Distance matrix` tool.
-#. Select the ``distance_points`` layer as the input layer, and the
-   ``Sampled Points`` layer as the target layer.
-#. Set it up like this:
+#. Select the ``distance_points`` layer as the input layer,
+   and the ``Sampled Points`` layer as the target layer.
+#. Set their ``id`` field as unique field references
+#. Change the :guilabel:`Output matrix type` option into :guilabel:`Summary distance matrix`.
+#. set value of :guilabel:`Use only the nearest (k) target points` to ``2``.
+#. If you want you can save the output layer as a file or just run the
+   algorithm and save the temporary output layer later.
 
    .. figure:: img/distance_matrix_setup.png
       :align: center
 
-#. If you want you can save the output layer as a file or just run the
-   algorithm and save the temporary output layer later.
 #. Click :guilabel:`Run` to generate the distance matrix layer.
 #. Open the attribute table of the generated layer: values refer to
    the distances between the :guilabel:`distance_points` features and
@@ -202,15 +204,16 @@ layers:
       :align: center
 
 With these parameters, the *Distance Matrix* tool calculates distance
-statistics for each point of the input layer with respect to the
-nearest points of the target layer.
+statistics for each point of the input layer with respect to their
+two nearest points in the target layer.
 The fields of the output layer contain the mean, standard deviation,
-minimum and maximum for the distances to the nearest neighbors of the
-points in the input layer.
+minimum and maximum for the calculated distances.
 
+For further testing, you may want to modify the :guilabel:`Output matrix type` option
+or the number of target points.
 
-|basic| |FA| Nearest Neighbor Analysis (within layer)
-----------------------------------------------------------------------
+:abbr:`★☆☆ (Basic level)` Follow Along: Nearest Neighbor Analysis (within layer)
+---------------------------------------------------------------------------------
 
 To do a nearest neighbor analysis of a point layer:
 
@@ -229,7 +232,7 @@ To do a nearest neighbor analysis of a point layer:
    .. figure:: img/nearest_neighbour_example.png
      :align: center
 
-|basic| |FA| Mean Coordinates
+:abbr:`★☆☆ (Basic level)` Follow Along: Mean Coordinates
 ----------------------------------------------------------------------
 
 To get the mean coordinates of a dataset:
@@ -256,7 +259,7 @@ represent the average of all node coordinates.
 .. figure:: img/polygon_centroid_mean.png
    :align: center
 
-|basic| |FA| Image Histograms
+:abbr:`★☆☆ (Basic level)` Follow Along: Image Histograms
 ----------------------------------------------------------------------
 
 The histogram of a dataset shows the distribution of its values.
@@ -291,8 +294,8 @@ compressed vertically.
 By zooming in to cover everything but the peak at ``0``, you will see
 more details:
 
-   .. figure:: img/histogram_export_zoom.png
-      :align: center
+.. figure:: img/histogram_export_zoom.png
+   :align: center
 
 .. note:: If the mean and maximum values are not the same as above, it
    can be due to the min/max value calculation.
@@ -305,7 +308,7 @@ Keep in mind that a histogram shows you the distribution of
 values, and not all values are necessarily visible on the graph.
 
 
-|basic| |FA| Spatial Interpolation
+:abbr:`★☆☆ (Basic level)` Follow Along: Spatial Interpolation
 ----------------------------------------------------------------------
 
 Let's say you have a collection of sample points from which you would
@@ -336,8 +339,8 @@ As you can see, 100 sample points aren't really enough to get a
 detailed impression of the terrain.
 It gives a very general idea, but it can be misleading as well.
 
-|moderate| |TY| Different interpolation methods
-----------------------------------------------------------------------
+:abbr:`★★☆ (Moderate level)` Try Yourself: Different interpolation methods
+---------------------------------------------------------------------------
 
 #. Use the processes shown above to create a set of 10 000 random
    points
@@ -362,14 +365,14 @@ density of sample points. Remember, larger samples give better
 results.
 
 
-|IC|
+In Conclusion
 ----------------------------------------------------------------------
 
 QGIS has a number of tools for analyzing the spatial statistical
 properties of datasets.
 
 
-|WN|
+What's Next?
 ----------------------------------------------------------------------
 
 Now that we have covered vector analysis, why not see what can be
@@ -383,17 +386,10 @@ That is what we will do in the next module!
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |FA| replace:: Follow Along:
-.. |IC| replace:: In Conclusion
-.. |LS| replace:: Lesson:
-.. |TY| replace:: Try Yourself
-.. |WN| replace:: What's Next?
-.. |basic| image:: /static/common/basic.png
 .. |editCopy| image:: /static/common/mActionEditCopy.png
    :width: 1.5em
 .. |fileSave| image:: /static/common/mActionFileSave.png
    :width: 1.5em
-.. |moderate| image:: /static/common/moderate.png
 .. |radioButtonOn| image:: /static/common/radiobuttonon.png
    :width: 1.5em
 .. |sum| image:: /static/common/mActionSum.png

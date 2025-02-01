@@ -19,8 +19,8 @@ follow, the tricks you can use and the traps you should be aware of.
 
 For any help, do not hesitate to either ask in a comment on the issue report you
 are trying to fix or write to the `QGIS-community-team list
-<https://lists.osgeo.org/mailman/listinfo/qgis-community-team>`_. More details at
-`Get involved in documentation <https://qgis.org/en/site/getinvolved/document.html>`_.
+<https://lists.osgeo.org/mailman/listinfo/qgis-community-team>`_.
+Read general information on `QGIS community support <https://qgis.org/resources/support/>`_.
 
 Let's now dive into the process.
 
@@ -30,8 +30,8 @@ A list of issues to fix and features to explain can be found at
 https://github.com/qgis/QGIS-Documentation/issues.
 
 .. tip:: If you are a first-time contributor and do not know where to start from,
-  you may be interested in tackling our `welcoming reports
-  <https://github.com/qgis/QGIS-Documentation/issues?q=is%3Aissue+is%3Aopen+label%3AEasy>`_.
+  you may be interested in tackling our `welcoming issue reports
+  <https://github.com/qgis/QGIS-Documentation/contribute>`_.
 
 There are two main ways, not mutually exclusive, to modify the files:
 
@@ -51,7 +51,7 @@ The GitHub web interface allows you to do the following:
 * create, update, or delete branches
 
 If you are not yet familiar with git and GitHub vocabulary, you may want to
-read the GitHub `Hello-world <https://guides.github.com/activities/hello-world/>`_
+read the GitHub `Hello-world <https://docs.github.com/en/get-started/quickstart/hello-world>`_
 project to learn some basic vocabulary and actions that will be used below.
 
 .. note:: **If you are fixing a reported issue**
@@ -84,6 +84,8 @@ There are different ways to contribute to QGIS documentation. We show
 them separately below, but you can switch from one process to the other
 without any harm.
 
+.. _edit_on_github:
+
 Alternative 1: Use the ``Edit on GitHub`` shortcut
 ..................................................
 
@@ -99,8 +101,9 @@ Pages on the QGIS documentation website can be edited quickly and easily by clic
    guidelines <QGIS-documentation-guidelines>`.
 
 #. When you finish, make a short comment about your changes and click on
-   :guilabel:`Propose changes`. This will generate a
-   new `branch <https://help.github.com/articles/about-branches/>`_ (``patch-xxx``) in your repository.
+   :guilabel:`Propose changes`. This will generate a new `branch
+   <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches>`_
+   (``patch-xxx``) in your repository.
 
 #. After you click on :guilabel:`Propose changes`, github will navigate to
    the :guilabel:`Comparing changes` page.
@@ -124,13 +127,33 @@ Alternative 2: Create an ad hoc branch in your documentation repository
 
 You can edit files directly from your fork of the QGIS Documentation.
 
-Click on |githubBranch| in the upper left corner of your forked QGIS-
-Documentation repository and enter a unique name in the text field to create a
-new `branch <https://help.github.com/articles/about-branches/>`_ .
-The name of the new branch should relate to the problem you intend to fix. The
-|githubBranch| button should now say :guilabel:`Branch: branch_name`
+First, make sure that your ``master`` branch is up to date with ``qgis:master`` branch.
+To do so:
 
-.. tip:: **Do your changes in an ad hoc branch, never in the** ``master`` **branch**
+#. Go to the main page of your repository, i.e. ``https://github.com/<YourName>/QGIS-Documentation``.
+   The ``master`` branch should be active with a mention whether it is up to date
+   with ``qgis/QGIS-Documentation:master`` or not.
+
+   If it has commits ahead the upstream branch, you better use the previous
+   :ref:`shortcut button alternative <edit_on_github>` until you align your ``master`` branch.
+
+   If it only has commits behind:
+
+   #. Expand the :guilabel:`Fetch Upstream` drop-down menu on the right. You can
+
+      * :guilabel:`Compare` the branches and see new changes in the main repository
+      * :guilabel:`Fetch and merge`: takes changes from the upstream branch to yours.
+   #. Let's click :guilabel:`Fetch and merge`: after the process, your branch is
+      mentioned as up to date with ``qgis/QGIS-Documentation:master``.
+
+#. Click on |githubBranch| in the upper left corner of your forked
+   QGIS-Documentation repository and enter a unique name in the text field to create a
+   new `branch <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches>`_ .
+   The name of the new branch should relate to the problem you intend to fix. The
+   |githubBranch| button should now say :guilabel:`Branch: branch_name`
+#. You are ready to start new changes on top of it.
+
+.. attention:: **Do your changes in an ad hoc branch, never in the** ``master`` **branch**
 
    By convention, avoid making changes in your ``master`` branch except when
    you merge the modifications from the ``master`` branch of ``qgis/QGIS-Documentation``
@@ -218,7 +241,7 @@ Click the :guilabel:`Create pull request` button.
 
 .. warning:: **If you see** |githubCantMerge|
 
-    This means that there are `conflicts <https://help.github.com/articles/addressing-merge-conflicts/>`_.
+    This means that there are `conflicts <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts>`_.
     The files that you are modifying are not up to date with the branch you are
     targeting because someone else has made a commit that conflicts with your
     changes. You can still create the pull request but you'll need to fix any
@@ -249,7 +272,7 @@ Review and comment pull request
 
 As seen above, anyone can submit modifications to the documentation through pull
 requests. Likewise anyone can review pull requests with questions and `comments
-<https://help.github.com/articles/commenting-on-a-pull-request/>`_. Perhaps the
+<https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/commenting-on-a-pull-request>`_. Perhaps the
 writing style doesn't match the project guidelines, the change is missing some major
 details or screenshots, or maybe everything looks great and is in order.
 Reviewing helps to improve the quality of the contribution, both in form and
@@ -282,7 +305,7 @@ Specific line comments can be published either:
   allows you to structure your review, edit the comments, publish when you are
   ready and send a single notification to the repository followers and not one
   notification for each comment. Get `more details
-  <https://help.github.com/en/articles/reviewing-proposed-changes-in-a-pull-request>`_.
+  <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request>`_.
 
 .. figure:: img/githubAddLineComment.png
     :align: Center
@@ -431,7 +454,7 @@ Alternatively you can clone your QGIS repository using the SSH protocol:
 
    If you get a Permission denied (publickey) error with the former command,
    there may be a problem with your SSH key. See `GitHub help 
-   <https://help.github.com/articles/error-permission-denied-publickey/>`_ for details.
+   <https://docs.github.com/en/authentication/troubleshooting-ssh/error-permission-denied-publickey>`_ for details.
 
 Check the following if you used the SSH protocol:
 
@@ -607,19 +630,20 @@ Further reading
   merge is possible:
 
   * if the conflict relates to few competing lines, a :guilabel:`Resolve conflicts`
-    button is available in the Github pull request page. Press the button
-    and resolve the issue as explained at
-    https://help.github.com/articles/resolving-a-merge-conflict-on-github/
+    button is available in the GitHub pull request page. Press the button
+    and resolve the issue as explained at `Resolving a merge conflict on GitHub
+    <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github>`_
   * if the conflict involves files renaming or removal, then you'd need to
     resolve the conflict using git command lines. Typically, you have to first
     rebase your branch over the target branch using ``git rebase targetBranch``
-    call and fix the conflicts that are reported. Read more at
-    https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/
+    call and fix the conflicts that are reported. Read more at `Resolving a merge
+    conflict using the command line
+    <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line>`_
 * Sometimes, at the end of the proofreading process, you may end up with changes
   split into multiple commits that are not necessarily worth it. Git command
   lines help you squash these commits to a smaller number and more meaningful
-  commit messages. Some details at
-  https://help.github.com/articles/using-git-rebase-on-the-command-line/
+  commit messages. Some details at `Using git rebase on the command line
+  <https://docs.github.com/en/get-started/using-git/using-git-rebase-on-the-command-line>`_
 
 
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE

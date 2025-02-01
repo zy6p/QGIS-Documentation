@@ -12,7 +12,7 @@ you need to activate it:
 
 #. Go to :menuselection:`Plugins --> Manage and install plugins...`
 #. Click on the :guilabel:`Installed` tab at the left
-#. Check the box next to the |processing| :guilabel:`Processing` entry
+#. Check the box next to the |processingAlgorithm| :guilabel:`Processing` entry
 #. Close the dialog.
 
    A :menuselection:`Processing` menu is now available in the top menu bar.
@@ -40,7 +40,7 @@ and will be explained later in this chapter).
 
    Processing Toolbox
 
-* The :guilabel:`Graphical Modeler`: Several algorithms can be combined
+* The :guilabel:`Model Designer`: Several algorithms can be combined
   graphically using the modeler to define a workflow, creating a single
   process that involves several subprocesses.
 
@@ -84,5 +84,5 @@ In the following sections, we will review each one of these elements in detail.
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |processing| image:: /static/common/processingAlgorithm.png
+.. |processingAlgorithm| image:: /static/common/processingAlgorithm.png
    :width: 1.5em

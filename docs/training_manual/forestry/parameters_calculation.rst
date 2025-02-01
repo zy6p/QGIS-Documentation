@@ -1,4 +1,4 @@
-|LS| Calculating the Forest Parameters
+Lesson: Calculating the Forest Parameters
 ===============================================================================
 
 Estimating the parameters of the forest is the goal of the forest inventory.
@@ -8,7 +8,7 @@ whole forest first, and then for the stands you digitized before.
 
 **The goal for this lesson:** Calculate forest parameters at general and stand level.
 
-|basic| |FA| Adding the Inventory Results 
+:abbr:`★☆☆ (Basic level)` Follow Along: Adding the Inventory Results
 -------------------------------------------------------------------------------
 
 The field teams visited the forest and with the help of the information you
@@ -23,7 +23,7 @@ you probably named it :file:`forest_inventory.qgs`.
 
 First, add the sample plots measurements to your QGIS project:
 
-#. Go to :menuselection:`Layer --> Add Delimited Text Layer...`.
+#. Go to :menuselection:`Layer --> Add Layer --> Add Delimited Text Layer...`.
 #. Browse to the file :file:`systematic_inventory_results.csv` located in
    :file:`exercise_data/forestry/results/`.
 #. Make sure that the :guilabel:`Point coordinates` option is checked.
@@ -46,7 +46,7 @@ Before you continue, convert the inventory results to a real spatial dataset:
 #. Check :guilabel:`Add saved file to map`.
 #. Remove the :file:`systematic_inventory_results` layer from your project.
 
-|basic| |FA| Whole Forest Parameters Estimation
+:abbr:`★☆☆ (Basic level)` Follow Along: Whole Forest Parameters Estimation
 -------------------------------------------------------------------------------
 
 You can calculate the averages for this whole forest area from the inventory
@@ -70,7 +70,7 @@ You can calculate the average for the number of stems in the same way, ``2745 st
 .. figure:: img/statistics_pvol-pstem.png
    :align: center
 
-|basic| |FA| Estimating Stand Parameters
+:abbr:`★☆☆ (Basic level)` Follow Along: Estimating Stand Parameters
 -------------------------------------------------------------------------------
 
 You can make use of those same systematic sample plots to calculate estimates
@@ -111,7 +111,7 @@ smaller stands:
 .. figure:: img/stands_no_info.png
    :align: center
 
-Lets calculate now the same averages for the whole forest as you did before,
+Let's calculate now the same averages for the whole forest as you did before,
 only this time you will use the averages you got for the stands as the bases
 for the calculation. Remember that in the previous situation, each sample plot
 represented a theoretical stand of ``80x80 m``. Now you have to consider the
@@ -127,8 +127,8 @@ volumes and stem numbers for each of them:
 #. Create a new field called ``area``.
 #. Set the :guilabel:`Output field type` to ``Decimal number (real)``.
 #. Set the :guilabel:`Precision` to ``2``.
-#. In the :guilabel:`Expression` box, write ``$area / 10000``. This will
-   calculate the area of the forest stands in ha.
+#. In the :guilabel:`Expression` box, write ``$area / 10000``.
+   This will calculate the area of the forest stands in ha.
 #. Click :guilabel:`OK`.
 
 Now calculate a field with the total volumes and number of stems estimated for every stand:
@@ -170,7 +170,7 @@ from the sample plots, gives the following average estimates:
 
 Save your QGIS project, :file:`forest_inventory.qgs`.
 
-|IC|
+In Conclusion
 -------------------------------------------------------------------------------
 
 You managed to calculate forest estimates for the whole forest using the information
@@ -179,22 +179,9 @@ characteristics and also using the interpretation of the aerial image into fores
 stands. And you also got some valuable information about the particular stands,
 which could be used to plan the management of the forest in the coming years.
 
-|WN|
+What's Next?
 -------------------------------------------------------------------------------
 
 In the following lesson, you will first create a hillshade background from a
 LiDAR dataset which you will use to prepare a map presentation with the forest
 results you just calculated.
-
-
-.. Substitutions definitions - AVOID EDITING PAST THIS LINE
-   This will be automatically updated by the find_set_subst.py script.
-   If you need to create a new substitution manually,
-   please add it also to the substitutions.txt file in the
-   source folder.
-
-.. |FA| replace:: Follow Along:
-.. |IC| replace:: In Conclusion
-.. |LS| replace:: Lesson:
-.. |WN| replace:: What's Next?
-.. |basic| image:: /static/common/basic.png

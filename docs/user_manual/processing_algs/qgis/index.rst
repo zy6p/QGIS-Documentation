@@ -14,22 +14,30 @@ algorithms.
 .. toctree::
      :maxdepth: 2
 
+     3dtiles
      cartography
      database
      filetools
+     gps
      interpolation
      layertools
+     mesh
      modelertools
      networkanalysis
      plots
+     pointcloudconversion
+     pointclouddatamanagement
+     pointcloudextraction
      rasteranalysis
      rastercreation
      rasterterrainanalysis
      rastertools
      vectoranalysis
+     vectorcoverage
      vectorcreation
      vectorgeneral
      vectorgeometry
      vectoroverlay
      vectorselection
      vectortable
+     vectortiles

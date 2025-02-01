@@ -1,4 +1,4 @@
-|LS| Serving WMS
+Lesson: Serving WMS
 ===============================================================================
 
 The data used for this exercise are available in the :file:`qgis-server-tutorial-data`
@@ -139,8 +139,8 @@ The above request should output the following image:
 
    Qgis Server response after a simple GetMap request
 
-|moderate| |TY| Change the Image and Layers parameters
--------------------------------------------------------------------------------
+:abbr:`★★☆ (Moderate level)` Try Yourself: Change the Image and Layers parameters
+------------------------------------------------------------------------------------
 
 Based on the request above, let's replace the ``countries`` layer with another.
 
@@ -163,11 +163,11 @@ scale so you could get a blank image as response.
 You can also play around with others parameters from above, like changing the
 returned image type to ``image/png``.
 
-|moderate| |FA| Use Filter, Opacities and Styles parameters
--------------------------------------------------------------------------------
+:abbr:`★★☆ (Moderate level)` Follow Along: Use Filter, Opacities and Styles parameters
+-----------------------------------------------------------------------------------------
 
-Let's do another request that adds another layer, some of the
-:ref:`extra-getmap-parameters`, **FILTER** and **OPACITIES**, but also
+Let's do another request that adds another layer, some
+:ref:`basic parameters <services_basics>`, **FILTER** and **OPACITIES**, but also
 uses the standard STYLES parameter.
 
 .. code-block:: bash
@@ -197,12 +197,12 @@ The above request should output the following image:
 As you can see from the above image, among other things, we told QGIS Server
 to render only **Germany** and **Italy** from the countries layer.
 
-|moderate| |FA| Use Redlining
+:abbr:`★★☆ (Moderate level)` Follow Along: Use Redlining
 -------------------------------------------------------------------------------
 
-Let's do another GetMap request that makes use of the :ref:`qgisserver-redlining`
-feature and of the **SELECTION** parameter detailed in the
-:ref:`extra-getmap-parameters` section:
+Let's do another GetMap request that makes use of the :ref:`redlining
+<wms_redlining>` feature and of the **SELECTION** parameter detailed in the
+:ref:`Basics <services_basics>` section:
 
 .. code-block:: bash
 
@@ -239,10 +239,10 @@ and we used the **REDLINING** feature to overlay a rectangle with the
 **QGIS Tutorial** label.
 
 GetPrint requests
------------------
+-------------------
 
 One very nice feature of QGIS Server is that it makes use of the QGIS Desktop
-print layouts. You can learn about it in the :ref:`server_wms_getprint` section.
+print layouts. You can learn about it in the :ref:`wms_getprint` section.
 
 If you open the :file:`world.qgs` project with QGIS Desktop you will find a
 print layout named ``Population distribution``. A simplified ``GetPrint``
@@ -297,26 +297,12 @@ If you click the Print button in QWC you can interactively create ``GetPrint``
 requests. You can also click the ``?`` icon in the QWC to access the available
 help so that you can better discover the QWC possibilities.
 
-|IC|
+In Conclusion
 -------------------------------------------------------------------------------
 
 You learned how use QGIS Server to provide WMS Services.
 
-|WN|
+What's Next?
 -------------------------------------------------------------------------------
 
 Next, you'll see how to use QGIS as a frontend for the famous GRASS GIS.
-
-
-.. Substitutions definitions - AVOID EDITING PAST THIS LINE
-   This will be automatically updated by the find_set_subst.py script.
-   If you need to create a new substitution manually,
-   please add it also to the substitutions.txt file in the
-   source folder.
-
-.. |FA| replace:: Follow Along:
-.. |IC| replace:: In Conclusion
-.. |LS| replace:: Lesson:
-.. |TY| replace:: Try Yourself
-.. |WN| replace:: What's Next?
-.. |moderate| image:: /static/common/moderate.png

@@ -191,27 +191,19 @@ Basic parameters
      - Pixel value resampling method to use.
        Options:
 
-       * 0 --- Nearest neighbour
-       * 1 --- Bilinear
-       * 2 --- Cubic
-       * 3 --- Cubic spline
-       * 4 --- Lanczos windowed sinc
-       * 5 --- Average
-       * 6 --- Mode
-       * 7 --- Maximum
-       * 8 --- Minimum
-       * 9 --- Median
-       * 10 --- First quartile
-       * 11 --- Third quartile
-   * - **Nodata value for output bands**
+       .. include:: ../algs_include.rst
+          :start-after: **raster_resampling_methods**
+          :end-before: **end_raster_resampling_methods**
+
+   * - **NoData value for output bands**
 
        Optional
      - ``NODATA``
      - [number]
 
        Default: None
-     - Sets nodata value for output bands.
-       If not provided, then nodata values will be copied from
+     - Sets NoData value for output bands.
+       If not provided, then NoData values will be copied from
        the source dataset.
    * - **Output file resolution in target georeferenced units**
 
@@ -258,7 +250,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Output data type**
      - ``DATA_TYPE``
@@ -268,18 +260,10 @@ Advanced parameters
      - Defines the format of the output raster file.
        Options:
 
-       * 0 --- Use input layer data type
-       * 1 --- Byte
-       * 2 --- Int16
-       * 3 --- UInt16
-       * 4 --- UInt32
-       * 5 --- Int32
-       * 6 --- Float32
-       * 7 --- Float64
-       * 8 --- CInt16
-       * 9 --- CInt32
-       * 10 --- CFloat32
-       * 11 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types_extended**
+          :end-before: **end_raster_data_types_extended**
+
    * - **Georeferenced extents of output file to be created**
 
        Optional

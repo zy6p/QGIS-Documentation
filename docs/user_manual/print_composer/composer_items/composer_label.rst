@@ -2,7 +2,7 @@
 .. _layout_label_item:
 
 The Label Item
-===============
+==============
 
 .. only:: html
 
@@ -43,10 +43,12 @@ in order to be interpreted and evaluated as such.
   button, write your formula as usual and when the dialog is applied,
   QGIS automatically adds the surrounding characters.
 
-  .. hint:: Clicking the :guilabel:`Insert/Edit Expression...` button when no
-   selection is made in the textbox will append the new expression to the existing text.
-   If you want to modify an existing expression, you need to first select the part of
-   interest.
+  .. hint:: When you click the :guilabel:`Insert/Edit Expression...` button with
+   no selection made in the textbox, the new expression will be appended to the existing text.
+   However, if you want to modify an existing expression, the behavior changes based
+   on your selection: If some text is selected and the selection is within an expression
+   (between '[%' and '%]'), or if no text is selected but the cursor is inside an expression,
+   the whole expression will be selected. In all other cases, the selection will remain as is.
 
   Because maps are usually filled with some common textual information (date,
   author, title, page number, ...), QGIS provides a direct access to the
@@ -106,8 +108,9 @@ labeling and will output :numref:`figure_layout_label_html`:
 Appearance
 ----------
 
-* Define :guilabel:`Font` by clicking on the :guilabel:`Font...` button or a
-  :guilabel:`Font color` by pushing the :ref:`color widget <color-selector>`.
+* Define font and style of the text by clicking on the :guilabel:`Font` button.
+  In the :guilabel:`Label Font` menu you can use some of the options for :ref:`Formatting the label text <text_format>`.
+  
 * You can specify different horizontal and vertical margins in ``mm``. This is
   the margin from the edge of the layout item. The label can be positioned
   outside the bounds of the label e.g. to align label items with other items.
@@ -116,8 +119,15 @@ Appearance
 
   * :guilabel:`Left`, :guilabel:`Center`, :guilabel:`Right` or
     :guilabel:`Justify` for :guilabel:`Horizontal alignment`
-  * and :guilabel:`Top`, :guilabel:`Middle`, :guilabel:`Bottom` for
+  * and :guilabel:`Top`, :guilabel:`Vertical Center`, :guilabel:`Bottom` for
     :guilabel:`Vertical alignment`.
+
+.. _figure_layout_label_appearance:
+
+.. figure:: img/label_appearance.png
+   :align: center
+
+   Label Item Appearance Properties
 
 .. _layout_label_expressions:
 

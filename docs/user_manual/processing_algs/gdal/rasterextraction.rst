@@ -15,7 +15,7 @@ Clip raster by extent
 Clips any GDAL-supported raster file to a given extent.
 
 This algorithm is derived from the
-`GDAL warp utility <https://gdal.org/programs/gdalwarp.html>`_.
+`GDAL translate utility <https://gdal.org/programs/gdal_translate.html>`_.
 
 **Default menu**: :menuselection:`Raster --> Extraction`
 
@@ -55,14 +55,14 @@ Basic parameters
 
        Default: False
      - If checked, the output file is assigned the input layer CRS.
-   * - **Assign a specified nodata value to output bands**
+   * - **Assign a specified NoData value to output bands**
 
        Optional
      - ``NODATA``
      - [number]
 
        Default: None
-     - Defines a value that should be inserted for the nodata
+     - Defines a value that should be inserted for the NoData
        values in the output raster
    * - **Clipped (extent)**
      - ``OUTPUT``
@@ -100,7 +100,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Output data type**
      - ``DATA_TYPE``
@@ -111,18 +111,9 @@ Advanced parameters
 
        Options:
 
-       * 0 --- Use Input Layer Data Type
-       * 1 --- Byte
-       * 2 --- Int16
-       * 3 --- UInt16
-       * 4 --- UInt32
-       * 5 --- Int32
-       * 6 --- Float32
-       * 7 --- Float64
-       * 8 --- CInt16
-       * 9 --- CInt32
-       * 10 --- CFloat32
-       * 11 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types_extended**
+          :end-before: **end_raster_data_types_extended**
 
    * - **Additional command-line parameters**
 
@@ -201,14 +192,25 @@ Basic parameters
      - ``TARGET_CRS``
      - [crs]
      - Set the coordinate reference to use for the mask layer
-   * - **Assign a specified nodata value to output bands**
+   * - **Target extent**
+
+       Optional
+     - ``TARGET_EXTENT``
+     - [extent]
+     - Extent of the output file to be created
+
+       .. include:: ../algs_include.rst
+          :start-after: **extent_options**
+          :end-before: **end_extent_options**
+
+   * - **Assign a specified NoData value to output bands**
 
        Optional
      - ``NODATA``
      - [number]
 
        Default: None
-     - Defines a value that should be inserted for the nodata
+     - Defines a value that should be inserted for the NoData
        values in the output raster
    * - **Create an output alpha band**
      - ``ALPHA_BAND``
@@ -262,6 +264,7 @@ Basic parameters
    * - **Clipped (mask)**
      - ``OUTPUT``
      - [raster]
+
        Default: ``[Save to temporary file]``
      - Specification of the output raster layer.
        One of:
@@ -294,7 +297,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Output data type**
      - ``DATA_TYPE``
@@ -305,18 +308,9 @@ Advanced parameters
 
        Options:
 
-       * 0 --- Use Input Layer Data Type
-       * 1 --- Byte
-       * 2 --- Int16
-       * 3 --- UInt16
-       * 4 --- UInt32
-       * 5 --- Int32
-       * 6 --- Float32
-       * 7 --- Float64
-       * 8 --- CInt16
-       * 9 --- CInt32
-       * 10 --- CFloat32
-       * 11 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types_extended**
+          :end-before: **end_raster_data_types_extended**
 
    * - **Additional command-line parameters**
 
@@ -448,15 +442,15 @@ Advanced parameters
      - [boolean]
 
        Default: False
-     - Ignores any nodata values in the dataset.
-   * - **Input pixel value to treat as "nodata"**
+     - Ignores any NoData values in the dataset.
+   * - **Input pixel value to treat as "NoData"**
 
        Optional
      - ``NODATA``
      - [number]
 
        Default: None
-     - Defines a value that should be inserted for the nodata
+     - Defines a value that should be inserted for the NoData
        values in the output raster
    * - **Additional command-line parameters**
 
@@ -599,15 +593,15 @@ Advanced parameters
      - [boolean]
 
        Default: False
-     - Ignores any nodata values in the dataset.
-   * - **Input pixel value to treat as "nodata"**
+     - Ignores any NoData values in the dataset.
+   * - **Input pixel value to treat as "NoData"**
 
        Optional
      - ``NODATA``
      - [number]
 
        Default: None
-     - Defines a value that should be inserted for the nodata
+     - Defines a value that should be inserted for the NoData
        values in the output raster
    * - **Additional command-line parameters**
 

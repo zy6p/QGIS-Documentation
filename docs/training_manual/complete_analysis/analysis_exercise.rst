@@ -1,4 +1,4 @@
-|LS| Supplementary Exercise
+Lesson: Supplementary Exercise
 ======================================================================
 
 In this lesson, you will be guided through a complete GIS analysis in
@@ -41,14 +41,14 @@ University of Cape Town.
 
 The solution will involve:
 
-#. Analysing a DEM raster layer to find the east facing slopes and the
+#. Analyzing a DEM raster layer to find the east facing slopes and the
    slopes with the correct gradients
-#. Analysing a rainfall raster layer to find the areas with the
+#. Analyzing a rainfall raster layer to find the areas with the
    correct amount of rainfall
-#. Analysing a zoning vector layer to find areas that are away from
+#. Analyzing a zoning vector layer to find areas that are away from
    human settlement and are of the correct size
 
-|FA| Setting up the Map
+Follow Along: Setting up the Map
 ----------------------------------------------------------------------
 
 #. Click on the |projectionEnabled| :sup:`Current CRS` button in the
@@ -58,9 +58,15 @@ The solution will involve:
    Select the entry :guilabel:`WGS 84 / UTM zone 33S` (with EPSG code
    ``32733``). 
 #. Click :guilabel:`OK`
+
+   .. figure:: img/crs.png
+      :align: center
+
+      Setting up the CRS
+
 #. Save the project file by clicking on the |fileSave|
    :sup:`Save Project` toolbar button, or use the
-   :menuselection:`File --> Save As...` menu item.
+   :menuselection:`Project --> Save As...` menu item.
 
    Save it in a new directory called :file:`Rasterprac`, that you
    should create somewhere on your computer.
@@ -181,6 +187,12 @@ districts to the following ones:
    #. Repeat the previous step for the remaining districts
    #. Close the brackets
 
+   .. figure:: img/query_builder.png
+      :align: center
+
+      Query builder
+
+
       The final query should be (the order of the districts in the brackets
       does not matter)::
 
@@ -235,6 +247,11 @@ this area.
    the :guilabel:`Clip Raster by Mask Layer` dialog
 #. Save the map
 
+   .. figure:: img/clipped_r_filtered_v_reordered_l.png
+      :align: center
+
+      Map view with filtered vector, clipped raster and reordered layers 
+
 Align the rasters
 ......................................................................
 
@@ -243,26 +260,43 @@ have to be aligned.
 
 First we change the resolution of our rainfall data to 30 meters
 (pixel size):
+	
+#. In the :guilabel:`Layers` panel, ensure that
+   ``Rainfall_clipped`` is the active layer (i.e., it is highlighted by
+   having been clicked on)
+#. Click on the :menuselection:`Raster --> Projections --> Warp (Reproject)...`
+   menu item to open the :guilabel:`Warp (Reproject)` dialog
+#. Under :guilabel:`Resampling method to use`, select :guilabel:`Bilinear (2x2 kernel)`
+   from the drop down menu
+#. Set :guilabel:`Output file resolution in target georeferenced units` to ``30`` 
+#. Scroll down to :guilabel:`Reprojected` and save the output in your
+   :file:`rainfall/reprojected` directory as :file:`Rainfall30.tif`.
+#. Make sure that |checkbox|
+   :guilabel:`Open output file after running algorithm` is checked
 
-#. Right-click on the ``Rainfall_clipped`` layer and select
-   :menuselection:`Export--> Save As...` in the context menu.
-#. Under :guilabel:`Resolution`, set the :guilabel:`Horizontal` and
-   :guilabel:`Vertical` resolutions to ``30`` (meters).
-#. Save the file as :file:`Rainfall30.tif` in
-   :file:`rainfall/reprojected` (:guilabel:`File name`)
+   .. figure:: img/wrap_rainfall.png
+      :align: center
+
+      Warp (Reproject) Rainfall_clipped
+
 
 Then we align the DEM:
 
-#. Right-click on the ``DEM_clipped`` layer and select
-   :menuselection:`Export--> Save As...` in the context menu
-#. For :guilabel:`CRS`, choose *WGS 84 / UTM zone 33S* (EPSG code
-   ``32733``)
-#. Under :guilabel:`Resolution`, set the :guilabel:`Horizontal` and
-   :guilabel:`Vertical` resolutions to ``30`` (in meters).
-#. Under :guilabel:`Extent`, click on
-   :guilabel:`Calculate from Layer` and choose ``Rainfall30``
-#. Save the file as :file:`DEM30.tif` in :file:`DEM/reprojected`
-   (:guilabel:`File name`)
+#. In the :guilabel:`Layers` panel, ensure that
+   ``DEM_clipped`` is the active layer (i.e., it is highlighted by
+   having been clicked on)
+#. Click on the :menuselection:`Raster --> Projections --> Warp (Reproject)...`
+   menu item to open the :guilabel:`Warp (Reproject)` dialog
+#. Under :guilabel:`Target CRS`, select :guilabel:`Project CRS: EPSG:32733 - WGS 84 / UTM zone 33S` from the drop down menu
+#. Under :guilabel:`Resampling method to use`, select :guilabel:`Bilinear (2x2 kernel)`
+   from the drop down menu
+#. Set :guilabel:`Output file resolution in target georeferenced units` to ``30``
+#. Scroll down to :guilabel:`Georeferenced extents of output file to be created`. Use the button to the right of the text box to select :menuselection:`Calculate from Layer --> Rainfall30`.
+#. Scroll down to :guilabel:`Reprojected` and save the output in your
+   :file:`DEM/reprojected` directory as :file:`DEM30.tif`.
+#. Make sure that |checkbox|
+   :guilabel:`Open output file after running algorithm` is checked
+   
 
 In order to properly see what's going on, the symbology for the
 layers needs to be changed.
@@ -274,7 +308,7 @@ Changing the symbology of vector layers
    :guilabel:`Streets` layer
 #. Select :guilabel:`Properties` from the menu that appears
 #. Switch to the :guilabel:`Symbology` tab in the dialog that appears
-#. Click on the :guilabel:`Fill` entry in the top widget
+#. Click on the :guilabel:`Line` entry in the top widget
 #. Select a symbol in the list below or set a new one (color,
    transparency, ...)
 #. Click :guilabel:`OK` to close the :guilabel:`Layer Properties`
@@ -304,6 +338,11 @@ Raster layer symbology is somewhat different.
 #. For :guilabel:`Color gradient`, change it to
    :guilabel:`White to Black`
 #. Click :guilabel:`OK`
+
+   .. figure:: img/raster_symbology.png
+      :align: center
+
+      Raster symbology 
 
    The ``Rainfall30`` raster, if visible, should change colors,
    allowing you to see different brightness values for each pixel
@@ -345,6 +384,11 @@ that was written for this purpose.
 #. Click :guilabel:`Run`
 #. Wait for it to finish processing.
 
+   .. figure:: img/hillshade.png
+      :align: center
+
+      Raster analysis Hillshade 
+
 The new ``hillshade`` layer has appeared in the
 :guilabel:`Layers` panel.
 
@@ -376,6 +420,11 @@ Slope
    :guilabel:`Open output file after running algorithm` is checked
 #. Click :guilabel:`Run`
 
+   .. figure:: img/slope.png
+      :align: center
+
+      Raster analysis Slope 
+
 The slope image has been calculated and added to the map.
 As usual, it is rendered in grayscale.
 Change the symbology to a more colorful one:
@@ -391,7 +440,7 @@ Change the symbology to a more colorful one:
 #. Select a suitable :guilabel:`Color ramp`
 #. Click :guilabel:`Run`
 
-|TY| Aspect
+Try Yourself: Aspect
 ----------------------------------------------------------------------
 
 Use the same approach as for calculating the slope, choosing
@@ -426,6 +475,11 @@ Reclassifying rasters
 #. Set the :guilabel:`Output layer` field to an appropriate location
    and file name.
 #. Click :guilabel:`Run`.
+
+   .. figure:: img/raster_calculator_slope.png
+      :align: center
+
+      Raster calculator Slope 
 
 Now find the correct aspect (east-facing: between ``45`` and ``135``
 degrees) using the same approach.
@@ -475,6 +529,11 @@ are satisfied.
 
 Save the project.
 
+.. figure:: img/aspect_slope_rainfall.png
+   :align: center
+
+   Map view where all three criteria are satisfied  
+
 The next criterion that needs to be satisfied is that the area must be 
 ``250`` m away from urban areas.
 We will satisfy this requirement by ensuring that the areas we compute
@@ -499,6 +558,11 @@ Finding rural areas
    See the earlier instructions if you get stuck.
 #. Click :guilabel:`OK` to close the :guilabel:`Query Builder` dialog.
    The query should return one feature.
+
+   .. figure:: img/query_builder_zoning.png
+    :align: center
+
+   Query builder Zoning
 
 You should see the rural polygons from the ``Zoning`` layer.
 You will need to save these.
@@ -541,6 +605,11 @@ Creating a negative buffer
 #. Remove the ``rural`` layer
 #. Save the project
 
+   .. figure:: img/rural_buffer.png
+      :align: center
+
+      Map view with rural buffer 
+
 
 Now you need to combine your ``rural_buffer`` vector layer with the
 ``aspect_slope_rainfall`` raster.
@@ -566,6 +635,11 @@ Vectorizing the raster
 #. Click :guilabel:`Run`
 #. Close the dialog when processing is complete
 
+   .. figure:: img/vectorized.png
+      :align: center
+
+      Raster to Vector 
+
 All areas of the raster have been vectorized, so you need to select
 only the areas that have a value of ``1`` in the ``suitable`` field.
 (Digital Number.
@@ -580,7 +654,7 @@ only the areas that have a value of ``1`` in the ``suitable`` field.
 #. After you are sure the query is complete (and only the areas that
    meet all three criteria, i.e. with a value of ``1`` are visible),
    create a new vector file from the results, using the
-   :guilabel:`Export --> Save Features As...` in the layer's
+   :menuselection:`Export --> Save Features As...` in the layer's
    right-click menu
 #. Save the file in the :file:`Rasterprac` directory
 #. Name the file :file:`aspect_slope_rainfall_1.shp`
@@ -662,6 +736,11 @@ Calculating the area for each polygon
    each polygon in the vector layer and will then populate a new
    integer column (called ``area``) with the computed value.
 
+   .. figure:: img/field_calculator_area.png
+      :align: center
+
+      Field Calculator  
+
 #. Click :guilabel:`OK`
 #. Do the same thing for another new field called ``id``.
    In :guilabel:`Field calculator expression`, type::
@@ -672,6 +751,11 @@ Calculating the area for each polygon
    purposes.
 #. Click |toggleEditing| :sup:`Toggle editing` again, and save your
    edits if prompted to do so
+
+   .. figure:: img/attribute_table.png
+      :align: center
+
+      Attribute table with area and id columns 
 
 Selecting areas of a given size
 ----------------------------------------------------------------------
@@ -784,9 +868,6 @@ map.
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |FA| replace:: Follow Along:
-.. |LS| replace:: Lesson:
-.. |TY| replace:: Try Yourself
 .. |addOgrLayer| image:: /static/common/mActionAddOgrLayer.png
    :width: 1.5em
 .. |addRasterLayer| image:: /static/common/mActionAddRasterLayer.png
