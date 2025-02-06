@@ -40,8 +40,8 @@ symbol properties change.
 Depending on the level selected in the symbol tree items, various tools are
 made available to help you manage the tree:
 
-* |signPlus| add new symbol layer: you can stack as many symbols as you want
-* |signMinus| remove the selected symbol layer
+* |symbologyAdd| add new symbol layer: you can stack as many symbols as you want
+* |symbologyRemove| remove the selected symbol layer
 * lock colors of symbol layer: a |locked| locked color stays unchanged when
   user changes the color at the global (or upper) symbol level
 * |duplicateLayer| duplicate a (group of) symbol layer(s)
@@ -99,8 +99,10 @@ You can setup some parameters that apply to the global symbol:
     |openTable| :sup:`List View` button below the frame;
   * or as icon preview using the |iconView| :sup:`Icon View` button.
 
-* Press the :guilabel:`Save Symbol` button to add the symbol being edited to the
-  symbols library. 
+* Press the :guilabel:`Save Symbol` button to open the :guilabel:`Save New Symbol` dialog.
+  Here, you can choose the :guilabel:`Destination` where you want to add the symbol being edited,
+  give it a :guilabel:`Name` and add :guilabel:`Tag(s)`.
+  You also have the option to |checkbox| :sup:`Add to favorites` your new symbol.
 * With the :guilabel:`Advanced` |selectString| option, you can:
 
   * for line and fill symbols, :guilabel:`Clip features to canvas extent`.
@@ -116,15 +118,22 @@ You can setup some parameters that apply to the global symbol:
     geometry is unchanged. This allows for creation of fill symbols with consistent
     appearance, regardless of the dataset being rendered and the ring orientation
     of individual features.
-  * Depending on the :ref:`symbology <vector_style_menu>` of the layer a symbol is
-    being applied to, additional settings are available in the :guilabel:`Advanced`
-    menu:
 
-    * :ref:`Symbol levels... <Symbols_levels>` to define the order of symbols
-      rendering
+  .. _marker_symbols_buffer:
+
+  * for marker symbols, the :guilabel:`Buffer settings...` enables addition of a halo effect
+    around the marker symbol in order to make it more readable against different backgrounds.
+    The buffer is calculated and drawn using the shape of ALL the symbol layers in the marker.
+    You can adjust the :guilabel:`Size`, :guilabel:`Join style` and :guilabel:`Symbol` of display. 
+
+  * Depending on the :ref:`symbology <vector_style_menu>` of the layer a symbol is
+    being applied to, additional settings are available in the :guilabel:`Advanced` menu:
+
+    * :ref:`Symbol levels... <Symbols_levels>` to define the order of symbols rendering
     * :ref:`Data-defined Size Legend <data_defined_size_legend>`
-    * :guilabel:`Match to Saved Symbols...` and :guilabel:`Match to Symbols from
-      File...` to automatically :ref:`assign symbols to classes <categorized_advanced_menu>`
+    * :guilabel:`Match to Saved Symbols...` and :guilabel:`Match to Symbols from File...`
+      to automatically :ref:`assign symbols to classes <categorized_advanced_menu>`
+    * :ref:`Animation settings <animation_settings>`
 
 .. _symbol_layer:
 
@@ -148,7 +157,7 @@ regardless it's of marker, line or fill sub-type:
 * :guilabel:`Units`: it can be **Millimeters**, **Points**, **Pixels**,
   **Meters at Scale**, **Map units** or **Inches** (see :ref:`unit_selector`
   for more details)
-* the |dataDefined| :sup:`data-defined override` widget near almost all options,
+* the |dataDefine| :sup:`Data-defined override` widget near almost all options,
   extending capabilities of customizing each symbol (see :ref:`data_defined` for
   more information)
 * the |checkbox| :guilabel:`Enable symbol layer` option controls the symbol layer's
@@ -201,6 +210,7 @@ Appropriate for point geometry features, marker symbols have several
   * :guilabel:`Anchor point`: defining the quadrant point on the symbol to settle
     as placement origin. This is the point the :guilabel:`Offset` is applied on.
 
+* **Animated marker** (see :ref:`animated_marker`)
 * **Ellipse marker**: a simple marker symbol layer, with customizable width and
   height
 * **Filled marker**: similar to the simple marker symbol layer, except that it
@@ -229,8 +239,9 @@ Appropriate for point geometry features, marker symbols have several
 .. _raster_image_marker:
 
 * **Raster image marker**: use an image (:file:`PNG`, :file:`JPG`, :file:`BMP` ...)
-  as marker symbol. The image can be a file on the disk, a remote URL
-  or embedded in the style database (:ref:`more details <embedded_file_selector>`).
+  as marker symbol. The image can be a file on the disk, a remote URL, embedded
+  in the style database (:ref:`more details <embedded_file_selector>`) or it can
+  be encoded as a base64 string.
   Width and height of the image can be set independently or using the
   |lockedGray| :sup:`Lock aspect ratio`. The size can be set using any of the
   :ref:`common units <unit_selector>` or as a percentage of the image's original
@@ -243,8 +254,9 @@ Appropriate for point geometry features, marker symbols have several
   :menuselection:`Settings --> Options... --> System` menu) to render as marker
   symbol. Width and height of the symbol can be set independently or using the
   |lockedGray| :sup:`Lock aspect ratio`. Each SVG file colors and stroke can
-  also be adapted. The image can be a file on the disk, a remote URL or
-  embedded in the style database (:ref:`more details <embedded_file_selector>`).
+  also be adapted. The image can be a file on the disk, a remote URL, embedded
+  in the style database (:ref:`more details <embedded_file_selector>`) or it can
+  be encoded as a base64 string.
 
   The symbol can also be set with :guilabel:`Dynamic SVG parameters`.
   See :ref:`svg_symbol` section to parametrize an SVG symbol.
@@ -284,7 +296,10 @@ layer types:
   :ref:`simple marker symbol <simple_marker_symbol>`, and in addition:
 
   * |checkbox| :guilabel:`Use custom dash pattern`: overrides the
-    :guilabel:`Stroke style` setting with a custom dash.
+    :guilabel:`Stroke style` setting with a custom dash. You would need to
+    define length of consecutive dashes and spaces shaping the model,
+    in the chosen unit.
+    The total length of the pattern is displayed at the bottom of the dialog.
   * :guilabel:`Pattern offset`: the positioning of the dashes/spaces in the line
     can be tweaked, so that they can be placed at nicer positions to account for corners
     in the line (also can be used potentially to "align" adjacent dash pattern borders)
@@ -298,11 +313,11 @@ layer types:
   * :guilabel:`Trim lines` from :guilabel:`Start` and/or :guilabel:`End`:
     allows for the line rendering to trim off the first x mm and last y mm
     from the actual line string when drawing the line.
-    It can be used e.g. when creating complex symbols where a line layer should
-    not overlap marker symbol layers placed at the start and end of the line.
-    The start/end trim distance supports a range of :ref:`units  <unit_selector>`,
-    including percentage of the overall line length, and can be data defined for
-    extra control.
+    It supports a range of :ref:`units <unit_selector>`, including percentage
+    of the overall line length, and can be data defined for extra control.
+    The start/end trim distance can be used e.g. when creating complex symbols
+    where a line layer should not overlap marker symbol layers placed at
+    the start and end of the line.
 
 .. _arrow_symbol:
 
@@ -369,11 +384,28 @@ layer types:
 * **Marker line**: repeats a :ref:`marker symbol
   <vector_marker_symbols>` over the length of a line.
 
-  * The :guilabel:`Marker placement` can be at a regular distance or based on the
-    line geometry: first, last or each vertex, on the central point of the line
-    or of each segment, or on every curve point.
-  * :guilabel:`Offset along the line`: the markers placement can also be given
-    an offset from the start, along the line
+  * The :guilabel:`Marker placement` can be set using a regular interval setting
+    (starting from the first vertex)
+    and/or the line geometry property (on first or last vertex, inner vertices,
+    the central point of the line or of each segment, or on every curve point).
+  * When first or last vertex placement is enabled, the |checkbox|
+    :guilabel:`Place on every part extremity` option will make the markers
+    render also at the first or last vertex for every part of multipart geometries.
+  * :guilabel:`Offset along line`: the markers placement can also be given
+    an offset along the line, in the ref:`unit <unit_selector>` of your choice
+    (millimeters, points, map unit, meters at scale, percentage, ...):
+
+    * A positive value offsets the markers symbols in the line direction (with
+      :guilabel:`On first vertex` and :guilabel:`With interval` placements)
+      and backwards (with :guilabel:`On last vertex` placement).
+    * A negative value on a not closed line will result in no offset (for
+      :guilabel:`On first vertex` and :guilabel:`On last vertex` placements)
+      or backwards offset of the symbols (from the last vertex).
+    * With a closed ring, QGIS treats the offset as continuing to loop around
+      the ring (forward or backward).
+      E.g. setting the offset to 150% (resp. -10% or -110%) results in the
+      offset being treated as 50% (resp. 90%) of the length of the closed ring.
+
   * The |checkbox| :guilabel:`Rotate marker to follow line direction` option
     sets whether each marker symbol should be oriented relative to the line
     direction or not.
@@ -425,13 +457,52 @@ layer types:
 
      Examples of raster lines
 
+
+.. _linear_referencing_symbol:
+
+* **Linear referencing**: allows placing text labels at regular intervals along a line,
+  or at positions corresponding to existing vertices.
+  Positions can be calculated using Cartesian distances, or interpolated from z/m values.
+  Parameters include:
+
+  * :guilabel:`Measure placement`: Labels can be placed at regular cartesian 2d distances,
+    at regular linearly interpolated spacing calculated using the Z or M values in geometries,
+    or at existing vertices.
+    A fixed or data-defined :guilabel:`Interval` is given.
+  * :guilabel:`Quantity`: Label displayed at each position represent the running distance along the line,
+    or the linearly interpolated Z or M value.
+    Labels are rendered using the full range of :ref:`text <text_format>`
+    and :ref:`number <number_formatting>` formatting functionalities available in QGIS.
+
+  .. note::
+
+    When using the distance-based placement or labels, the distances are calculated using 2D only.
+    Cartesian calculations are based on the original layer CRS.
+
+  * :guilabel:`Skip multiples of`: If set, labels which are a multiple of this value will be skipped over.
+    This allows construction of complex referencing labels, e.g. where a symbol has two linear referencing symbol layers,
+    one set to label every 100m in a small font, skipping multiples of 1000,
+    and a second set to label every 1000m in a big bold font.
+  * :guilabel:`Avergare angle over`: Labels are rendered using an angle calculated by averaging the linestring,
+    so sharp tiny jaggies don't result in unslightly label rotation
+  * :guilabel:`Show marker symbols`, at referenced points in the line feature, using a full QGIS marker symbol.
+    This allows e.g. showing a cross-hatch at the labeled point, for a "ruler" style line.
+
+  .. _figure_linear_referencing_symbol:
+
+  .. figure:: img/linearReferencingSymbol.png
+     :align: center
+     :width: 100%
+
+     Drawing linear labels along line feature
+
+
 .. _lineburst_symbol:
 
 * **Lineburst**: renders a gradient along the width of a line.
   You can choose between :guilabel:`Two color` or :guilabel:`Color ramp` and
   the :guilabel:`Stroke width`, :guilabel:`Offset`,
-  :guilabel:`Join style`, :guilabel:`Cap style` and :guilabel:`Opacity`
-  can be adjusted.
+  :guilabel:`Join style`, :guilabel:`Cap style` can be adjusted.
 
   .. _figure_lineburst_symbol:
 
@@ -440,6 +511,21 @@ layer types:
      :width: 100%
 
      Examples of lineburst lines
+
+.. _filled_line_symbol:
+
+* **Filled line**: renders the interior of the lines using a fill symbol
+  allowing for lines filled with gradients, line hatches, etc.
+  The :guilabel:`Stroke width`, :guilabel:`Offset`,
+  :guilabel:`Join style`, :guilabel:`Cap style` can be adjusted.
+
+  .. _figure_filled_line_symbol:
+
+  .. figure:: img/filledLineSymbol.png
+     :align: center
+     :width: 100%
+
+     Examples of filled lines
 
 
 .. _vector_fill_symbols:
@@ -466,9 +552,9 @@ symbol layer types:
   clipped to area visible in map canvas for rendering and ignores holes.
   Use the :ref:`geometry generator symbol <geometry_generator_symbol>`
   if you want the exact centroid. 
-  
+
   You can:
-  
+
   * :guilabel:`Force placement of markers inside polygons`
   * :guilabel:`Draw markers on every part of multi-part features` or place
     the point only on its biggest part
@@ -485,30 +571,122 @@ symbol layer types:
   points can be set via coordinates or using the centroid (of feature or map).
   A data-defined offset can be defined.
 * **Line pattern fill**: fills the polygon with a hatching pattern of
-  :ref:`line symbol layer <vector_line_symbols>`. You can set a rotation, the
-  spacing between lines and an offset from the feature boundary.
-* **Point pattern fill**: fills the polygon with a hatching pattern of 
-  :ref:`marker symbol layer <vector_marker_symbols>`. You can set the distance
-  and a displacement between rows of markers, an offset from the
-  feature boundary and the angle of the pattern.
+  :ref:`line symbol layer <vector_line_symbols>`. You can set:
+
+  * :guilabel:`Alignment`: defines how the pattern is positioned relative
+    to the feature(s):
+
+    * :guilabel:`Align pattern to feature`: lines are rendered within
+      each feature
+    * :guilabel:`Align pattern to map extent`: a pattern is rendered over
+      the whole map extent, allowing lines to align nicely across features
+  * :guilabel:`Rotation` of the lines, counter-clockwise
+  * :guilabel:`Spacing`: distance between consecutive lines
+  * :guilabel:`Offset` distance of the lines from the feature boundary
+  * :guilabel:`Clipping`: allows to control how lines in the fill should
+    be clipped to the polygon shape. Options are:
+
+    * :guilabel:`Clip During Render Only`: lines are created covering
+      the whole bounding box of the feature and then clipped while drawing.
+      Line extremities (beginning and end) will not be visible.
+    * :guilabel:`Clip Lines Before Render`: lines are clipped to the exact shape
+      of the polygon prior to rendering. Line extremities (including cap styles,
+      start/end marker line objects, ...) will be visible, and may sometimes
+      extend outside of the polygon (depending on the line symbol settings).
+    * :guilabel:`No Clipping`: no clipping at all is done - lines will cover
+      the whole bounding box of the feature
+
+* **Point pattern fill**: fills the polygon with a grid pattern of 
+  :ref:`marker symbol <vector_marker_symbols>`. You can set:
+
+  * :guilabel:`Alignment`: defines how the pattern is positioned relative
+    to the feature(s):
+
+    * :guilabel:`Align pattern to feature`: marker lines are rendered within
+      each feature
+    * :guilabel:`Align pattern to map extent`: a pattern is rendered over
+      the whole map extent, allowing markers to align nicely across features
+
+      .. _figure_point_pattern_alignment:
+
+      .. figure:: img/pointPatternAlignment.png
+         :align: center
+
+         Aligning point pattern to feature (left) and to map extent (right)
+
+  * :guilabel:`Distance`: :guilabel:`Horizontal` and :guilabel:`Vertical` distances
+    between consecutive markers
+  * :guilabel:`Displacement`: a :guilabel:`Horizontal` (resp. :guilabel:`Vertical`)
+    offset of alignment between consecutive markers in a column (resp. in a row)
+  * :guilabel:`Offset`: :guilabel:`Horizontal` and :guilabel:`Vertical` distances
+    from the feature boundary
+  * :guilabel:`Clipping`: allows to control how markers in the fill should
+    be clipped to the polygon shape. Options are:
+
+    * :guilabel:`Clip to shape`: markers are clipped so that only the portions
+      inside the polygon are visible
+    * :guilabel:`Marker centroid within shape`: only markers where the center
+      of the marker falls inside the polygon are drawn, but these markers won't
+      be clipped to the outside of the polygon
+    * :guilabel:`Marker completely within shape`: only markers which fall completely
+      within the polygon are shown
+    * :guilabel:`No clipping`: any marker which intersects at all with the polygon
+      will be completely rendered (strictly speaking its the "intersects with the
+      bounding box of the marker")
+
+      .. _figure_clip_point_pattern_fill:
+
+      .. figure:: img/clipPointPatternFill.png
+         :align: center
+
+         Clipping markers in fill - From left to right: Clip to shape,
+         Marker centroid within shape, Marker completely within shape, No clipping
+
+  * :guilabel:`Rotation` of the whole pattern, clockwise
+  * The :guilabel:`Randomize pattern` group setting allows each point in a point
+    pattern fill to be randomly shifted up to the specified maximum distance
+    :guilabel:`Horizontally` or :guilabel:`Vertically`.
+    You can specify the maximum offset in any supported units, such as millimeters,
+    points, map units, or even "percentage" (where percentage is relative
+    to the pattern width or height).
+
+    You can set an optional random number seed to avoid the symbol patterns
+    "jumping" around between map refreshes. Data defined overrides are also supported.
+
+    .. note:: The main difference between the :guilabel:`Randomize pattern` and
+     the :ref:`random marker fill <random_marker_fill>` symbol type is that
+     the random offset with a point pattern allows for quasi-"regular" placement
+     of markers – because the points in the pattern are effectively constrained
+     to a grid, this allows creation of semi-random fills which don’t have empty
+     areas or overlapping markers. (As opposed to the random marker fill,
+     which will always place points completely randomly… sometimes resulting
+     in visual clusters of points or unwanted empty areas).
+
+.. _random_marker_fill:
+
 * **Random marker fill**: fills the polygon with a :ref:`marker symbol 
   <vector_marker_symbols>` placed at random locations within the polygon
   boundary. You can set:
 
-  * the number of marker symbols to render, either as an absolute count
-    or as density-based (the fill density will remain the same on different
-    scale / zoom levels)
-  * an optional random number seed, to give consistent placement
+  * :guilabel:`Count method`: whether the number of marker symbols to render
+    is considered as an absolute count or density-based
+  * :guilabel:`Point count`: the number of marker symbols to render,
+  * an optional random number :guilabel:`seed`, to give consistent placement
+  * :guilabel:`Density area`: in case of density-based count method, ensures
+    the fill density of markers remains the same on different scale / zoom levels
     of markers whenever maps are refreshed (also allows random placement
     to play nice with QGIS server and tile-based rendering)
-  * whether markers rendered near the edges of polygons should be clipped
-    to the polygon boundary or not
+  * :guilabel:`Clip markers to polygon boundary`: whether markers rendered near
+    the edges of polygons should be clipped to the polygon boundary or not
 
 * **Raster image fill**: fills the polygon with tiles from a raster image (:file:`PNG`
   :file:`JPG`, :file:`BMP` ...). The image can be a file on the disk, a remote URL
   or an embedded file encoded as a string (:ref:`more details <embedded_file_selector>`).
-  Options include (data defined) opacity, image width, coordinate mode (object
-  or viewport), rotation and offset. The image width can be set using any of the
+  Options include (data defined) opacity, size, coordinate mode (object
+  or viewport), rotation and offset. Under the option Size you can 
+  independently adjust the width and height of the fill pattern, enabling 
+  stretched raster fills in either the horizontal or vertical directions. 
+  The image width and height can be set using any of the
   :ref:`common units <unit_selector>` or as a percentage of the original size.
 * **SVG fill**: fills the polygon using :ref:`SVG markers <svg_marker>`
   of a given size (:guilabel:`Texture width`).
@@ -549,14 +727,15 @@ Parametrizable SVG
 ..................
 
 You have the possibility to change the colors of a :guilabel:`SVG marker`.
-You have to add the placeholders ``param(fill)`` for fill color,
-``param(outline)`` for stroke color and ``param(outline-width)`` for stroke
-width. These placeholders can optionally be followed by a default value, e.g.:
+You have to add the placeholders ``param(fill)`` for fill color, ``param(fill-opacity)`` for
+fill opacity, ``param(outline)`` and ``param(outline-opacity)`` for stroke color and opacity respectively,
+and ``param(outline-width)`` for stroke width. These placeholders can optionally
+be followed by a default value, e.g.:
 
 .. code-block:: xml
 
     <svg width="100%" height="100%">
-    <rect fill="param(fill) #ff0000" stroke="param(outline) #00ff00" stroke-width="param(outline-width) 10" width="100" height="100">
+    <rect fill="param(fill) #ff0000" fill-opacity="param(fill-opacity) 1" stroke="param(outline) #00ff00" stroke-opacity="param(outline-opacity) 1" stroke-width="param(outline-width) 10" width="100" height="100">
     </rect>
     </svg>
 
@@ -577,6 +756,13 @@ The parameters can then be defined as expressions in the :guilabel:`Dynamic SVG 
 
    Dynamic SVG parameters table
 
+.. note::
+
+ QGIS is looking for a complete SVG node. So if your parameter is within a more complex node, 
+ you need to inject the complete node with the expression. 
+ For instance, ``transform="rotate(param(angle)"`` will not work.
+ Instead, you need to do ``transform="param(rotation)"`` and ``rotation`` parameter will be defined 
+ with the expression ``'rotate(' || coalesce(my_field, 0) || ')'``.
 
 .. _geometry_generator_symbol: 
  
@@ -584,7 +770,7 @@ The Geometry Generator
 ......................
 
 Available with all types of symbols, the :guilabel:`geometry generator` symbol
-layer allows to use :ref:`expression syntax <functions_list>` to generate a
+layer allows to use :ref:`expression syntax <expression_builder>` to generate a
 geometry on the fly during the rendering process. The resulting geometry does
 not have to match with the original :guilabel:`Geometry type` and you can add
 several differently modified symbol layers on top of each other.
@@ -595,30 +781,94 @@ more control over the generated output.
 
 Some examples:
 
-::
 
-  -- render the centroid of a feature
-  centroid( $geometry ) 
+* Render symbol as the centroid of a feature
 
-  -- visually overlap features within a 100 map units distance from a point
-  -- feature, i.e generate a 100m buffer around the point
-  buffer( $geometry, 100 )
+  ::
 
-  -- Given polygon layer1( id1, layer2_id, ...) and layer2( id2, fieldn...)
-  -- render layer1 with a line joining centroids of both where layer2_id = id2
-  make_line( centroid( $geometry ),
-             centroid( geometry( get_feature( 'layer2', 'id2', attribute(
-                 $currentfeature, 'layer2_id') ) )
-           ) 
+   centroid( $geometry ) 
 
-  -- Create a nice radial effect of points surrounding the central feature
-  -- point when used as a MultiPoint geometry generator
-  collect_geometries(
-    array_foreach(
-      generate_series( 0, 330, 30 ),
-        project( $geometry, .2, radians( @element ) )
-    )
-  )
+* Visually overlap features within a 100 map units distance from a point feature,
+  i.e generate a 100m buffer around the point
+
+  ::
+
+    buffer( $geometry, 100 )
+
+* Create a radial effect of points surrounding the central feature point
+  when used as a MultiPoint geometry generator
+
+  .. list-table::
+     :widths: 15 85
+
+     * - ::
+
+          collect_geometries(
+           array_foreach(
+            generate_series( 0, 330, 30 ),
+            project( $geometry, 3, radians( @element ) )
+           )
+          )
+       - .. figure:: img/radial_symbols.png
+            :align: center
+            :width: 100%
+
+* Create a radial effect of points surrounding the central feature point.
+  The number of points varies based on a field.
+
+  .. list-table::
+     :widths: 15 85
+
+     * - ::
+
+          with_variable(
+           'symbol_numbers',
+           ceil(fid/10),
+           collect_geometries(
+            array_foreach(
+             generate_series( 0, 360, 360/@symbol_numbers ),
+             project( $geometry, 2, radians( @element ) )
+            )
+           )
+          )
+       - .. figure:: img/radial_symbols_datadefined.png
+            :align: center
+            :width: 100%
+
+* Create a curved arrow line connecting features of two layers based on their :ref:`relation <project_relations>`
+
+  .. list-table::
+     :widths: 15 85
+
+     * - ::
+
+          collect_geometries(
+           with_variable(
+            'destination_points',
+            relation_aggregate(
+             'the_relation_id',
+             'array_agg',
+             centroid( $geometry )
+            ),
+            array_foreach(
+             @destination_points,
+             make_line(
+              centroid( @geometry ),
+              project(
+               centroid(
+                make_line( centroid( @geometry ), @element )
+               ),
+               10, 50
+              ),
+              @element
+             )
+            )
+           )
+          )
+       - .. figure:: img/arrow_relations.png
+            :align: center
+            :width: 100%
+
 
 .. _vector_field_marker:
 
@@ -646,6 +896,56 @@ The magnitude of field can be scaled up or down to an appropriate size for
 viewing the field.
 
 
+.. index:: Animation
+.. _animated_marker:
+
+Animated marker
+...............
+
+Animated marker symbol type allows you to use a :file:`.GIF`, :file:`.WebP`,
+:file:`.MNG`, etc. animation file to represent points on your map. 
+You can specify:
+
+* :guilabel:`File` path,
+* :guilabel:`Frame rate`: number of steps that are shown per second,
+  indicating how fast the animation is played,
+* :guilabel:`Size` in any :ref:`supported unit <unit_selector>`,
+* :guilabel:`Opacity`,
+* :guilabel:`Rotation`,
+* :guilabel:`Offset` in :guilabel:`x` and :guilabel:`y` directions 
+  from the marker position,
+* :guilabel:`Anchor point`   
+
+There are two ways to handle animated symbols:
+
+* **When your map is not configured as an animation** (i.e. it's a standard QGIS 
+  project without animations), the frame for the animated markers will be 
+  determined solely by the current timestamp. 
+
+  .. only:: html
+
+    .. figure:: img/animated_marker_map.gif
+       :align: center
+       :width: 100%
+
+       Animated marker when map is not configured as animation
+
+* **When your map is** :ref:`configured as an animation <maptimecontrol>`, 
+  the animated markers will sync with the animation's timeline.
+  This means that animated markers will pause when the animation is paused,
+  progress with the animation, and so forth. The map will also be redrawn 
+  according to the frame rate established for temporal animation. This mode
+  is also applied when exporting an animation using the temporal controller.
+
+  .. only:: html
+
+    .. figure:: img/animated_marker_animation.gif
+       :align: center
+       :width: 100%
+
+       Animated marker when map is configured as animation
+
+
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE
    This will be automatically updated by the find_set_subst.py script.
    If you need to create a new substitution manually,
@@ -654,7 +954,7 @@ viewing the field.
 
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em
 .. |duplicateLayer| image:: /static/common/mActionDuplicateLayer.png
    :width: 1.5em
@@ -672,9 +972,9 @@ viewing the field.
    :width: 1.5em
 .. |selectString| image:: /static/common/selectstring.png
    :width: 2.5em
-.. |signMinus| image:: /static/common/symbologyRemove.png
-   :width: 1.5em
-.. |signPlus| image:: /static/common/symbologyAdd.png
-   :width: 1.5em
 .. |styleManager| image:: /static/common/mActionStyleManager.png
+   :width: 1.5em
+.. |symbologyAdd| image:: /static/common/symbologyAdd.png
+   :width: 1.5em
+.. |symbologyRemove| image:: /static/common/symbologyRemove.png
    :width: 1.5em

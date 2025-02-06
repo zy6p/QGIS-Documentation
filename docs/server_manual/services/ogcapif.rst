@@ -1,34 +1,36 @@
 .. _`ogc_api_features`:
 
-WFS3 (OGC API Features)
+OGC API Features
 ==============================================
 
-WFS3 is the first implementation of the new generation of OGC
+OGC API Features (OAPIF) is the first implementation of the new generation of OGC
 protocols.
 It is described by the `OGC API - Features - Part 1: Core
-<http://docs.opengeospatial.org/is/17-069r3/17-069r3.html>`_ document.
+<http://docs.ogc.org/is/17-069r3/17-069r3.html>`_ document. 
+
+The API can be reached on typical installations via `http://localhost/qgisserver/wfs3`
 
 Here is a quick informal summary of the most important differences
-between the well known WFS protocol and WFS3:
+between the well known WFS protocol and OAPIF:
 
-- WFS3 is based on a
+- OAPIF is based on a
   `REST <https://en.wikipedia.org/wiki/Representational_state_transfer>`_
   API
-- WFS3 API must follow the
+- OAPIF must follow the
   `OPENAPI <https://en.wikipedia.org/wiki/OpenAPI_Specification>`_
   specifications
-- WFS3 supports multiple output formats but it does not dictate any
-  (only GeoJSON and HTML are currently available in QGIS WFS3) and it
+- OAPIF supports multiple output formats but it does not dictate any
+  (only GeoJSON and HTML are currently available in QGIS OAPIF) and it
   uses `content negotiation
   <https://en.wikipedia.org/wiki/Content_negotiation>`_ to determine
   which format is to be served to the client
-- JSON and HTML are first class citizens in WFS3
-- WFS3 is self-documenting (through the ``/api`` endpoint)
-- WFS3 is fully navigable (through links) and browsable
+- JSON and HTML are first class citizens in OAPIF
+- OAPIF is self-documenting (through the ``/api`` endpoint)
+- OAPIF is fully navigable (through links) and browsable
 
 .. important::
 
-    While the WFS3 implementation in QGIS can make use of the ``MAP``
+    While the OGC API Features implementation in QGIS can make use of the ``MAP``
     parameter to specify the project file, no extra query parameters
     are allowed by the OPENAPI specification.
     For this reason it is strongly recommended that ``MAP`` is not
@@ -47,8 +49,8 @@ between the well known WFS protocol and WFS3:
 Resource representation
 -----------------------
 
-The QGIS Server WFS3 implementation currently supports the following
-resource representation (output) formats:
+The implementation of OGC API Features in QGIS Server currently supports
+the following resource representation (output) formats:
 
 - HTML
 - JSON
@@ -69,7 +71,7 @@ endpoints:
 - ``.geojson``: alias for ``.json`` supported by the **Features** and
   **Feature** endpoints
 
-.. _wfs3_endpoints:
+.. _oapif_endpoints:
 
 Endpoints
 --------------------
@@ -99,6 +101,7 @@ Endpoints points provided by the QGIS implementation are:
    "Feature", "``/collections/{collectionId}/items/{featureId}``", "Information
    about a single feature"
 
+Similar to WFS-T (transactional Web Feature Service), it is possible to add, update and delete features (CRUD). The respective requests are described on "``/api``".
 
 Landing Page
 ^^^^^^^^^^^^^^^^^^^^
@@ -113,12 +116,12 @@ The **Landing Page** must provide links to
   ``conformance``), and
 - the Collections (path ``/collections``, link relation ``data``).
 
-.. _figure_server_wfs3_landing_page:
+.. _figure_server_oapif_landing_page:
 
-.. figure:: ../img/server_wfs3_landing_page.png
+.. figure:: img/server_wfs3_landing_page.png
    :align: center
 
-   Server WFS3 landing page
+   Server OAPIF landing page
 
 .. _`ogc_api_features_api_definition`:
 
@@ -150,12 +153,12 @@ the vector layers from the current project (if they were published as
 WFS in the project properties).
 The path of this endpoint is ``/collections/``.
 
-.. _figure_server_wfs3_collections:
+.. _figure_server_oapif_collections:
 
-.. figure:: ../img/server_wfs3_collections.png
+.. figure:: img/server_wfs3_collections.png
    :align: center
 
-   Server WFS3 collections list page
+   Server OAPIF collections list page
 
 
 Collection detail
@@ -171,12 +174,12 @@ The HTML representation also provides a browsable map with the
 available features.
 
 
-.. _figure_server_wfs3_collection:
+.. _figure_server_oapif_collection:
 
-.. figure:: ../img/server_wfs3_collection.png
+.. figure:: img/server_wfs3_collection.png
    :align: center
 
-   Server WFS3 collection detail page
+   Server OAPIF collection detail page
 
 
 .. _`ogc_api_features_features_list`:
@@ -197,12 +200,12 @@ available features.
     This endpoint is analogue to ``GetFeature`` in  WFS 1 and WFS 2.
 
 
-.. _figure_server_wfs3_features:
+.. _figure_server_oapif_features:
 
-.. figure:: ../img/server_wfs3_features.png
+.. figure:: img/server_wfs3_features.png
    :align: center
 
-   Server WFS3 features list page
+   Server OAPIF features list page
 
 
 Feature detail
@@ -217,12 +220,12 @@ The HTML representation also provides a browsable map with the
 feature geometry.
 
 
-.. _figure_server_wfs3_feature:
+.. _figure_server_oapif_feature:
 
-.. figure:: ../img/server_wfs3_feature.png
+.. figure:: img/server_wfs3_feature.png
    :align: center
 
-   Server WFS3 feature detail page
+   Server OAPIF feature detail page
 
 
 
@@ -392,7 +395,7 @@ response.
 The template is parsed by a template engine called
 `inja <https://github.com/pantor/inja/>`_.
 The templates can be customized by overriding them (see:
-:ref:`server_wfs3_template_override`).
+:ref:`server_oapif_template_override`).
 The template has access to the same data that are available to the
 ``JSON`` representation and a few additional functions are available to
 the template:
@@ -413,9 +416,13 @@ Custom template functions
   link list
 - ``content_type_name( content_type )``: Returns a short name from a
   content type, for example "text/html" will return "HTML"
+- ``nl2br( text )``: Returns the input text with all newlines replaced
+  by "<br>" tags
+- ``starts_with( string, prefix )``: returns true if a string begins 
+  with the provided string prefix, false otherwise
 
 
-.. _`server_wfs3_template_override`:
+.. _`server_oapif_template_override`:
 
 Template overrides
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

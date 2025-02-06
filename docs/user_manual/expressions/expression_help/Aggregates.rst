@@ -29,8 +29,8 @@ Returns an aggregate value calculated using features from another layer.
          * count
          * count_distinct
          * count_missing
-         * min
-         * max
+         * minimum or min
+         * maximum or max
          * sum
          * mean
          * median
@@ -48,20 +48,20 @@ Returns an aggregate value calculated using features from another layer.
          * concatenate_unique: join unique strings with a concatenator
          * collect: create an aggregated multipart geometry
          * array_agg: create an array of aggregated values
-         
+
 
        * **expression** - sub expression or field name to aggregate
        * **filter** - optional filter expression to limit the features used for calculating the aggregate. Fields and geometry are from the features on the joined layer. The source feature can be accessed with the variable @parent.
-       * **concatenator** - optional string to use to join values for 'concatenate' aggregate
+       * **concatenator** - optional string to use to join values for 'concatenate' and 'concatenate_unique' aggregates
        * **order_by** - optional filter expression to order the features used for calculating the aggregate. Fields and geometry are from the features on the joined layer. By default, the features will be returned in an unspecified order.
    * - Examples
      - * ``aggregate(layer:='rail_stations',aggregate:='sum',expression:="passengers")`` → sum of all values from the passengers field in the rail_stations layer
        * ``aggregate('rail_stations','sum', "passengers"/7)`` → calculates a daily average of "passengers" by dividing the "passengers" field by 7 before summing the values
        * ``aggregate(layer:='rail_stations',aggregate:='sum',expression:="passengers",filter:="class">3)`` → sums up all values from the "passengers" field from features where the "class" attribute is greater than 3 only
        * ``aggregate(layer:='rail_stations',aggregate:='concatenate', expression:="name", concatenator:=',')`` → comma separated list of the name field for all features in the rail_stations layer
-       * ``aggregate(layer:='countries', aggregate:='max', expression:="code", filter:=intersects( $geometry, geometry(@parent) ) )`` → The country code of an intersecting country on the layer 'countries'
-       * ``aggregate(layer:='rail_stations',aggregate:='sum',expression:="passengers",filter:=contains( @atlas_geometry, $geometry ) )`` → sum of all values from the passengers field in the rail_stations within the current atlas feature
-       * ``aggregate(layer:='rail_stations', aggregate:='collect', expression:=centroid($geometry), filter:="region_name" = attribute(@parent,'name') )`` → aggregates centroid geometries of the rail_stations of the same region as current feature
+       * ``aggregate(layer:='countries', aggregate:='max', expression:="code", filter:=intersects( @geometry, geometry(@parent) ) )`` → The country code of an intersecting country on the layer 'countries'
+       * ``aggregate(layer:='rail_stations',aggregate:='sum',expression:="passengers",filter:=contains( @atlas_geometry, @geometry ) )`` → sum of all values from the passengers field in the rail_stations within the current atlas feature
+       * ``aggregate(layer:='rail_stations', aggregate:='collect', expression:=centroid(@geometry), filter:="region_name" = attribute(@parent,'name') )`` → aggregates centroid geometries of the rail_stations of the same region as current feature
 
 
 .. end_aggregate_section
@@ -110,8 +110,8 @@ Returns the multipart geometry of aggregated geometries from an expression
        * **group_by** - optional expression to use to group aggregate calculations
        * **filter** - optional expression to use to filter features used to calculate aggregate
    * - Examples
-     - * ``collect( $geometry )`` → multipart geometry of aggregated geometries
-       * ``collect( centroid($geometry), group_by:="region", filter:= "use" = 'civilian' )`` → aggregated centroids of the civilian features based on their region value
+     - * ``collect( @geometry )`` → multipart geometry of aggregated geometries
+       * ``collect( centroid(@geometry), group_by:="region", filter:= "use" = 'civilian' )`` → aggregated centroids of the civilian features based on their region value
 
 
 .. end_collect_section
@@ -551,8 +551,8 @@ Returns an aggregate value calculated using all matching child features from a l
          * count
          * count_distinct
          * count_missing
-         * min
-         * max
+         * minimum or min
+         * maximum or max
          * sum
          * mean
          * median
@@ -570,7 +570,7 @@ Returns an aggregate value calculated using all matching child features from a l
          * concatenate_unique: join unique strings with a concatenator
          * collect: create an aggregated multipart geometry
          * array_agg: create an array of aggregated values
-         
+
 
        * **expression** - sub expression or field name to aggregate
        * **concatenator** - optional string to use to join values for 'concatenate' aggregate

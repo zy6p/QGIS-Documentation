@@ -49,27 +49,17 @@ You can open that modeless dialog either:
 Organizing style items
 ----------------------
 
-The :guilabel:`Style Manager` dialog displays in its center a frame with
-previewed items organized into tabs:
+In the upper left corner of the :guilabel:`Style Manager` dialog, within
+the drop-down menu, you can choose the style database you want to connect to.
+If you choose :guilabel:`Default` you will be connected to the default style database
+where you can find all available default style items and the ones that you saved in this database.
+Choosing :guilabel:`Project Styles` will connect you to the Project Style database
+where you can find only symbols that you saved in this database.
+If you created more style databases, they will be listed in the drop-down menu.
+There are also options to |symbologyAdd| :sup:`Add existing style database to project`
+and |newPage| :sup:`Create new style database` (see more :ref:`Style database <style_database>`).
 
-* :guilabel:`All` for a complete collection of point, linear and surface symbols
-  and label settings as well as predefined color ramps and text formats;
-* |pointLayer| :guilabel:`Marker` for point symbols only;
-* |lineLayer| :guilabel:`Line` for linear symbols only;
-* |polygonLayer| :guilabel:`Fill` for surface symbols only;
-* |color| :guilabel:`Color ramp`;
-* |text| :guilabel:`Text format` to manage :ref:`text formats <text_format>`,
-  which store the font, color, buffers, shadows, and backgrounds of texts
-  (i.e. all the formatting parts of the label settings, which for instance can
-  be used in layouts);
-* |labeling| :guilabel:`Label settings` to manage :ref:`label settings
-  <showlabels>`, which include the text formats and some layer-type specific
-  settings such as label placement, priority, callouts, rendering...
-* |3d| :guilabel:`3D Symbols` to configure symbols with :ref:`3D properties
-  <3dsymbols>` (extrusion, shading, altitude, ...) for the features to render
-  in a :ref:`3D Map view <label_3dmapview>`
-
-For each family of items, you can organize the elements into different categories,
+For each style database, you can organize the elements into different categories,
 listed in the panel on the left:
 
 * **Favorites**: displayed by default when configuring an item, it shows an
@@ -79,7 +69,7 @@ listed in the panel on the left:
   An item can be tagged more than once. Select a tag in the list and the tabs
   are updated to show only their items that belong to it.
   To create a new tag you could later attach to a set of items, use the
-  :guilabel:`Add Tag...` button or select the |signPlus| :guilabel:`Add Tag...`
+  :guilabel:`Add Tag...` button or select the |symbologyAdd| :guilabel:`Add Tag...`
   from any tag contextual menu;
 * **Smart Group**: a smart group dynamically fetches its symbols according to
   conditions set (see eg, :numref:`figure_smart_group`). Click the :guilabel:`Add Smart Group...`
@@ -113,9 +103,39 @@ categories, you can either:
   Editor` dialog.
   This option is also available in the contextual menu of the smart group.
 
-To remove a tag or a smart group, right-click on it and select the |signMinus|
+To remove a tag or a smart group, right-click on it and select the |symbologyRemove|
 :guilabel:`Remove` button. Note that this does not delete the items grouped in the
 category.
+
+The :guilabel:`Style Manager` dialog displays in its center a frame with
+previewed items organized into tabs:
+
+* :guilabel:`All` for a complete collection of point, linear and surface symbols
+  and label settings as well as predefined color ramps and text formats;
+* |pointLayer| :guilabel:`Marker` for point symbols only;
+* |lineLayer| :guilabel:`Line` for linear symbols only;
+* |polygonLayer| :guilabel:`Fill` for surface symbols only;
+* |color| :guilabel:`Color ramp`;
+* |text| :guilabel:`Text format` to manage :ref:`text formats <text_format>`,
+  which store the font, color, buffers, shadows, and backgrounds of texts
+  (i.e. all the formatting parts of the label settings, which for instance can
+  be used in layouts);
+* |labelingSingle| :guilabel:`Label settings` to manage :ref:`label settings
+  <showlabels>`, which include the text formats and some layer-type specific
+  settings such as label placement, priority, callouts, rendering...
+* |legend| :guilabel:`Legend Patch Shapes` to manage custom legend patch
+  shapes, which include :guilabel:`Marker`, :guilabel:`Line` and
+  :guilabel:`Fill` geometries.
+* |3d| :guilabel:`3D Symbols` to configure symbols with :ref:`3D properties
+  <3dsymbols>` (extrusion, shading, altitude, ...) for the features to render
+  in a :ref:`3D Map view <label_3dmapview>`
+
+You can arrange the Styles in |iconView| :guilabel:`Icon View` or in
+|openTable| :guilabel:`List View` on the bottom right side. In both views
+the tooltip shows a larger instance of the style.
+The thumbnail size slider at the left of the icons helps you adjust the actual
+thumbnail sizes in the dialog, for a better preview of the symbols!
+
 
 Adding, editing or removing an item
 -----------------------------------
@@ -124,13 +144,13 @@ As seen earlier, style elements are listed under different tabs whose
 contents depend on the active category (tag, smart group, favorites...).
 When a tab is enabled, you can:
 
-* Add new items: press the |signPlus| :sup:`Add item` button and configure the
+* Add new items: press the |symbologyAdd| :sup:`Add item` button and configure the
   item following :ref:`symbols <symbol-selector>`, :ref:`color ramps
   <color-ramp>` or :ref:`text format and label <showlabels>` builder description.
 * Modify an existing item: select an item and press |symbologyEdit| :sup:`Edit
   item` button and configure as mentioned above. 
 * Delete existing items: to delete an element you no longer need, select it and
-  click |signMinus| :sup:`Remove item` (also available through right-click).
+  click |symbologyRemove| :sup:`Remove item` (also available through right-click).
   The item will be deleted from the local database.
 
 Note that the :guilabel:`All` tab provides access to these options for every type
@@ -278,19 +298,39 @@ The Color ramp tab in the :guilabel:`Style Manager` dialog helps you preview
 different color ramps based on the category selected in the left panel.
 
 To create a custom color ramp, activate the Color ramp tab and click the
-|signPlus| :sup:`Add item` button. The button reveals a drop-down list to
+|symbologyAdd| :sup:`Add item` button. The button reveals a drop-down list to
 choose the ramp type:
 
-* :guilabel:`Gradient`: given a start and end colors, generate a color ramp which
-  can be **continuous** or **discrete**. With double-clicking the ramp preview, you
-  can add as many intermediate color stops as you want.
+* :guilabel:`Gradient`: given a start and end colors, generates a color ramp
+  which can be **continuous** or **discrete**.
+  With double-clicking the ramp preview, you can add as many intermediate color stops as you want.
+  Click on the color stop indicator and under :guilabel:`Gradient stop` you can:
 
-.. _figure_color_custom_ramp:
+  * adjust its :guilabel:`Relative position` from the color ramp start.
+    Also possible dragging the indicator with the mouse, or pressing the arrow keys
+    (combine with :kbd:`Shift` key for a larger move)
+  * specify the color model to use when interpolating between colors:
+    it can be :guilabel:`RGB`, :guilabel:`HSL` or :guilabel:`HSV`.
+    In some circumstances, this option can help avoid desaturated mid tones,
+    resulting in more visually pleasing gradients.
+  * set the direction which the interpolation should follow for the **Hue** component
+    of a :guilabel:`HSL` or :guilabel:`HSV` color specification.
+    It can be :guilabel:`Clockwise` or :guilabel:`Counterclockwise`.
+  * set the :ref:`color properties <color-selector>`
+  * remove the color stop pressing :guilabel:`Delete stop` or :kbd:`DEL`
 
-.. figure:: img/customColorRampGradient.png
-   :align: center
+  The :guilabel:`Plots` group provides another graphical way to design the color ramp,
+  changing the position or the opacity and HSL components of the color stops.
 
-   Example of custom gradient color ramp with multiple stops
+  .. _figure_color_custom_ramp:
+
+  .. figure:: img/customColorRampGradient.png
+     :align: center
+
+     Example of custom gradient color ramp with multiple stops
+
+  .. hint:: Drag-and-drop a color from a color spot onto the gradient ramp preview
+    adds a new color stop.
 
 * :guilabel:`Color presets`: allows to create a color ramp consisting of a list of
   colors selected by the user;
@@ -310,14 +350,54 @@ choose the ramp type:
 
    cpt-city dialog with hundreds of color ramps
 
-.. tip:: **Easily adjust the color stops of the gradient color ramp**
 
- Double-clicking the ramp preview or drag-and-drop a color from the color spot onto
- the ramp preview adds a new color stop. Each color stop can be tweaked using the
- :ref:`color-selector` widgets or by plotting each of its parameters. You can also 
- reposition it using the mouse, the arrow keys (combine with :kbd:`Shift` key for
- a larger move) or the :guilabel:`Relative position` spinbox. Pressing :guilabel:`Delete
- stop` as well as :kbd:`DEL` key removes the selected color stop. 
+.. _legend_patch:
+
+Creating a Legend Patch Shape
+=============================
+
+To create a new Legend Patch Shape, activate the :guilabel:`Legend Patch Shapes` tab and
+click the |symbologyAdd| :sup:`Add item` button. The button reveals a drop-down
+list to choose the geometry type:
+
+* :guilabel:`Marker Legend Patch Shape...`: to use with point geometries.
+* :guilabel:`Line Legend Patch Shape...`: to use with line geometries.
+* :guilabel:`Fill Legend Patch Shape...`: to use with polygon geometries.
+
+All three options will show the same dialog.
+
+.. _figure_legend_patch:
+
+.. figure:: img/createLegendPatchShape.png
+   :align: center
+
+   Create a new Legend Patch Shape
+
+Only the shape type and displayed legend patch shapes will differ regarding
+to the chosen geometry type. The following options will be available:
+
+* :guilabel:`Shape`: define the shape of the legend patch shape as a
+  WKT string. Single and multipart geometries may be used, but no
+  GeometryCollection.
+* |checkbox| :guilabel:`Preserve aspect ratio`
+* |iconView| :guilabel:`Icon View` or |openTable| :guilabel:`List View` of
+  available legend patch shapes, filtered by tags.
+
+When the new Shape is defined you can :guilabel:`Save Legend Patch Shape...`
+or press :guilabel:`OK`, which will both lead to the same dialog.
+
+.. _figure_safe_legend_patch:
+
+.. figure:: img/safeLegendPatchShape.png
+   :align: center
+
+   Save a new Legend Patch Shape
+
+Here you have to choose a name, tags to describe the shape and if it should
+be added to favorites.
+
+If you press :guilabel:`Save...`, the shape is added to the list and you are directed
+back to the :guilabel:`New Legend Patch Shape` dialog to keep creating new shapes.
 
 
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE
@@ -328,14 +408,24 @@ choose the ramp type:
 
 .. |3d| image:: /static/common/3d.png
    :width: 1.5em
+.. |checkbox| image:: /static/common/checkbox.png
+   :width: 1.3em
 .. |color| image:: /static/common/color.png
 .. |fileOpen| image:: /static/common/mActionFileOpen.png
    :width: 1.5em
 .. |fileSave| image:: /static/common/mActionFileSave.png
    :width: 1.5em
-.. |labeling| image:: /static/common/labelingSingle.png
+.. |iconView| image:: /static/common/mActionIconView.png
    :width: 1.5em
+.. |labelingSingle| image:: /static/common/labelingSingle.png
+   :width: 1.5em
+.. |legend| image:: /static/common/legend.png
+   :width: 1.2em
 .. |lineLayer| image:: /static/common/mIconLineLayer.png
+   :width: 1.5em
+.. |newPage| image:: /static/common/mActionNewPage.png
+   :width: 1.5em
+.. |openTable| image:: /static/common/mActionOpenTable.png
    :width: 1.5em
 .. |pointLayer| image:: /static/common/mIconPointLayer.png
    :width: 1.5em
@@ -345,15 +435,15 @@ choose the ramp type:
    :width: 1.5em
 .. |sharing| image:: /static/common/mActionSharing.png
    :width: 1.5em
-.. |signMinus| image:: /static/common/symbologyRemove.png
-   :width: 1.5em
-.. |signPlus| image:: /static/common/symbologyAdd.png
-   :width: 1.5em
 .. |styleManager| image:: /static/common/mActionStyleManager.png
+   :width: 1.5em
+.. |symbologyAdd| image:: /static/common/symbologyAdd.png
    :width: 1.5em
 .. |symbologyEdit| image:: /static/common/symbologyEdit.png
    :width: 1.5em
+.. |symbologyRemove| image:: /static/common/symbologyRemove.png
+   :width: 1.5em
 .. |text| image:: /static/common/text.png
    :width: 1.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em

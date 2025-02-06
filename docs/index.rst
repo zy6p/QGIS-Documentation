@@ -23,7 +23,7 @@
 .. only:: i18n
 
   .. note:: This documentation is translated from the original English version
-    by community members on `Transifex <https://transifex.com/qgis/qgis-documentation>`_.
+    by community members on `Transifex <https://explore.transifex.com/qgis/qgis-documentation>`_.
 
     Depending on the translation effort's :ref:`completion level <translation_stats>`,
     you may find paragraphs or whole pages which are still in English.
@@ -65,8 +65,7 @@ you can download for offline reading. They are accessible from the
 
     * Submit an issue or pull request on the `GitHub repository
       <https://github.com/qgis/QGIS-Documentation/>`_,
-    * Help us `translate the documentation
-      <https://qgis.org/en/site/getinvolved/translate.html>`_ into your language
+    * Help us :ref:`translate the documentation <translation_guidelines>` into your language
     * Or talk to us on either the `qgis-community-team
       <https://lists.osgeo.org/mailman/listinfo/qgis-community-team>`_ mailing-list,
       the `#qgis <http://webchat.freenode.net/?channels=#qgis>`_ channel on IRC
@@ -106,4 +105,4 @@ Please have a look into one of the documents below.
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |CURRENT| replace:: 3.16
+.. |CURRENT| replace:: 3.40

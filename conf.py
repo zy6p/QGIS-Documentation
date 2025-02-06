@@ -23,7 +23,9 @@ import doctest
 import yaml
 import sys
 import os
+from hashlib import md5
 from sphinx.roles import MenuSelection
+
 project = 'QGIS Documentation'
 copyright = '2002-now, QGIS project'
 author = 'QGIS Authors'
@@ -38,7 +40,7 @@ master_doc = 'docs/index'
 # of the sidebar.
 html_logo = 'static/common/logo.png'
 
-html_last_updated_fmt = '%b %d, %Y %H:%M'
+html_last_updated_fmt = '%Y %b %d, %H:%M %z'
 
 
 # The version info for the project you're documenting, acts as replacement for
@@ -57,6 +59,7 @@ extensions = [
     'sphinx.ext.extlinks',
     'sphinxext.rediraffe',
     'sphinx_togglebutton',
+    'sphinx_copybutton'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -67,8 +70,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [
     'venv',
-    'README.rst',
-    'readme_old.rst',
+    '.github',
     'docs/user_manual/expressions/expression_help/*'
 ]
 
@@ -80,6 +82,9 @@ gettext_compact = False     # optional.
 
 # Enable numeric figure references
 numfig = True
+
+# The filename format for language-specific figures
+figure_language_filename = '{path}{language}/{basename}{ext}'
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -153,11 +158,13 @@ html_context = {
 if html_context['isTesting'] or html_context['outdated']:
     html_css_files = ['css/qgis_topbar.css']
 
-# Add custom tag to allow display of text based on the branch status
+# Add custom tags to allow display of text based on the branch status
 if html_context['isTesting']:
     tags.add('testing')
+if html_context['outdated']:
+    tags.add('outdated')
 
-supported_languages = cfg['supported_languages'].replace(' ', '').split(',')
+supported_languages = cfg['supported_languages'].split()
 version_list = cfg['version_list'].replace(' ', '').split(',')
 docs_url = 'https://docs.qgis.org/'
 
@@ -180,12 +187,18 @@ source_version = ''.join(['release-', version]).replace('.',
                                                         '_') if version != 'testing' else 'master'
 
 extlinks = {  # api website: docs master branch points to '/' while x.y points to x.y
-    'api': ('https://qgis.org/api/{}%s'.format(''.join([version, '/']) if version != 'testing' else ''), None),
+    'api': ('https://api.qgis.org/api/{}%s'.format(''.join([version, '/']) if version != 'testing' else ''), None),
     # pyqgis website: docs master branch points to 'master' and x.y points to x.y
     'pyqgis': ('https://qgis.org/pyqgis/{}/%s'.format(pyqgis_version), None),
     # code on github: docs master branch points to 'master' while x.y points to release-x_y
     'source': ('https://github.com/qgis/QGIS/blob/{}/%s'.format(source_version), None)
 }
+
+def calculate_tx_slug(filepath):
+    """A function to calculate Transifex slug using md5 on file path"""
+
+    result = md5(filepath.encode())
+    return result.hexdigest()
 
 context = {
     # 'READTHEDOCS': True,
@@ -200,11 +213,12 @@ context = {
     'github_repo': 'QGIS-Documentation',
     'github_version': 'master/',
     'github_url': 'https://github.com/qgis/QGIS-Documentation/edit/master',
-    'transifex_url': 'https://www.transifex.com/qgis/qgis-documentation/translate',
+    'transifex_url': 'https://app.transifex.com/qgis/qgis-documentation/translate',
+    'calculate_tx_slug': calculate_tx_slug,
 
     'pyqgis_version': pyqgis_version,
     'source_version': source_version,
-    'api_version': api_version
+    'api_version': api_version,
 }
 
 if 'html_context' in globals():
@@ -212,6 +226,25 @@ if 'html_context' in globals():
 else:
     html_context = context
 
+# Supported image file formats and order of picking if named alike
+from sphinx.builders.html import StandaloneHTMLBuilder
+StandaloneHTMLBuilder.supported_image_types = [
+    'image/svg+xml',
+    'image/gif',
+    'image/png',
+    'image/jpeg'
+]
+
+rst_prolog = r"""
+    .. only:: html and i18n
+
+      .. important::
+        Translation is a community effort :ref:`you can join <translation_guidelines>`.
+        This page is currently translated at |translation progress|.
+    """
+
+# A list of warning codes to suppress arbitrary warning messages.
+suppress_warnings = ["config.cache"]
 
 # -- Options for LaTeX output --------------------------------------------------
 
@@ -226,17 +259,19 @@ latex_paper_size = 'a4'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ('docs/user_manual/index', 'QGISDesktopUserGuide.tex',
+    ('docs/user_manual/index', 'DesktopUserGuide.tex',
      f'QGIS Desktop {version} User Guide', u'QGIS Project', 'manual'),
-    ('docs/server_manual/index', 'QGISServerUserGuide.tex',
+    ('docs/server_manual/index', 'ServerUserGuide.tex',
         f'QGIS Server {version} User Guide', u'QGIS Project', 'manual'),
     ('docs/pyqgis_developer_cookbook/index', 'PyQGISDeveloperCookbook.tex',
         f'PyQGIS {version} developer cookbook', u'QGIS Project', 'manual'),
-    ('docs/training_manual/index', 'QGISTrainingManual.tex',
+    ('docs/training_manual/index', 'TrainingManual.tex',
         u'QGIS Training Manual', u'QGIS Project', 'manual'),
-    ('docs/documentation_guidelines/index', 'QGISDocumentationGuidelines.tex',
+    ('docs/gentle_gis_introduction/index', 'GentleGISIntroduction.tex',
+        u'Gentle GIS Introduction', u'QGIS Project', 'manual'),
+    ('docs/documentation_guidelines/index', 'DocumentationGuidelines.tex',
         u'QGIS Documentation Guidelines', u'QGIS Project', 'manual'),
-    #('docs/developers_guide/index', 'QGISDevelopersGuide.tex', u'QGIS Developers Guide', u'QGIS Project', 'manual'),
+    #('docs/developers_guide/index', 'DevelopersGuide.tex', u'QGIS Developers Guide', u'QGIS Project', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -274,13 +309,13 @@ latex_elements = {
     \\newunicodechar{Ț}{\\cb{T}}
     \\newunicodechar{ț}{\\cb{t}}
     \\newunicodechar{≠}{$\\neq$}
-    \\newunicodechar{≥}{$\geq$}
-    \\newunicodechar{≤}{$\leq$}
-    \\newunicodechar{π}{$\pi$}
+    \\newunicodechar{≥}{$\\geq$}
+    \\newunicodechar{≤}{$\\leq$}
+    \\newunicodechar{π}{$\\pi$}
     \\newunicodechar{㎡}{$m^2$}
     \\newunicodechar{\u25BA}{$\u25BA$}
-    \\newunicodechar{′}{\ensuremath{^{\prime}}}
-    \\newunicodechar{″}{\ensuremath{^{\prime\prime}}}
+    \\newunicodechar{′}{\\ensuremath{^{\\prime}}}
+    \\newunicodechar{″}{\\ensuremath{^{\\prime\\prime}}}
     \\newunicodechar{​}{ }''',
 
     # Latex figure float alignment
@@ -296,7 +331,7 @@ if tags.has('ko'):
         'preamble': '''
         \\usepackage{fontspec}
         \\usepackage[space]{xeCJK}
-        \\renewcommand\CJKglue{}
+        \\renewcommand\\CJKglue{}
         \\setCJKmainfont{NanumMyeongjo}''',
     }
 
@@ -371,6 +406,12 @@ os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 from qgis.testing import start_app
 from qgis.testing.mocked import get_iface
 
+# Workaround for https://github.com/qgis/QGIS/issues/48670
+from qgis.PyQt.QtCore import QSettings
+settings = QSettings()
+settings.setValue("cache/directory", "testdata")
+
+
 def start_qgis():
 
     save_stdout = sys.stdout
@@ -388,13 +429,16 @@ def start_qgis():
         QgsFeature,
         QgsGeometry,
         QgsApplication,
-        QgsLayerTreeModel
+        QgsLayerTreeModel,
+        QgsSettings,
     )
 
     from qgis.gui import (
         QgsLayerTreeView,
         QgsMessageBar,
     )
+
+    QgsProject.instance().clear()
 
     from qgis.analysis import QgsNativeAlgorithms
 
@@ -429,6 +473,7 @@ def start_qgis():
 
     return iface
 
+
 def dump_tree(root):
     """Dump the layer tree for testing"""
 
@@ -441,10 +486,7 @@ def dump_tree(root):
 '''
 doctest_test_doctest_blocks = ''
 
-doctest_global_cleanup = '''
-from qgis.core import QgsProject
-QgsProject.instance().clear()
-'''
+doctest_global_cleanup = ''
 
 # Make Sphinx doctest insensitive to object address differences,
 # also 'output_....' processing alg ids
@@ -472,6 +514,18 @@ class BetterOutputChecker(doctest.OutputChecker):
 
 ext_doctest.SphinxDocTestRunner = BetterDocTestRunner
 
+class BetterDocTestBuilder(ext_doctest.DocTestBuilder):
+
+    def skipped(self, node) -> bool:
+        to_skip = super().skipped(node)
+
+        if not to_skip and os.environ.get('SINGLE_TEST') is not None:
+            to_skip = os.path.basename(node.source or '') != os.environ.get('SINGLE_TEST')
+
+        return to_skip
+
+ext_doctest.DocTestBuilder = BetterDocTestBuilder
+
 # -- External Link check settings --------------------------------
 
 # A list of regular expressions that match URIs that should not be checked
@@ -488,4 +542,3 @@ linkcheck_retries = 2
 # -- Redirection settings --------------------------------
 
 rediraffe_redirects = "redirects.txt"
-#rediraffe_branch = "release_3.4"

@@ -6,6 +6,7 @@ Vector analysis
    .. contents::
       :local:
       :depth: 1
+      :class: toc-columns
 
 
 .. _qgisbasicstatisticsforfields:
@@ -14,13 +15,11 @@ Basic statistics for fields
 ---------------------------
 Generates basic statistics for a field of the attribute table of a
 vector layer.
-
 Numeric, date, time and string fields are supported.
-
 The statistics returned will depend on the field type.
 
-Statistics are generated as an HTML file and are available in the
-:menuselection:`Processing --> Results viewer`.
+Statistics can be generated as a table or an HTML file
+and are available in the :menuselection:`Processing --> Results viewer`.
 
 **Default menu**: :menuselection:`Vector --> Analysis Tools`
 
@@ -46,6 +45,19 @@ Parameters
    * - **Statistics**
 
        Optional
+     - ``OUTPUT``
+     - [table]
+
+       Default: ``[Create temporary layer]``
+     - Specify the output table for the generated statistics. One of:
+
+       .. include:: ../algs_include.rst
+          :start-after: **layer_output_types**
+          :end-before: **end_layer_output_types**
+
+   * - **Statistics report**
+
+       Optional
      - ``OUTPUT_HTML_FILE``
      - [html]
 
@@ -69,6 +81,10 @@ Outputs
      - Type
      - Description
    * - **Statistics**
+     - ``OUTPUT``
+     - [table]
+     - Table containing the calculated statistics
+   * - **Statistics report**
      - ``OUTPUT_HTML_FILE``
      - [html]
      - HTML file with the calculated statistics
@@ -275,6 +291,10 @@ Alternatively, a unique class field can be specified.
 If both options are used, the weight field will take precedence and
 the unique class field will be ignored.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
+
 ``Default menu``: :menuselection:`Vector --> Analysis Tools`
 
 Parameters
@@ -429,8 +449,6 @@ Advanced parameters
      - Type
      - Description
    * - **Treat border points as noise (DBSCAN\*)**
-
-       Optional
      - ``DBSCAN*``
      - [boolean]
 
@@ -1113,9 +1131,9 @@ Outputs
    * - **Total unique values**
      - ``TOTAL_VALUES``
      - [number]
-     - The number of uniqe values in the input field
-   * - **UNIQUE_VALUES**
-     - ``Unique values``
+     - The number of unique values in the input field
+   * - **Unique values concatenated**
+     - ``UNIQUE_VALUES``
      - [string]
      - A string with the comma separated list of unique values found
        in the input field
@@ -1329,6 +1347,9 @@ overlapped by each of the selected overlay layers.
 Parameters
 ..........
 
+Basic parameters
+^^^^^^^^^^^^^^^^
+
 .. list-table::
    :header-rows: 1
    :widths: 20 20 20 40
@@ -1345,9 +1366,133 @@ Parameters
      - ``LAYERS``
      - [vector: any] [list]
      - The overlay layers.
-   * - **Output layer**
+   * - **Overlap**
      - ``OUTPUT``
      - [same as input]
+
+       Default: ``[Create temporary layer]``
+     - Specify the output vector layer. One of:
+
+       .. include:: ../algs_include.rst
+          :start-after: **layer_output_types**
+          :end-before: **end_layer_output_types**
+
+Advanced parameters
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+   :class: longtable
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Grid size**
+
+       Optional
+     - ``GRID_SIZE``
+     - [number]
+
+       Default: Not set
+     - If provided, the input geometries are snapped to a grid of the given size,
+       and the result vertices are computed on that same grid. Requires GEOS 3.9.0 or higher.
+
+Outputs
+.......
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Overlap**
+     - ``OUTPUT``
+     - [same as input]
+     - The output layer with additional fields reporting the
+       overlap (in map units and percentage) of the input feature
+       overlapped by each of the selected layers.
+
+Python code
+...........
+
+**Algorithm ID**: ``native:calculatevectoroverlaps``
+
+.. include:: ../algs_include.rst
+  :start-after: **algorithm_code_section**
+  :end-before: **end_algorithm_code_section**
+
+
+.. _qgisshortestline:
+
+Shortest line between features
+------------------------------
+
+Creates a line layer as the shortest line between the source and the destination layer. By default only the first nearest feature of the destination layer is taken into account. The n-nearest neighboring features number can be specified.
+If a maximum distance is specified, then only features which are closer than this distance will be considered.
+
+The output features will contain all the source layer attributes, all the attributes from the n-nearest feature and the additional field of the distance.
+
+.. important:: This algorithm uses purely Cartesian calculations for distance,
+  and does not consider geodetic or ellipsoid properties when determining
+  feature proximity. The measurement and output coordinate system is based
+  on the coordinate system of the source layer.
+
+.. figure:: img/shortest_line.png
+   :align: center
+
+   Shortest line from point features to lines
+
+Parameters
+..........
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Source layer**
+     - ``SOURCE``
+     - [vector: any]
+     - Origin layer for which to search for nearest neighbors
+   * - **Destination layer**
+     - ``DESTINATION``
+     - [vector: any]
+     - Target Layer in which to search for nearest neighbors
+   * - **Method**
+     - ``METHOD``
+     - [enumeration]
+
+       Default: 0
+     - Shortest distance calculation method
+       Possible values are:
+
+       * 0 --- Distance to nearest point on feature
+       * 1 --- Distance to feature centroid
+
+   * - **Maximum number of neighbors**
+     - ``NEIGHBORS``
+     - [number]
+
+       Default: 1
+     - Maximum number of neighbors to look for
+   * - **Maximum distance**
+
+       Optional
+     - ``DISTANCE``
+     - [number]
+     - Only destination features which are closer than this distance
+       will be considered.
+   * - **Shortest lines**
+     - ``OUTPUT``
+     - [vector: line]
 
        Default: ``[Create temporary layer]``
      - Specify the output vector layer. One of:
@@ -1369,15 +1514,15 @@ Outputs
      - Description
    * - **Output layer**
      - ``OUTPUT``
-     - [same as input]
-     - The output layer with additional fields reporting the
-       overlap (in map units and percentage) of the input feature
-       overlapped by each of the selected layers.
+     - [vector: line]
+     - Line vector layer joining source features to their nearest
+       neighbor(s) in the destination layer. Contains all attributes for
+       both source and destination features, and the computed distance.
 
 Python code
 ...........
 
-**Algorithm ID**: ``native:calculatevectoroverlaps``
+**Algorithm ID**: ``native:shortestline``
 
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
@@ -1463,8 +1608,6 @@ Advanced parameters
      - Type
      - Description
    * - **Treat border points as noise (DBSCAN\*)**
-
-       Optional
      - ``DBSCAN*``
      - [boolean]
 
@@ -1690,6 +1833,10 @@ of lines and the total number of them that cross each polygon.
 The resulting layer has the same features as the input polygon layer,
 but with two additional attributes containing the length and count of
 the lines across each polygon.
+
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>` 
+of polygon features
 
 **Default menu**: :menuselection:`Vector --> Analysis Tools`
 

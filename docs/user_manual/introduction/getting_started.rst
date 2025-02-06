@@ -39,8 +39,7 @@ Installing from source
 
 If you need to build QGIS from source, please refer to the installation
 instructions. They are distributed with the QGIS source code in a file
-called :file:`INSTALL`. You can also find them online at
-https://github.com/qgis/QGIS/blob/master/INSTALL.md.
+called :file:`INSTALL`. You can also find them online at :source:`INSTALL.md`.
 
 
 If you want to build a particular release and not the version in development,
@@ -101,7 +100,7 @@ units feet. The EPSG code is 2964.
 
 If you intend to use QGIS as a graphical front end for GRASS, you can find a
 selection of sample locations (e.g., Spearfish or South Dakota) at the
-official GRASS GIS website, https://grass.osgeo.org/download/sample-data/.
+official GRASS GIS website, https://grass.osgeo.org/download/data/.
 
 .. index:: Start QGIS, Stop QGIS
 .. _`label_startingqgis`:
@@ -143,12 +142,34 @@ We will use:
 Where :file:`qgis_sample_data` represents the path to the unzipped dataset.
 
 #. Start QGIS as seen in :ref:`label_startingqgis`.
-#. To load the files in QGIS:
+#. The data we will be working with are in ``Albers Equal Area``,
+   so let's set the project's CRS accordingly:
+
+   #. Click the |setProjection| :sup:`Select projection` button
+      in the bottom right of QGIS interface.
+      The project properties dialog opens with the :guilabel:`CRS` tab active.
+   #. Type `̀`2964`` in the |search| :guilabel:`Filter` text area.
+   #. Select the row with ``NAD27 / Alaska Albers`` CRS name.
+
+      .. _figure_selectCRS:
+
+      .. figure:: img/selectCRS.png
+         :align: center
+
+         Select the Coordinate Reference System of data
+
+   #. Press :guilabel:`OK`
+
+   .. note:: You can ignore/close for now the "ballpark transform" message
+    that could display.
+
+#. Load the files in QGIS:
 
    #. Click on the |dataSourceManager| :sup:`Open Data Source Manager` icon.
       The Data Source Manager should open in Browser mode.
    #. Browse to the folder :file:`qgis_sample_data/raster/`
-   #. Select the ERDAS IMG file :file:`landcover.img` and double-click it.
+   #. Select the ERDAS IMG file |rasterLayer| :guilabel:`landcover.img`
+      and double-click it.
       The landcover layer is added in the background while the Data Source
       Manager window remains open.
 
@@ -160,21 +181,31 @@ Where :file:`qgis_sample_data` represents the path to the unzipped dataset.
          Adding data to a new project in QGIS
 
    #. To load the lakes data, browse to the folder :file:`qgis_sample_data/gml/`,
-      and double-click the :file:`lakes.gml` file to open it.
-   #. A :guilabel:`Coordinate Reference System Selector` dialog opens. In the
-      :guilabel:`Filter` menu, type ``2964``, filtering the list of Coordinate
-      Reference Systems below.
+      and drag and drop the |dbSchema| :guilabel:`lakes.gml` file over QGIS main dialog.
+      (Or just double-click as mentioned above.)
+   #. The :guilabel:`Select Items to Add` dialog opens, scanning the file.
+      This is due to :file:`.gml` file format being able to store more than one layer at a time.
 
-      .. _figure_selectCRS:
+      .. _figure_selectitems:
 
-      .. figure:: img/selectCRS.png
+      .. figure:: img/addLayerItems.png
          :align: center
 
-         Select the Coordinate Reference System of data
+         Select layers within a file
 
-   #. Select the :guilabel:`NAD27 / Alaska Albers` entry
-   #. Click :guilabel:`OK`
-   #. Close the Data Source Manager window
+   #. In our case there is a single |polygonLayer| :guilabel:`lakes` layer.
+      Select it and press :guilabel:`Add Layers`.
+   #. The layer is added to the :guilabel:`Layers` panel
+#. Close the Data Source Manager window
+
+In the :guilabel:`Layers` panel, you can notice that the :guilabel:`lakes` layer
+displays |indicatorNoCRS| :sup:`Layer has no coordinate reference system set` next to it.
+Let's adjust that.
+
+#. Click the |indicatorNoCRS| icon.
+   The :guilabel:`Coordinate Reference System Selector` dialog opens.
+#. As done earlier, find and select the :guilabel:`NAD27 / Alaska Albers` CRS entry.
+#. Click :guilabel:`OK`
 
 You now have the two layers available in your project in some random colours.
 Let's do some customization on the lakes layer.
@@ -199,7 +230,7 @@ Let's do some customization on the lakes layer.
 #. To display the name of the lakes:
 
    #. Reopen the :file:`lakes` layer :guilabel:`Properties` dialog
-   #. Click on the |labeling| :guilabel:`Labels` tab
+   #. Click on the |labelingSingle| :guilabel:`Labels` tab
    #. Select :guilabel:`Single labels` in the drop-down menu to enable labeling.
    #. From the :guilabel:`Label with` list, choose the ``NAMES`` field.
 
@@ -221,6 +252,13 @@ Let's do some customization on the lakes layer.
    #. Finally click :guilabel:`OK` to close the :guilabel:`Layer Properties`
       dialog and apply the changes.
 
+      .. _figure_buffer_around_labels:
+
+      .. figure:: img/buffer_around_labels.png
+         :align: center
+
+         Showing Buffers around Labels
+
 Let's now add some decorations in order to shape the map and export it out of
 QGIS:
 
@@ -237,6 +275,13 @@ QGIS:
    again.
 #. Press :menuselection:`Project -->` |fileSave| :menuselection:`Save...` to
    store your changes as a :file:`.qgz` project file.
+
+      .. _figure_map_with_decorations:
+
+      .. figure:: img/map_with_decorations.png
+         :align: center
+
+         Showing Exported Map with Decorations
 
 That's it! You can see how easy it is to visualize raster and vector layers in
 QGIS, configure them and generate your map in an image format you can use in
@@ -258,15 +303,27 @@ features and settings, and how to use them.
    :width: 1.3em
 .. |dataSourceManager| image:: /static/common/mActionDataSourceManager.png
    :width: 1.5em
+.. |dbSchema| image:: /static/common/mIconDbSchema.png
+   :width: 1.5em
 .. |fileSave| image:: /static/common/mActionFileSave.png
    :width: 1.5em
-.. |labeling| image:: /static/common/labelingSingle.png
+.. |indicatorNoCRS| image:: /static/common/mIndicatorNoCRS.png
+   :width: 1.5em
+.. |labelingSingle| image:: /static/common/labelingSingle.png
    :width: 1.5em
 .. |nix| image:: /static/common/nix.png
    :width: 1em
 .. |osx| image:: /static/common/osx.png
    :width: 1em
+.. |polygonLayer| image:: /static/common/mIconPolygonLayer.png
+   :width: 1.5em
+.. |rasterLayer| image:: /static/common/mIconRasterLayer.png
+   :width: 1.5em
 .. |saveMapAsImage| image:: /static/common/mActionSaveMapAsImage.png
+   :width: 1.5em
+.. |search| image:: /static/common/search.png
+   :width: 1.5em
+.. |setProjection| image:: /static/common/mActionSetProjection.png
    :width: 1.5em
 .. |symbology| image:: /static/common/symbology.png
    :width: 2em

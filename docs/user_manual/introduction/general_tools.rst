@@ -46,23 +46,41 @@ Layers Panel
    single: Legend
 
 The :guilabel:`Layers` panel (also called the ``map legend``) lists all
-the layers in the project and helps you
-manage their visibility. You can show or hide it by pressing :kbd:`Ctrl+1`.
-A layer can be selected and dragged up or down in the
-legend to change the Z-ordering. Z-ordering means that layers listed nearer the
-top of the legend are drawn over layers listed lower down in the legend.
-Also a layer or a group of layers can be dragged across several QGIS instances.
+the layers in the project and helps you manage their visibility and shape the map.
+You can show or hide the panel by pressing :kbd:`Ctrl+1`.
 
-.. note:: The Z-ordering behavior can be overridden by the
-   :ref:`Layer Order <layer_order>` panel.
+QGIS provides a variety of ways to add layers to a project:
 
-At the top of the Layers panel, a toolbar allows you to:
+* using the :guilabel:`Add` button from the dedicated data provider tab
+  in the :ref:`Data source manager <opening_data>` dialog
+* from QGIS :ref:`Browser panel <label_browserpanel>` or :ref:`DB Manager <dbmanager>`:
+  double-click, drag-and-drop files and layers onto QGIS or use the contextual menu
+* drag-and-drop files from the Operating System files explorer onto QGIS
 
-* |symbology| :sup:`Open the layer styling dock (F7)`: toggle the layer styling
-  panel on and off.
+In all these scenarios, you can open one or many layers at a time.
+New layers are added to the :guilabel:`Layers` panel:
+
+#. if dropped over the :guilabel:`Layers` panel, at the exact location they are released
+#. in the other cases, at a location that respects the global :ref:`behavior used when adding new layers
+   <layer_tree_insertion_methods>` setting
+#. and in case of multiple layers, they are sorted in a way
+   that increases the chance of their stacking being logical
+   and features being visible as most as possible, using the following logic (top to bottom):
+
+   * vector point layers
+   * vector line layers
+   * vector polygon layers
+   * point cloud layers
+   * mesh layers
+   * raster layers
+
+At the top of the :guilabel:`Layers` panel, a toolbar allows you to:
+
+* |symbology| :sup:`Open the layer styling dock (F7)`: toggle the
+  :ref:`Layer Styling <layer_styling_panel>` panel on and off.
 * |addGroup| :sup:`Add new group`: see :ref:`group_layers_interact`
-* |showMapTheme| :sup:`Manage Map Themes`: control visibility of layers and
-  arrange them in different map themes.
+* |showPresets| :sup:`Manage Map Themes`: control visibility of layers and
+  arrange them in different :ref:`map themes <map_themes>`.
 * |filterMap| filter layers in the legend tree:
 
   * :guilabel:`Filter Legend by Map Content`: only the layers that are set
@@ -73,6 +91,8 @@ At the top of the Layers panel, a toolbar allows you to:
   * :guilabel:`Show Private Layers`: a convenient shortcut to display and
     interact with :ref:`private layers <project_layer_capabilities>`
     in the :guilabel:`Layers` panel without modifying the project settings.
+  * :guilabel:`Show Broken Layers Only`: only layers with broken data sources
+    are displayed.
 * |expressionFilter| :sup:`Filter Legend by Expression`: apply an
   expression to remove styles from the selected layer tree that have no feature
   satisfying the condition. This can be used to highlight features
@@ -99,7 +119,7 @@ At the top of the Layers panel, a toolbar allows you to:
 Configuring map themes
 ......................
 
-The |showMapTheme| :sup:`Manage Map Themes` drop-down button provides access to
+The |showPresets| :sup:`Manage Map Themes` drop-down button provides access to
 convenient shortcuts to manipulate visibility of the layers in the :guilabel:`Layers`
 panel:
 
@@ -115,7 +135,7 @@ panel:
 * |hideDeselectedLayers| :guilabel:`Hide Deselected Layers`
 
 Beyond the simple control of layer visibility,
-the |showMapTheme| :sup:`Manage Map Themes` menu allows you to configure
+the |showPresets| :sup:`Manage Map Themes` menu allows you to configure
 **Map Themes** in the legend and switch from one map theme to another.
 A map theme is a **snapshot** of the current map legend that records:
 
@@ -133,9 +153,8 @@ To create a map theme:
 
 #. Check a layer you want to show
 #. Configure the layer properties (symbology, diagram, labels...) as usual
-#. Expand the :menuselection:`Style -->` menu at the bottom and click on :guilabel:`Add...` to
-   store the settings as :ref:`a new style embedded in the project
-   <manage_custom_style>`
+#. Expand the :menuselection:`Style -->` menu at the bottom and click on :guilabel:`Add...`
+   to store the settings as :ref:`a new style embedded in the project <manage_custom_style>`
 
    .. note:: A map theme does not remember the current details of the properties:
      only a reference to the style name is saved, so whenever you apply
@@ -145,11 +164,11 @@ To create a map theme:
 #. Repeat the previous steps as necessary for the other layers
 #. If applicable, expand or collapse groups or visible layer nodes in the
    :guilabel:`Layers` panel
-#. Click on the |showMapTheme| :sup:`Manage Map Themes` button on top of the panel,
+#. Click on the |showPresets| :sup:`Manage Map Themes` button on top of the panel,
    and :guilabel:`Add Theme...`
 #. Enter the map theme's name and click :guilabel:`OK`
 
-The new theme is listed in the lower part of the |showMapTheme| drop-down menu.
+The new theme is listed in the lower part of the |showPresets| drop-down menu.
 
 You can create as many map themes as you need: whenever the current combination
 in the map legend (visible layers, their active style, the map legend nodes)
@@ -170,73 +189,87 @@ Overview of the context menu of the Layers panel
 ................................................
 
 At the bottom of the toolbar, the main component of the Layers panel is the
-frame listing vector or raster layers added to the project, optionally
-organized in groups. Depending on the item selected in the panel, a
-right-click shows a dedicated set of options presented below.
+frame listing all the layers added to the project, optionally organized in groups.
+A layer with a checked box next to it displays its contents overlapping the map
+canvas extent, unless a :ref:`scale-based visibility <label_scaledepend>` is set.
+A layer can be selected and dragged up or down in the legend to change the Z-ordering.
+Z-ordering means that layers listed nearer the top of the legend are drawn
+over layers listed lower down in the legend.
+Also a layer or a group of layers can be dragged across several QGIS instances.
 
-.. tabularcolumns:: |l|c|c|c|
+.. note:: The Z-ordering behavior can be overridden by the
+   :ref:`Layer Order <layer_order>` panel.
 
-=================================================================  ==================  =================  =============
-Option                                                             Vector Layer        Raster Layer       Group
-=================================================================  ==================  =================  =============
-|zoomToLayer| :guilabel:`Zoom to Layer(s)/Group`                   |checkbox|          |checkbox|         |checkbox|
-|zoomToLayer| :guilabel:`Zoom to Selection`                        |checkbox|          \                  \
-|inOverview| :guilabel:`Show in Overview`                          |checkbox|          |checkbox|         \
-:guilabel:`Show Feature Count`                                     |checkbox|          \                  \
-|labeling| :guilabel:`Show Label`                                  |checkbox|          \                  \
-:guilabel:`Copy Layer/Group`                                       |checkbox|          |checkbox|         |checkbox|
-:guilabel:`Rename Layer/Group`                                     |checkbox|          |checkbox|         |checkbox|
-|zoomActual| :guilabel:`Zoom to Native Resolution (100%)`          \                   |checkbox|         \
-:guilabel:`Stretch Using Current Extent`                           \                   |checkbox|         \
-|dbManager| :guilabel:`Update SQL Layer...`                        |checkbox|          \                  \
-|addGroup| :guilabel:`Add Group`                                   \                   \                  |checkbox|
-|duplicateLayer| :guilabel:`Duplicate Layer`                       |checkbox|          |checkbox|         \
-|removeLayer| :guilabel:`Remove Layer/Group...`                    |checkbox|          |checkbox|         |checkbox|
-:guilabel:`Move Out of Group`                                      |checkbox|          |checkbox|         \
-:guilabel:`Move to Top`                                            |checkbox|          |checkbox|         |checkbox|
-:guilabel:`Move to Bottom`                                         |checkbox|          |checkbox|         |checkbox|
-:guilabel:`Check and all its Parents`                              |checkbox|          |checkbox|         \
-:guilabel:`Group Selected`                                         |checkbox|          |checkbox|         \
-|openTable| :guilabel:`Open Attribute Table`                       |checkbox|          \                  \
-|toggleEditing| :guilabel:`Toggle Editing`                         |checkbox|          \                  \
-|allEdits| :menuselection:`Current Edits -->`                      |checkbox|          \                  \
-:guilabel:`Filter...`                                              |checkbox|          \                  \
-:guilabel:`Change Data Source...`                                  |checkbox|          \                  \
-:guilabel:`Repair Data Source...`                                  |checkbox|          \                  \
-:menuselection:`Actions on selections -->` (in edit mode)          |checkbox|          \                  \
-:menuselection:`--> Duplicate Feature`                             |checkbox|          \                  \
-:menuselection:`--> Duplicate Feature and Digitize`                |checkbox|          \                  \
-:guilabel:`Set Layer Scale Visibility...`                          |checkbox|          |checkbox|         \
-:guilabel:`Zoom to Visible Scale`                                  |checkbox|          |checkbox|         \
-:menuselection:`Set CRS -->`                                       |checkbox|          |checkbox|         \
-:menuselection:`--> Set Layer/Group CRS...`                        |checkbox|          |checkbox|         |checkbox|
-:menuselection:`--> Set Project CRS from Layer`                    |checkbox|          |checkbox|         \
-:guilabel:`Set Group WMS Data...`                                  \                   \                  |checkbox|
-|unchecked| :guilabel:`Mutually Exclusive Group`                   \                   \                  |checkbox|
-:guilabel:`Check and all its children (Ctrl-click)`                \                   \                  |checkbox|
-:guilabel:`Uncheck and all its children (Ctrl-click)`              \                   \                  |checkbox|
-:guilabel:`Make Permanent`                                         |checkbox|          \                  \
-:menuselection:`Export -->`                                        |checkbox|          |checkbox|         |checkbox|
-:menuselection:`--> Save As...`                                    \                   |checkbox|         \
-:menuselection:`--> Save Features As...`                           |checkbox|          \                  \
-:menuselection:`--> Save Selected Features As...`                  |checkbox|          \                  \
-:menuselection:`--> Save As Layer Definition File...`              |checkbox|          |checkbox|         |checkbox|
-:menuselection:`--> Save As QGIS Layer Style File...`              |checkbox|          |checkbox|         \
-:menuselection:`Styles -->`                                        |checkbox|          |checkbox|         \
-:menuselection:`--> Copy Style`                                    |checkbox|          |checkbox|         \
-:menuselection:`--> Paste Style`                                   |checkbox|          |checkbox|         |checkbox|
-:menuselection:`--> Add...`                                        |checkbox|          |checkbox|         \
-:menuselection:`--> Rename Current...`                             |checkbox|          |checkbox|         \
-:menuselection:`--> Edit symbol...`                                |checkbox|          \                  \
-:menuselection:`--> Copy Symbol`                                   |checkbox|          \                  \
-:menuselection:`--> Paste Symbol`                                  |checkbox|          \                  \
-:guilabel:`Add Layer Notes...`                                     |checkbox|          |checkbox|         \
-:guilabel:`Edit Layer Notes...`                                    |checkbox|          |checkbox|         \
-:guilabel:`Remove Layer Notes`                                     |checkbox|          |checkbox|         \
-:guilabel:`Properties...`                                          |checkbox|          |checkbox|         \
-=================================================================  ==================  =================  =============
+Depending on the item selected in the panel,
+a right-click shows a dedicated set of options presented below.
 
-Table: Context menu from Layers Panel items
+.. table updated with https://tableconvert.com/excel-to-restructuredtext
+.. table:: Contextual menus from :guilabel:`Layers` panel items
+
+ ============================================================ ============= =============== =============== ============= ==================== =============
+  Option                                                       Group         Vector Layer    Raster Layer    Mesh Layer    Point Cloud Layer    3D Layer
+ ============================================================ ============= =============== =============== ============= ==================== =============
+  |zoomToLayer| :guilabel:`Zoom to Layer(s)/Group`             |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  |zoomToLayer| :guilabel:`Zoom to Selection`                                |checkbox|
+  |inOverview| :guilabel:`Show in Overview`                                  |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|  
+  :guilabel:`Show Feature Count`                                             |checkbox|
+  |labelingSingle| :guilabel:`Show Label`                                    |checkbox|                      |checkbox|
+  :guilabel:`Copy Layer/Group`                                 |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :guilabel:`Rename Layer/Group`                               |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  |zoomActual| :guilabel:`Zoom to Native Resolution (100%)`                                  |checkbox|
+  :guilabel:`Stretch Using Current Extent`                                                   |checkbox|
+  |dbManager| :guilabel:`Update SQL Layer...`                                |checkbox|
+  |dbManager| :guilabel:`Execute SQL...`                                     |checkbox|
+  |addVirtualLayer| :guilabel:`Edit Virtual Layer...`                        |checkbox|
+  |addGroup| :guilabel:`Add Group`                             |checkbox|
+  |duplicateLayer| :guilabel:`Duplicate Layer`                               |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  |removeLayer| :guilabel:`Remove Layer/Group...`              |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox| 
+  :guilabel:`Move Out of Group`                                              |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :guilabel:`Move to Top`                                      |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :guilabel:`Move to Bottom`                                   |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :guilabel:`Check and all its Parents`                                      |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :guilabel:`Group Selected`                                                 |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  |openTable| :guilabel:`Open Attribute Table`                               |checkbox|
+  |toggleEditing| :guilabel:`Toggle Editing`                                 |checkbox|                      |checkbox|
+  |allEdits| :menuselection:`Current Edits -->`                              |checkbox|                      |checkbox|
+  :guilabel:`Filter...`                                                      |checkbox|      |checkbox|                    |checkbox|
+  :guilabel:`Change Data Source...`                                          |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :guilabel:`Repair Data Source...`                                          |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :menuselection:`Actions on selections -->` (in edit mode)                  |checkbox|
+  :menuselection:`--> Duplicate Feature`                                     |checkbox|
+  :menuselection:`--> Duplicate Feature and Digitize`                        |checkbox|
+  :guilabel:`Set Layer Scale Visibility...`                                  |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox| 
+  :guilabel:`Zoom to Visible Scale`                                          |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :menuselection:`Layer CRS -->`                                             |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Set Project CRS from Layer`                            |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Set to..` (recent CRSs)                                                                |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Set Layer CRS...`                                      |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`Set Group CRS...`                            |checkbox|
+  :guilabel:`Set Group WMS Data...`                            |checkbox|
+  |unchecked| :guilabel:`Mutually Exclusive Group`             |checkbox|
+  :guilabel:`Check and all its children (Ctrl-click)`          |checkbox|
+  :guilabel:`Uncheck and all its children (Ctrl-click)`        |checkbox|
+  :guilabel:`Make Permanent`                                                 |checkbox|
+  :menuselection:`Export -->`                                  |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Save As...`                                                            |checkbox|
+  :menuselection:`--> Save Features As...`                                   |checkbox|
+  :menuselection:`--> Save Selected Features As...`                          |checkbox|
+  :menuselection:`--> Save As Layer Definition File...`        |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Save As QGIS Layer Style File...`                      |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`Styles -->`                                                |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Copy Style`                                            |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Paste Style`                             |checkbox|    |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :menuselection:`--> Add...`                                                |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Rename Current...`                                     |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :menuselection:`--> Edit symbol...`                                        |checkbox|
+  :menuselection:`--> Copy Symbol`                                           |checkbox|
+  :menuselection:`--> Paste Symbol`                                          |checkbox|
+  :guilabel:`Add Layer Notes...`                                             |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+  :guilabel:`Edit Layer Notes...`                                            |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :guilabel:`Remove Layer Notes`                                             |checkbox|      |checkbox|      |checkbox|    |checkbox|
+  :guilabel:`Properties...`                                                  |checkbox|      |checkbox|      |checkbox|    |checkbox|           |checkbox|
+ ============================================================ ============= =============== =============== ============= ==================== =============
+
 
 For GRASS vector layers, |toggleEditing| :sup:`Toggle editing` is not available.
 See section :ref:`grass_digitizing` for information on editing GRASS vector
@@ -254,7 +287,8 @@ do this:
 #. Press the |folder| icon to add a new group. Type in a name for
    the group and press :kbd:`Enter`. Now click on an existing layer and
    drag it onto the group.
-#. Select more than one layer, then press the |folder| icon. The selected layers are automatically inserted into the new group.
+#. Select more than one layer, then press the |folder| icon.
+   The selected layers are automatically inserted into the new group.
 #. Select some layers, right-click in the legend window and choose
    :guilabel:`Group Selected`. The selected layers will automatically be placed
    in a new group.
@@ -294,9 +328,9 @@ all selected layers or groups will be removed from the layers list.
 More information on layers and groups using indicator icon
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In some circumstances, icons appears next to the layer or group in the
-:guilabel:`Layers` panel to give more information about the layer/group. These
-symbols are:
+In some circumstances, formatting or icons next to the layer or group in the
+:guilabel:`Layers` panel change to give more information about the layer/group.
+These elements are:
 
 * |toggleEditing| to indicate that the layer is in edit mode and you can modify
   the data
@@ -315,7 +349,7 @@ symbols are:
 * |indicatorMemory| to remind you that the layer is a :ref:`temporary scratch
   layer <vector_new_scratch_layer>` and its content will be discarded when you
   close this project. To avoid data loss and make the layer permanent, click
-  the icon to store the layer in any of the OGR vector formats supported by QGIS.
+  the icon to store the layer in any of the GDAL vector formats supported by QGIS.
 * |indicatorOffline| to identify a layer used in :ref:`offline editing mode
   <offlinedit>`.
 * |indicatorNoCRS| to identify a layer that has no/unknown CRS
@@ -324,54 +358,113 @@ symbols are:
   :ref:`corresponding setting <crs_inaccuracies>` to be enabled)
 * |indicatorTemporal| to identify a temporal layer controlled by canvas animation
 * |indicatorNotes| to identify a layer that has :ref:`notes <layer_notes>` associated
+* A grayed name, when the map canvas current scale is outside the layer's
+  visibility scale range (as set in its :menuselection:`Rendering` properties).
+  Select the contextual menu :guilabel:`Zoom to Visible Scale` option to zoom
+  the map to the layer's nearest visibility scale bound.
+
+.. _render_as_group:
+
+Control layers rendering through grouping
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Groups are a means of structuring layers within a tree in the project
+but they can also impact how their component layers are rendered,
+namely as a single flattened object during map renders.
+
+The option for such a rendering is available within the :guilabel:`Layer Styling` panel whenever a group is selected.
+Under the |symbology| :sup:`Symbology` tab, check |checkbox| :guilabel:`Render Layers as a Group`
+to enable a set of options to control the appearance of the child layers as a whole, instead of individual layers:
+
+* :guilabel:`Opacity`: Features from child layers which are obscured by other child layers remain obscured,
+  and the opacity applies to the "whole of group" only.
+
+  .. _figure_group_opacity:
+
+  .. figure:: img/group_opacity.png
+     :align: center
+
+     Setting opacity on layers vs on a group
+
+     The image on the left shows two layers being rendered at 50% opacity
+     (underlying features are visible, but semi-masked by the 50% red feature on top).
+     The second image shows the result of setting the opacity on the group
+     (parts of the blue underlying child layer is completely obscured by the red layer on top
+     and then the result is rendered at 50% opacity).
+
+* :guilabel:`Blend modes`: Just like opacity, setting a :ref:`blend mode <blend-modes>` (like multiply, overlay, ...)
+  for an entire group results first in flattening features of child layers, with upper ones obscuring lower.
+  The rendering is then obtained by blending the flat group and the layers sitting below the group.
+
+  * When the child layers have blend modes assigned, it is applied before flattening
+    but the scope is restricted to only affecting other child layers from that group,
+    and not other layers sitting below the whole group.
+  * Some more :ref:`blending modes <blending_clipping>` options are available for child layers in groups,
+    in their :guilabel:`Symbology` tab which perform "clipping" style operations
+    on other child layers during the render.
+    You can e.g. clip the render of one layer’s content by the content in a second "mask" layer.
+
+* :guilabel:`Layer effects`: applies :ref:`effects <draw_effects>` only to the flattened render of the child layers;
+  So e.g. a drop shadow effect applied to the group would not be visible for obscured child layers.
+
+
+When a group is set to :guilabel:`Render layers as a group`,
+then only the group will be shown in the :guilabel:`Layer Order` panel list.
+Group children will not be visible in this order list,
+as their ordering is determined by the placement of the group layer.
+
 
 .. index:: Style
 
 .. _editing_style_layer:
 
-Editing vector layer style
-...........................
+Editing layer style
+....................
 
-From the Layers panel, you have shortcuts to change the layer rendering quickly
-and easily. Right-click on a vector layer and select :menuselection:`Styles -->`
-in the list in order to:
+From the :guilabel:`Layers` panel, you have shortcuts to change the layer rendering quickly and easily.
 
-* see the :ref:`styles <manage_custom_style>` currently applied to the layer. If
-  you defined many styles for the layer, you can switch from one to another
+Right-click on a layer and select :menuselection:`Styles -->` in the list in order to:
+
+* see the :ref:`styles <manage_custom_style>` currently available for the layer.
+  If you defined many styles for the layer, you can switch from one to another
   and your layer rendering will automatically be updated on the map canvas.
 * copy part or all of the current style, and when applicable, paste a copied
   style from another layer
+* :guilabel:`Rename current...` style
+* :guilabel:`Add` a new style (which is actually a copy of the current one)
+* or :guilabel:`Remove current` style (only when multiple styles are available).
 
   .. tip:: **Quickly share a layer style**
 
     From the context menu, copy the style of a layer and paste it to a group
     or a selection of layers: the style is applied to all the layers that
-    are of the same type (vector/raster) as the original layer and,
+    are of the same type (vector, raster, mesh, point cloud, ...) as the original layer and,
     for vector layers, have the same geometry type (point, line or polygon).
 
-* rename the current style, add a new style (which is actually a copy of
-  the current one) or delete the current style (when multiple styles are
-  available).
+When using a symbology based on features classification
+(e.g. :ref:`categorized <categorized_renderer>`, :ref:`graduated <graduated_renderer>`
+or :ref:`rule-based <rule_based_rendering>` for vector layers,
+or :ref:`classification <point_cloud_classification>` for point clouds),
+right-clicking a class entry in the :guilabel:`Layers` panels makes it possible
+to edit the visibility of the classes (and their features) and avoid (un)checking them one by one:
 
-.. note:: The previous options are also available for raster or mesh layers.
+* |toggleAllLayers| :guilabel:`Toggle Items`
+* |showAllLayers| :guilabel:`Show All Items`
+* |hideAllLayers| :guilabel:`Hide All Items`
 
+With vector layer, the contextual menu of a class leaf entry also gives access to:
+
+* |selectAll| :guilabel:`Select features`: selects in the layer all the features matching that class
+* |openTable| :guilabel:`Show in attribute table`: opens an attribute table
+  filtered to only the features matching that class
 * update the :ref:`symbol color <color-selector>` using a **Color Wheel**.
-  For convenience, the recently used colors are also available at the bottom
-  of the color wheel.
-* :guilabel:`Edit Symbol...`: open the :ref:`Symbol Selector <symbol-selector>`
-  dialog and change feature symbol (symbol, size, color...).
+  For convenience, the recently used colors are also available at the bottom of the color wheel.
+* :guilabel:`Edit Symbol...`: opens the :ref:`Symbol Selector <symbol-selector>`
+  dialog to change feature symbol (symbol, size, color...).
+* :guilabel:`Copy Symbol`
+* :guilabel:`Paste Symbol`
 
-When using a classification symbology type (based on :ref:`categorized
-<categorized_renderer>`, :ref:`graduated <graduated_renderer>` or
-:ref:`rule-based <rule_based_rendering>`), the aforementioned symbol-level
-options are available from the class entry context menu. Also provided are the
-|toggleAllLayers| :guilabel:`Toggle Items`, |showAllLayers| :guilabel:`Show All
-Items` and |hideAllLayers| :guilabel:`Hide All Items` entries to switch the
-visibility of all the classes of features. These avoid (un)checking items
-one by one.
-
-.. tip:: Double-clicking a class leaf entry also opens the
- :guilabel:`Symbol Selector` dialog.
+.. tip:: Double-clicking a class leaf entry also opens the :guilabel:`Symbol Selector` dialog.
 
 
 .. index::
@@ -397,18 +490,23 @@ rather than as a separate dialog.
 
 From a drop-down list of current layers in the layer panel, select an item and:
 
-* Depending on the layer type, set:
+* Depending on the active item, set:
 
+  * |symbology| :guilabel:`Symbology` for groups (see :ref:`render_as_group`)
   * |symbology| :guilabel:`Symbology`, |transparency| :guilabel:`Transparency`,
     and |rasterHistogram| :guilabel:`Histogram` properties for raster layer.
     These options are the same as in the :ref:`raster_properties_dialog`.
-  * |symbology| :guilabel:`Symbology`, |labeling| :guilabel:`Labels`, |labelmask|
+  * |symbology| :guilabel:`Symbology`, |labelingSingle| :guilabel:`Labels`, |labelmask|
     :guilabel:`Mask` and |3d| :guilabel:`3D View` properties for vector layer.
     These options are the same as in the :ref:`vector_properties_dialog`
     and can be extended by custom properties introduced by third-party plugins.
   * |symbology| :guilabel:`Symbology` and |3d| :guilabel:`3D View` properties
     for mesh layer.
     These options are the same as in the :ref:`label_meshproperties`.
+  * |symbology| :guilabel:`Symbology`, |3d| :guilabel:`3D View`
+    and |elevationscale| :guilabel:`Elevation` properties for point cloud layer.
+    These options are the same as in the :ref:`point_clouds_properties`.
+* Enable and configure :ref:`global map shading <global_map_shading>` properties
 * Manage the associated style(s) in the |stylePreset| :guilabel:`Style Manager`
   (more details at :ref:`manage_custom_style`).
 * See the |history| :guilabel:`History` of changes you applied to the
@@ -517,46 +615,49 @@ Statistical Summary Panel
 The :guilabel:`Statistics` panel (:kbd:`Ctrl+6`) provides summarized information
 on any vector layer. This panel allows you to select:
 
-* the vector layer to compute the statistics on
-* the column to use, or an |expression| :ref:`expression <vector_expressions>`
+* the vector layer to compute the statistics on: it can be selected
+  from the top drop-down menu, or synced with the active layer in the
+  :guilabel:`Layers` panel using the :guilabel:`Follow selected layer`
+  checkbox at the bottom of the statistics drop-down list
+* the field or |expression| :ref:`expression <vector_expressions>` to use:
+  for each layer, the last entry is remembered and automatically computed
+  upon layer reselection.
 * the statistics to return using the drop-down button at the bottom-right of the
   dialog. Depending on the field's (or expression's values) type, available
   statistics are:
 
-.. tabularcolumns:: |l|c|c|c|c|
+.. table:: Statistics available for each field type
 
-================================== ============ ============  ============  ============
- Statistics                         String       Integer       Float         Date
-================================== ============ ============  ============  ============
-Count                               |checkbox|   |checkbox|    |checkbox|    |checkbox|
-Count Distinct Value                |checkbox|                               |checkbox|
-Count Missing value                 |checkbox|   |checkbox|    |checkbox|    |checkbox|
-Sum                                              |checkbox|    |checkbox|
-Mean                                             |checkbox|    |checkbox|    |checkbox|
-Standard Deviation                               |checkbox|    |checkbox|
-Standard Deviation on Sample                     |checkbox|    |checkbox|
-Minimal value                       |checkbox|   |checkbox|    |checkbox|    |checkbox|
-Maximal value                       |checkbox|   |checkbox|    |checkbox|    |checkbox|
-Range                                            |checkbox|    |checkbox|    |checkbox|
-Minority                            |checkbox|   |checkbox|    |checkbox|
-Majority                            |checkbox|   |checkbox|    |checkbox|
-Variety                                          |checkbox|    |checkbox|
-First Quartile                                   |checkbox|    |checkbox|
-Third Quartile                                   |checkbox|    |checkbox|
-Inter Quartile Range                             |checkbox|    |checkbox|
-Minimum Length                      |checkbox|
-Maximum Length                      |checkbox|
-Mean Length                         |checkbox|
-================================== ============ ============  ============  ============
-
-Table: Statistics available for each field type
+ ================================== ============ ============  ============  ============
+  Statistics                         String       Integer       Float         Date
+ ================================== ============ ============  ============  ============
+ Count                               |checkbox|   |checkbox|    |checkbox|    |checkbox|
+ Count Distinct Value                |checkbox|                               |checkbox|
+ Count Missing value                 |checkbox|   |checkbox|    |checkbox|    |checkbox|
+ Sum                                              |checkbox|    |checkbox|
+ Mean                                             |checkbox|    |checkbox|    |checkbox|
+ Standard Deviation                               |checkbox|    |checkbox|
+ Standard Deviation on Sample                     |checkbox|    |checkbox|
+ Minimal value                       |checkbox|   |checkbox|    |checkbox|    |checkbox|
+ Maximal value                       |checkbox|   |checkbox|    |checkbox|    |checkbox|
+ Range                                            |checkbox|    |checkbox|    |checkbox|
+ Minority                            |checkbox|   |checkbox|    |checkbox|
+ Majority                            |checkbox|   |checkbox|    |checkbox|
+ Variety                                          |checkbox|    |checkbox|
+ First Quartile                                   |checkbox|    |checkbox|
+ Third Quartile                                   |checkbox|    |checkbox|
+ Inter Quartile Range                             |checkbox|    |checkbox|
+ Minimum Length                      |checkbox|
+ Maximum Length                      |checkbox|
+ Mean Length                         |checkbox|
+ ================================== ============ ============  ============  ============
 
 The statistical summary can be:
 
-* returned for the whole layer or |checkbox| :guilabel:`selected features only`
+* returned for the whole layer or |checkbox| :guilabel:`Selected features only`
+* |editCopy| copied to the clipboard and pasted as a table in another application
 * recalculated using the |refresh| button when the underlying data source changes
   (eg, new or removed features/fields, attribute modification)
-* |editCopy| copied to the clipboard and pasted as a table in another application
 
 .. _figure_statistical_summary:
 
@@ -566,11 +667,129 @@ The statistical summary can be:
     Show statistics on a field
 
 
+.. index:: Debugging/Development Tools Panel
+.. _debug_dev_tools:
+
+Debugging/Development Tools Panel
+---------------------------------
+
+The :guilabel:`Debugging/Development Tools` panel (:kbd:`F12`) provides
+a unified place for handling and debugging actions within QGIS.
+Available tools are organized under following tabs:
+
+* |networkAndProxy| :guilabel:`Network Logger`
+* |dbManager| :guilabel:`Query Logger`
+* |stopwatch| :guilabel:`Profiler` - under this tab you can choose one out
+  of these categories:
+  
+    * :guilabel:`Startup` helps you diagnose (and fix) occasional long startup 
+      times of QGIS.
+    * :guilabel:`Project Load` allows you to get a breakdown of the various 
+      stages of project load, in order to identify the causes of slow project 
+      load times.
+    * :guilabel:`Map Render` tool allows you to identify pain points in your
+      map rendering and track down exactly which layers are causing long map 
+      redraws.
+
+.. note:: Plugin authors can extend the panel with custom tabs
+ for debugging and developping their own plugins.
+ This is done using :meth:`registerDevToolWidgetFactory
+ <qgis.gui.QgisInterface.registerDevToolWidgetFactory>` method.
+
+Network Logger
+..............
+
+The |networkAndProxy| :guilabel:`Network Logger` tab helps you record
+and display network requests, along with a whole load of useful details
+like request and reply status, header, errors, SSL configuration errors,
+timeouts, cache status, etc.
+
+From its top toolbar, you can:
+
+* |record| :guilabel:`Record Log`: which will start or stop the logging.
+* |deleteSelected| :guilabel:`Clear Log`: will clear the log history.
+* |fileSave| :guilabel:`Save Log...`: will first show a big warning that
+  the log is sensitive and should be treated as confidential and then
+  allow you to save the log.
+* Press the |options| :guilabel:`Settings` drop-down menu to select whether
+  to :guilabel:`Show Successful Requests`, :guilabel:`Show Timeouts` and
+  :guilabel:`Show Replies Served from Cache`.
+* |unchecked| :guilabel:`Disable cache`: will disable the cache so that
+  every request has to be performed.
+* |search| :guilabel:`Filter requests` based on URL string subsets
+  or request status
+
+
+By right clicking on a request you can:
+
+* :guilabel:`Open URL` which will open the URL in your default browser.
+* :guilabel:`Copy URL`
+* :guilabel:`Copy As cURL` to use it in the terminal.
+* :guilabel:`Copy as JSON`: copies the tree values as a json string to the
+  clipboard, for easy pasting in bug reports or for remote assistance.
+
+.. figure:: img/network_logger.png
+   :align: center
+
+   Network Logger output for GET Request
+
+Query Logger
+............
+
+The |dbManager| :guilabel:`Query Logger` is the place to log the SQL commands
+sent by the data provider and the connections API to the backend database,
+together with their execution time as measured by QGIS (i.e. in the client
+that sent the commands).
+This can be useful when investigating performances of a particular layer
+during debugging or development of a QGIS algorithm or plugin.
+
+From its top toolbar, you can:
+
+* |record| :guilabel:`Record Log`: which will start or stop the logging.
+* |deleteSelected| :guilabel:`Clear Log`: will clear the log history.
+* |fileSave| :guilabel:`Save Log...`: will first show a big warning that
+  the log is sensitive and should be treated as confidential and then
+  allow you to save the log.
+* |search| :guilabel:`Filter queries` based on the query string subsets
+  or details such as provider type, start time, initiator, ...
+
+Right-click on a reported query, and you can:
+
+* :guilabel:`Copy SQL` command called by QGIS on the database
+* :guilabel:`Copy as JSON`: copies the tree values as a json string to the
+  clipboard, for easy pasting in bug reports or for remote assistance.
+
+.. figure:: img/query_logger.png
+   :align: center
+
+   Query Logger output
+
+Profiler
+........
+
+The |stopwatch| :guilabel:`Profiler` tab allows to get load times for every
+single operation involved in actions requested by the user. Depending on
+the context, these operations can be settings reading, menu, map canvas or 3D
+views creation, resolving map layers reference, bookmark or layout loading, ...
+This helps identify causes of slow load times.
+
+Default supported actions can be selected from the :guilabel:`Categories`
+drop-down menu:
+
+* QGIS :guilabel:`Startup`
+* :guilabel:`Project Load`
+
+.. figure:: img/profiler.png
+   :align: center
+
+   Profiler for QGIS Startup
+
+
 .. index:: Nesting projects, Embed layers and groups
 .. _nesting_projects:
 
-Nesting Projects
-================
+Embedding layers from external projects
+=======================================
 
 Sometimes, you'd like to keep some layers in different projects, but with the
 same style. You can either create a :ref:`default style <store_style>` for
@@ -620,911 +839,6 @@ right-clicking on the layer and clicking |removeLayer| :sup:`Remove`.
  dependent on the original project. You can then safely remove the linked
  layer.
 
-
-.. _working_canvas:
-
-Working with the map canvas
-===========================
-
-.. index:: Rendering
-.. _`redraw_events`:
-
-Rendering
----------
-
-By default, QGIS renders all visible layers whenever the map canvas is
-refreshed. The events that trigger a refresh of the map canvas include:
-
-*  adding a layer
-*  panning or zooming
-*  resizing the QGIS window
-*  changing the visibility of a layer or layers
-
-QGIS allows you to control the rendering process in a number of ways.
-
-.. index:: Rendering scale dependent, Scale
-.. _`label_scaledepend`:
-
-Scale Dependent Rendering
-.........................
-
-Scale-dependent rendering allows you to specify the minimum and maximum scales
-at which a layer (raster or vector) will be visible. To set scale-dependent rendering,
-open the :guilabel:`Properties` dialog by double-clicking on the layer in the legend.
-On the :guilabel:`Rendering` tab, tick |checkbox| :guilabel:`Scale
-dependent visibility` and enter the :guilabel:`Minimum (exclusive)` and
-:guilabel:`Maximum (inclusive)` scale values.
-
-You can also activate scale dependent visibility on a layer from the Layers panel.
-Right-click on the layer and in the context menu, select :guilabel:`Set Layer Scale Visibility`.
-
-The |mapIdentification| :sup:`Set to current canvas scale` button allow you to use
-the current map canvas scale as boundary of the range visibility.
-
-
-.. note::
-   When a layer is not rendered in the map canvas because the map scale is out of
-   its visibility scale range, the layer is greyed in the Layers panel and
-   a new option :guilabel:`Zoom to Visible Scale` appears in the layer context menu.
-   Select it and the map is zoomed to the layer's nearest visibility scale.
-
-
-.. _`label_controlmap`:
-
-Controlling Map Rendering
-.........................
-
-Map rendering can be controlled in various ways, as described below.
-
-.. index::
-   single: Rendering; Suspending
-.. _`label_suspendrender`:
-
-Suspending Rendering
-^^^^^^^^^^^^^^^^^^^^
-
-To suspend rendering, click the |checkbox| :guilabel:`Render` checkbox in the
-bottom-right corner of the status bar. When |checkbox| :guilabel:`Render`
-is not checked, QGIS does not redraw the canvas in response to any of
-the events described in the section :ref:`redraw_events`. Examples of when you
-might want to suspend rendering include:
-
-* adding many layers and symbolizing them prior to drawing
-* adding one or more large layers and setting scale dependency before drawing
-* adding one or more large layers and zooming to a specific view before drawing
-* any combination of the above
-
-Checking the |checkbox| :guilabel:`Render` checkbox enables rendering and
-causes an immediate refresh of the map canvas.
-
-
-.. index::
-   single: Rendering; Options
-   single: Layers; Initial visibility
-.. _`label_settinglayer`:
-
-Setting Layer Add Option
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-You can set an option to always load new layers without drawing them. This
-means the layer will be added to the map, but its visibility checkbox in the
-legend will be unchecked by default. To set this option, choose menu option
-:menuselection:`Settings --> Options` and click on the :guilabel:`Rendering`
-tab. Uncheck |checkbox| :guilabel:`By default new layers added to the map
-should be displayed`. Any layer subsequently added to the map will be off
-(invisible) by default.
-
-
-.. index::
-   single: Rendering; Halting
-.. _label_stoprender:
-
-Stopping Rendering
-^^^^^^^^^^^^^^^^^^
-
-To stop the map drawing, press the :kbd:`Esc` key. This will halt the refresh of
-the map canvas and leave the map partially drawn. It may take a bit of time
-between pressing :kbd:`Esc` for the map drawing to halt.
-
-
-.. index::
-   single: Rendering; Quality
-.. _`label_renderquality`:
-
-Influence Rendering Quality
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-QGIS has an option to influence the rendering quality of the map. Choose menu
-option :menuselection:`Settings --> Options`, click on the :guilabel:`Rendering`
-tab and select or deselect |checkbox| :guilabel:`Make lines appear less jagged
-at the expense of some drawing performance`.
-
-.. index::
-   single: Rendering; Speed-up
-
-Speed-up rendering
-^^^^^^^^^^^^^^^^^^
-
-There are some settings that allow you to improve rendering speed. Open the QGIS options
-dialog using :menuselection:`Settings --> Options`, go to the :guilabel:`Rendering`
-tab and select or deselect the following checkboxes:
-
-* |checkbox| :guilabel:`Use render caching where possible to speed up redraws`.
-* |checkbox| :guilabel:`Render layers in parallel using many CPU cores` and then
-  set the |checkbox| :guilabel:`Max cores to use`.
-* The map renders in the background onto a separate image and each
-  |checkbox| :guilabel:`Map Update interval`, the content from this
-  (off-screen) image will be taken to update the visible screen representation.
-  However, if rendering finishes faster than this duration, it will be shown
-  instantaneously.
-* With |checkbox| :guilabel:`Enable Feature simplification by default for newly
-  added layers`, you simplify features' geometry (fewer nodes) and as a result,
-  they display more quickly.
-  Be aware that this can cause rendering inconsistencies.
-
-
-.. index:: Zoom, Pan, Map navigation
-.. _zoom_pan:
-
-
-Zooming and Panning
--------------------
-
-There are multiple ways to zoom and pan to an area of interest.
-You can use the :guilabel:`Map Navigation` toolbar, the mouse and keyboard on
-the map canvas and also the menu actions from the :menuselection:`View`
-menu and the layers' contextual menu in the :guilabel:`Layers` panel.
-
-.. list-table::
-   :header-rows: 1
-   :widths: 5 15 65 5 5 5
-   :class: longtable
-
-   * - Icon
-     - Label
-     - Usage
-     - View menu
-     - Map Navigation Toolbar
-     - Layer Contextual Menu
-   * - |pan|
-     - Pan Map
-     - When activated, left click anywhere on the map canvas to pan the map at
-       the cursor position. You can also pan the map by holding down the left
-       mouse button and dragging the map canvas.
-     - |checkbox|
-     - |checkbox|
-     -
-   * - |zoomIn|
-     - Zoom In
-     - When activated, left click anywhere on the map canvas to zoom in one
-       level. The mouse cursor position will be the center of the
-       zoomed area of interest. You can also zoom in to an area
-       by dragging a rectangle on the map canvas with the left mouse button.
-     - |checkbox|
-     - |checkbox|
-     -
-   * - |zoomOut|
-     - Zoom Out
-     - When activated, left click anywhere on the map canvas to zoom out one
-       level. The mouse cursor position will be the center of the
-       zoomed area of interest. You can also zoom out from an area
-       by dragging a rectangle on the map canvas with the left mouse button.
-     - |checkbox|
-     - |checkbox|
-     -
-   * - |panToSelected|
-     - Pan Map to Selection
-     - Pan the map to the selected features of all the selected layers in the
-       :guilabel:`Layers` panel.
-     - |checkbox|
-     - |checkbox|
-     -
-   * - |zoomToSelected|
-     - Zoom To Selection
-     - Zoom to the selected features of all the selected layers in the
-       :guilabel:`Layers` panel.
-     - |checkbox|
-     - |checkbox|
-     - |checkbox|
-   * - |zoomToLayer|
-     - Zoom To Layer(s)
-     - Zoom to the extent of all the selected layers in the
-       :guilabel:`Layers` panel.
-     - |checkbox|
-     - |checkbox|
-     - |checkbox|
-   * - |zoomFullExtent|
-     - Zoom Full
-     - Zoom to the extent of all the layers in the project
-       or to the :ref:`project full extent <project_full_extent>`.
-     - |checkbox|
-     - |checkbox|
-     -
-   * - |zoomLast|
-     - Zoom Last
-     - Zoom the map to the previous extent in history.
-     - |checkbox|
-     - |checkbox|
-     -
-   * - |zoomNext|
-     - Zoom Next
-     - Zoom the map to the next extent in history.
-     - |checkbox|
-     - |checkbox|
-     -
-   * - |zoomActual|
-     - Zoom to Native Resolution
-     - Zoom the map to a level where one pixel of the active raster layer covers
-       one screen pixel.
-     - |checkbox|
-     - |checkbox|
-     - |checkbox|
-
-A :guilabel:`Zoom factor` can be set under the
-:menuselection:`Settings -->` |options| :menuselection:`Options --> Map
-tools` menu to define the scale behavior while zooming. There, you can also
-set a list of :guilabel:`Predefined Scales` that will be available at the
-bottom of the map canvas.
-
-With the Mouse on the Map Canvas
-......................................
-
-In addition to using the |pan| :sup:`Pan` |zoomIn| :sup:`Zoom In` and
-|zoomOut| :sup:`Zoom Out` tools described above, you can hold the mouse wheel
-inside of the map canvas and drag the mouse cursor (on macOS, you may need to
-hold down the :kbd:`cmd` key). You can also roll the mouse wheel to zoom in and
-out on the map. The mouse cursor position will be the center of the zoomed area
-of interest. Holding down :kbd:`Ctrl` while rolling the mouse wheel results in a
-finer zoom.
-
-With the Keyboard on the Map Canvas
-...................................
-
-Holding down :kbd:`spacebar` on the keyboard and moving the mouse cursor will
-pan the map the same way dragging the map canvas with |pan| :sup:`Pan` does.
-
-Panning the map is possible with the arrow keys.
-Place the mouse cursor inside the map area, and press on the arrow keys
-to pan up, down, left and right.
-
-The :kbd:`PgUp` and :kbd:`PgDown` keys on the keyboard will cause
-the map display to zoom in or out following the zoom factor set. Pressing
-:kbd:`Ctrl++` or :kbd:`Ctrl+-` also performs an immediate zoom in/out
-on the map canvas.
-
-When certain map tools are active (Identify, Measure...), you can perform a
-zoom by holding down :kbd:`Shift` and dragging a rectangle on the map to zoom
-to that area. This is not enabled for selection tools (since they
-use :kbd:`Shift` for adding to selection) or edit tools.
-
-.. index::
-   single: Bookmarks
-   see: Spatial bookmarks; Bookmarks
-.. _`sec_bookmarks`:
-
-Spatial Bookmarks
------------------
-
-Spatial Bookmarks allow you to "bookmark" a geographic location and return to
-it later. By default, bookmarks are saved in the user's profile (as :guilabel:`User
-Bookmarks`), meaning that they are available from any project the user opens.
-They can also be saved for a single project (named
-:guilabel:`Project Bookmarks`) and stored within the project file, which can
-be helpful if the project is to be shared with other users.
-
-Creating a Bookmark
-...................
-
-To create a bookmark:
-
-#. Zoom and pan to the area of interest.
-#. Select the menu option :menuselection:`View -->` |newBookmark|
-   :menuselection:`New Spatial Bookmark...`,
-   press :kbd:`Ctrl+B` or right-click the |showBookmarks| :guilabel:`Spatial
-   Bookmarks` entry in
-   the :guilabel:`Browser` panel and select :guilabel:`New Spatial Bookmark`.
-   The :guilabel:`Bookmark Editor` dialog opens.
-
-   .. _figure_create_bookmarks:
-
-   .. figure:: img/bookmark_editor.png
-      :align: center
-
-      The Bookmark Editor Dialog
-
-#. Enter a descriptive name for the bookmark
-#. Enter or select a group name in which to store related bookmarks
-#. Select the extent of the area you wish to save, using the :ref:`extent selector
-   <extent_selector>` widget
-#. Indicate the :guilabel:`CRS` to use for the extent
-#. Select whether the bookmark will be :guilabel:`Saved in` :guilabel:`User
-   Bookmarks` or :guilabel:`Project Bookmarks`
-#. Press :guilabel:`Save` to add the bookmark to the list
-
-Note that you can have multiple bookmarks with the same name.
-
-Working with Bookmarks
-......................
-
-To use and manage bookmarks, you can either use the :guilabel:`Spatial Bookmarks`
-panel or :guilabel:`Browser`.
-
-Select :menuselection:`View -->` |showBookmarks| :menuselection:`Show Spatial
-Bookmark Manager` or press :kbd:`Ctrl+7`
-to open the :guilabel:`Spatial Bookmarks Manager` panel.
-Select :menuselection:`View -->` |showBookmarks| :menuselection:`Show Bookmarks`
-or :kbd:`Ctrl+Shift+B` to show
-the |showBookmarks| :guilabel:`Spatial Bookmarks` entry in the
-:guilabel:`Browser` panel.
-
-You can perform the following tasks:
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 40 40
-   :class: longtable
-
-   * - Task
-     - Spatial Bookmark Manager
-     - Browser
-   * - **Zoom to a Bookmark**
-     - Double-click on it, or select the bookmark and press the
-       |zoomToBookmark| :guilabel:`Zoom to bookmark` button.
-     - Double-click on it, drag and drop it to the map canvas, or right-click
-       the bookmark and select :guilabel:`Zoom to Bookmark`.
-   * - **Delete a bookmark**
-     - Select the bookmark and click the |deleteSelected| :guilabel:`Delete bookmark` button.
-       Confirm your choice.
-     - Right-click the bookmark and select :guilabel:`Delete Spatial Bookmark`.
-       Confirm your choice.
-   * - **Export bookmarks to XML**
-     - Click the |sharing| :guilabel:`Import/Export Bookmarks` button and select
-       |sharingExport| :guilabel:`Export`.
-       All the bookmarks (user or project) are saved in an xml file.
-     - Select one or more folders (user or project) or subfolders (groups),
-       then right-click and select |sharingExport| :guilabel:`Export Spatial Bookmarks...`.
-       The selected bookmark subset is saved.
-   * - **Import bookmarks from XML**
-     - Click the |sharing| :guilabel:`Import/Export Bookmarks` button and
-       select |sharingImport| :guilabel:`Import`.
-       All bookmarks in the XML file are imported as user bookmarks.
-     - Right-click the :guilabel:`Spatial Bookmarks` entry or one of its folders (user or
-       project) or subfolders (groups) to determine where to import the
-       bookmarks, then select |sharingImport| :guilabel:`Import Spatial Bookmarks`.
-       If performed on the :guilabel:`Spatial Bookmarks` entry, the bookmarks
-       are added to :guilabel:`User Bookmarks`.
-   * - **Edit bookmark**
-     - You can change a bookmark by changing the values in the table. You can
-       edit the name, the group, the extent and if it is stored in the project or
-       not.
-     - Right-click the desired bookmark and select :guilabel:`Edit Spatial
-       Bookmark...`.
-       The :guilabel:`Bookmark Editor` will open, allowing you to redefine every
-       aspect of the bookmark as if you were creating it for the first time.
-
-       You can also drag and drop the bookmark between folders (user and
-       project) and subfolders (groups).
-
-You can also zoom to bookmarks by typing the bookmark name in the
-:ref:`locator <label_statusbar>`.
-
-.. index:: Decorations
-.. _decorations:
-
-Decorations
------------
-
-Decorations include Grid, Title Label, Copyright Label, Image, North Arrow, Scale Bar and Layout
-Extents. They are used to 'decorate' the map by adding cartographic elements.
-
-.. index:: Grid
-.. _grid_decoration:
-
-Grid
-....
-
-|addGrid| :guilabel:`Grid` allows you to add a coordinate grid and coordinate
-annotations to the map canvas.
-
-#. Select menu option :menuselection:`View --> Decorations --> Grid...` to open the dialog.
-
-   .. _figure_decorations_grid:
-
-   .. figure:: img/grid_dialog.png
-      :align: center
-
-      The Grid Dialog
-
-#. Tick |checkbox| :guilabel:`Enable grid` and set grid
-   definitions according to the layers loaded in the map canvas:
-
-   * The :guilabel:`Grid type`: it can be :guilabel:`Line` or :guilabel:`Marker`
-   * The associated :ref:`Line symbol <vector_line_symbols>` or :ref:`marker
-     symbol <vector_marker_symbols>` used to represent the grid marks
-   * The :guilabel:`Interval X` and :guilabel:`Interval Y` between the grid
-     marks, in map units
-   * An :guilabel:`Offset X` and :guilabel:`Offset Y` distance of the grid
-     marks from the bottom left corner of the map canvas, in map units
-   * The interval and offset parameters can be set based on the:
-
-     * :guilabel:`Canvas Extents`: generates a grid with an interval that is
-       approximatively 1/5 of the canvas width
-     * :guilabel:`Active Raster Layer` resolution
-#. Tick |checkbox| :guilabel:`Draw annotations` to display the coordinates of
-   the grid marks and set:
-
-   * The :guilabel:`Annotation direction`, ie how the labels would be placed
-     relative to their grid line. It can be:
-
-     * :guilabel:`Horizontal` or :guilabel:`Vertical` for all the labels
-     * :guilabel:`Horizontal and Vertical`, ie each label is parallel to the
-       grid mark it refers to
-     * :guilabel:`Boundary direction`, ie each label follows the canvas
-       boundary, and is perpendicular to the grid mark it refers to
-   * The :guilabel:`Annotation font` (text formatting, buffer, shadow...) using
-     the :ref:`font selector widget <font_selector>`
-   * The :guilabel:`Distance to map frame`, margin between annotations and map
-     canvas limits. Convenient when :ref:`exporting the map canvas <exportingmapcanvas>`
-     eg to an image format or PDF, and avoid annotations to be on the "paper" limits.
-   * The :guilabel:`Coordinate precision`
-
-#. Click :guilabel:`Apply` to verify that it looks as expected or :guilabel:`OK`
-   if you're satisfied.
-
-.. index:: Title
-.. _title_label_decoration:
-
-Title Label
-...........
-
-|titleLabel| :guilabel:`Title Label` allows you to decorate your map with a **Title**.
-
-To add a Title Label decoration:
-
-#. Select menu option :menuselection:`View --> Decorations --> Title Label...`
-   to open the dialog.
-
-   .. _figure_decorations_title:
-
-   .. figure:: img/titleLabel.png
-      :align: center
-
-      The Title Decoration Dialog
-
-#. Make sure |checkbox| :guilabel:`Enable Title Label` is checked
-#. Enter the title text you want to place on the map.
-   You can make it dynamic using the :guilabel:`Insert or Edit an Expression...`
-   button.
-#. Choose the :guilabel:`Font` for the label using the :ref:`font selector
-   widget <font_selector>` with full access to QGIS :ref:`text formatting
-   <text_format>` options. Quickly set the font color and opacity by clicking
-   the black arrow to the right of the font combo box.
-#. Select the :ref:`color <color-selector>` to apply to the title's
-   :guilabel:`Background bar color`.
-#. Choose the :guilabel:`Placement` of the label in the canvas: options are
-   :guilabel:`Top left`, :guilabel:`Top Center` (default),
-   :guilabel:`Top Right`, :guilabel:`Bottom left`, :guilabel:`Bottom Center`
-   and :guilabel:`Bottom Right`.
-#. Refine the placement of the item by setting a horizontal and/or vertical
-   :guilabel:`Margin from Edge`. These values can be in **Millimeters** or
-   **Pixels** or set as a **Percentage** of the width or height of the map canvas.
-#. Click :guilabel:`Apply` to verify that it looks as expected or
-   :guilabel:`OK` if you're satisfied.
-
-.. index:: Copyright
-.. _copyright_decoration:
-
-Copyright Label
-...............
-
-|copyrightLabel| :guilabel:`Copyright Label` can be used to decorate your
-map with a **Copyright** label.
-
-To add this decoration:
-
-#. Select menu option :menuselection:`View --> Decorations --> Copyright Label...`
-   to open the dialog.
-
-   .. _figure_decorations_copyright:
-
-   .. figure:: img/copyright.png
-      :align: center
-
-      The Copyright Decoration Dialog
-
-#. Make sure |checkbox| :guilabel:`Enable Copyright Label` is checked
-#. Enter the copyright text you want to place on the map.
-   You can make it dynamic using the :guilabel:`Insert or Edit an Expression...`
-   button.
-#. Choose the :guilabel:`Font` for the label using the :ref:`font selector
-   widget <font_selector>` with full access to QGIS :ref:`text formatting
-   <text_format>` options. Quickly set the font color and opacity by clicking
-   the black arrow to the right of the font combo box.
-#. Choose the :guilabel:`Placement` of the label in the canvas: options are
-   :guilabel:`Top left`, :guilabel:`Top Center`,
-   :guilabel:`Top Right`, :guilabel:`Bottom left`, :guilabel:`Bottom Center`,
-   and :guilabel:`Bottom Right` (default for Copyright decoration)
-#. Refine the placement of the item by setting a horizontal and/or vertical
-   :guilabel:`Margin from Edge`. These values can be in **Millimeters** or
-   **Pixels** or set as a **Percentage** of the width or height of the map canvas.
-#. Click :guilabel:`Apply` to verify that it looks as expected or
-   :guilabel:`OK` if you're satisfied.
-
-.. index:: Image decoration
-.. _image_decoration:
-
-Image Decoration
-................
-
-|addImage| :guilabel:`Image` allows you to add an image (logo, legend, ..) on the map canvas.
-
-To add an image:
-
-#. Select menu option :menuselection:`View --> Decorations --> Image...`
-   to open the dialog.
-
-   .. _figure_image_decoration:
-
-   .. figure:: img/image_decoration.png
-      :align: center
-
-      The Image Decoration Dialog
-
-#. Make sure |checkbox| :guilabel:`Enable Image` is checked
-#. Select a bitmap (e.g. png or jpg) or SVG image using the
-   :guilabel:`...` :sup:`Browse` button
-#. If you have chosen a parameter enabled SVG then you can also set
-   a :guilabel:`Fill` or :guilabel:`Stroke` (outline) color.
-   For bitmap images, the color settings are disabled.
-#. Set a :guilabel:`Size` of the image in mm. The width of selected image is used to
-   resize it to given :guilabel:`Size`.
-#. Choose where you want to place the image on the map canvas with the
-   :guilabel:`Placement` combo box. The default position is :guilabel:`Top Left`.
-#. Set the :guilabel:`Horizontal` and :guilabel:`Vertical Margin from (Canvas) Edge`.
-   These values can be set in **Millimeters**, **Pixels** or as a **Percentage** of
-   the width or height of the map canvas.
-#. Click :guilabel:`Apply` to verify that it looks as expected and :guilabel:`OK`
-   if you're satisfied.
-
-.. index:: North arrow
-.. _northarrow_decoration:
-
-North Arrow
-...........
-
-|northArrow| :guilabel:`North Arrow` allows you to add a north arrow on the map canvas.
-
-To add a north arrow:
-
-#. Select menu option :menuselection:`View --> Decorations --> North Arrow...`
-   to open the dialog.
-
-   .. _figure_decorations_north:
-
-   .. figure:: img/north_arrow_dialog.png
-      :align: center
-
-      The North Arrow Dialog
-
-#. Make sure |checkbox| :guilabel:`Enable north arrow` is checked
-#. Optionally change the color and size, or choose a custom SVG
-#. Optionally change the angle or choose **Automatic** to let QGIS determine the
-   direction
-#. Optionally choose the placement from the Placement combo box
-#. Optionally refine the placement of the arrow by setting a horizontal and/or vertical
-   `Margin from (Canvas) Edge`. These values can be in **Millimeters** or
-   **Pixels** or set as a **Percentage** of the width or height of the map canvas.
-#. Click :guilabel:`Apply` to verify that it looks as expected and :guilabel:`OK` if you're satisfied.
-
-
-.. index:: Scale bar
-.. _scalebar_decoration:
-
-Scale Bar
-.........
-
-|scaleBar| :guilabel:`Scale Bar` adds a simple scale bar to the map canvas.
-You can control the style and placement, as well as the labelling of the bar.
-
-QGIS only supports displaying the scale in the same units as your map frame.
-So, if the units of your project's CRS are meters, you can't create a scale bar in
-feet. Likewise, if you are using decimal degrees, you can't create a scale
-bar to display distance in meters.
-
-To add a scale bar:
-
-#. Select menu option :menuselection:`View --> Decorations --> Scale Bar...`
-   to open the dialog
-
-   .. _figure_decorations_scale:
-
-   .. figure:: img/scale_bar_dialog.png
-      :align: center
-
-      The Scale Bar Dialog
-
-#. Make sure |checkbox| :guilabel:`Enable scale bar` is checked
-#. Choose a style from the :guilabel:`Scale bar style` |selectString| combo box
-#. Select the :guilabel:`Color of bar` |selectColor| by choosing
-   a fill color (default: black) and an outline color (default: white). The scale
-   bar fill and outline can be made opaque by clicking on the down arrow to the right
-   of the color input.
-#. Select the font for the scale bar from the :guilabel:`Font of bar` |selectString| combo box
-#. Set the :guilabel:`Size of bar` |selectNumber|
-#. Optionally check |checkbox| :guilabel:`Automatically snap to round number
-   on resize` to display easy-to-read values
-#. Choose the placement from the :guilabel:`Placement` |selectString| combo box
-#. You can refine the placement of the item by setting a horizontal and/or vertical
-   `Margin from (Canvas) Edge`. These values can be in **Millimeters** or
-   **Pixels** or set as a **Percentage** of the width or height of the map canvas.
-#. Click :guilabel:`Apply` to verify that it looks as expected or :guilabel:`OK` if you're satisfied.
-
-.. index:: Layout extents
-.. _layoutextents_decoration:
-
-Layout Extents
-..............
-
-|addMap| :guilabel:`Layout Extents` adds the extents of :ref:`map item(s) <layout_map_item>` in print
-layout(s) to the canvas. When enabled, the extents of all map items within all print layouts are
-shown using a lightly dotted border labeled with the name of the print layout and map item.
-You can control the style and labeling of the displayed layout extents.
-This decoration is useful when you are tweaking the positioning of map elements such as labels,
-and need to know the actual visible region of print layouts.
-
-.. _figure_decorations_layoutextents_example:
-
-.. figure:: img/decoration_layoutextents_example.png
-   :align: center
-
-   Example of layout extents displayed in a QGIS project with two print layouts. The print
-   layout named 'Sights' contains two map items, while the other print layout contains one
-   map item.
-
-To add layout extent(s):
-
-#. Select :menuselection:`View --> Decorations --> Layout Extents` to open
-   the dialog
-
-   .. _figure_decorations_layoutextents:
-
-   .. figure:: img/decoration_layoutextents.png
-      :align: center
-
-      The Layout Extents Dialog
-
-#. Make sure |checkbox| :guilabel:`Show layout extents` is checked.
-#. Optionally change the symbol and labeling of the extents.
-#. Click :guilabel:`Apply` to verify that it looks as expected and :guilabel:`OK`
-   if you're satisfied.
-
-
-.. tip::
-
-   **Decorations Settings**
-
-   When you save a QGIS project file, any changes you have made to Grid,
-   North Arrow, Scale Bar, Copyright and Layout Extents will be saved in the project and restored
-   the next time you load the project.
-
-
-.. index::
-   single: Annotation
-   see: Annotation; Form annotation
-.. _sec_annotations:
-
-Annotation Tools
-----------------
-
-Annotations are information added to the map canvas and shown within a
-balloon. This information can be of different types and annotations are
-added using the corresponding tools in the :guilabel:`Annotations Toolbar`:
-
-* |textAnnotation| :sup:`Text Annotation` for custom formatted text
-* |htmlAnnotation| :sup:`HTML Annotation` to place the content of an :file:`html`
-  file
-* |svgAnnotation| :sup:`SVG Annotation` to add an :file:`SVG` symbol
-* |formAnnotation| :sup:`Form Annotation`: useful to display attributes
-  of a vector layer in a customized :file:`ui` file (see :numref:`figure_custom_annotation`).
-  This is similar to the :ref:`custom attribute forms <provide_ui_file>`,
-  but displayed in an annotation item. Also see this video
-  https://www.youtube.com/watch?v=0pDBuSbQ02o&feature=youtu.be&t=2m25s
-  from Tim Sutton for more information.
-
-.. _figure_custom_annotation:
-
-.. figure:: img/custom_annotation.png
-   :align: center
-
-   Customized QT Designer annotation form
-
-.. Todo: Ideally, to sync with the text, this screenshot should not show the
- dialog of form annotation but instead different forms in action, this will be all
- about showing what an annotation looks like.
- Annotation dialog will need to be shown only when it's described (which is done below)
-
-To add an annotation, select the corresponding tool and click on the map canvas.
-An empty balloon is added. Double-click on it and a dialog opens with various
-options. This dialog is almost the same for all the annotation types:
-
-* At the top, a file selector to fill with the path to an :file:`html`, :file:`svg`
-  or :file:`ui` file depending on the type of annotation. For text annotation,
-  you can enter your message in a text box and set its rendering with
-  the normal font tools.
-* |checkbox| :guilabel:`Fixed map position`: when unchecked, the balloon placement
-  is based on a screen position (instead of the map), meaning that it's always shown
-  regardless the map canvas extent.
-* :guilabel:`Linked layer`: associates the annotation with a map layer, making it
-  visible only when that layer is visible.
-* :guilabel:`Map marker`: using :ref:`QGIS symbols <symbol-selector>`,
-  sets the symbol to display at the balloon anchor position (shown only when
-  :guilabel:`Fixed map position` is checked).
-* :guilabel:`Frame style`: sets the frame background color, transparency,
-  stroke color or width of the balloon using QGIS symbols.
-* :guilabel:`Contents margins`: sets interior margins of the annotation frame.
-
-.. _figure_annotation:
-
-.. figure:: img/annotation.png
-   :align: center
-
-   Annotation text dialog
-
-Annotations can be selected when an annotation tool is enabled. They can then be
-moved by map position (by dragging the map marker) or by moving only the balloon.
-The |annotation| :sup:`Move Annotation` tool also allows you to move the
-balloon on the map canvas.
-
-To delete an annotation, select it and either press the :kbd:`Del` or :kbd:`Backspace`
-button, or double-click it and press the :guilabel:`Delete` button in the properties dialog.
-
-.. note::
-   If you press :kbd:`Ctrl+T` while an :guilabel:`Annotation` tool (move annotation,
-   text annotation, form annotation) is active, the visibility states of the items
-   are inverted.
-
-.. tip:: **Layout the map with annotations**
-
-  You can print or export annotations with your map to various formats using:
-
-  * map canvas export tools available in the :menuselection:`Project` menu
-  * :ref:`print layout <create-output>`, in which case you need to check
-    :guilabel:`Draw map canvas items` in the corresponding map item properties
-
-
-.. index::
-   pair: Tools; Measure
-.. _`sec_measure`:
-
-Measuring
----------
-
-General information
-...................
-
-QGIS provides four means of measuring geometries:
-
-* interactive measurement tools |measure|
-* measuring in the |calculateField| :sup:`Field Calculator`
-* derived measurements in the :ref:`identify` tool
-* the vector analysis tool: :menuselection:`Vector --> Geometry Tools -->
-  Export/Add Geometry Columns`
-
-Measuring works within projected coordinate systems (e.g., UTM) and unprojected
-data. The first three measuring tools behave equally to global project settings:
-
-* Unlike most other GIS, the default measurement metric is
-  ellipsoidal, using the ellipsoid defined in
-  :menuselection:`Project --> Properties... --> General`. This is true both
-  when geographic and projected coordinate systems are defined for the project.
-* If you want to calculate the projected/planimetric area or distance using cartesian
-  maths, the measurement ellipsoid has to be set to "None/Planimetric"
-  (:menuselection:`Project --> Properties... --> General`). However,
-  with a geographic (ie unprojected) CRS defined for the data and project, area and
-  distance measurement will be ellipsoidal.
-
-However, neither the identify tool nor the field calculator will transform your
-data to the project CRS before measuring. If you want to achieve this, you have
-to use the vector analysis tool: :menuselection:`Vector --> Geometry Tools -->
-Add Geometry Attributes...`. Here, measurement is planimetric, unless
-you choose the ellipsoidal measurement.
-
-Measure length, areas, bearings and angles interactively
-........................................................
-
-Click the |measure| icon in the Attribute toolbar to begin measurements.
-The down arrow near the icon switches between
-|measure| length, |measureArea| area, |measureBearing| bearing or |measureAngle| angle.
-The default unit used in the dialog is the one set in :menuselection:`Project -->
-Properties... --> General` menu.
-
-.. note:: **Configuring the measure tool**
-
-   While measuring length or area, clicking the :guilabel:`Configuration` button
-   at the bottom of the widget opens the :menuselection:`Settings -->
-   Options --> Map Tools` menu, where you can select the rubberband color, the
-   precision of the measurements and the unit behavior. You can also choose your
-   preferred measurement or angle units, but keep in mind that those values are
-   overridden in the current project by the selection made in the
-   :menuselection:`Project --> Properties... --> General` menu, and by the
-   selection made in the measurement widget.
-
-All measuring modules use the snapping settings from the digitizing module (see
-section :ref:`snapping_tolerance`). So, if you want
-to measure exactly along a line feature, or around a polygon feature, first set
-its layer snapping tolerance. Now, when using the measuring
-tools, each mouse click (within the tolerance setting) will snap to that layer.
-
-.. index::
-   single: Measure; Distances
-   single: Measure; Areas
-   single: Measure; Angles
-
-By default, |measure| :sup:`Measure Line` measures real distances
-between given points according to a defined ellipsoid.
-The tool then allows you to click points on the map. Each segment length,
-as well as the total, shows up in the measure window.
-To stop measuring, click the right mouse button. Now it is possible
-to copy all your line measurements at once to the clipboard using the 
-:guilabel:`Copy All` button.
-
-Note that you can use the drop-down list near the total to change
-the measurement units interactively while working with the measure tool ('Meters', 'Kilometers', 'Feet', 'Yards',
-'Miles', 'Nautical miles', 'Centimeters', 'Millimeters', 'Degrees', 'Map units').
-This unit is retained for the widget until a new project is created or another project
-is opened.
-
-The :guilabel:`Info` section in the dialog explains how calculations are made
-according to the CRS settings available.
-
-.. %FixMe: currently, validating the Settings --> Options dialog revert any change
-   made on units in the measurement dialog (see https://issues.qgis.org/issues/15436
-   bug or not? should it be documented?)
-
-.. _figure_measure_length:
-
-.. figure:: img/measure_line.png
-   :align: center
-
-   Measure Distance
-
-|measureArea| :sup:`Measure Area`: Areas can also be measured. In the
-measure window, the accumulated area size appears. Right-click to stop drawing.
-The Info section is also available as well as the ability to switch between
-different area units ('Square meters', 'Square kilometers', 'Square feet', 'Square yards',
-'Square miles', 'Hectares', 'Acres', 'Square centimeters',
-'Square millimeters', 'Square nautical miles', 'Square degrees', 'Map units').
-
-.. _figure_measure_area:
-
-.. figure:: img/measure_area.png
-   :align: center
-
-   Measure Area
-
-|measureBearing| :sup:`Measure Bearing`: You can also measure bearings. The
-cursor becomes cross-shaped. Click to draw the first point of the bearing,
-then move the cursor to draw the second point. The measurement
-is displayed in a pop-up dialog.
-
-.. _figure_measure_bearing:
-
-.. figure:: img/measure_bearing.png
-   :align: center
-
-   Measure Bearing
-
-|measureAngle| :sup:`Measure Angle`: You can also measure angles. The
-cursor becomes cross-shaped. Click to draw the first segment of the angle you
-wish to measure, then move the cursor to draw the desired angle. The measurement
-is displayed in a pop-up dialog.
-
-.. _figure_measure_angle:
-
-.. figure:: img/measure_angle.png
-   :align: center
-
-   Measure Angle
 
 Interacting with features
 =========================
@@ -1617,9 +931,12 @@ be selected on the map canvas too):
   features in the current layer
 * |invertSelection| :sup:`Invert Feature Selection` to invert the selection in
   the current layer
-* |algorithmSelectLocation| :sup:`Select by Location` to select the features
+* |selectLocation| :sup:`Select by Location` to select the features
   based on their spatial relationship with other features (in the same or
   another layer - see :ref:`qgisselectbylocation`)
+* |selectDistance| :sup:`Select within distance` to select features
+  wherever they are within the specified maximum distance from referenced features -
+  see :ref:`qgisselectwithindistance`)
 
 For example, if you want to find regions that are boroughs from
 :file:`regions.shp` of the QGIS sample data, you can:
@@ -1672,27 +989,27 @@ automatically filling the search box with existing values.
 Alongside each field, there is a drop-down list with options to
 control the search behaviour:
 
-.. tabularcolumns:: |l|c|c|c|
+.. table:: Query operators per data type
 
-============================================= ============ ============  ============
- Field search option                           String       Numeric       Date
-============================================= ============ ============  ============
- :guilabel:`Exclude Field` from the search     |checkbox|   |checkbox|    |checkbox|
- :guilabel:`Equal to (=)`                      |checkbox|   |checkbox|    |checkbox|
- :guilabel:`Not equal to (≠)`                  |checkbox|   |checkbox|    |checkbox|
- :guilabel:`Greater than (>)`                               |checkbox|    |checkbox|
- :guilabel:`Less than (<)`                                  |checkbox|    |checkbox|
- :guilabel:`Greater than or equal to (≥)`                   |checkbox|    |checkbox|
- :guilabel:`Less than or equal to (≤)`                      |checkbox|    |checkbox|
- :guilabel:`Between (inclusive)`                            |checkbox|    |checkbox|
- :guilabel:`Not between (inclusive)`                        |checkbox|    |checkbox|
- :guilabel:`Contains`                          |checkbox|
- :guilabel:`Does not contain`                  |checkbox|
- :guilabel:`Is missing (null)`                 |checkbox|   |checkbox|    |checkbox|
- :guilabel:`Is not missing (not null)`         |checkbox|   |checkbox|    |checkbox|
- :guilabel:`Starts with`                       |checkbox|
- :guilabel:`Ends with`                         |checkbox|
-============================================= ============ ============  ============
+ ============================================= ============ ============  ============
+  Field search option                           String       Numeric       Date
+ ============================================= ============ ============  ============
+  :guilabel:`Exclude Field` from the search     |checkbox|   |checkbox|    |checkbox|
+  :guilabel:`Equal to (=)`                      |checkbox|   |checkbox|    |checkbox|
+  :guilabel:`Not equal to (≠)`                  |checkbox|   |checkbox|    |checkbox|
+  :guilabel:`Greater than (>)`                               |checkbox|    |checkbox|
+  :guilabel:`Less than (<)`                                  |checkbox|    |checkbox|
+  :guilabel:`Greater than or equal to (≥)`                   |checkbox|    |checkbox|
+  :guilabel:`Less than or equal to (≤)`                      |checkbox|    |checkbox|
+  :guilabel:`Between (inclusive)`                            |checkbox|    |checkbox|
+  :guilabel:`Not between (inclusive)`                        |checkbox|    |checkbox|
+  :guilabel:`Contains`                          |checkbox|
+  :guilabel:`Does not contain`                  |checkbox|
+  :guilabel:`Is missing (null)`                 |checkbox|   |checkbox|    |checkbox|
+  :guilabel:`Is not missing (not null)`         |checkbox|   |checkbox|    |checkbox|
+  :guilabel:`Starts with`                       |checkbox|
+  :guilabel:`Ends with`                         |checkbox|
+ ============================================= ============ ============  ============
 
 
 For string comparisons, it is also possible to use the |checkbox|
@@ -1723,53 +1040,165 @@ Once the conditions are set, you can also either:
 Identifying Features
 --------------------
 
-The Identify tool allows you to interact with the map canvas and get information
-on features in a pop-up window. To identify features, use:
+The |identify| :sup:`Identify Features` tool allows you to interact with the map canvas
+and get information on features or pixels in a pop-up window.
+It can be used to query most of the layer types supported by QGIS
+(vector, raster, mesh, point cloud, wms, wfs, ...).
+To identify an element, use either:
 
 * :menuselection:`View --> Identify Features`
 * :kbd:`Ctrl+Shift+I` (or |osx| :kbd:`Cmd+Shift+I`),
-* |identify| :sup:`Identify Features` icon on the Attributes toolbar
+* |identify| :sup:`Identify Features` button on the :guilabel:`Attributes` toolbar
+
+Then click on a feature or pixel of the active layer.
+The identified item gets highlighted in the map canvas
+while the :guilabel:`Identify Results` dialog opens with detailed information on it.
+The dialog also shows a set of buttons for advanced configuration.
+
+.. _identify_results_dialog:
+
+The Identify Results dialog
+...........................
+
+.. _figure_identify:
+
+.. figure:: img/identify_features.png
+   :align: center
+
+   Identify Results dialog
+
+From bottom to top:
+
+.. _identify_view:
+
+* The :guilabel:`View` controls the general aspect of the dialog
+  and the formatting of the results; it can be set as:
+
+  * **Tree**: this is the default view, and returns the results in a tree-structure
+  * **Table**: available only for raster-based layers, it allows to display the results
+    as a table whose columns are ``Layer``, ``FID``, ``Attribute`` and ``Value``
+  * or **Graph**: available only for raster-based layers
+
+  .. Todo: If ever someone has experience with the graph view...
+
+  .. _identify_mode:
+
+* The :guilabel:`Mode` helps you select the layers from which results could be returned.
+  These layers should be set visible, displaying data in the map canvas,
+  and set :ref:`identifiable <project_layer_capabilities>`
+  from the :menuselection:`Project properties --> Data Sources --> Layers capabilities`.
+  Available modes are:
+
+  * **Current layer**: only the layer(s) selected in the :guilabel:`Layers` panel
+    return results.
+    If a group is selected, then results are picked from its leaf layers.
+  * **Top down, stop at first**: results are from the layer of the top most feature or pixel
+    under the mouse.
+  * **Top down**: results are from the layers with feature or pixel under the mouse.
+  * **Layer selection**: opens a contextual menu where the user selects the layer
+    to identify features from.
+    If only a single feature is under the mouse, then the results are automatically displayed.
+
+* In the upper part of the :guilabel:`Identify Results` dialog,
+  a frame shows the :ref:`information <identified_information>` returned by features
+  as a table, a graph or a tree, depending on the :ref:`selected view <identify_view>`.
+  When in a tree view, you have a handful of tools above the results:
+
+  * |formView| :sup:`Open Form` of the current feature
+  * |expandTree| :sup:`Expand tree`
+  * |collapseTree| :sup:`Collapse tree`
+  * |expandNewTree| :sup:`Expand New Results by Default` to define whether the next
+    identified feature's information should be collapsed or expanded
+  * |deselectAll| :sup:`Clear Results`
+  * |editCopy| :sup:`Copy the identified feature to clipboard`, suitable for pasting in a spreadsheet.
+  * |filePrint| :sup:`Print selected HTML response`: a text-based formatting of the results
+    to print on paper or save as a :file:`.PDF` file
+  * the :ref:`interactive identifying tools <identify_selection>`: a drop-down menu
+    with tools for selecting on the map canvas features or pixels to identify
+  * Under |options| :sup:`Identify Settings`, you can activate whether to:
+
+    * |checkbox| :guilabel:`Auto open form for single feature results`:
+      If checked, each time a single feature is identified, a form opens showing its attributes.
+      This is a handy way to quickly edit a feature's attributes.
+    * |unchecked| :guilabel:`Hide derived attributes from results`
+      to only show fields actually defined in the layer
+    * |unchecked| :guilabel:`Hide NULL values from results`
+
+  * |helpContents|:sup:`Help` to access the current documentation
+
+.. _identify_selection:
 
 Using the Identify Features tool
 ................................
 
-QGIS offers several ways to identify features with the |identify|
-:sup:`Identify Features` tool:
+In its default display (:guilabel:`View: Tree`), the :guilabel:`Identify Results` panel
+offers several tools to interact with the layers to query.
+A smart combination of these tools with the :ref:`target layers selector <identify_mode>`
+may greatly improve identification operations:
 
-* **left click** identifies features according to the
-  :ref:`selection mode <identify_mode>` and the
-  :ref:`selection mask <identify_selection>` set in the
-  :guilabel:`Identify Results` panel
-* **right click** with :guilabel:`Identify Feature(s)` as
-  :ref:`selection mode <identify_mode>` set in the :guilabel:`Identify Results`
-  panel fetches all snapped features from all visible layers.
-  This opens a context menu, allowing the user to choose more precisely the
-  features to identify or the action to execute on them.
-* **right click** with :guilabel:`Identify Features by Polygon` as
-  :ref:`selection mode <identify_mode>` in the :guilabel:`Identify Results`
-  panel identifies the features that overlap with the chosen existing
-  polygon, according to the :ref:`selection mask <identify_selection>` set in
-  the :guilabel:`Identify Results` panel
+* |identifyByRectangle| :sup:`Identify Feature(s)` by single click or click-and-drag
+
+  * single click or click-and-drag: overlaying features in the target layers are returned
+  * right-click: overlaying features from target layers are listed in the contextual menu,
+    grouped by layers. You can then choose to:
+
+    * display the result for a specific feature,
+    * display the result for all the features of a specific layer,
+    * for vector layers, it is also possible to open its attribute table
+      filtered to the returned features
+    * or show all of the returned features.
+* |identifyByMouseOver| :sup:`Identify Features on Mouse over`:
+  move over the map canvas and hovered items in the target layers get highlighted
+  and returned in the results panel.
+* |identifyByPolygon| :sup:`Identify Features by Polygon`:
+  returns items overlapping a drawn or selected polygon.
+
+  * Draw a polygon (left click to add point, right click to close the polygon)
+    and all the overlaying features from target layers are highlighted
+    and returned in the results panel.
+  * Right-click and you get the list of all visible polygon features
+    in the project under the click.
+    Pick an entry and QGIS will return all the features from the target layers
+    that overlap the selected polygon.
+* |identifyByFreehand| :sup:`Identify Features by Freehand`:
+  returns items overlapping a polygon drawn by freehand.
+  Draw a polygon (left-click to start, move the pointer to shape the area
+  and right-click to close the polygon).
+  All the overlaying features from target layers are highlighted
+  and returned in the results panel.
+* |identifyByRadius| :sup:`Identify Features by Radius`
+  returns items overlapping a drawn circle.
+  Draw a cercle (left-click to indicate the center point,
+  move the pointer to shape the area or enter the radius in the pop-up text box
+  and left-click or press :kbd:`Enter` to validate the circle).
+  All the overlaying features from target layers are highlighted
+  and returned in the results panel.
 
 .. tip:: **Filter the layers to query with the Identify Features tool**
 
-   Under :guilabel:`Layer Capabilities` in :menuselection:`Project --> Properties...
-   --> Data Sources`, uncheck the :guilabel:`Identifiable` column next to a
-   layer to avoid it
-   being queried when using the |identify| :sup:`Identify Features` tool in a mode
-   other than **Current Layer**. This is a handy way to return features from
-   only layers that are of interest for you.
+   Under :menuselection:`Project --> Properties... --> Data Sources --> Layer Capabilities`,
+   uncheck the :guilabel:`Identifiable` column next to a layer
+   to avoid it being queried when using the |identify| :sup:`Identify Features` tool.
+   This is a handy way to return features from only layers that are of interest to you.
 
-If you click on feature(s), the :guilabel:`Identify Results` dialog will list
-information about the feature(s) clicked. The default view is a tree view in which
-the first item is the name of the layer and its children are its identified feature(s).
-Each feature is described by the name of a field along with its value.
-This field is the one set in :menuselection:`Layer Properties --> Display`.
-All the other information about the feature follows.
+
+.. _`identified_information`:
 
 Feature information
 ...................
 
+When you identify a data in the map canvas, the :guilabel:`Identify Results` dialog will list
+information about the items clicked (or hovered over, depending on the tool in use).
+The default view is a tree view in which the first item is the name of the layer
+and its children are its identified feature(s).
+Each feature is described by the name of a field along with its value.
+This field is the one set in :menuselection:`Layer Properties --> Display`.
+All the other information about the feature follows.
+
+The feature information displayed by the identify tool will depend on the type 
+of layer you have selected, whether it is a vector layer (including vector tiles 
+or point cloud data) or raster layer. If your layer is raster, clicking on a location
+on the map canvas with identify tool will highlight the identified raster pixel. 
 The Identify Results dialog can be customized to display custom fields, but by
 default it will display the following information:
 
@@ -1803,83 +1232,29 @@ default it will display the following information:
       closest vertex (and ``Z``/``M`` if applicable)
     * if you click on a curved segment,
       the radius of that section is also displayed.
+    * if both the vector layer and the project have vertical datums set and they differ,
+      the ``Z`` value will be displayed for both datums.
 
 * **Data attributes**: This is the list of attribute fields and values for the
   feature that has been clicked.
 * information about the related child feature if you defined a :ref:`relation <vector_relations>`:
-  
+
   * the name of the relation
   * the entry in reference field, e.g. the name of the related child feature
   * **Actions**: lists actions defined in the layer's properties dialog (see :ref:`actions_menu`)
     and the default action is ``View feature form``.
   * **Data attributes**: This is the list of attributes fields and values of the
-    related child feature. 
-  
+    related child feature.
+
 .. note:: Links in the feature's attributes are clickable from the :guilabel:`Identify
    Results` panel and will open in your default web browser.
 
-.. _figure_identify:
 
-.. figure:: img/identify_features.png
-   :align: center
+Results contextual menu
+.......................
 
-   Identify Results dialog
-
-The Identify Results dialog
-...........................
-
-At the top of the window, you have a handful of tools:
-
-* |formView| :sup:`Open Form` of the current feature
-* |expandTree| :sup:`Expand tree`
-* |collapseTree| :sup:`Collapse tree`
-* |expandNewTree| :sup:`Expand New Results by Default` to define whether the next
-  identified feature's information should be collapsed or expanded
-* |deselectAll| :sup:`Clear Results`
-* |editCopy| :sup:`Copy selected feature to clipboard`
-* |filePrint| :sup:`Print selected HTML response`
-
-.. _identify_selection:
-
-* selection mode to use to fetch features to identify:
-
-  * |identifyByRectangle| :sup:`Identify Features by area or single click`
-  * |identifyByPolygon| :sup:`Identify Features by Polygon`
-  * |identifyByFreehand| :sup:`Identify Features by Freehand`
-  * |identifyByRadius| :sup:`Identify Features by Radius`
-
-  .. note::
-     When using |identifyByPolygon| :sup:`Identify Features by Polygon`, you can
-     right-click any existing polygon and use it to identify overlapping
-     features in another layer.
-
-.. _identify_mode:
-
-At the bottom of the window are the :guilabel:`Mode` and :guilabel:`View`
-combo boxes.
-:guilabel:`Mode` defines from which layers features should be identified:
-
-* **Current layer**: only features from the selected layers are identified.
-  If a group is selected, features from its visible layers are identified. If there is no
-  selection then only the current layer is identified.
-* **Top down, stop at first**: only features from the upper visible layer.
-* **Top down**: all features from the visible layers. The results are shown in
-  the panel.
-* **Layer selection**: opens a context menu where the user selects the layer to
-  identify features from, similar to a right-click. Only the chosen features
-  will be shown in the result panel.
-
-The :guilabel:`View` can be set as **Tree**, **Table** or **Graph**.
-'Table' and 'Graph' views can only be set for raster layers.
-
-The identify tool allows you to |checkbox|
-:guilabel:`Auto open form for single feature results`, found under |options|
-:sup:`Identify Settings`.
-If checked, each time a single feature is identified, a form opens
-showing its attributes. This is a handy way to quickly edit a feature's attributes.
-
-Other functions can be found in the context menu of the identified item. For
-example, from the context menu you can:
+Other functions can be found in the context menu of the identified item.
+For example, from the context menu you can:
 
 * View the feature form
 * Zoom to feature
@@ -1887,6 +1262,8 @@ example, from the context menu you can:
 * Toggle feature selection: Add identified feature to selection
 * Copy attribute value: Copy only the value of the attribute that you click on
 * Copy feature attributes: Copy the attributes of the feature
+* Select features by attribute value: Select all features in the layer
+  that match the selected attribute
 * Clear result: Remove results in the window
 * Clear highlights: Remove features highlighted on the map
 * Highlight all
@@ -1921,18 +1298,57 @@ You can achieve this by using the :menuselection:`Style` menu at the bottom
 of the Layer Properties dialog. This menu provides you with functions to
 create, load and manage styles.
 
-A style stores any information set in the layer properties dialog to render
-or interact with the layer (including symbology, labeling, fields and form definitions,
-actions, diagrams...) for vector layers, or the pixels (band or color rendering, transparency,
-pyramids, histogram ...) for raster.
+A style stores various information set in the layer or project properties dialog to render or interact with the layer.
+This includes:
 
+.. table:: Components of stored style and their references
 
-.. _figure_manage_style:
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | Category                                         | Vector                                      | Raster                                      |
+   +==================================================+=============================================+=============================================+
+   | |layerConfiguration| :sup:`Layer Configuration`  | :ref:`Layers capabilities <project_layer_capabilities>`                                   |
+   +                                                  +---------------------------------------------+---------------------------------------------+
+   |                                                  | :ref:`maptips`                              | :ref:`raster_display`                       |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |symbology| :sup:`Symbology`                     | :ref:`vector_style_menu`                    | :ref:`raster_symbology` :sup:`[1]`          |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |3d| :sup:`3D Symbology`                         | :ref:`sec_3_d_view`                         | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |labelingSingle| :sup:`Labels`                   | :ref:`vector_labels_tab`                    | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |sourceFieldsForms| :sup:`Fields`                | :ref:`vector_fields_menu`                   | N/A                                         |
+   |                                                  | and :ref:`constraints`                      |                                             |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |formView| :sup:`Attributes Form`                | :ref:`vector_attributes_menu`               | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |action| :sup:`Actions`                          | :ref:`actions_menu`                         | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |mapTips| :sup:`Map Tips`                        | :ref:`maptips`                              | :ref:`raster_display`                       |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |diagram| :sup:`Diagrams`                        | :ref:`sec_diagram`                          | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |openTable| :sup:`Attribute Table Configuration` | :ref:`sec_attribute_table`                  |                                             |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |rendering| :sup:`Rendering`                     | :ref:`vectorrenderingmenu`                  | :ref:`raster_rendering` :sup:`[1]`          |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |options| :sup:`Custom Properties`               | :ref:`vectorinformationmenu`                | :ref:`raster_information`                   |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |digitizing| :sup:`Geometry Options`             | :ref:`digitizingmenu`                       | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |relations| :sup:`Relations`                     | :ref:`vector_relations`                     | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |temporal| :sup:`Temporal Properties`            | :ref:`vectortemporalmenu`                   | :ref:`raster_temporal`                      |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |legend| :sup:`Legend Settings`                  | :ref:`vectorlegendmenu`                     | N/A                                         |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |elevationscale| :sup:`Elevation Properties`     | :ref:`vectorelevationmenu`                  | :ref:`raster_elevation`                     |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
+   | |indicatorNotes| :sup:`Notes`                    | :ref:`layer_notes`                                                                        |
+   +--------------------------------------------------+---------------------------------------------+---------------------------------------------+
 
-.. figure:: img/style_combobox.png
-   :align: center
+:sup:`[1]`: For raster layers, symbology and rendering items are melted together,
+meaning that saving/loading one would also save/load items of/from the other.
 
-   Vector layer style combo box options
 
 By default, the style applied to a loaded layer is named ``default``. Once you
 have got the ideal and appropriate rendering for your layer, you can save it by
@@ -1967,6 +1383,9 @@ to duplicate any layer in the map legend.
 
    Right-click on the layer in the :guilabel:`Layers` panel to copy, paste, add
    or rename layer styles.
+   For both vector and raster layers, you can choose which style categories to copy/paste.
+   Choose :guilabel:`All Style Categories` or one of the available categories, depending on the layer type.
+   Note that for raster layers, the :guilabel:`Symbology` and :guilabel:`Rendering` categories are always copied together.
 
 .. _store_style:
 
@@ -1987,6 +1406,13 @@ save the style as a:
 * QGIS layer style file (:file:`.qml`)
 * SLD file (:file:`.sld`), only available for vector layers
 
+.. _figure_manage_style:
+
+.. figure:: img/style_combobox.png
+   :align: center
+
+   Vector layer style combo box options
+
 Used on file-based format layers (:file:`.shp`, :file:`.tab`...), :guilabel:`Save
 as Default` generates a :file:`.qml` file for the layer (with the same name).
 SLDs can be exported from any type of renderer -- single symbol,
@@ -2001,7 +1427,7 @@ Save in database
 .................
 
 Vector layer styles can also be stored in a database if the layer datasource is a
-database provider. Supported formats are PostGIS, GeoPackage, SpatiaLite, MSSQL
+database provider. Supported formats are PostGIS, GeoPackage, SpatiaLite, MS SQL Server
 and Oracle. The layer style is saved inside a table (named :file:`layer_styles`)
 in the database. Click on :menuselection:`Save Style... --> Save in database`
 then fill in the dialog to define a style name, add a description, a :file:`.ui`
@@ -2022,7 +1448,7 @@ database or in :file:`qgis.db`, a local SQLite database in the active
 .. tip:: **Sharing style files between databases**
 
   You can only save your style in a database if the layer comes from such a
-  database. You can't mix databases (layer in Oracle and style in MSSQL for
+  database. You can't mix databases (layer in Oracle and style in MS SQL Server for
   instance). Use instead a plain text file if you want the style to be shared
   among databases.
 
@@ -2114,9 +1540,41 @@ A summary of the filled information is provided in the :guilabel:`Validation`
 tab and helps you identify potential issues related to the form. You can then
 either fix them or ignore them.
 
-Metadata are currently saved in the project file. They can also be saved in a
-:file:`.qmd` file alongside file based layers or in a local :file:`.sqlite`
-database for remote layers (e.g. PostGIS).
+Metadata are saved in the project file by default, the :guilabel:`Metadata` drop-down
+offers options for loading/saving metadata from :file:`.qmd` file
+and for loading/saving metadata in the "Default" location.
+
+.. _figure_metadata_save_options:
+
+.. figure:: img/metadata_save_options.png
+   :align: center
+
+   Metadata load/save options
+
+
+The "Default" location used by :guilabel:`Save to Default Location` and 
+:guilabel:`Restore from Default Location` changes depending on the underlying 
+data source and on its configuration:
+
+.. _`savemetadatatodb`:
+
+* For PostgreSQL data sources if the configuration
+  option :guilabel:`Allow saving/loading QGIS layer metadata in the database`
+  is checked the metadata are stored inside a dedicated table in the
+  database.
+
+* For GeoPackage data sources :guilabel:`Save to Default Location` always saves
+  the metadata in the internal metadata tables of the GeoPackage.
+
+  When metadata are saved into the internal tables of PostgreSQL or GeoPackage they
+  become available for search and filtering in the browser and in
+  the :ref:`layer metadata search panel <layer_metadata_search_panel>`.
+
+* For all other file based data sources :guilabel:`Save to Default Location` 
+  saves the metadata in a :file:`.qmd` file alongside the file.
+
+* In all other cases :guilabel:`Save to Default Location` saves the metadata
+  in a local :file:`.sqlite` database.
 
 
 .. _layer_notes:
@@ -2197,7 +1655,7 @@ manage:
   :ref:`project_properties`)
 * **vector layer variables** from the :guilabel:`Layer Properties` dialog
   (see :ref:`vector_properties_dialog`);
-* **modeler variables** from the :guilabel:`Graphical Modeler` dialog
+* **modeler variables** from the :guilabel:`Model Designer` dialog
   (see :ref:`processing.modeler`);
 * **layout variables** from the :guilabel:`Layout` panel in the
   Print layout (see :ref:`layout_panel`);
@@ -2210,7 +1668,7 @@ variables overwritten by lower level ones are strike through.
 
 .. _figure_variables_dialog:
 
-.. figure:: img/options_variables.png
+.. figure:: img/project_variables.png
    :align: center
 
    Variables editor at the project level
@@ -2279,7 +1737,7 @@ apply your choice to the item.
 In the |colorSwatches| :sup:`Color swatches` tab, you can choose from a
 list of color palettes (see :ref:`colors_options` for details).
 All but the :guilabel:`Recent colors` palette can be modified with the
-|signPlus| :sup:`Add current color` and |signMinus| :sup:`Remove selected color`
+|symbologyAdd| :sup:`Add current color` and |symbologyRemove| :sup:`Remove selected color`
 buttons at the bottom of the frame.
 
 The :guilabel:`...` button next to the palette combo box also offers several
@@ -2305,9 +1763,13 @@ from another application: press the space bar while the tab is active, move the
 mouse over the desired color and click on it or press the space bar again. You
 can also click the :guilabel:`Sample Color` button to activate the picker.
 
-Whatever method you use, the selected color is always described through color
-sliders for ``HSV`` (Hue, Saturation, Value) and ``RGB`` (Red, Green, Blue)
-values. The color is also identifiable in :guilabel:`HTML notation`.
+Whatever method you use, the selected color is always described
+through options of a :guilabel:`Color model`
+that defaults to the :ref:`project color model <project_colors>`:
+
+* :guilabel:`RGB`: color is set using sliders for ``HSV`` (Hue, Saturation, Value)
+  or ``RGB`` (Red, Green, Blue) values.
+* :guilabel:`CMYK` (Cyan, Magenta, Yellow, Black)
 
 Modifying a color is as simple as clicking on the color wheel or ramp or on any
 of the color parameters sliders. You can adjust such parameters with the spinbox
@@ -2344,6 +1806,9 @@ to:
 * choose a color from the color selector dialog
 * drag-and-drop the color from one widget to another for quick modification
 
+.. tip:: Scroll the mouse wheel over a color selector widget to quickly
+ modify the opacity of the associated color.
+
 .. note:: When the color widget is set to a :ref:`project color <project_colors>`
   through the data-defined override properties, the above functions for
   changing the color are unavailable. You'd first need to :guilabel:`Unlink color`
@@ -2378,6 +1843,8 @@ The drop-down menu to the right of the button gives quick access to a
 wider set of color ramps and options:
 
 * :guilabel:`Invert Color Ramp`
+* :guilabel:`Clear Current Ramp` to unset any assigned color ramp to the widget
+  (available only in some contexts)
 * |unchecked| :guilabel:`Random Colors`: available only in some contexts
   (e.g., when a color ramp is being used for a layer symbology),
   checking this entry creates and applies a color ramp with random colors.
@@ -2415,6 +1882,11 @@ following symbol options, together with the features of the
   It opens a dialog to set the :ref:`symbol parameters <edit_symbol>`.
 * :guilabel:`Copy Symbol` from the current item
 * :guilabel:`Paste Symbol` to the current item, speeding configuration
+* :guilabel:`Clear Current Symbol` to unset any assigned symbol to the widget
+  (available only in some contexts)
+
+.. tip:: Scroll the mouse wheel over a marker or line symbol widget to quickly
+ modify the size of the associated symbol.
 
 .. index:: Embedded file
 .. _embedded_file_selector:
@@ -2430,16 +1902,46 @@ show a drop-down arrow. This is usually available when using:
 
 Pressing the arrow will provide you with a menu to:
 
-* load the file from the file system: the file is identified through the file path and
+* :guilabel:`Select File…`, to load the file from the file system. The file is identified through the file path and
   QGIS needs to resolve the path in order to display the corresponding image
-* load the file from a remote URL: as above, the image will only be loaded on
+* :guilabel:`From URL…`, to load the file from a remote URL. As above, the image will only be loaded on
   successful retrieval of the remote resource
-* embed the file into the item: the file is embedded inside
+* :guilabel:`Embed File…`, to embed the file inside
   the current project, style database, or print layout template.
   The file is then always rendered as part of the item.
   This is a convenient way to create self-contained projects with custom symbols
   which can be easily shared amongst different users and installations of QGIS.
-* extract the embedded file from the widget and save it on disk.
+* :guilabel:`Extract Embedded File…`, to extract the embedded file from the widget and save it on disk.
+
+.. index:: Rendering; Scale dependent visibility
+.. _label_scaledepend:
+
+Visibility Scale Selector
+-------------------------
+
+The visibility scale selector provides options to control the scales
+at which an element will be made visible in the map canvas.
+Out of the specified range of scales, the elements are not displayed.
+It can be applied e.g. to layers, labels or diagrams,
+from their :guilabel:`Rendering` properties tab.
+
+#. Tick the |checkbox| :guilabel:`Scale dependent visibility` box
+#. Fill the :guilabel:`Minimum (exclusive)` box with the most zoomed out desired scale,
+   typing the value or selecting it from the :ref:`predefined scales <predefinedscales>`
+#. and/or fill the :guilabel:`Maximum (inclusive)` box with the most zoomed in desired scale
+
+   The |mapIdentification| :sup:`Set to current canvas scale` button next to
+   the scale boxes sets the current map canvas scale as boundary of the range visibility.
+   Press the arrow next to the button to access scales from layouts' maps
+   and reuse them to fill the box.
+
+.. _figure_visibilityscaleselector_widget:
+
+.. figure:: img/visibilityscale_selector.png
+   :align: center
+
+   Visibility scale selector widget
+
 
 .. index:: Extent selection
 .. _extent_selector:
@@ -2451,11 +1953,13 @@ The :guilabel:`Extent` selector widget is a convenient shortcut when you want to
 select a spatial extent to assign to a layer or to limit the actions to run on.
 Depending on the context, it offers selection between:
 
-* :guilabel:`Current layer extent`, e.g. when exporting a layer
-* :menuselection:`Calculate from layer -->`: uses extent of a layer loaded in the
+* :guilabel:`Current Layer Extent`: e.g. when exporting a layer
+* :menuselection:`Calculate from Layer -->`: uses extent of a layer loaded in the
   current project
-* Use current :guilabel:`Map canvas extent`
-* :guilabel:`Draw on canvas` a rectangle whose coordinates are then used
+* Use current :guilabel:`Map Canvas Extent`
+* :guilabel:`Draw on Canvas`: a rectangle whose coordinates are then used
+* :guilabel:`Calculate from Bookmark`: uses extent of a saved :ref:`bookmark <sec_bookmarks>`
+* :guilabel:`Calculate from Layout Map`: uses extent of a :ref:`layout map <layout_map_item>`
 * Enter or edit the coordinates as ``xmin, xmax, ymin, ymax``
 
 .. _figure_extentselector_widget:
@@ -2484,17 +1988,20 @@ following options:
 
    Font selector drop-down menu
 
+* :guilabel:`Clear Current Text Format` to unset any assigned text format
+  to the widget (available only in some contexts)
 * :guilabel:`Font Size` in the associated unit
 * :menuselection:`Recent Fonts -->` menu with the active font checked (at the top)
-* :guilabel:`Configure Format...`: same as pressing the font selector widget. It
-  opens a dialog to set text format parameters. Depending on the context, it can
-  be the OS default :guilabel:`Text format` dialog or the QGIS custom dialog
-  with advanced formatting options (opacity, orientation, buffer, background,
-  shadow, ...) as described in section :ref:`text_format`.
+* :guilabel:`Configure Format...`: same as pressing the font selector widget.
+  It opens the :ref:`Text format <text_format>` dialog,
+  providing advanced formatting options such as color, opacity, orientation, HTML notation,
+  buffer, background, shadow, ...
 * :guilabel:`Copy Format` of the text
 * :guilabel:`Paste Format` to the text, speeding configuration
 * the :ref:`color widget <color_widget>` for quick color setting
 
+.. tip:: Scroll the mouse wheel over a font selector widget to quickly
+ modify the font size of the associated text.
 
 .. index:: Unit selection; Map scale
 .. _unit_selector:
@@ -2512,11 +2019,19 @@ screen resolution, paper size, or the terrain). Available units are:
 * :guilabel:`Points`
 * :guilabel:`Pixels`
 * :guilabel:`Inches`
+* :guilabel:`Percentage`: allows you to set some properties as a percent of another one. For example, this is
+  useful for creation of text formats where the components (buffer size, shadow radius...)
+  nicely scale as the text size is changed, instead of having
+  constant buffer/shadow sizes. So you don't need to adjust those sizes,
+  when the text size changes.
 * :guilabel:`Meters at Scale`: This allows you to always set the size in meters,
   regardless of what the underlying map units are (e.g. they can be in inches, feet,
   geographic degrees, ...). The size in meters is calculated based on the current project
   ellipsoid setting and a projection of the distances in meters at the center of the
-  current map extent.
+  current map extent. For maps in a projected coordinate system this is calculated using
+  projected units. For maps in a geographic (latitude/longitude) based system the size is
+  approximated by calculating meter sizes using ellipsoidal calculations for the vertical
+  scale of the map.
 * and :guilabel:`Map Units`: The size is scaled according to the map view scale.
   Because this can lead to too big or too small values, use the |options| button
   next to the entry to constrain the size to a range of values based on:
@@ -2541,11 +2056,19 @@ screen resolution, paper size, or the terrain). Available units are:
 Number Formatting
 -----------------
 
-Numeric formatters allow formatting of numeric values for display, using
-a variety of different formatting techniques (for instance scientific notation,
-currency values, percentage values, etc). One use of this is to set
-text in a layout scale bar or fixed table.
- 
+Numeric formatters allow formatting of numeric values for display,
+using a variety of different formatting techniques
+(for instance scientific notation,
+currency values, percentage values, custom formatting, etc).
+One use of this is to set text in a layout scale bar or table, a color ramp legend, an elevation profile plot, ...
+
+.. _figure_number_formatting:
+
+.. figure:: img/number_formatting.png
+   :align: center
+
+   Formatting numeric value
+
 Different categories of formats are supported.
 For most of them, you can set part or all of the following numeric options:
 
@@ -2557,6 +2080,11 @@ But they can also have their custom settings. Provided categories are:
 
 * :guilabel:`General`, the default category: has no setting and displays values
   as set in the parent widget properties or using the global settings.
+
+* :guilabel:`Custom expression`: allows you to craft a custom :ref:`QGIS expression <vector_expressions>` to format numbers.
+  The expression can use the ``@value`` variable to retrieve the value to be formatted,
+  and then use any standard QGIS expression function to format this as desired.
+
 * :guilabel:`Number`
 
   * The value can be :guilabel:`Round to` a self defined number of
@@ -2583,7 +2111,7 @@ But they can also have their custom settings. Provided categories are:
 
   * number of :guilabel:`Decimal places`
   * :guilabel:`Scaling` to indicate whether the actual values already represent
-    percentages (then they will be kept as is) or fractions (then they are converted)    
+    percentages (then they will be kept as is) or fractions (then they are converted)
 * :guilabel:`Scientific` notation in the form ``2.56e+03``. The number of
   :guilabel:`Decimal places` can be set.
 
@@ -2600,37 +2128,74 @@ QGIS offers different options for special rendering effects with these tools tha
 you may previously only know from graphics programs. Blending modes can be applied
 on layers and features, and also on print layout items:
 
-* **Normal**: This is the standard blend mode, which uses the alpha channel of the top
+* :guilabel:`Normal`: This is the standard blend mode, which uses the alpha channel of the top
   pixel to blend with the pixel beneath it. The colors aren't mixed.
-* **Lighten**: This selects the maximum of each component from the foreground and
+* :guilabel:`Lighten`: This selects the maximum of each component from the foreground and
   background pixels. Be aware that the results tend to be jagged and harsh.
-* **Screen**: Light pixels from the source are painted over the destination, while
+* :guilabel:`Screen`: Light pixels from the source are painted over the destination, while
   dark pixels are not. This mode is most useful for mixing the texture of one item
   with another item (such as using a hillshade to texture another layer).
-* **Dodge**: Brighten and saturate underlying pixels based on the lightness
+* :guilabel:`Dodge`: Brighten and saturate underlying pixels based on the lightness
   of the top pixel. Brighter top pixels cause the saturation and brightness of
   the underlying pixels to increase. This works best if the top pixels aren't too
   bright. Otherwise the effect is too extreme.
-* **Addition**: Adds pixel values of one item to the other.
+* :guilabel:`Addition`: Adds pixel values of one item to the other.
   In case of values above the maximum value (in the case of RGB), white is displayed.
   This mode is suitable for highlighting features.
-* **Darken**: Retains the lowest values of each component of the
+* :guilabel:`Darken`: Retains the lowest values of each component of the
   foreground and background pixels. Like lighten, the results tend to be jagged and harsh.
-* **Multiply**: Pixel values of the top item are multiplied with
+* :guilabel:`Multiply`: Pixel values of the top item are multiplied with
   the corresponding values for the bottom item. The results are darker.
-* **Burn**: Darker colors in the top item cause the underlying items to darken.
+* :guilabel:`Burn`: Darker colors in the top item cause the underlying items to darken.
   Burn can be used to tweak and colorize underlying layers.
-* **Overlay**: Combines multiply and screen blending modes.
+* :guilabel:`Overlay`: Combines multiply and screen blending modes.
   Light parts become lighter and dark parts become darker.
-* **Soft light**: Very similar to overlay, but instead of using multiply/screen
+* :guilabel:`Soft light`: Very similar to overlay, but instead of using multiply/screen
   it uses color burn/dodge. This is supposed to emulate shining a soft light onto an image.
-* **Hard light**: Hard light is also very similar to the overlay mode. It's supposed
+* :guilabel:`Hard light`: Hard light is also very similar to the overlay mode. It's supposed
   to emulate projecting a very intense light onto an image.
-* **Difference**: Subtracts the top pixel from the bottom pixel, or the other
+* :guilabel:`Difference`: Subtracts the top pixel from the bottom pixel, or the other
   way around, in order always to get a positive value. Blending with black produces no change,
   as the difference with all colors is zero.
-* **Subtract**: Subtracts pixel values of one item from the other.
+* :guilabel:`Subtract`: Subtracts pixel values of one item from the other.
   In the case of negative values, black is displayed.
+
+.. _figure_blend_modes:
+
+.. figure:: img/blending_modes.png
+   :align: center
+
+   Examples of blend modes applied to a green feature over an orange
+
+   From top to bottom, left to right: Normal -- Lighten, Screen, Dodge, Addition --
+   Difference, Subtract -- Darken, Multiply, Burn -- Overlay, Soft light, Hard light
+
+
+.. _blending_clipping:
+
+When a layer is part of a group that :ref:`renders layers as a group <render_as_group>`,
+additional blending modes are available for the rendering.
+They provide methods to clip the render of one layer’s content by the content in a second "mask" layer.
+
+* :guilabel:`Masked By Below`: The output is the top pixel, where the opacity is reduced by that of the bottom pixel.
+* :guilabel:`Mask Below`: The output is the bottom pixel, where the opacity is reduced by that of the top pixel.
+* :guilabel:`Inverse Masked By Below`: The output is the top pixel, where the opacity is reduced by the inverse of the bottom pixel.
+* :guilabel:`Inverse Mask Below`: The output is the bottom pixel, where the opacity is reduced by the inverse of the top pixel.
+* :guilabel:`Paint Inside Below`: The top pixel is blended on top of the bottom pixel,
+  with the opacity of the top pixel reduced by the opacity of the bottom pixel.
+* :guilabel:`Paint Below Inside`: The bottom pixel is blended on top of the top pixel,
+  with the opacity of the bottom pixel reduced by the opacity of the top pixel.
+
+.. _figure_blend_clipping_modes:
+
+.. figure:: img/blending_clipping.png
+   :align: center
+
+   Examples of blend clipping mode applied to top green layer in a group
+
+   **A**: Mask Below **B**: Masked By Below **C**: Paint Below Inside
+   **D**: Inverse Mask Below **E**: Inverse Masked By Below **F**: Paint Inside Below
+
 
 .. index:: Data-defined override
 .. _data_defined:
@@ -2639,7 +2204,7 @@ Data defined override setup
 ---------------------------
 
 Next to many options in the vector layer properties dialog or settings in the print
-layout, you will find a |dataDefined| :sup:`Data defined override` icon.
+layout, you will find a |dataDefine| :sup:`Data defined override` icon.
 Using :ref:`expressions <vector_expressions>` based on layer attributes or item
 settings, prebuilt or custom functions and :ref:`variables <general_tools_variables>`,
 this tool allows you to set dynamic values for parameters. When enabled,
@@ -2649,13 +2214,13 @@ value (checkbox, textbox, slider...).
 The data defined override widget
 ................................
 
-Clicking the |dataDefined| :sup:`Data defined override` icon shows the following entries:
+Clicking the |dataDefine| :sup:`Data defined override` icon shows the following entries:
 
 * :guilabel:`Description...` that indicates if the option is enabled, which input is
   expected, the valid input type and the current definition. Hovering over the
   widget also pops up this information.
-* :guilabel:`Store data in the project`: a button allowing  the property to be stored
-  using to the :ref:`vector_auxiliary_storage` mechanism.
+* :guilabel:`Store data in the project`: a button allowing the property to be stored
+  using the :ref:`vector_auxiliary_storage` mechanism.
 * :guilabel:`Field type`: an entry to select from the layer's fields that match the
   valid input type.
 * :guilabel:`Color`: when the widget is linked to a color property, this menu
@@ -2679,15 +2244,21 @@ Clicking the |dataDefined| :sup:`Data defined override` icon shows the following
  icon is yellow |dataDefineOn| or |dataDefineExpressionOn|. If it is broken,
  the icon is red |dataDefineError| or |dataDefineExpressionError|.
 
- You can enable or disable a configured |dataDefined| :sup:`data-defined
+ You can enable or disable a configured |dataDefine| :sup:`Data-defined
  override` button by simply clicking the widget with the right mouse button.
+
+.. tip:: **Use middle-click to create or edit the expression to apply**
+
+ You can directly open the :guilabel:`Expression String Builder` dialog to create or
+ edit the expression to apply by simply clicking the |dataDefine| :sup:`Data-defined
+ override` widget with the middle mouse button.
 
 .. _data_defined_assistant:
 
 Using the data-defined assistant interface
 ..........................................
 
-When the |dataDefined| :sup:`Data-defined override` button is associated with a
+When the |dataDefine| :sup:`Data-defined override` button is associated with a
 size, a rotation, an opacity or a color property, it has an :guilabel:`Assistant...`
 option that helps you change how the data is applied to the parameter for each
 feature. The assistant allows you to:
@@ -2744,23 +2315,15 @@ The values presented in the varying size assistant above will set the size
 
 .. |3d| image:: /static/common/3d.png
    :width: 1.5em
-.. |addGrid| image:: /static/common/add_grid.png
-   :width: 1.5em
+.. |action| image:: /static/common/action.png
+   :width: 2em
 .. |addGroup| image:: /static/common/mActionAddGroup.png
    :width: 1.5em
-.. |addImage| image:: /static/common/mActionAddImage.png
-   :width: 1.5em
-.. |addMap| image:: /static/common/mActionAddMap.png
-   :width: 1.5em
-.. |algorithmSelectLocation| image:: /static/common/mAlgorithmSelectLocation.png
+.. |addVirtualLayer| image:: /static/common/mActionAddVirtualLayer.png
    :width: 1.5em
 .. |allEdits| image:: /static/common/mActionAllEdits.png
    :width: 1.5em
-.. |annotation| image:: /static/common/mActionAnnotation.png
-   :width: 1.5em
 .. |atlasNext| image:: /static/common/mActionAtlasNext.png
-   :width: 1.5em
-.. |calculateField| image:: /static/common/mActionCalculateField.png
    :width: 1.5em
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
@@ -2774,7 +2337,7 @@ The values presented in the varying size assistant above will set the size
    :width: 1.5em
 .. |colorWheel| image:: /static/common/mIconColorWheel.png
    :width: 1.5em
-.. |copyrightLabel| image:: /static/common/copyright_label.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em
 .. |dataDefineError| image:: /static/common/mIconDataDefineError.png
    :width: 1.5em
@@ -2784,8 +2347,6 @@ The values presented in the varying size assistant above will set the size
    :width: 1.5em
 .. |dataDefineOn| image:: /static/common/mIconDataDefineOn.png
    :width: 1.5em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
-   :width: 1.5em
 .. |dbManager| image:: /static/common/dbmanager.png
    :width: 1.5em
 .. |deleteSelected| image:: /static/common/mActionDeleteSelected.png
@@ -2793,6 +2354,10 @@ The values presented in the varying size assistant above will set the size
 .. |deselectActiveLayer| image:: /static/common/mActionDeselectActiveLayer.png
    :width: 1.5em
 .. |deselectAll| image:: /static/common/mActionDeselectAll.png
+   :width: 1.5em
+.. |diagram| image:: /static/common/diagram.png
+   :width: 2em
+.. |digitizing| image:: /static/common/digitizing.png
    :width: 1.5em
 .. |duplicateLayer| image:: /static/common/mActionDuplicateLayer.png
    :width: 1.5em
@@ -2802,6 +2367,8 @@ The values presented in the varying size assistant above will set the size
    :width: 1.2em
 .. |editableEdits| image:: /static/common/mIconEditableEdits.png
    :width: 1em
+.. |elevationscale| image:: /static/common/elevationscale.png
+   :width: 1.5em
 .. |expandNewTree| image:: /static/common/mActionExpandNewTree.png
    :width: 1.5em
 .. |expandTree| image:: /static/common/mActionExpandTree.png
@@ -2814,16 +2381,18 @@ The values presented in the varying size assistant above will set the size
    :width: 1.5em
 .. |filePrint| image:: /static/common/mActionFilePrint.png
    :width: 1.5em
+.. |fileSave| image:: /static/common/mActionFileSave.png
+   :width: 1.5em
 .. |filterMap| image:: /static/common/mActionFilterMap.png
    :width: 1.5em
 .. |folder| image:: /static/common/mActionFolder.png
-   :width: 1.5em
-.. |formAnnotation| image:: /static/common/mActionFormAnnotation.png
    :width: 1.5em
 .. |formSelect| image:: /static/common/mIconFormSelect.png
    :width: 1.5em
 .. |formView| image:: /static/common/mActionFormView.png
    :width: 1.2em
+.. |helpContents| image:: /static/common/mActionHelpContents.png
+   :width: 1.5em
 .. |hideAllLayers| image:: /static/common/mActionHideAllLayers.png
    :width: 1.5em
 .. |hideDeselectedLayers| image:: /static/common/mActionHideDeselectedLayers.png
@@ -2832,11 +2401,11 @@ The values presented in the varying size assistant above will set the size
    :width: 1.5em
 .. |history| image:: /static/common/mActionHistory.png
    :width: 1.5em
-.. |htmlAnnotation| image:: /static/common/mActionHtmlAnnotation.png
-   :width: 1.5em
 .. |identify| image:: /static/common/mActionIdentify.png
    :width: 1.5em
 .. |identifyByFreehand| image:: /static/common/mActionIdentifyByFreehand.png
+   :width: 1.5em
+.. |identifyByMouseOver| image:: /static/common/mActionIdentifyByMouseOver.png
    :width: 1.5em
 .. |identifyByPolygon| image:: /static/common/mActionIdentifyByPolygon.png
    :width: 1.5em
@@ -2868,25 +2437,21 @@ The values presented in the varying size assistant above will set the size
    :width: 1.5em
 .. |invertSelection| image:: /static/common/mActionInvertSelection.png
    :width: 1.5em
-.. |labeling| image:: /static/common/labelingSingle.png
+.. |labelingSingle| image:: /static/common/labelingSingle.png
    :width: 1.5em
 .. |labelmask| image:: /static/common/labelmask.png
    :width: 1.5em
+.. |layerConfiguration| image:: /static/common/layerconfiguration.png
+   :width: 1.5em
+.. |legend| image:: /static/common/legend.png
+   :width: 1.2em
 .. |mapIdentification| image:: /static/common/mActionMapIdentification.png
    :width: 1.5em
-.. |measure| image:: /static/common/mActionMeasure.png
-   :width: 1.5em
-.. |measureAngle| image:: /static/common/mActionMeasureAngle.png
-   :width: 1.5em
-.. |measureArea| image:: /static/common/mActionMeasureArea.png
-   :width: 1.5em
-.. |measureBearing| image:: /static/common/mActionMeasureBearing.png
+.. |mapTips| image:: /static/common/mActionMapTips.png
    :width: 1.5em
 .. |messageLog| image:: /static/common/mMessageLog.png
    :width: 1.5em
-.. |newBookmark| image:: /static/common/mActionNewBookmark.png
-   :width: 1.5em
-.. |northArrow| image:: /static/common/north_arrow.png
+.. |networkAndProxy| image:: /static/common/network_and_proxy.png
    :width: 1.5em
 .. |openTable| image:: /static/common/mActionOpenTable.png
    :width: 1.5em
@@ -2894,26 +2459,30 @@ The values presented in the varying size assistant above will set the size
    :width: 1em
 .. |osx| image:: /static/common/osx.png
    :width: 1em
-.. |pan| image:: /static/common/mActionPan.png
-   :width: 1.5em
-.. |panToSelected| image:: /static/common/mActionPanToSelected.png
-   :width: 1.5em
 .. |rasterHistogram| image:: /static/common/rasterHistogram.png
+   :width: 1.5em
+.. |record| image:: /static/common/mActionRecord.png
    :width: 1.5em
 .. |refresh| image:: /static/common/mActionRefresh.png
    :width: 1.5em
+.. |relations| image:: /static/common/relations.png
+   :width: 1.5em
 .. |removeLayer| image:: /static/common/mActionRemoveLayer.png
    :width: 1.5em
-.. |scaleBar| image:: /static/common/mActionScaleBar.png
+.. |rendering| image:: /static/common/rendering.png
+   :width: 1.5em
+.. |search| image:: /static/common/search.png
    :width: 1.5em
 .. |selectAll| image:: /static/common/mActionSelectAll.png
    :width: 1.5em
 .. |selectColor| image:: /static/common/selectcolor.png
 .. |selectColorRamp| image:: /static/common/selectcolorramp.png
+.. |selectDistance| image:: /static/common/mAlgorithmSelectDistance.png
+   :width: 1.5em
 .. |selectFreehand| image:: /static/common/mActionSelectFreehand.png
    :width: 1.5em
-.. |selectNumber| image:: /static/common/selectnumber.png
-   :width: 2.8em
+.. |selectLocation| image:: /static/common/mAlgorithmSelectLocation.png
+   :width: 1.5em
 .. |selectPolygon| image:: /static/common/mActionSelectPolygon.png
    :width: 1.5em
 .. |selectRadius| image:: /static/common/mActionSelectRadius.png
@@ -2922,33 +2491,25 @@ The values presented in the varying size assistant above will set the size
    :width: 1.5em
 .. |selectString| image:: /static/common/selectstring.png
    :width: 2.5em
-.. |sharing| image:: /static/common/mActionSharing.png
-   :width: 1.5em
-.. |sharingExport| image:: /static/common/mActionSharingExport.png
-   :width: 1.5em
-.. |sharingImport| image:: /static/common/mActionSharingImport.png
-   :width: 1.5em
 .. |showAllLayers| image:: /static/common/mActionShowAllLayers.png
    :width: 1.5em
-.. |showBookmarks| image:: /static/common/mActionShowBookmarks.png
-   :width: 1.5em
-.. |showMapTheme| image:: /static/common/mActionShowPresets.png
+.. |showPresets| image:: /static/common/mActionShowPresets.png
    :width: 1.5em
 .. |showSelectedLayers| image:: /static/common/mActionShowSelectedLayers.png
    :width: 1.5em
-.. |signMinus| image:: /static/common/symbologyRemove.png
+.. |sourceFieldsForms| image:: /static/common/sourcefieldsandforms.png
    :width: 1.5em
-.. |signPlus| image:: /static/common/symbologyAdd.png
+.. |stopwatch| image:: /static/common/mIconStopwatch.png
    :width: 1.5em
 .. |stylePreset| image:: /static/common/stylepreset.png
    :width: 1.5em
-.. |svgAnnotation| image:: /static/common/mActionSvgAnnotation.png
-   :width: 1.5em
 .. |symbology| image:: /static/common/symbology.png
    :width: 2em
-.. |textAnnotation| image:: /static/common/mActionTextAnnotation.png
+.. |symbologyAdd| image:: /static/common/symbologyAdd.png
    :width: 1.5em
-.. |titleLabel| image:: /static/common/title_label.png
+.. |symbologyRemove| image:: /static/common/symbologyRemove.png
+   :width: 1.5em
+.. |temporal| image:: /static/common/temporal.png
    :width: 1.5em
 .. |toggleAllLayers| image:: /static/common/mActionToggleAllLayers.png
    :width: 1.5em
@@ -2958,23 +2519,9 @@ The values presented in the varying size assistant above will set the size
    :width: 1.5em
 .. |transparency| image:: /static/common/transparency.png
    :width: 1.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em
 .. |zoomActual| image:: /static/common/mActionZoomActual.png
    :width: 1.5em
-.. |zoomFullExtent| image:: /static/common/mActionZoomFullExtent.png
-   :width: 1.5em
-.. |zoomIn| image:: /static/common/mActionZoomIn.png
-   :width: 1.5em
-.. |zoomLast| image:: /static/common/mActionZoomLast.png
-   :width: 1.5em
-.. |zoomNext| image:: /static/common/mActionZoomNext.png
-   :width: 1.5em
-.. |zoomOut| image:: /static/common/mActionZoomOut.png
-   :width: 1.5em
-.. |zoomToBookmark| image:: /static/common/mActionZoomToBookmark.png
-   :width: 1.5em
 .. |zoomToLayer| image:: /static/common/mActionZoomToLayer.png
-   :width: 1.5em
-.. |zoomToSelected| image:: /static/common/mActionZoomToSelected.png
    :width: 1.5em

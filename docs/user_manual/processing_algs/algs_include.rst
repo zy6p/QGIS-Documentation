@@ -16,9 +16,9 @@ Algorithms Include
 Python Code Sample
 ==================
 
-The following section is used to load python code sample in algs help
+.. The following section is used to load python code sample in algs help
 
-**algorithm_code_section**
+.. **algorithm_code_section**
 
 .. code-block:: python
 
@@ -31,57 +31,57 @@ The *parameter dictionary* provides the parameter NAMEs and values.
 See :ref:`processing_console` for details on how to run processing algorithms
 from the Python console.
 
-**end_algorithm_code_section**
+.. **end_algorithm_code_section**
 
 
 Output Types
 ============
 
-The following describes the different options for algorithm outputs,
-with variants including the "skip output" and the "append" options
+.. The following describes the different options for algorithm outputs,
+ with variants including the "skip output" and the "append" options
 
 Directory
 ---------
 
-**directory_output_types**
+.. **directory_output_types**
 
 * Save to a Temporary Directory
 * Save to Directory
 
-**end_directory_output_types**
+.. **end_directory_output_types**
 
 
-**directory_output_types_skip**
+.. **directory_output_types_skip**
 
 * Skip Output
 * Save to a Temporary Directory
 * Save to Directory
 
-**end_directory_output_types_skip**
+.. **end_directory_output_types_skip**
 
 File
 ----
 
-**file_output_types**
+.. **file_output_types**
 
 * Save to a Temporary File
 * Save to File…
 
-**end_file_output_types**
+.. **end_file_output_types**
 
 
-**file_output_types_skip**
+.. **file_output_types_skip**
 
 * Skip Output
 * Save to a Temporary File
 * Save to File…
 
-**end_file_output_types_skip**
+.. **end_file_output_types_skip**
 
 Layer
 -----
 
-**layer_output_types**
+.. **layer_output_types**
 
 * Create Temporary Layer (``TEMPORARY_OUTPUT``)
 * Save to File…
@@ -90,10 +90,10 @@ Layer
 
 The file encoding can also be changed here.
 
-**end_layer_output_types**
+.. **end_layer_output_types**
 
 
-**layer_output_types_append**
+.. **layer_output_types_append**
 
 * Create Temporary Layer (``TEMPORARY_OUTPUT``)
 * Save to File…
@@ -103,10 +103,10 @@ The file encoding can also be changed here.
 
 The file encoding can also be changed here.
 
-**end_layer_output_types_append**
+.. **end_layer_output_types_append**
 
 
-**layer_output_types_skip**
+.. **layer_output_types_skip**
 
 * Skip Output
 * Create Temporary Layer (``TEMPORARY_OUTPUT``)
@@ -116,34 +116,37 @@ The file encoding can also be changed here.
 
 The file encoding can also be changed here.
 
-**end_layer_output_types_skip**
+.. **end_layer_output_types_skip**
 
 
 Extent Dropdown
 ===============
 
-The following refers to the extent selector widget in the algorithms GUI
+.. The following refers to the extent selector widget in the algorithms GUI
 
-**extent_options**
+.. **extent_options**
 
 Available methods are:
 
 * Calculate from layer…: uses extent of a layer loaded in the current project
+* Calculate from layout map…: uses extent of a :ref:`layout map item <layout_map_item>`
+  in the active project
+* Calculate from bookmark…: uses extent of a saved :ref:`bookmark <sec_bookmarks>`
 * Use map canvas extent
-* Draw on canvas
+* Draw on canvas: click and drag a rectangle delimiting the area to take into account
 * Enter the coordinates as ``xmin, xmax, ymin, ymax``
 
-**end_extent_options**
+.. **end_extent_options**
 
 
 Geometric predicates
 ====================
 
-The following section is included in vector selection algorithms such as
-qgisselectbylocation, qgisextractbylocation and vector general algorithms
-such as qgisjoinattributesbylocation and qgisjoinbylocationsummary
+.. The following section is included in vector selection algorithms such as
+ qgisselectbylocation, qgisextractbylocation and vector general algorithms
+ such as qgisjoinattributesbylocation and qgisjoinbylocationsummary
 
-**geometric_predicates**
+.. **geometric_predicates**
 
 Geometric predicates are boolean functions used to determine the spatial
 relation a feature has with another by comparing whether and how
@@ -200,4 +203,174 @@ Available geometric predicates are:
   Two polygons cross as a polygon (false).
   In the picture, no circles will be returned.
 
-**end_geometric_predicates**
+.. **end_geometric_predicates**
+
+Notes on algorithms
+===================
+
+.. **warning_attributes**
+
+.. warning:: **Geometry modification only**
+
+   This operation modifies only the features geometry.
+   The attribute values of the features are **not modified**, although
+   properties such as area or length of the features will be modified
+   by the overlay operation.
+   If such properties are stored as attributes, those attributes will
+   have to be manually updated.
+
+.. **end_warning_attributes**
+
+
+Raster data types
+=================
+
+Without user input (native)
+---------------------------
+
+.. **native_raster_data_types**
+
+.. The following section is included in raster based algorithms such as
+ qgisrasterbooleanand, qgisrasterbooleanor, qgisreclassifybylayer, qgisreclassifybytable
+
+
+* 0 --- Byte        (Eight bit unsigned integer (quint8))
+* 1 --- Int16       (Sixteen bit signed integer (qint16))
+* 2 --- UInt16      (Sixteen bit unsigned integer (quint16))
+* 3 --- Int32       (Thirty two bit signed integer (qint32))
+* 4 --- UInt32      (Thirty two bit unsigned integer (quint32))
+* 5 --- Float32     (Thirty two bit floating point (float))
+* 6 --- Float64     (Sixty four bit floating point (double))
+* 7 --- CInt16      (Complex Int16)
+* 8 --- CInt32      (Complex Int32)
+* 9 --- CFloat32    (Complex Float32)
+* 10 --- CFloat64   (Complex Float64)
+* 11 --- Int8       (Eight bit signed integer (qint8))
+
+Available options depend on the GDAL version built with QGIS
+(see :menuselection:`Help --> About` menu)
+
+.. **end_native_raster_data_types**
+
+
+Without user input
+------------------
+
+.. **raster_data_types**
+
+.. The following section is included in raster based algorithms such as
+ gdalrasterize, gdalmerge, gdalretile, gdalgriddatametrics,
+ gdalgridinversedistancenearestneighbor, gdalgridinversedistance, gdalgridlinear,
+ gdalgridaverage, gdalgridnearestneighbor, gdalproximity, gdalrastercalculator
+
+
+* 0 --- Byte        (Eight bit unsigned integer (quint8))
+* 1 --- Int16       (Sixteen bit signed integer (qint16))
+* 2 --- UInt16      (Sixteen bit unsigned integer (quint16))
+* 3 --- UInt32      (Thirty two bit unsigned integer (quint32))
+* 4 --- Int32       (Thirty two bit signed integer (qint32))
+* 5 --- Float32     (Thirty two bit floating point (float))
+* 6 --- Float64     (Sixty four bit floating point (double))
+* 7 --- CInt16      (Complex Int16)
+* 8 --- CInt32      (Complex Int32)
+* 9 --- CFloat32    (Complex Float32)
+* 10 --- CFloat64   (Complex Float64)
+* 11 --- Int8       (Eight bit signed integer (qint8))
+
+Available options depend on the GDAL version built with QGIS
+(see :menuselection:`Help --> About` menu)
+
+.. **end_raster_data_types**
+
+
+With user input
+---------------
+
+.. **raster_data_types_extended**
+
+.. The following section is included in raster based algorithms such as
+  gdalwarpreproject, gdalcliprasterbyextent, gdalcliprasterbymasklayer,
+  gdalrearrange_bands, gdaltranslate
+
+
+* 0 --- Use Input Layer Data Type
+* 1 --- Byte        (Eight bit unsigned integer (quint8))
+* 2 --- Int16       (Sixteen bit signed integer (qint16))
+* 3 --- UInt16      (Sixteen bit unsigned integer (quint16))
+* 4 --- UInt32      (Thirty two bit unsigned integer (quint32))
+* 5 --- Int32       (Thirty two bit signed integer (qint32))
+* 6 --- Float32     (Thirty two bit floating point (float))
+* 7 --- Float64     (Sixty four bit floating point (double))
+* 8 --- CInt16      (Complex Int16)
+* 9 --- CInt32      (Complex Int32)
+* 10 --- CFloat32   (Complex Float32)
+* 11 --- CFloat64   (Complex Float64)
+* 12 --- Int8       (Eight bit signed integer (qint8))
+
+Available options depend on the GDAL version built with QGIS
+(see :menuselection:`Help --> About` menu)
+
+.. **end_raster_data_types_extended**
+
+
+Resampling methods
+------------------
+
+.. **raster_resampling_methods**
+
+.. The following section is included in raster based algorithms such as
+  qgisalignrasters, qgisalignraster
+
+* 0 --- Nearest Neighbour
+* 1 --- Bilinear (2x2 kernel)
+* 2 --- Cubic (4x4 kernel)
+* 3 --- Cubic B-Spline (4x4 kernel)
+* 4 --- Lanczos (6x6 kernel)
+* 5 --- Average
+* 6 --- Mode
+* 7 --- Maximum
+* 8 --- Minimum
+* 9 --- Median
+* 10 --- First quartile (Q1)
+* 11 --- Third quartile (Q3)
+
+.. **end_raster_resampling_methods**
+
+
+Vector field types
+==================
+
+.. **vector_field_types**
+
+.. The following section is included in vector based algorithms such as
+  qgisaggregate, qgisrefactorfields
+
+* 1 --- Boolean
+* 2 --- Integer (32bit)
+* 4 --- Integer (64bit)
+* 6 --- Decimal (double)
+* 9 --- Integer list
+* 9 --- Integer (64bit) list
+* 9 --- Decimal (double) list
+* 10 --- Text (string)
+* 11 --- String list
+* 12 --- Binary Object (BLOB)
+* 14 --- Date
+* 15 --- Time
+* 16 --- Date & Time
+
+.. **end_vector_field_types**
+
+
+.. **vector_field_subtypes**
+
+.. The following section is included in vector based algorithms such as
+  qgisaggregate, qgisrefactorfields
+
+* 2 --- Integer list
+* 4 --- Integer (64bit) list
+* 6 --- Decimal (double) list
+* 10 --- String list
+* 0 --- Any other types
+
+.. **end_vector_field_subtypes**

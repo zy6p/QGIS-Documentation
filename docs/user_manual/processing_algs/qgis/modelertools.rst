@@ -1,14 +1,76 @@
 Modeler tools
 =============
 
+.. warning::
+
+ These tools are only available in the model designer.
+ They are not available in the Processing Toolbox.
+
 .. only:: html
 
    .. contents::
       :local:
       :depth: 1
+      :class: toc_columns
 
-These tools are only available in the Graphical Modeler.
-They are not available in the Processing Toolbox.
+
+.. _qgiscalculateexpression:
+
+Calculate expression 
+--------------------
+
+It calculates the result of a QGIS expression and eliminates 
+the need to use the same expression multiple times throughout 
+a model when the same result is required more than once. 
+Additionally, it enables use cases that would otherwise not be
+possible. For instance, you can generate a timestamp value once
+and use it multiple times within the model, if the timestamp 
+were recalculated every time, the values would vary during the
+model's runtime.
+
+Parameters
+..........
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Input**
+     - ``INPUT``
+     - [expression]
+     - Expression to calculate 
+
+Outputs
+.......
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Value**
+     - ``OUTPUT``
+     - [Result Value]
+     - Calculated result value, the data type of the
+       output will vary based on the specific expression used 
+       in the algorithm.
+
+Python code
+...........
+
+**Algorithm ID**: ``native:calculateexpression``
+
+.. include:: ../algs_include.rst
+  :start-after: **algorithm_code_section**
+  :end-before: **end_algorithm_code_section**
+
 
 
 .. _qgiscondition:
@@ -132,7 +194,7 @@ Parameters
      - [vector: any]
      - The input layer.
    * - **Outputs and filters**
-       
+
        (one or more)
      - ``OUTPUT_<name of the filter>``
      - [same as input]
@@ -150,7 +212,7 @@ Outputs
      - Type
      - Description
    * - **Output**
-       
+
        (one or more)
      - ``native:filter_1:OUTPUT_<name of filter>``
      - [same as input]
@@ -161,75 +223,6 @@ Python code
 ...........
 
 **Algorithm ID**: ``native:filter``
-
-.. include:: ../algs_include.rst
-  :start-after: **algorithm_code_section**
-  :end-before: **end_algorithm_code_section**
-
-
-.. _qgisfilterbygeometry:
-
-Filter by geometry type
------------------------
-Filters features by their geometry type. Incoming features will be directed
-to different outputs based on whether they have a point, line or polygon geometry.
-
-Parameters
-..........
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 20 40
-
-   * - Label
-     - Name
-     - Type
-     - Description
-   * - **Input layer**
-     - ``INPUT``
-     - [vector: any]
-     - Layer to evaluate
-
-Outputs
-.......
-
-.. list-table::
-   :header-rows: 1
-   :widths: 20 20 20 40
-
-   * - Label
-     - Name
-     - Type
-     - Description
-   * - **Point features**
-
-       Optional
-     - ``POINTS``
-     - [vector: point]
-     - Layer with points
-   * - **Line features**
-
-       Optional
-     - ``LINES``
-     - [vector: line]
-     - Layer with lines
-   * - **Polygon features**
-
-       Optional
-     - ``POLYGONS``
-     - [vector: polygon]
-     - Layer with polygons
-   * - **Features with no geometry**
-
-       Optional
-     - ``NO_GEOMETRY``
-     - [table]
-     - Geometry-less vector layer
-
-Python code
-...........
-
-**Algorithm ID**: ``native:filterbygeometry``
 
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
@@ -278,7 +271,7 @@ Outputs
      - [vector]
      - A Vector Layer of the input, if compatible
    * - **Raster layer**
- 
+
        Optional
      - ``RASTER``
      - [raster]
@@ -372,6 +365,8 @@ Parameters
      - [string]
      - Message to display
    * - **Condition**
+
+       Optional
      - ``CONDITION``
      - [expression]
      - Expression to evaluate if true
@@ -379,12 +374,60 @@ Parameters
 Outputs
 .......
 
-None.
+A message in the log panel.
 
 Python code
 ...........
 
 **Algorithm ID**: ``native:raiseexception``
+
+.. include:: ../algs_include.rst
+  :start-after: **algorithm_code_section**
+  :end-before: **end_algorithm_code_section**
+
+
+.. _qgisraisemessage:
+
+Raise message
+-------------
+
+Raises an information message in the log.
+The message can be customized, and optionally an expression based condition
+can be specified. If an expression condition is used, then the message will only
+be logged if the expression result is true. A false result indicates that no message
+will be logged.
+
+Parameters
+..........
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
+   * - **Information message**
+     - ``MESSAGE``
+     - [string]
+     - Message to display
+   * - **Condition**
+
+       Optional
+     - ``CONDITION``
+     - [expression]
+     - Expression to evaluate if true
+
+Outputs
+.......
+
+A message in the log panel.
+
+Python code
+...........
+
+**Algorithm ID**: ``native:raisemessage``
 
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
@@ -417,6 +460,8 @@ Parameters
      - [string]
      - Message to display
    * - **Condition**
+
+       Optional
      - ``CONDITION``
      - [expression]
      - Expression to evaluate if true
@@ -424,7 +469,7 @@ Parameters
 Outputs
 .......
 
-None.
+A message in the log panel.
 
 Python code
 ...........
@@ -635,6 +680,10 @@ Python code
 
 Variable distance buffer
 --------------------------------------------------
+
+.. warning:: This algorithm is deprecated and can be removed
+  anytime. Prefer using :ref:`qgisbuffer` algorithm instead.
+
 Computes a buffer area for all the features in an input layer.
 
 The size of the buffer for a given feature is defined by an
@@ -733,5 +782,3 @@ Python code
 .. include:: ../algs_include.rst
   :start-after: **algorithm_code_section**
   :end-before: **end_algorithm_code_section**
-
-

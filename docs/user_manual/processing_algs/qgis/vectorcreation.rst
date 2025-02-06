@@ -6,6 +6,7 @@ Vector creation
    .. contents::
       :local:
       :depth: 1
+      :class: toc-columns
 
 
 .. _qgisarrayoffsetlines:
@@ -25,6 +26,7 @@ distances will offset them to the right.
    In blue the source layer, in red the offset one
 
 |checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
+of line features
 
 .. seealso:: :ref:`qgisoffsetline`, :ref:`qgisarraytranslatedfeatures`
 
@@ -49,13 +51,13 @@ Basic parameters
      - Input line vector layer to use for the offsets.
    * - **Number of features to create**
      - ``COUNT``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 10
      - Number of offset copies to generate for each feature
    * - **Offset step distance**
      - ``OFFSET``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - Distance between two consecutive offset copies
@@ -100,15 +102,27 @@ Advanced parameters
        * 0 --- Round
        * 1 --- Miter
        * 2 --- Bevel
+  
+       .. figure:: img/buffer_join_style.png
+          :align: center
+          :width: 100%
 
+          Round, miter, and bevel join styles
    * - **Miter limit**
      - ``MITER_LIMIT``
      - [number]
 
        Default: 2.0
-     - Only applicable for mitered join styles, and controls
-       the maximum distance from the offset curve to use when
-       creating a mitered join.
+     - Sets the maximum distance from the offset geometry to use
+       when creating a mitered join as a factor of the offset distance (only applicable for miter
+       join styles).
+       Minimum: 1.0
+              
+       .. figure:: img/buffer_miter_limit.png
+          :align: center
+          :width: 100%
+         
+          A 10m buffer with a limit of 2 and a 10m buffer with a limit of 1
 
 Outputs
 .......
@@ -156,6 +170,7 @@ M values present in the geometry can also be translated.
 
 |checkbox| Allows
 :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgistranslategeometry`, :ref:`qgisarrayoffsetlines`
 
@@ -177,31 +192,31 @@ Parameters
      - Input vector layer to translate
    * - **Number of features to create**
      - ``COUNT``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 10
      - Number of copies to generate for each feature
    * - **Step distance (x-axis)**
      - ``DELTA_X``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on the X axis
    * - **Step distance (y-axis)**
      - ``DELTA_Y``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on the Y axis
    * - **Step distance (z-axis)**
      - ``DELTA_Z``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on the Z axis
    * - **Step distance (m values)**
      - ``DELTA_M``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - Displacement to apply on M
@@ -256,13 +271,11 @@ Grid cells can have different shapes:
 .. figure:: img/create_grid.png
   :align: center
 
-  Different grid cell shapes
+  Different grid cell shapes applied to the same extent, without overlaps
 
-The size of each element in the grid is defined using a horizontal and
+The size and/or placement of each element in the grid is defined using a horizontal and
 vertical spacing.
-
 The CRS of the output layer must be defined.
-
 The grid extent and the spacing values must be expressed in the
 coordinates and units of this CRS.
 
@@ -361,6 +374,13 @@ Outputs
      - [vector: any]
      - Resulting vector grid layer. The output geometry type (point,
        line or polygon) depends on the :guilabel:`Grid type`.
+       Features are created from top to bottom, left to right.
+       The attribute table is filled with:
+       
+       * an ``id``
+       * coordinates on the ``left``, ``right``, ``top`` and ``bottom`` sides
+       * and their placement in the grid: ``row_index`` and ``column_index``
+         (available for point, rectangle and hexagon grid types)
 
 Python code
 ...........
@@ -609,7 +629,7 @@ Python code
 Import geotagged photos
 -----------------------
 Creates a point layer corresponding to the geotagged locations from
-JPEG images from a source folder.
+JPEG or HEIC/HEIF images from a source folder.
 
 The point layer will contain a single PointZ feature per input file
 from which the geotags could be read.
@@ -751,8 +771,6 @@ Parameters
      - Field or expression providing the order to connect the points in the path.
        If not set, the feature ID (``$id``) is used.
    * - **Sort text containing numbers naturally**
-
-       Optional
      - ``NATURAL_SORT``
      - [boolean]
 
@@ -1175,7 +1193,7 @@ Basic parameters
      - Input polygon vector layer
    * - **Number of points for each feature**
      - ``POINTS_NUMBER``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - Number of points to create
@@ -1183,7 +1201,7 @@ Basic parameters
 
        Optional
      - ``MIN_DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - The minimum distance between points within one polygon feature
@@ -1214,7 +1232,7 @@ Advanced parameters
 
        Optional
      - ``MIN_DISTANCE_GLOBAL``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - The global minimum distance between points.
@@ -1224,7 +1242,7 @@ Advanced parameters
 
        Optional
      - ``MAX_TRIES_PER_POINT``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 10
      - The maximum number of tries per point.
@@ -1337,7 +1355,7 @@ Parameters
 
    * - **Point count or density**
      - ``VALUE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1.0
      - The number or density of points, depending on the chosen
@@ -1452,7 +1470,7 @@ Basic parameters
      - Input line vector layer
    * - **Number of points for each feature**
      - ``POINTS_NUMBER``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 1
      - Number of points to create
@@ -1460,7 +1478,7 @@ Basic parameters
 
        Optional
      - ``MIN_DISTANCE``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - The minimum distance between points within one line feature
@@ -1491,7 +1509,7 @@ Advanced parameters
 
        Optional
      - ``MIN_DISTANCE_GLOBAL``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 0.0
      - The global minimum distance between points.
@@ -1501,7 +1519,7 @@ Advanced parameters
 
        Optional
      - ``MAX_TRIES_PER_POINT``
-     - [number |dataDefined|]
+     - [number |dataDefine|]
 
        Default: 10
      - The maximum number of tries per point.
@@ -1576,7 +1594,7 @@ raster layer.
 
 Converts a raster layer to a vector layer, by creating point features
 for each individual pixel's center in the raster layer.
-Any nodata pixels are skipped in the output.
+Any NoData  pixels are skipped in the output.
 
 Parameters
 ..........
@@ -1650,7 +1668,7 @@ raster layer.
 
 Converts a raster layer to a vector layer, by creating polygon
 features for each individual pixel's extent in the raster layer.
-Any nodata pixels are skipped in the output.
+Any NoData  pixels are skipped in the output.
 
 Parameters
 ..........
@@ -1831,5 +1849,5 @@ Python code
 
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em

@@ -12,7 +12,7 @@
 QGIS is an open source project developed by a team of dedicated volunteers and
 organisations. We strive to be a welcoming community for people of all race, creed,
 gender and walks of life.
-At any moment, you can `get involved <https://qgis.org/en/site/getinvolved/index.html>`_.
+At any moment, you can `get involved <https://qgis.org/community/involve/>`_.
 
 .. index::
    single: Contributors; Authors
@@ -44,13 +44,20 @@ and update the whole QGIS documentation.
    "João Gaspar", "Tom Kralidis", "Alexander Bruy", "Paolo Cavallini", "Milo Van der Linden"
    "Peter Ersts", "Ujaval Gandhi", "Dominic Keller", "Giovanni Manghi", "Maximilian Krambach"
    "Anne Ghisla", "Dick Groskamp", "Uros Preloznik", "Stéphane Brunner", "QGIS Korean Translator"
-   "Zoltan Siki", "Håvard Tveite", "Mattheo Ghetta", "Salvatore Larosa", "Konstantinos Nikolaou"
+   "Zoltan Siki", "Håvard Tveite", "Matteo Ghetta", "Salvatore Larosa", "Konstantinos Nikolaou"
    "Tom Chadwin", "Larry Shaffer", "Nathan Woodrow", "Martina Savarese", "Godofredo Contreras"
    "Astrid Emde", "Luigi Pirelli", "Thomas Gratier", "Giovanni Allegri", "GiordanoPezzola"
    "Paolo Corti", "Tudor Bărăscu", "Maning Sambale",  "Claudia A. Engel", "Yoichi Kayama"
    "Otto Dassau", "Denis Rouzaud", "Nick Bearman", "embelding", "ajazepk"
    "Ramon", "Andrei", "zstadler",  "icephale", "Rosa Aguilar"
-   "Patrice Pineault"
+   "Patrice Pineault", "Jörn Gutzeit", "Felix Feckler", "Benoît de Mezzo", "Étienne Trimaille"
+   "Andrea Giudiceandrea", "Julien Cabieces", "roya0045", "Sebastian Gutwein", "Jessica Veenstra"
+   "Ryan Welfle", "Martin Pergler", "Ivan Ivanov", "muranamihdk", "Loïc Bartoletti"
+   "Tomasz Taraś", "Ian Maddaus", "Jürnjakob Dugge", "Roman Bug", "Damiano Lombardi"
+   "Marc Ducobu", "Philip Albrecht", "Dennis Milechin", "Cody Martin", "Savinaud Mickaël"
+   "Stefan Uhrig", "Ariadni-Karolina Alexiou", "Björn Hinkeldey", "Benjamin Riley", "MorriganR"
+   "Thayer Young", "Shane Carey", "Ian Turton", "Emma Hain", "Germán Carrillo"
+   "Jakob Miksch", "Nicolas Boisteault", "Bertrand Rix", "Jorge Rosales", ""
 
 
 .. index:: 
@@ -64,7 +71,7 @@ QGIS is a multi-language application and as is, also publishes a documentation
 translated into several languages. Many other languages are being translated
 and would be released as soon as they reach a reasonable percentage of
 translation. If you wish to help improving a language or request a new one,
-please see https://qgis.org/en/site/getinvolved/index.html.
+please see :ref:`translation_guidelines`.
 
 The current translations are made possible thanks to:
 
@@ -75,6 +82,7 @@ The current translations are made possible thanks to:
    "Bahasa Indonesia", "Emir Hartato, I Made Anombawa, Januar V. Simarmata,
    Muhammad Iqnaul Haq Siregar, Trias Aditya"
    "Chinese (Traditional)", "Calvin Ngei, Zhang Jun, Richard Xie"
+   "Chinese (Simplified)", "Xu Baocai"
    "Dutch", "Carlo van Rijswijk, Dick Groskamp, Diethard Jansen, Raymond Nijssen,
    Richard Duivenvoorde, Willem Hoffman"
    "Finnish", "Matti Mäntynen, Kari Mikkonen"
@@ -109,16 +117,18 @@ The current translations are made possible thanks to:
    Javier César Aldariz, Mayeul Kauffmann, Fran Raga"
    "Ukrainian", "Alexander Bruy"
 
+.. only:: not testing
 
-.. _translation_stats:
+  .. _translation_stats:
 
-Statistics of translation
-=========================
+  Statistics of translation
+  =========================
 
-Efforts of translation for QGIS |CURRENT| Long Term Release are provided below.
+  Efforts of translation for QGIS |CURRENT| Long Term Release are provided below.
+  Only languages that reached 5% by the version release time are published here.
 
-.. include:: translation_stats.rst
-   :start-line: 8
+  .. include:: translation_stats.rst
+     :start-line: 8
 
 
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE
@@ -127,4 +137,4 @@ Efforts of translation for QGIS |CURRENT| Long Term Release are provided below.
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |CURRENT| replace:: 3.16
+.. |CURRENT| replace:: 3.40

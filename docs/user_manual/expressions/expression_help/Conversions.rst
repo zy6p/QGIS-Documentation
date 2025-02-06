@@ -120,6 +120,31 @@ Encodes a binary value into a string, using the Base64 encoding.
 
 .. end_to_base64_section
 
+.. _expression_function_Conversions_to_bool:
+
+to_bool
+.......
+
+Converts a given value to a boolean. The function will return false if the value is NULL, an empty string, an empty list, or 0.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - to_bool(value)
+   * - Arguments
+     - * **value** - value to convert to boolean
+   * - Examples
+     - * ``to_bool('')`` → false
+       * ``to_bool('123')`` → true
+       * ``to_bool('false')`` → true
+       * ``to_bool(0)`` → false
+       * ``to_bool(1)`` → true
+       * ``to_bool(null)`` → false
+
+
+.. end_to_bool_section
+
 .. _expression_function_Conversions_to_date:
 
 to_date
@@ -251,7 +276,7 @@ Converts a coordinate to degree, minute, second.
 to_int
 ......
 
-Converts a string to integer number. Nothing is returned if a value cannot be converted to integer (e.g '123asd' is invalid).
+Converts a string to integer number. If a value cannot be converted to integer the expression is invalid (e.g '123asd' is invalid).
 
 .. list-table::
    :widths: 15 85
@@ -293,7 +318,7 @@ Converts a string to an interval type. Can be used to take days, hours, month, e
 to_real
 .......
 
-Converts a string to a real number. Nothing is returned if a value cannot be converted to real (e.g '123.56asd' is invalid).  Numbers are rounded after saving changes if the precision is smaller than the result of the conversion.
+Converts a string to a real number. If a value cannot be converted to real the expression is invalid (e.g '123.56asd' is invalid).  Numbers are rounded after saving changes if the precision is smaller than the result of the conversion.
 
 .. list-table::
    :widths: 15 85

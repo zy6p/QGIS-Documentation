@@ -96,7 +96,7 @@ The following example shows how to check if a given expression can be parsed cor
    exp = QgsExpression('1 + 1 = ')
    assert(exp.hasParserError())
 
-   assert(exp.parserErrorString() == '\nsyntax error, unexpected $end')
+   assert(exp.parserErrorString() == '\nIncomplete expression. You might not have finished the full expression.')
 
 .. index:: Expressions; Evaluating
 
@@ -166,17 +166,17 @@ order to compute new field values:
 
 .. testcode:: expr
 
-   from qgis.PyQt.QtCore import QVariant
+   from qgis.PyQt.QtCore import QMetaType
 
    # create a vector layer
    vl = QgsVectorLayer("Point", "Companies", "memory")
    pr = vl.dataProvider()
-   pr.addAttributes([QgsField("Name", QVariant.String),
-                     QgsField("Employees",  QVariant.Int),
-                     QgsField("Revenue", QVariant.Double),
-                     QgsField("Rev. per employee", QVariant.Double),
-                     QgsField("Sum", QVariant.Double),
-                     QgsField("Fun", QVariant.Double)])
+   pr.addAttributes([QgsField("Name", QMetaType.Type.QString),
+                     QgsField("Employees",  QMetaType.Type.Int),
+                     QgsField("Revenue", QMetaType.Type.Double),
+                     QgsField("Rev. per employee", QMetaType.Type.Double),
+                     QgsField("Sum", QMetaType.Type.Double),
+                     QgsField("Fun", QMetaType.Type.Double)])
    vl.updateFields()
 
    # add data to the first three fields

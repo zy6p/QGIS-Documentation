@@ -64,6 +64,7 @@ Returns a matching layer property or metadata value.
          * crs: layer CRS
          * crs_definition: layer CRS full definition
          * crs_description: layer CRS description
+         * crs_ellipsoid: acronym of the layer CRS ellipsoid
          * extent: layer extent (as a geometry object)
          * distance_units: layer distance units
          * type: layer type, e.g., Vector or Raster
@@ -71,7 +72,7 @@ Returns a matching layer property or metadata value.
          * geometry_type: geometry type, e.g., Point (vector layers only)
          * feature_count: approximate feature count for layer (vector layers only)
          * path: File path to the layer data source. Only available for file based layers.
-         
+
 
    * - Examples
      - * ``layer_property('streets','title')`` → 'Basemap Streets'
@@ -80,4 +81,25 @@ Returns a matching layer property or metadata value.
 
 
 .. end_layer_property_section
+
+.. _expression_function_Map_Layers_load_layer:
+
+load_layer
+..........
+
+Loads a layer by source URI and provider name.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - load_layer(uri, provider)
+   * - Arguments
+     - * **uri** - layer source URI string
+       * **provider** - layer data provider name
+   * - Examples
+     - * ``layer_property(load_layer('c:/data/roads.shp', 'ogr'), 'feature_count')`` → count of features from the c:/data/roads.shp vector layer
+
+
+.. end_load_layer_section
 

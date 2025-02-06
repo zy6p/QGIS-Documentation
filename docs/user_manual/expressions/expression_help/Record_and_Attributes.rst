@@ -88,7 +88,7 @@ Allows the target feature to be specified.
 $currentfeature
 ...............
 
-Returns the current feature being evaluated. This can be used with the 'attribute' function to evaluate attribute values from the current feature.
+Returns the current feature being evaluated. This can be used with the 'attribute' function to evaluate attribute values from the current feature. **WARNING: This function is deprecated. It is recommended to use the replacement @feature variable instead.**
 
 .. list-table::
    :widths: 15 85
@@ -153,10 +153,30 @@ If the function is called with both a layer and a feature, it will evaluate the 
        * **evaluate** - If the expression must be evaluated. If false, the expression will be returned as a string literal only (which could potentially be later evaluated using the 'eval' function).
    * - Examples
      - * ``display_expression( 'streets', get_feature_by_id('streets', 1))`` → The display expression of the feature with the ID 1 on the layer 'streets'.
-       * ``display_expression('a_layer_id', $currentfeature, 'False')`` → The display expression of the given feature not evaluated.
+       * ``display_expression('a_layer_id', @feature, 'False')`` → The display expression of the given feature not evaluated.
 
 
 .. end_display_expression_section
+
+.. _expression_function_Record_and_Attributes_feature_id:
+
+feature_id
+..........
+
+Returns a feature's unique ID, or NULL if the feature is not valid.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - feature_id(feature)
+   * - Arguments
+     - * **feature** - a feature object
+   * - Examples
+     - * ``feature_id( @feature )`` → the ID of the current feature
+
+
+.. end_feature_id_section
 
 .. _expression_function_Record_and_Attributes_get_feature:
 
@@ -190,10 +210,10 @@ Along with the layer ID, a map containing the columns (key) and their respective
    :widths: 15 85
 
    * - Syntax
-     - get_feature(layer, map)
+     - get_feature(layer, attribute)
    * - Arguments
      - * **layer** - layer name or ID
-       * **map** - Map containing the column and value pairs to use
+       * **attribute** - Map containing the column and value pairs to use
    * - Examples
      - * ``get_feature('streets',map('name','main st','lane_num','4'))`` → first feature found in "streets" layer with "main st" value in the "name" field and  "4" value in the "lane_num" field
 
@@ -226,7 +246,7 @@ Returns the feature with an id on a layer.
 $id
 ...
 
-Returns the feature id of the current row.
+Returns the feature id of the current row. **WARNING: This function is deprecated. It is recommended to use the replacement @id variable instead.**
 
 .. list-table::
    :widths: 15 85
@@ -239,16 +259,67 @@ Returns the feature id of the current row.
 
 .. end_$id_section
 
+.. _expression_function_Record_and_Attributes_is_attribute_valid:
+
+is_attribute_valid
+..................
+
+Returns TRUE if a specific feature attribute meets all constraints.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - is_attribute_valid(attribute, [feature], [layer], [strength])
+
+       [] marks optional arguments
+   * - Arguments
+     - * **attribute** - an attribute name
+       * **feature** - A feature. If not set, the current feature will be used.
+       * **layer** - A vector layer. If not set, the current layer will be used.
+       * **strength** - Set to 'hard' or 'soft' to narrow down to a specific constraint type. If not set, the function will return FALSE if either a hard or a soft constraint fails.
+   * - Examples
+     - * ``is_attribute_valid('HECTARES')`` → TRUE if the current feature's value in the "HECTARES" field meets all constraints.
+       * ``is_attribute_valid('HOUSES',get_feature('my_layer', 'FID', 10), 'my_layer')`` → FALSE if the value in the "HOUSES" field from the feature with "FID"=10 in 'my_layer' fails to meet all constraints.
+
+
+.. end_is_attribute_valid_section
+
+.. _expression_function_Record_and_Attributes_is_feature_valid:
+
+is_feature_valid
+................
+
+Returns TRUE if a feature meets all field constraints.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - is_feature_valid([feature], [layer], [strength])
+
+       [] marks optional arguments
+   * - Arguments
+     - * **feature** - A feature. If not set, the current feature will be used.
+       * **layer** - A vector layer. If not set, the current layer will be used.
+       * **strength** - Set to 'hard' or 'soft' to narrow down to a specific constraint type. If not set, the function will return FALSE if either a hard or a soft constraint fails.
+   * - Examples
+     - * ``is_feature_valid(strength:='hard')`` → TRUE if all fields from the current feature meet their hard constraints.
+       * ``is_feature_valid(get_feature('my_layer', 'FID', 10), 'my_layer')`` → FALSE if all fields from feature with "FID"=10 in 'my_layer' fails to meet all constraints.
+
+
+.. end_is_feature_valid_section
+
 .. _expression_function_Record_and_Attributes_is_selected:
 
 is_selected
 ...........
 
-Returns True if a feature is selected. Can be used with zero, one or two arguments, see below for details.
+Returns TRUE if a feature is selected. Can be used with zero, one or two arguments, see below for details.
 
 **No parameters**
 
-If called with no parameters, the function will return true if the current feature in the current layer is selected.
+If called with no parameters, the function will return TRUE if the current feature in the current layer is selected.
 
 .. list-table::
    :widths: 15 85
@@ -256,12 +327,12 @@ If called with no parameters, the function will return true if the current featu
    * - Syntax
      - is_selected()
    * - Examples
-     - * ``is_selected()`` → True if the current feature in the current layer is selected.
+     - * ``is_selected()`` → TRUE if the current feature in the current layer is selected.
 
 
 **One 'feature' parameter**
 
-If called with a 'feature' parameter only, the function returns true if the specified feature from the current layer is selected.
+If called with a 'feature' parameter only, the function returns TRUE if the specified feature from the current layer is selected.
 
 .. list-table::
    :widths: 15 85
@@ -271,14 +342,14 @@ If called with a 'feature' parameter only, the function returns true if the spec
    * - Arguments
      - * **feature** - The feature which should be checked for selection.
    * - Examples
-     - * ``is_selected(@atlas_feature)`` → True if the current atlas feature is selected.
-       * ``is_selected(get_feature('streets', 'name', 'Main St.')))`` → True if the unique named "Main St." feature on the active "streets" layer is selected.
-       * ``is_selected(get_feature_by_id('streets', 1))`` → True if the feature with the id 1 on the active "streets" layer is selected.
+     - * ``is_selected(@atlas_feature)`` → TRUE if the current atlas feature is selected.
+       * ``is_selected(get_feature('streets', 'name', 'Main St.'))`` → TRUE if the unique named "Main St." feature on the active "streets" layer is selected.
+       * ``is_selected(get_feature_by_id('streets', 1))`` → TRUE if the feature with the id 1 on the active "streets" layer is selected.
 
 
 **Two parameters**
 
-If the function is called with both a layer and a feature, it will return true if the specified feature from the specified layer is selected.
+If the function is called with both a layer and a feature, it will return TRUE if the specified feature from the specified layer is selected.
 
 .. list-table::
    :widths: 15 85
@@ -289,8 +360,8 @@ If the function is called with both a layer and a feature, it will return true i
      - * **layer** - The layer (its ID or name) on which the selection will be checked.
        * **feature** - The feature which should be checked for selection.
    * - Examples
-     - * ``is_selected( 'streets', get_feature('streets', 'name', "street_name"))`` → True if the current building's street is selected (assuming the building layer has a field named 'street_name' and the 'streets' layer has a field called 'name' with unique values).
-       * ``is_selected( 'streets', get_feature_by_id('streets', 1))`` → True if the feature with the id 1 on the "streets" layer is selected.
+     - * ``is_selected( 'streets', get_feature('streets', 'name', "street_name"))`` → TRUE if the current building's street is selected (assuming the building layer has a field named 'street_name' and the 'streets' layer has a field called 'name' with unique values).
+       * ``is_selected( 'streets', get_feature_by_id('streets', 1))`` → TRUE if the feature with the id 1 on the "streets" layer is selected.
 
 
 .. end_is_selected_section
@@ -347,7 +418,7 @@ If the function is called with both a layer and a feature, it will evaluate the 
        * **evaluate** - If the expression must be evaluated. If false, the expression will be returned as a string literal only (which could potentially be later evaluated using the 'eval_template' function).
    * - Examples
      - * ``maptip('streets', get_feature_by_id('streets', 1))`` → The maptip of the feature with the ID 1 on the layer 'streets'.
-       * ``maptip('a_layer_id', $currentfeature, 'False')`` → The maptip of the given feature not evaluated.
+       * ``maptip('a_layer_id', @feature, 'False')`` → The maptip of the given feature not evaluated.
 
 
 .. end_maptip_section
@@ -375,6 +446,59 @@ Returns the number of selected features on a given layer. By default works on th
 
 .. end_num_selected_section
 
+.. _expression_function_Record_and_Attributes_represent_attributes:
+
+represent_attributes
+....................
+
+Returns a map with the attribute names as keys and the configured representation values as values. The representation value for the attributes depends on the configured widget type for each attribute.  Can be used with zero, one or more arguments, see below for details.
+
+**No parameters**
+
+If called with no parameters, the function will return the representation of the attributes of the current feature in the current layer.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - represent_attributes()
+   * - Examples
+     - * ``represent_attributes()`` → The representation of the attributes for the current feature.
+
+
+**One 'feature' parameter**
+
+If called with a 'feature' parameter only, the function will return the representation of the attributes of the specified feature from the current layer.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - represent_attributes(feature)
+   * - Arguments
+     - * **feature** - The feature which should be evaluated.
+   * - Examples
+     - * ``represent_attributes(@atlas_feature)`` → The representation of the attributes for the specified feature from the current layer.
+
+
+**Layer and feature parameters**
+
+If called with a 'layer' and a 'feature' parameter, the function will return the representation of the attributes of the specified feature from the specified layer.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - represent_attributes(layer, feature)
+   * - Arguments
+     - * **layer** - The layer (or its ID or name).
+       * **feature** - The feature which should be evaluated.
+   * - Examples
+     - * ``represent_attributes('atlas_layer', @atlas_feature)`` → The representation of the attributes for the specified feature from the specified layer.
+
+
+.. end_represent_attributes_section
+
 .. _expression_function_Record_and_Attributes_represent_value:
 
 represent_value
@@ -386,10 +510,12 @@ Returns the configured representation value for a field value. It depends on the
    :widths: 15 85
 
    * - Syntax
-     - represent_value(value, fieldName)
+     - represent_value(value, [fieldName])
+
+       [] marks optional arguments
    * - Arguments
      - * **value** - The value which should be resolved. Most likely a field.
-       * **fieldName** - The field name for which the widget configuration should be loaded. (Optional)
+       * **fieldName** - The field name for which the widget configuration should be loaded.
    * - Examples
      - * ``represent_value("field_with_value_map")`` → Description for value
        * ``represent_value('static value', 'field_name')`` → Description for static value

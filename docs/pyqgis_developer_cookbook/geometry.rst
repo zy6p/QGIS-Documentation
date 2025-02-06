@@ -30,6 +30,7 @@ Geometry Handling
 
     from qgis.core import (
       QgsGeometry,
+      QgsGeometryCollection,
       QgsPoint,
       QgsPointXY,
       QgsWkbTypes,
@@ -63,7 +64,7 @@ coordinates in CRS of the layer.
 
 Description and specifications of all possible geometries construction and
 relationships are available in the `OGC Simple Feature Access Standards
-<https://www.opengeospatial.org/standards/sfa>`_ for advanced details.
+<https://www.ogc.org/standards/sfa>`_ for advanced details.
 
 .. index:: Geometry; Construction
 
@@ -146,15 +147,12 @@ enumeration.
 
 .. testcode:: geometry
 
-  if gPnt.wkbType() == QgsWkbTypes.Point:
-    print(gPnt.wkbType())
-    # output: 1 for Point
-  if gLine.wkbType() == QgsWkbTypes.LineString:
-    print(gLine.wkbType())
-    # output: 2 for LineString
-  if gPolygon.wkbType() == QgsWkbTypes.Polygon:
-    print(gPolygon.wkbType())
-    # output: 3 for Polygon
+  print(gPnt.wkbType())
+  # output: 1
+  print(gLine.wkbType())
+  # output: 2
+  print(gPolygon.wkbType())
+  # output: 3
 
 .. testoutput:: geometry
   :hide:
@@ -164,8 +162,18 @@ enumeration.
   3
 
 As an alternative, one can use the :meth:`type() <qgis.core.QgsGeometry.type>`
-method which returns a value from the :class:`QgsWkbTypes.GeometryType <qgis.core.QgsWkbTypes>`
+method which returns a value from the :meth:`QgsWkbTypes.GeometryType <qgis.core.QgsWkbTypes.geometryType>`
 enumeration.
+
+.. testcode:: geometry
+
+  print(gLine.type())
+  # output: 1
+
+.. testoutput:: geometry
+  :hide:
+
+  1
 
 You can use the :meth:`displayString() <qgis.core.QgsWkbTypes.displayString>`
 function to get a human readable geometry type.
@@ -180,6 +188,7 @@ function to get a human readable geometry type.
   # output: 'Polygon'
 
 .. testoutput:: geometry
+  :hide:
 
   Point
   LineString
@@ -243,6 +252,16 @@ regardless of the geometry's type. E.g.
 
   LineString (0 0, 10 10)
 
+.. testcode:: geometry
+
+  gc = QgsGeometryCollection()
+  gc.fromWkt('GeometryCollection( Point(1 2), Point(11 12), LineString(33 34, 44 45))')
+  print(gc[1].asWkt())
+
+.. testoutput:: geometry
+
+  Point (11 12)
+
 It's also possible to modify each part of the geometry using
 :meth:`QgsGeometry.parts() <qgis.core.QgsGeometry.parts>` method.
 
@@ -260,8 +279,7 @@ It's also possible to modify each part of the geometry using
 
 .. testoutput:: geometry
 
-    MultiPoint ((-10334726.79314761981368065 -5360105.10101188533008099),(-10462133.82917750626802444 -5217484.34365727473050356),(-10589398.51346865110099316 -5072020.358805269934237))
-
+    MultiPoint ((-10334726.79314758814871311 -5360105.10101194866001606),(-10462133.82917747274041176 -5217484.34365733992308378),(-10589398.51346861757338047 -5072020.35880533326417208))
 
 .. index:: Geometry; Predicates and operations
 
@@ -303,10 +321,10 @@ The following code assumes ``layer`` is a :class:`QgsVectorLayer <qgis.core.QgsV
 .. testoutput:: geometry
 
     Zambia
-    Area:  62.822790653431014
+    Area:  62.82279065343119
     Perimeter:  50.65232014052552
     Zimbabwe
-    Area:  33.41113559136511
+    Area:  33.41113559136517
     Perimeter:  26.608288555013935
 
 Now you have calculated and printed the areas and perimeters of the geometries.
@@ -346,15 +364,15 @@ The following code assumes ``layer`` is a :class:`QgsVectorLayer
 .. testoutput:: geometry
 
     Zambia
-    Perimeter (m): 5539361.250294596
+    Perimeter (m): 5539361.250294601
     Area (m2): 751989035032.9031
     Area (km2): 751989.0350329031
     Zimbabwe
-    Perimeter (m): 2865021.332507607
-    Area (m2): 389267821381.6009
-    Area (km2): 389267.82138160086
+    Perimeter (m): 2865021.3325076113
+    Area (m2): 389267821381.6008
+    Area (km2): 389267.8213816008
 
-Alternatively, you may want to know the distance and bearing between two points.
+Alternatively, you may want to know the distance between two points.
 
 .. testcode:: geometry
 

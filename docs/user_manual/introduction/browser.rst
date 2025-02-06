@@ -9,8 +9,8 @@ The Browser panel
 
 
 .. contents::
-      :local:
-      :depth: 2
+   :local:
+   :depth: 2
 
 The QGIS Browser panel is a great tool for browsing, searching,
 inspecting, copying and loading QGIS resources.
@@ -104,6 +104,8 @@ A lot can be accomplished in the Browser panel
   Examples: HTML files, spreadsheets, images, PDFs, text files, ...
 * Copy entries
 * Rename and delete (multiple) layers (context menu: :menuselection:`Manage -->`)
+* Open a file explorer window and directly select the file 
+  :guilabel:`Show in Files`
 
 Resource specific actions are listed for the different resource groups
 sorted under the top-level entries listed below.
@@ -133,6 +135,11 @@ From the top level context menu, you can create a bookmark
 :guilabel:`Show the Spatial Bookmark Manager`,
 :guilabel:`Import Spatial Bookmarks...` and
 :guilabel:`Export Spatial Bookmarks...`.
+
+For bookmark group entries you can :guilabel:`Export Spatial Bookmarks...`,
+create a bookmark (:guilabel:`New Spatial Bookmark...`),
+:guilabel:`Rename Bookmark Group`,
+and :guilabel:`Delete Bookmark Group`.
 
 For bookmark entries you can :guilabel:`Zoom to Bookmark`,
 :guilabel:`Edit Spatial Bookmark...` and
@@ -193,6 +200,7 @@ From the contextual menu of each of these folders or drives, you can:
 * inspect the :guilabel:`Properties...` or the parent :guilabel:`Directory
   Properties...`
 
+.. _database_entries:
 
 Database entries
 .................
@@ -204,123 +212,159 @@ each level of the dataset tree.
 .. You might want to use https://www.tablesgenerator.com/text_tables (Text tab) to update the next table.
     Particularly useful if you need to add, resize or move columns
 
-+---------------+--------------------------------------------+---------------------------------------------------------------------------------+
-| Level         | Context menu                               |                                 Type of database                                |
-|               |                                            +--------------+--------------+------------+------------+------------+------------+
-|               |                                            | |geoPackage| | |spatialite| | |postgis|  | |hana|     | |mssql|    | |oracle|   |
-|               |                                            | GeoPackage   | SpatiaLite   | PostGIS    | SAP HANA   | MSSQL      | Oracle     |
-+===============+============================================+==============+==============+============+============+============+============+
-| Top menu      | Create a :guilabel:`New Connection…`       | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox| | |checkbox| |
-|               | to an existing database                    |              |              |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Create Database…`               | |checkbox|   | |checkbox|   |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Save Connections…` details      |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-|               | to a file                                  |              |              |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Load Connections…`              |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-+---------------+--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-| Connection    | :guilabel:`Refresh` a connection           |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-| / Database    +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Edit Connection…` settings      |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Delete Connection`              | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Delete <database_name>`         | |checkbox|   | |checkbox|   |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Compact Database (VACUUM)`      | |checkbox|   |              |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | Create a :guilabel:`New Schema…`           |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | Create a :guilabel:`New Table…`            | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Execute SQL…` query             | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |            |            |
-+---------------+--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-| Schema        | :guilabel:`Refresh` a schema               |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :menuselection:`Schema Operations -->      |              |              |            |            |            |            |
-|               | Rename Schema…`                            |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :menuselection:`Schema Operations -->      |              |              |            |            |            |            |
-|               | Delete Schema…`                            |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | Create a :guilabel:`New Table…`            |              |              | |checkbox| | |checkbox| |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Execute SQL…` query             |              |              | |checkbox| | |checkbox| |            |            |
-+---------------+--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-| Table / Layer | :menuselection:`Table Operations -->       |              |              |            |            |            |            |
-|               | Rename Table…`                             |              |              | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :menuselection:`Table Operations -->       |              |              |            |            |            |            |
-|               | Truncate Table…`                           |              |              | |checkbox| |            | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :guilabel:`Execute SQL…` query             | |checkbox|   | |checkbox|   | |checkbox| |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :menuselection:`Export Layer --> To file…` | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :menuselection:`Manage -->                 |              |              |            |            |            |            |
-|               | Rename Layer <layer_name>…`                | |checkbox|   | |checkbox|   |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :menuselection:`Manage -->                 |              |              |            |            |            |            |
-|               | Delete Layer <layer_name>…`                | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox| |            |
-|               |                                            |              |              |            |            |            |            |
-|               | :menuselection:`Manage -->                 |              |              |            |            |            |            |
-|               | Delete Selected Layers`                    |              |              |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | :menuselection:`Manage -->                 | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox| |            |
-|               | Add Selected Layers to Project`            |              |              |            |            |            |            |
-|               |                                            |              |              |            |            |            |            |
-|               | :menuselection:`Manage -->                 |              |              |            |            |            |            |
-|               | Add Selected Layers to Project`            |              |              |            |            |            |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | Open :guilabel:`Layer Properties…` dialog  | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox| |            |
-|               +--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-|               | Open :guilabel:`File Properties…` dialog   | |checkbox|   |              |            |            |            |            |
-+---------------+--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-| Fields        | :guilabel:`Add New Field…`                 | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |            |            |
-+---------------+--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
-| Field         | :guilabel:`Delete Field…`                  | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |            |            |
-+---------------+--------------------------------------------+--------------+--------------+------------+------------+------------+------------+
++---------------+--------------------------------------------+------------------------------------------------------------------------------------+
+| Level         | Context menu                               |                                  Type of database                                  |
+|               |                                            +--------------+--------------+------------+------------+---------------+------------+
+|               |                                            | |geoPackage| | |spatialite| | |postgis|  | |hana|     | |mssql|       | |oracle|   |
+|               |                                            | GeoPackage   | SpatiaLite   | PostGIS    | SAP HANA   | MS SQL Server | Oracle     |
+|               |                                            | ([1]_)       |              |            |            |               |            |
++---------------+--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+| Top menu      | Create a :guilabel:`New Connection…`       | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    | |checkbox| |
+|               | to an existing database                    |              |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Create Database…`               | |checkbox|   | |checkbox|   |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Create Database and Layer…`     | |checkbox|   |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Save Connections…` details      |              |              | |checkbox| | |checkbox| | |checkbox|    |            |
+|               | to a file                                  |              |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Load Connections…`              |              |              | |checkbox| | |checkbox| | |checkbox|    |            |
++---------------+--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+| Connection    | :guilabel:`Refresh` a connection           |              |              | |checkbox| | |checkbox| | |checkbox|    | |checkbox| |
+| / Database    +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Edit Connection…` settings      |              |              | |checkbox| | |checkbox| | |checkbox|    | |checkbox| |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Duplicate Connection`           |              |              | |checkbox| | |checkbox| | |checkbox|    | |checkbox| |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Remove Connection…`             | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    | |checkbox| |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`New Field Domain -->       |              |              |            |            |               |            |
+|               | New Range Domain`                          | |checkbox|   |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`New Field Domain -->       |              |              |            |            |               |            |
+|               | New Coded Values Domain`                   | |checkbox|   |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`New Field Domain -->       |              |              |            |            |               |            |
+|               | New Glob Domain`                           | |checkbox|   |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Delete <database_name>`         | |checkbox|   | |checkbox|   |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Compact Database (VACUUM)`      | |checkbox|   |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | Create a :guilabel:`New Schema…`           |              |              | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | Create a :guilabel:`New Table…`            | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Execute SQL…` query             | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |               |            |
++---------------+--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+| Schema        | :guilabel:`Refresh` a schema               |              |              | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Schema Operations -->      |              |              |            |            |               |            |
+|               | Rename Schema…`                            |              |              | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Schema Operations -->      |              |              |            |            |               |            |
+|               | Delete Schema…`                            |              |              | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | Create a :guilabel:`New Table…`            |              |              | |checkbox| | |checkbox| |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Execute SQL…` query             |              |              | |checkbox| | |checkbox| |               |            |
++---------------+--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+| Table / Layer | :menuselection:`Table Operations -->       |              |              |            |            |               |            |
+|               | Rename Table…`                             |              |              | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Table Operations -->       |              |              |            |            |               |            |
+|               | Truncate Table…`                           |              |              | |checkbox| |            | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Execute SQL…` query             | |checkbox|   | |checkbox|   | |checkbox| |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Export Layer --> To file…` | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Manage -->                 |              |              |            |            |               |            |
+|               | Rename Layer <layer_name>…`                | |checkbox|   | |checkbox|   |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Manage -->                 |              |              |            |            |               |            |
+|               | Delete Layer <layer_name>…`                | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Manage -->                 | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    |            |
+|               | Delete Selected Layers`                    |              |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Manage -->                 | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    |            |
+|               | Add Layer to Project`                      |              |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :menuselection:`Manage -->                 | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    |            |
+|               | Add Selected Layers to Project`            |              |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | Open :guilabel:`Layer Properties…` dialog  | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| | |checkbox|    |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | Open :guilabel:`File Properties…` dialog   | |checkbox|   |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Open with Data Source Manager`  | |checkbox|   | |checkbox|   |            |            |               |            |
++---------------+--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+| Fields        | :guilabel:`Add New Field…`                 | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |               |            |
++---------------+--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+| Field         | :guilabel:`Set Field Domain`               | |checkbox|   |              |            |            |               |            |
++               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Rename Field`                   | |checkbox|   |              |            |            |               |            |
++               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Set Alias…`                     | |checkbox|   |              |            |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Set Comment…`                   | |checkbox|   |              | |checkbox| |            |               |            |
+|               +--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
+|               | :guilabel:`Delete Field…`                  | |checkbox|   | |checkbox|   | |checkbox| | |checkbox| |               |            |
++---------------+--------------------------------------------+--------------+--------------+------------+------------+---------------+------------+
 
+
+.. [1] The different entries may also be available for some GDAL supported `vector file formats <https://gdal.org/drivers/vector/index.html>`_
+ such as ESRI File Geodatabase, FlatGeobuf, GeoParquet, NetCDF, ... when compatible.
+
+.. note::
+
+  When loading vector layers into QGIS, fields with |sourceFields| :guilabel:`Field Domains`
+  (such as those defined in a GeoPackage or ESRI File Geodatabase) are automatically
+  detected. These domains are database-level constraints, meaning they are enforced
+  by the database itself and apply across different applications, not just QGIS.
 
 Tiles and Web Services
 ......................
 
-+---------------+----------------------------------------------+------------------------------------------------------------------------------------------------------+
-| Level         | Context menu                                 |                                               Type of services                                       |
-|               |                                              +------------+-------------------+------------+------------+----------------+-------------+------------+
-|               |                                              | |wms|      | |vectorTileLayer| | |xyz|      | |wcs|      | |wfs|          | |afs|       | |geonode|  |
-|               |                                              | WMS/WMTS   | Vector Tiles      | XYZ Tiles  | WCS        | WFS / OGC      | ArcGIS REST | GeoNode    |
-|               |                                              |            |                   |            |            | API - Features | Servers     |            |
-+===============+==============================================+============+===================+============+============+================+=============+============+
-| Top menu      | Create a :guilabel:`New Connection…`         | |checkbox| |                   | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | Create a :guilabel:`New Generic Connection…` |            | |checkbox|        |            |            |                |             |            |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | Create a :guilabel:`New ArcGIS Vector Tile   |            | |checkbox|        |            |            |                |             |            |
-|               | Service Connection…`                         |            |                   |            |            |                |             |            |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | :guilabel:`Save Connections…` details        | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               | to a file                                    |            |                   |            |            |                |             |            |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | :guilabel:`Load Connections…`                | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-+---------------+----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-| Connection    | :guilabel:`Refresh` connection               | |checkbox| |                   | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | :guilabel:`Edit…` connection settings        | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | :guilabel:`Delete` connection                | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | :guilabel:`View Service Info` in Web browser |            |                   |            |            |                | |checkbox|  |            |
-+---------------+----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-| Table / Layer | :menuselection:`Export Layer --> To File...` | |checkbox| |                   | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | :guilabel:`Add layer to Project`             | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | Open :guilabel:`Layer properties…` dialog    | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox| |
-|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
-|               | :guilabel:`View Service Info` in Web browser |            |                   |            |            |                | |checkbox|  |            |
-+---------------+----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+------------+
++---------------+----------------------------------------------+--------------------------------------------------------------------------------------------------------------+---------------------+
+| Level         | Context menu                                 |                                               Type of services                                                                     |
+|               |                                              +------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               |                                              | |wms|      | |vectorTileLayer| | |xyz|      | |wcs|      | |wfs|          | |afs|       | |tiledSceneLayer|  | |cloud|             |
+|               |                                              | WMS / WMTS | Vector Tiles      | XYZ Tiles  | WCS        | WFS / OGC      | ArcGIS REST | Scene              | Cloud               |
+|               |                                              |            |                   |            |            | API - Features | Servers     |                    |                     |
++===============+==============================================+============+===================+============+============+================+=============+====================+=====================+
+| Top menu      | Create a :guilabel:`New Connection…`         | |checkbox| |                   | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         | |checkbox|          |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | Create a :guilabel:`New Generic Connection…` |            | |checkbox|        |            |            |                |             |                    |                     |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | Create a :guilabel:`New ArcGIS Vector Tile   |            | |checkbox|        |            |            |                |             |                    |                     |
+|               | Service Connection…`                         |            |                   |            |            |                |             |                    |                     |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`Save Connections…` details        | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         | |checkbox|          |
+|               | to a file                                    |            |                   |            |            |                |             |                    |                     |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`Load Connections…`                | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         | |checkbox|          |
++---------------+----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+| Connection    | :guilabel:`Refresh` connection               | |checkbox| |                   | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  |                    |                     |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`Edit…` connection settings        | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         | |checkbox|          |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`Duplicate` connection             | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         | |checkbox|          |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`Delete` connection                | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         | |checkbox|          |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`View Service Info` in Web browser |            |                   |            |            |                | |checkbox|  |                    |                     |
++---------------+----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+| Table / Layer | :menuselection:`Export Layer --> To File...` | |checkbox| |                   | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  |                    |                     |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`Add layer to Project`             | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         |                     |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | Open :guilabel:`Layer properties…` dialog    | |checkbox| | |checkbox|        | |checkbox| | |checkbox| | |checkbox|     | |checkbox|  | |checkbox|         |                     |
+|               +----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
+|               | :guilabel:`View Service Info` in Web browser |            |                   |            |            |                | |checkbox|  |                    |                     |
++---------------+----------------------------------------------+------------+-------------------+------------+------------+----------------+-------------+--------------------+---------------------+
 
 
 
@@ -403,13 +447,13 @@ Resources
    :width: 1.5em
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
+.. |cloud| image:: /static/common/mIconCloud.png
+   :width: 1.5em
 .. |collapseTree| image:: /static/common/mActionCollapseTree.png
    :width: 1.5em
 .. |filterMap| image:: /static/common/mActionFilterMap.png
    :width: 1.5em
 .. |geoPackage| image:: /static/common/mGeoPackage.png
-   :width: 1.5em
-.. |geonode| image:: /static/common/mIconGeonode.png
    :width: 1.5em
 .. |hana| image:: /static/common/mIconHana.png
    :width: 1.5em
@@ -423,9 +467,13 @@ Resources
    :width: 1.5em
 .. |postgis| image:: /static/common/mIconPostgis.png
    :width: 1.5em
+.. |sourceFields| image:: /static/common/mSourceFields.png
+   :width: 1.5em
 .. |spatialite| image:: /static/common/mIconSpatialite.png
    :width: 1.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |tiledSceneLayer| image:: /static/common/mIconTiledSceneLayer.png
+   :width: 1.5em
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em
 .. |vectorTileLayer| image:: /static/common/mIconVectorTileLayer.png
    :width: 1.5em

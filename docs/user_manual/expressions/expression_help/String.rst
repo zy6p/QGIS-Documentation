@@ -169,13 +169,15 @@ Returns a number formatted with the locale separator for thousands. By default t
    :widths: 15 85
 
    * - Syntax
-     - format_number(number, [places=0], [language])
+     - format_number(number, [places=0], [language], [omit_group_separators=false], [trim_trailing_zeroes=false])
 
        [] marks optional arguments
    * - Arguments
      - * **number** - number to be formatted
        * **places** - integer representing the number of decimal places to truncate the string to.
        * **language** - language (lowercase, two- or three-letter, `ISO 639 language code <https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes>`_) used to format the number into a string. By default the current QGIS user locale is used.
+       * **omit_group_separators** - if set to true then group separators will not be included in the string
+       * **trim_trailing_zeroes** - if set to true then trailing zeros following the decimal point will be trimmed from the string
    * - Examples
      - * ``format_number(10000000.332,2)`` → '10,000,000.33' if e.g. the current locale is an English variant
        * ``format_number(10000000.332,2,'fr')`` → '10 000 000,33'
@@ -285,6 +287,30 @@ Returns a string padded on the left to the specified width, using a fill charact
 
 
 .. end_lpad_section
+
+.. _expression_function_String_ltrim:
+
+ltrim
+.....
+
+Removes the longest string containing only the specified characters (a space by default) from the start of string.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - ltrim(string, [characters=' '])
+
+       [] marks optional arguments
+   * - Arguments
+     - * **string** - string to trim
+       * **characters** - characters to trim
+   * - Examples
+     - * ``ltrim('   hello world  ')`` → 'hello world  '
+       * ``ltrim('zzzytest', 'xyz')`` → 'test'
+
+
+.. end_ltrim_section
 
 .. _expression_function_String_regexp_match:
 
@@ -442,6 +468,30 @@ Returns a string padded on the right to the specified width, using a fill charac
 
 .. end_rpad_section
 
+.. _expression_function_String_rtrim:
+
+rtrim
+.....
+
+Removes the longest string containing only the specified characters (a space by default) from the end of string.
+
+.. list-table::
+   :widths: 15 85
+
+   * - Syntax
+     - rtrim(string, [characters=' '])
+
+       [] marks optional arguments
+   * - Arguments
+     - * **string** - string to trim
+       * **characters** - characters to trim
+   * - Examples
+     - * ``rtrim('   hello world  ')`` → '   hello world'
+       * ``rtrim('testxxzx', 'xyz')`` → 'test'
+
+
+.. end_rtrim_section
+
 .. _expression_function_String_strpos:
 
 strpos
@@ -548,7 +598,7 @@ Removes all leading and trailing whitespace (spaces, tabs, etc) from a string.
    * - Arguments
      - * **string** - string to trim
    * - Examples
-     - * ``trim('   hello world    ')`` → 'hello world'
+     - * ``trim('   hello world  ')`` → 'hello world'
 
 
 .. end_trim_section

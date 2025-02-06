@@ -1,4 +1,4 @@
-|LS| Vector Analysis
+Lesson: Vector Analysis
 ======================================================================
 
 Vector data can also be analyzed to reveal how different features
@@ -11,7 +11,7 @@ using the tools that QGIS provides.
 analysis tools.
 
 
-|basic| The GIS Process
+:abbr:`★☆☆ (Basic level)` The GIS Process
 ----------------------------------------------------------------------
 
 Before we start, it would be useful to give a brief overview of a
@@ -24,7 +24,7 @@ The way to go about it is:
 #. Present the Results
 
 
-|basic| The Problem
+:abbr:`★☆☆ (Basic level)` The Problem
 ----------------------------------------------------------------------
 
 Let's start off the process by deciding on a problem to solve.
@@ -39,7 +39,7 @@ following criteria:
 #. Closer than 500m to a restaurant
 
 
-|basic| The Data
+:abbr:`★☆☆ (Basic level)` The Data
 ----------------------------------------------------------------------
 
 To answer these questions, we are going to need the following data:
@@ -63,8 +63,8 @@ If you want to download data from another area, jump to the
     region.
 
 
-|basic| |FA| Start a Project and get the Data
-----------------------------------------------------------------------
+:abbr:`★☆☆ (Basic level)` Follow Along: Start a Project and get the Data
+-------------------------------------------------------------------------
 
 We first need to load the data to work with.
 
@@ -88,35 +88,31 @@ We first need to load the data to work with.
 
 #. Zoom to the layer extent to see |majorUrbanName|, South Africa
 
-   Before proceeding we will filter the :guilabel:`roads` layer, in
-   order to have only some specific road types to work with.
+   Before proceeding we will filter the :guilabel:`roads` layer,
+   in order to have only some specific road types to work with.
 
    Some roads in OSM datasets are listed as ``unclassified``,
    ``tracks``, ``path`` and ``footway``.
-   We want to exclude these from our dataset and focus on the other
-   road types, more suitable for this exercise.
+   We want to exclude these from our dataset and focus on the other road types,
+   more suitable for this exercise.
 
-   Moreover, OSM data might not be updated everywhere, and we will
-   also exclude ``NULL`` values.
+   Moreover, OSM data might not be updated everywhere,
+   and we will also exclude ``NULL`` values.
 
-#. Right click on the ``roads`` layer and choose
-   :guilabel:`Filter...`.
-#. In the dialog that pops up we filter these features with the
-   following expression::
+#. Right click on the ``roads`` layer and choose :guilabel:`Filter...`.
+#. In the dialog that pops up we filter these features with the following expression::
 
      "highway" NOT IN ('footway', 'path', 'unclassified', 'track') AND "highway" IS NOT NULL
 
    The concatenation of the two operators ``NOT`` and ``IN`` excludes
-   all the features that have these attribute values in the
-   ``highway`` field.
+   all the features that have these attribute values in the ``highway`` field.
 
    ``IS NOT NULL`` combined with the ``AND`` operator excludes roads with
    no value in the ``highway`` field.
 
-   Note the |indicatorFilter| icon next to the :guilabel:`roads`
-   layer.
-   It helps you remember that this layer has a filter activated, so
-   some features may not be available in the project.
+   Note the |indicatorFilter| icon next to the :guilabel:`roads` layer.
+   It helps you remember that this layer has a filter activated,
+   so some features may not be available in the project.
 
 The map with all the data should look like the following one:
 
@@ -124,7 +120,7 @@ The map with all the data should look like the following one:
    :align: center
 
 
-|basic| |TY| Convert Layers' CRS
+:abbr:`★☆☆ (Basic level)` Try Yourself: Convert Layers' CRS
 ----------------------------------------------------------------------
 
 Because we are going to be measuring distances within our layers, we need to
@@ -158,17 +154,19 @@ Feel free to choose the best workflow for yourself.
    .. figure:: img/save_roads_34S.png
       :align: center
 
-   This will create the new GeoPackage database and add the
-   ``roads_34S`` layer.
+   This will create the new GeoPackage database and add the ``roads_34S`` layer.
 
 #. Repeat this process for each layer, creating a new layer in the
-   :file:`vector_analysis.gpkg` GeoPackage file with ``_34S`` appended
-   to the original name and removing each of the old layers from the
-   project.
+   :file:`vector_analysis.gpkg` GeoPackage file with ``_34S`` appended to the original name.
+   
+   On macOS, press the :guilabel:`Replace` button in the dialog that pops up
+   to allow QGIS to overwrite the existing GeoPackage.
 
-   .. note:: When you choose to save a layer to an existing
-      GeoPackage, QGIS will **append** that layer to the GeoPackage.
+   .. note:: When you choose to save a layer to an existing GeoPackage,
+      QGIS will **add** that layer next to the existing layers in the GeoPackage,
+      if no layer of the same name already exists.
 
+#. Remove each of the old layers from the project
 #. Once you have completed the process for all the layers, right click
    on any layer and click :guilabel:`Zoom to layer extent` to focus
    the map to the area of interest.
@@ -176,8 +174,8 @@ Feel free to choose the best workflow for yourself.
 Now that we have converted OSM data to a UTM projection, we can begin
 our calculations.
 
-|basic| |FA| Analyzing the Problem: Distances From Schools and Roads
-----------------------------------------------------------------------
+:abbr:`★☆☆ (Basic level)` Follow Along: Analyzing the Problem: Distances From Schools and Roads
+-------------------------------------------------------------------------------------------------
 
 QGIS allows you to calculate distances between any vector object.
 
@@ -271,7 +269,7 @@ Now there are no unnecessary subdivisions.
 
 .. _backlink-vector-analysis-basic-1:
 
-|basic| |TY| Distance from schools
+:abbr:`★☆☆ (Basic level)` Try Yourself: Distance from schools
 ----------------------------------------------------------------------
 
 Use the same approach as above and create a buffer for your schools.
@@ -306,7 +304,7 @@ Save the new layer in the :file:`vector_analysis.gpkg` file as ``schools_buffer_
    In our example, the difference is subtle, but you can see that the buffer's edges
    are smoother with the higher value.
 
-|basic| |FA| Overlapping Areas
+:abbr:`★☆☆ (Basic level)` Follow Along: Overlapping Areas
 ----------------------------------------------------------------------
 
 Now we have identified areas where the road is less than 50 meters
@@ -344,7 +342,7 @@ You can find it in :menuselection:`Vector Overlay` group in the
 
 .. _select-by-location:
 
-|basic| |FA| Extract the Buildings
+:abbr:`★☆☆ (Basic level)` Follow Along: Extract the Buildings
 ----------------------------------------------------------------------
 
 Now you've got the area that the buildings must overlap.
@@ -378,8 +376,8 @@ Next, you want to extract the buildings in that area.
    from the layer list.
 
 
-|moderate| |TY| Further Filter our Buildings
-----------------------------------------------------------------------
+:abbr:`★★☆ (Moderate level)` Try Yourself: Further Filter our Buildings
+-------------------------------------------------------------------------
 
 We now have a layer which shows us all the buildings within 1km of a
 school and within 50m of a road.
@@ -417,8 +415,8 @@ within 500m of a restaurant.
    .. figure:: img/restaurant_buffer_result.png
       :align: center
 
-|basic| |FA| Select Buildings of the Right Size
-----------------------------------------------------------------------
+:abbr:`★☆☆ (Basic level)` Follow Along: Select Buildings of the Right Size
+----------------------------------------------------------------------------
 
 To see which buildings are of the correct size (more than 100 square
 meters), we need to calculate their size.
@@ -455,7 +453,7 @@ Your map should now only show you those buildings which match our
 starting criteria and which are more than 100 square meters in size.
 
 
-|basic| |TY|
+:abbr:`★☆☆ (Basic level)` Try Yourself:
 ----------------------------------------------------------------------
 
 Save your solution as a new layer, using the approach you learned
@@ -463,14 +461,14 @@ above for doing so.
 The file should be saved within the same GeoPackage database, with
 the name ``solution``.
 
-|IC|
+In Conclusion
 ----------------------------------------------------------------------
 
 Using the GIS problem solving approach together with QGIS vector
 analysis tools, you were able to solve a problem with multiple
 criteria quickly and easily.
 
-|WN|
+What's Next?
 ----------------------------------------------------------------------
 
 In the next lesson, we will look at how to calculate the shortest
@@ -483,17 +481,10 @@ distance along roads from one point to another.
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |FA| replace:: Follow Along:
-.. |IC| replace:: In Conclusion
-.. |LS| replace:: Lesson:
-.. |TY| replace:: Try Yourself
-.. |WN| replace:: What's Next?
-.. |basic| image:: /static/common/basic.png
 .. |calculateField| image:: /static/common/mActionCalculateField.png
    :width: 1.5em
 .. |indicatorFilter| image:: /static/common/mIndicatorFilter.png
    :width: 1.5em
 .. |majorUrbanName| replace:: Swellendam
-.. |moderate| image:: /static/common/moderate.png
 .. |toggleEditing| image:: /static/common/mActionToggleEditing.png
    :width: 1.5em

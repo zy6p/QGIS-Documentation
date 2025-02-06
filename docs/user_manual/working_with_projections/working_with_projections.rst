@@ -47,7 +47,7 @@ In order to correctly project data into a specific target CRS, either your data
 must contain information about its coordinate reference system or you will need
 to manually assign the correct CRS to the layer. For PostGIS layers, QGIS uses
 the spatial reference identifier that was specified when that PostGIS layer was
-created. For data supported by OGR or GDAL, QGIS relies on the presence of a
+created. For data supported by GDAL, QGIS relies on the presence of a
 recognized means of specifying the CRS. For instance, for the Shapefile format
 this is a file containing an ESRI Well-Known Text (:index:`WKT`)
 representation of the layer's CRS. This projection file has the same base name
@@ -180,7 +180,7 @@ Available options are:
   or *user-defined*. A preview of the CRS extent on earth is displayed to
   help you select the appropriate one.
   Layers added to the project are translated on-the-fly to this CRS in order
-  to overlay them regardless their original CRS. Use of units and ellipsoid setting
+  to overlay them regardless of their original CRS. Use of units and ellipsoid setting
   are available and make sense and you can perform calculations accordingly.
 
 Whenever you select a new CRS for your QGIS project, the measurement units will automatically be
@@ -201,13 +201,20 @@ default.
    The project's CRS is redefined using the layer's CRS. Map canvas extent,
    coordinates display are updated accordingly and all the layers in
    the project are on-the-fly translated to the new project CRS.
-
+   
 
 .. index:: CRS Selection
 .. _crs_selector:
 
 Coordinate Reference System Selector
 =====================================
+
+.. _figure_crs_selector:
+
+.. figure:: img/crs_selector.png
+   :align: center
+
+   CRS Selector 
 
 This dialog helps you assign a Coordinate Reference System to a project or a
 layer, provided a set of projection databases. Items in the dialog are:
@@ -224,6 +231,19 @@ layer, provided a set of projection databases. Items in the dialog are:
   the appropriate node and selecting the CRS. The active CRS is preselected.
 * **PROJ text**: This is the CRS string used by the PROJ projection
   engine. This text is read-only and provided for informational purposes.
+
+
+If you want to remove a recently used CRS from the list that can be done in 
+several ways:
+
+* Press |clearItem| :sup:`Remove from recently used CRS` button on the right 
+  side.
+* Press :kbd:`Del` after selecting CRS that you want to remove.
+* Right-click on used CRS and choose
+  |clearItem| :guilabel:`Remove selected CRS from recently used CRS` to remove 
+  selected CRS
+  or |clearConsole| :guilabel:`Clear all recently used CRS` to remove all used 
+  CRS.
 
 The CRS selector also shows a rough preview of the geographic
 area for which a selected CRS is valid for use. Many CRSs are designed only
@@ -264,7 +284,7 @@ only two parameters to define a user CRS:
 
 To create a new CRS:
 
-#. Click the |signPlus| :sup:`Add new CRS` button
+#. Click the |symbologyAdd| :sup:`Add new CRS` button
 #. Enter a descriptive name
 #. Select the format: it can be :guilabel:`Proj String` or :guilabel:`WKT`
 #. Add the CRS :guilabel:`Parameters`.
@@ -351,7 +371,7 @@ This customization is done in the :menuselection:`Settings -->` |options|
 * or defining a list of appropriate datum transformations to use as defaults
   when loading a layer to a project or reprojecting a layer.
 
-  Use the |signPlus| button to open the :guilabel:`Select Datum Transformations`
+  Use the |symbologyAdd| button to open the :guilabel:`Select Datum Transformations`
   dialog. Then:
 
   #. Choose the :guilabel:`Source CRS` of the layer, using the drop-down menu
@@ -388,7 +408,7 @@ This customization is done in the :menuselection:`Settings -->` |options|
 
   From now, QGIS automatically uses the selected datum transformations for
   further transformation between these two CRSs until you remove
-  it (|signMinus|) from the list or change the entry (|toggleEditing|) in
+  it (|symbologyRemove|) from the list or change the entry (|toggleEditing|) in
   the list.
 
 Datum transformations set in the :menuselection:`Settings -->` |options|
@@ -408,6 +428,10 @@ to the current project only.
 
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
+.. |clearConsole| image:: /static/common/iconClearConsole.png
+   :width: 1.5em
+.. |clearItem| image:: /static/common/mIconClearItem.png
+   :width: 1.5em
 .. |customProjection| image:: /static/common/mActionCustomProjection.png
    :width: 1.5em
 .. |indicatorNoCRS| image:: /static/common/mIndicatorNoCRS.png
@@ -420,11 +444,11 @@ to the current project only.
    :width: 1.5em
 .. |setProjection| image:: /static/common/mActionSetProjection.png
    :width: 1.5em
-.. |signMinus| image:: /static/common/symbologyRemove.png
+.. |symbologyAdd| image:: /static/common/symbologyAdd.png
    :width: 1.5em
-.. |signPlus| image:: /static/common/symbologyAdd.png
+.. |symbologyRemove| image:: /static/common/symbologyRemove.png
    :width: 1.5em
 .. |toggleEditing| image:: /static/common/mActionToggleEditing.png
    :width: 1.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em

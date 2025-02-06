@@ -87,13 +87,16 @@ panel provides the following functionalities (see :numref:`figure_layout_legend_
   be activated.
 * The legend items window lists all legend items and allows you to change item
   order, group layers, remove and restore items in the list, edit layer names
-  and add a filter.
+  and symbology and add a filter.
 
+  * Use the |expandTree| :sup:`Expand all` and |collapseTree| :sup:`Collapse all` buttons
+    to respectively expand or collapse all the groups and subgroups in the legend tree. 
+    Ensure that the :guilabel:`Auto update` is unchecked to use these buttons.
   * The item order can be changed using the |arrowUp| and |arrowDown| buttons or
     with 'drag-and-drop' functionality. The order can not be changed for WMS
     legend graphics.
   * Use the |addGroup| button to add a legend group.
-  * Use the |signPlus| button to add layers and |signMinus| button to remove
+  * Use the |symbologyAdd| button to add layers and |symbologyRemove| button to remove
     groups, layers or symbol classes.
   * The |symbologyEdit| button is used to edit the layer, group name or title.
     First you need to select the legend item. Double-clicking the item also
@@ -119,9 +122,11 @@ panel provides the following functionalities (see :numref:`figure_layout_legend_
   :guilabel:`Update All` to adapt the changes in the legend element of the print
   layout.
   
-* With the |checkbox| :guilabel:`Only show items inside linked map`, only the
-  legend items visible in the linked map will be listed in the legend. This tool
-  remains available when |checkbox| :guilabel:`Auto-update` is active
+* With the |checkbox| :guilabel:`Only show items inside linked maps`, only the
+  legend items visible in the linked map will be listed in the legend. If you 
+  have more than one map you can click on :guilabel:`...` and select other 
+  maps from your layout.
+  This tool remains available when |checkbox| :guilabel:`Auto-update` is active.
 * While generating an atlas with polygon features, you can filter out legend
   items that lie outside the current atlas feature. To do that, check the
   |checkbox| :guilabel:`Only show items inside current atlas feature` option.
@@ -198,10 +203,10 @@ of a specific symbol, to enhance it in the legend or have a symbol independent f
 This custom symbol will override the legend symbol, but will take into account the symbol :guilabel:`Patch` specified. 
 
 
-Fonts
------
+Fonts and text formatting
+-------------------------
 
-The :guilabel:`Fonts` group of the legend :guilabel:`Item Properties` panel
+The :guilabel:`Fonts and text formatting` group of the legend :guilabel:`Item Properties` panel
 provides the following functionalities:
 
 .. _figure_layout_legend_fonts:
@@ -212,14 +217,12 @@ provides the following functionalities:
    Legend Fonts properties
 
 * You can change the font of the legend title, group, subgroup and item (feature)
-  in the legend item using the :ref:`font selector <font_selector>` widget
-* For each of these levels you can set the text :guilabel:`Alignment`: it can
-  be :guilabel:`Left` (default for left-to-right based locales),
-  :guilabel:`Center` or :guilabel:`Right` (default for right-to-left based
-  locales).
-* You set the :guilabel:`Color` of the labels using the :ref:`color selector
-  <color-selector>` widget. The selected color will apply to all the font items
-  in the legend.
+  in the legend item using the :ref:`font selector <font_selector>` widget,
+  providing all the capabilities of :ref:`text formatting <text_format>`
+  (font spacing control, mixed HTML formatting, coloring, blending, background, text buffer, shadow, ...)
+* For each of these levels you can set the text :guilabel:`Alignment`:
+  it can be :guilabel:`Left` (default for left-to-right based locales),
+  :guilabel:`Center` or :guilabel:`Right` (default for right-to-left based locales).
 
 
 Columns
@@ -320,17 +323,21 @@ and lines can be customized through this dialog.
    :width: 1.5em
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
+.. |collapseTree| image:: /static/common/mActionCollapseTree.png
+   :width: 1.5em
+.. |expandTree| image:: /static/common/mActionExpandTree.png
+   :width: 1.5em
 .. |expression| image:: /static/common/mIconExpression.png
    :width: 1.5em
 .. |expressionFilter| image:: /static/common/mIconExpressionFilter.png
    :width: 1.5em
 .. |selectNumber| image:: /static/common/selectnumber.png
    :width: 2.8em
-.. |signMinus| image:: /static/common/symbologyRemove.png
-   :width: 1.5em
-.. |signPlus| image:: /static/common/symbologyAdd.png
-   :width: 1.5em
 .. |sum| image:: /static/common/mActionSum.png
    :width: 1.2em
+.. |symbologyAdd| image:: /static/common/symbologyAdd.png
+   :width: 1.5em
 .. |symbologyEdit| image:: /static/common/symbologyEdit.png
+   :width: 1.5em
+.. |symbologyRemove| image:: /static/common/symbologyRemove.png
    :width: 1.5em

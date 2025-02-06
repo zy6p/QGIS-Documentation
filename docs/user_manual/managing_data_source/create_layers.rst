@@ -45,6 +45,8 @@ To create a new GeoPackage layer, press the |newGeoPackageLayer|
 :menuselection:`New GeoPackage Layer...` button in the
 :menuselection:`Layer --> Create Layer -->` menu or from the
 :guilabel:`Data Source Manager` toolbar.
+You can also create a new GeoPackage layer trought the :guilabel:`Browser Panel`
+by selecting the :guilabel:`Create Database and Layer...`. 
 The :guilabel:`New GeoPackage Layer` dialog will be displayed as shown in
 :numref:`figure_create_geopackage`.
 
@@ -183,7 +185,7 @@ To add fields to the layer you are creating:
    as described in section :ref:`sec_edit_existing_layer`.
 
 If desired, you can select |checkbox| :guilabel:`Create an autoincrementing
-primary key` under the guilabel:`Advanced Options` section. You can also rename
+primary key` under the :guilabel:`Advanced Options` section. You can also rename
 the :guilabel:`Geometry column` (``geometry`` by default).
 
 Further management of SpatiaLite layers can be done with :ref:`DB Manager
@@ -243,7 +245,7 @@ Creating a new GPX layer
 
 To create a new GPX file:
 
-#. Select :menuselection:`Create Layer -->` |createGPX|
+#. Select :menuselection:`Create Layer -->` |newGpx|
    :menuselection:`New GPX Layer...` from the :menuselection:`Layer` menu.
 #. In the dialog, choose where to save the new file, name it and press :guilabel:`Save`.
 #. Three new layers are added to the :guilabel:`Layers Panel`:
@@ -335,12 +337,12 @@ algorithm <processing_algs>`.
 Creating new layers from an existing layer
 ==========================================
 
-Both raster and vector layers can be saved in a different format and/or
+Layers (raster, vector and point cloud) can be saved in a different format and/or
 reprojected to a different coordinate reference system (CRS) using the
 :menuselection:`Layer --> Save As...` menu or right-clicking on the
 layer in the :guilabel:`Layers panel` and selecting:
 
-* :menuselection:`Export --> Save As...` for raster layers
+* :menuselection:`Export --> Save As...` for raster and point cloud layers
 * :menuselection:`Export --> Save Features As...` or
   :menuselection:`Export --> Save Selected Features As...` for vector
   layers.
@@ -360,11 +362,11 @@ Among the common parameters for raster and vector are:
   example database-like formats such as GeoPackage, SpatiaLite or Open Document
   Spreadsheets).
 * :guilabel:`CRS`: can be changed to reproject the data
-* :guilabel:`Extent` of the output layer using the :ref:`extent_selector
-  <extent_selector>` widget
+* :guilabel:`Extent`: restricts the extent of the input that is to be exported
+  using the :ref:`extent_selector <extent_selector>` widget
 * :guilabel:`Add saved file to map`: to add the new layer to the canvas
 
-However, some parameters are specific to raster and vector formats:
+However, some parameters are specific to certain formats:
 
 Raster specific parameters
 --------------------------
@@ -403,11 +405,24 @@ Depending on the format of export, some of these options may be available:
   container-like format, this entry represents the output layer.
 * :guilabel:`Encoding`
 * :guilabel:`Save only selected features`
-* :guilabel:`Select fields to export and their export options`. In case you set
-  your fields behavior with some :ref:`Edit widgets <configure_field>`, e.g.
-  ``value map``, you can keep the displayed values in the layer by checking
-  |checkbox| :guilabel:`Replace all selected raw fields values by displayed
-  values`.
+* :guilabel:`Select fields to export and their export options`: provides means
+  to export fields with custom names and :ref:`form widget <configure_field>`
+  settings:
+
+  * Check rows under the :guilabel:`Name` column to choose fields to keep
+    in the output layer, or press :guilabel:`Select All` or
+    :guilabel:`Deselect All` buttons
+  * Toggle the :guilabel:`Use aliases for exported name` checkbox to populate
+    the :guilabel:`Export name` column with corresponding field aliases or
+    reset to the original field name.
+    Double-clicking a cell will also edit the name.
+  * Depending on whether attribute form custom widgets are in use, you can
+    :guilabel:`Replace all selected raw field values by displayed values`.
+    E.g. if a ``value map`` widget is applied to a field, the output layer
+    will contain the description values instead of the original values.
+    The replacement can also be done on a field by field basis, in the
+    :guilabel:`Replace with displayed values` column.
+
 * :guilabel:`Persist layer metadata`: ensures that any layer :ref:`metadata
   <vectormetadatamenu>` present in the source layer will be copied and stored:
 
@@ -481,6 +496,26 @@ decide whether to:
 
 For formats like ESRI Shapefile, MapInfo .tab, feature append is also available.
 
+Point Cloud specific parameters
+-------------------------------
+
+Similar to raster and vector layers, point cloud layers can be saved in a different
+format and/or reprojected to a different coordinate reference system (CRS).
+This allows you to export a point cloud layer to vector or point cloud formats.
+Current supported formats are: Temporary scratch (memory layer), GeoPackage, ESRI Shapefile,
+DXF and LAS/LAZ point cloud.
+In addition to the common parameters listed above, exporting point cloud layers includes the following options:
+
+* :guilabel:`Filter by Polygon Layer`: Allows you to filter the point cloud data based on a polygon layer.
+* :guilabel:`Elevation Range`: Enables filtering of the point cloud data based on a specified Z range.
+* :guilabel:`Limit number of points`: Provides an option to limit the number of points exported from the point cloud layer.
+
+.. _figure_saveas_pointcloud:
+
+.. figure:: img/saveas_pointcloud.png
+   :align: center
+
+   Saving a point cloud layer as a new layer
 
 .. index:: DXF Export
 .. _create_dxf_files:
@@ -493,6 +528,13 @@ single layer to another format, including :file:`*.DXF`, QGIS provides another
 tool to export multiple layers as a single DXF layer. It's accessible in the
 :menuselection:`Project --> Import/Export --> Export Project to DXF...` menu.
 
+.. _figure_create_dxf:
+
+.. figure:: img/export_dxf.png
+   :align: center
+
+   Exporting a project to DXF dialog
+
 In the :guilabel:`DXF Export` dialog:
 
 #. Provide the destination file.
@@ -502,29 +544,53 @@ In the :guilabel:`DXF Export` dialog:
 #. Select the :guilabel:`CRS` to apply: the selected layers will be reprojected
    to the given CRS.
 #. Select the layers to include in the DXF files either by checking them in the
-   table widget or automatically picking them from an existing :ref:`map theme
-   <map_themes>`.
+   table widget or automatically picking them from an existing :ref:`map theme <map_themes>`.
    The :guilabel:`Select All` and :guilabel:`Deselect All` buttons
    can help to quickly set the data to export.
 
-   For each layer, you can choose whether to export all the features in a
-   single DXF layer or rely on a field whose values are used to split the
-   features into layers in the DXF output.
-  
+   For each layer, you can:
+
+   * Override the output layer name without altering the original project layer.
+     For this, click on the :guilabel:`Layer` name in the dialog and
+     write the output name to use.
+
+   * :guilabel:`Output layer attribute`: Choose whether to export all the features
+     in a single DXF layer or rely on a field whose values are used
+     to split the features into layers in the DXF output.
+     In the latter case, each layer will take its name from the corresponding field value.
+   * :guilabel:`Allow data defined symbol blocks`:
+   * :guilabel:`Maximum number of symbol blocks`: creates symbol blocks up to the specified limit,
+     starting with the ones containing the highest number of references.
+     The other symbols are written as they are. ``-1`` means no limitation.
+
 Optionally, you can also choose to:
 
-* |checkbox| :guilabel:`Use the layer title as name if set` instead of the
-  layer name itself;
-* |checkbox| :guilabel:`Export features intersecting the current map extent`;
+* |unchecked| :guilabel:`Use the layer title as name if set` instead of the
+  layer name itself: the title is taken from the :ref:`metadata <vectormetadatamenu>`
+  or :ref:`server <vectorservermenu>` properties of the layer;
+* |unchecked| :guilabel:`Export features intersecting the current map extent`;
 * |unchecked| :guilabel:`Force 2d output (eg. to support polyline width)`;
-* |checkbox| :guilabel:`Export label as MTEXT elements` or TEXT elements.
+* |checkbox| :guilabel:`Export label as MTEXT elements` or TEXT elements;
+* |unchecked| :guilabel:`Use only selected features`;
+* |unchecked| :guilabel:`Export lines with zero width`: all the lines are exported
+  with minimal width ``0`` (hairline) if enabled.
+  This helps keep the lines minimal in the file regardless of the zoom level,
+  and can be handy for doing further CAD-editing with the exported dxf,
+  especially if there are many features next to each other on the map.
 
-.. _figure_create_dxf:
+.. note::
 
-.. figure:: img/export_dxf.png
-   :align: center
+   The precedence for defining the output layer name is as follows:
 
-   Exporting a project to DXF dialog
+   1. The field value from :guilabel:`Output layer attribute`
+   2. The overridden name in :guilabel:`Layer` column
+   3. The :guilabel:`Use the layer title as name if set` option
+   4. The layer name
+
+Current settings defined in the :guilabel:`DXF Export` dialog may be stored in
+an XML file for reusing them in other sessions. For this, the
+:guilabel:`Settings` combo box has two options: :guilabel:`Load Settings from
+File...` and :guilabel:`Save Settings to File...`.
 
 
 .. _paste_into_layer:
@@ -639,7 +705,7 @@ layer out of an attribute-only layer can be done with a query similar to:
    SELECT id, MakePoint(x, y, 4326) as geometry
    FROM coordinates
 
-:ref:`Functions of QGIS expressions<functions_list>` can also be used in a
+:ref:`Functions of QGIS expressions <functions_list>` can also be used in a
 virtual layer query.
 
 To refer the geometry column of a layer, use the name ``geometry``.
@@ -747,8 +813,6 @@ when used in conjunction with this spatial index syntax.
    :width: 1.5em
 .. |checkbox| image:: /static/common/checkbox.png
    :width: 1.3em
-.. |createGPX| image:: /static/common/create_gpx.png
-   :width: 1.5em
 .. |createMemory| image:: /static/common/mActionCreateMemory.png
    :width: 1.5em
 .. |indicatorMemory| image:: /static/common/mIndicatorMemory.png
@@ -756,6 +820,8 @@ when used in conjunction with this spatial index syntax.
 .. |newAttribute| image:: /static/common/mActionNewAttribute.png
    :width: 1.5em
 .. |newGeoPackageLayer| image:: /static/common/mActionNewGeoPackageLayer.png
+   :width: 1.5em
+.. |newGpx| image:: /static/common/mActionNewGpx.png
    :width: 1.5em
 .. |newMeshLayer| image:: /static/common/mActionNewMeshLayer.png
    :width: 1.5em
@@ -765,5 +831,5 @@ when used in conjunction with this spatial index syntax.
    :width: 1.5em
 .. |setProjection| image:: /static/common/mActionSetProjection.png
    :width: 1.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em

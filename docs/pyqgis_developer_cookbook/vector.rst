@@ -68,26 +68,33 @@ Retrieving information about attributes
 ========================================
 
 You can retrieve information about the fields associated with a vector layer
-by calling :meth:`fields() <qgis.core.QgsVectorLayer.fields>` on a :class:`QgsVectorLayer <qgis.core.QgsVectorLayer>` object:
+by calling :meth:`fields() <qgis.core.QgsVectorLayer.fields>` on a
+:class:`QgsVectorLayer <qgis.core.QgsVectorLayer>` object:
 
 .. testcode:: vectors
 
-    vlayer = QgsVectorLayer("testdata/airports.shp", "airports", "ogr")
+    vlayer = QgsVectorLayer("testdata/data/data.gpkg|layername=airports", "Airports layer", "ogr")
     for field in vlayer.fields():
         print(field.name(), field.typeName())
 
 
 .. testoutput:: vectors
 
-    ID Integer64
-    fk_region Integer64
-    ELEV Real
-    NAME String
-    USE String
+    fid Integer64
+    id Integer64
+    scalerank Integer64
+    featurecla String
+    type String
+    name String
+    abbrev String
+    location String
+    gps_code String
+    iata_code String
+    wikipedia String
+    natlscale Real
 
 The :meth:`displayField() <qgis.core.QgsVectorLayer.displayField>` and
-:meth:`mapTipTemplate() <qgis.core.QgsVectorLayer.mapTipTemplate>` methods of
-the :class:`QgsVectorLayer <qgis.core.QgsVectorLayer>` class provide
+:meth:`mapTipTemplate() <qgis.core.QgsMapLayer.mapTipTemplate>` methods provide
 information on the field and template used in the :ref:`maptips` tab.
 
 When you load a vector layer, a field is always chosen by QGIS as the
@@ -96,13 +103,13 @@ methods you can easily get both:
 
 .. testcode:: vectors
 
-    vlayer = QgsVectorLayer("testdata/airports.shp", "airports", "ogr")
+    vlayer = QgsVectorLayer("testdata/data/data.gpkg|layername=airports", "Airports layer", "ogr")
     print(vlayer.displayField())
 
 
 .. testoutput:: vectors
 
-    NAME
+    name
 
 .. note:: If you change the ``Display Name`` from a field to an expression, you have to
    use :meth:`displayExpression() <qgis.core.QgsVectorLayer.displayExpression>`
@@ -215,11 +222,11 @@ can call :meth:`select() <qgis.core.QgsVectorLayer.select>` passing to it the li
  selected_fid = []
 
  # Get the first feature id from the layer
- for feature in layer.getFeatures():
+ feature = next(layer.getFeatures())
+ if feature:
      selected_fid.append(feature.id())
-     break
 
- # Add these features to the selected list
+ # Add that features to the selected list
  layer.select(selected_fid)
 
 To clear the selection:
@@ -409,8 +416,8 @@ explains how to do :ref:`modifications with editing buffer <editing-buffer>`.
 Add Features
 ------------
 
-Create some :class:`QgsFeature <qgis.core.QgsFeature>` instances and pass a list of them to provider's
-:meth:`addFeatures() <qgis.core.QgsVectorDataProvider.addFeatures>` method. It will return two values:
+Create some :class:`QgsFeature <qgis.core.QgsFeature>` instances and pass a list of them to the provider
+:class:`QgsVectorDataProvider <qgis.core.QgsVectorDataProvider>` ``addFeatures()`` method. It will return two values:
 result (:const:`True` or :const:`False`) and
 list of added features (their ID is set by the data store).
 
@@ -502,7 +509,7 @@ Here you have some examples that demonstrate how to use these editing methods.
 
 .. testcode:: vectors
 
-  from qgis.PyQt.QtCore import QVariant
+  from qgis.PyQt.QtCore import QMetaType
 
   feat1 = feat2 = QgsFeature(layer.fields())
   fid = 99
@@ -522,7 +529,7 @@ Here you have some examples that demonstrate how to use these editing methods.
   layer.changeAttributeValue(fid, fieldIndex, value)
 
   # add new field
-  layer.addAttribute(QgsField("mytext", QVariant.String))
+  layer.addAttribute(QgsField("mytext", QMetaType.Type.QString))
   # remove a field
   layer.deleteAttribute(fieldIndex)
 
@@ -579,12 +586,12 @@ For deletion of fields just provide a list of field indexes.
 
 .. testcode:: vectors
 
- from qgis.PyQt.QtCore import QVariant
+ from qgis.PyQt.QtCore import QMetaType
 
  if caps & QgsVectorDataProvider.AddAttributes:
      res = layer.dataProvider().addAttributes(
-         [QgsField("mytext", QVariant.String),
-         QgsField("myint", QVariant.Int)])
+         [QgsField("mytext", QMetaType.Type.QString),
+         QgsField("myint", QMetaType.Type.Int)])
 
  if caps & QgsVectorDataProvider.DeleteAttributes:
      res = layer.dataProvider().deleteAttributes([0])
@@ -593,7 +600,9 @@ For deletion of fields just provide a list of field indexes.
 
  # Alternate methods for removing fields
  # first create temporary fields to be removed (f1-3)
- layer.dataProvider().addAttributes([QgsField("f1",QVariant.Int),QgsField("f2",QVariant.Int),QgsField("f3",QVariant.Int)])
+ layer.dataProvider().addAttributes([QgsField("f1", QMetaType.Type.Int),
+                                     QgsField("f2", QMetaType.Type.Int),
+                                     QgsField("f3", QMetaType.Type.Int)])
  layer.updateFields()
  count=layer.fields().count() # count of layer fields
  ind_list=list((count-3, count-2)) # create list
@@ -701,7 +710,7 @@ field:
 
 .. testcode:: vectors
 
-    vlayer = QgsVectorLayer("testdata/airports.shp", "airports", "ogr")
+    vlayer = QgsVectorLayer("testdata/data/data.gpkg|layername=airports", "Airports layer", "ogr")
     feat = QgsVectorLayerUtils.createFeature(vlayer)
 
 
@@ -710,7 +719,7 @@ you to quickly get the values of a field or expression:
 
 .. testcode:: vectors
 
-    vlayer = QgsVectorLayer("testdata/airports.shp", "airports", "ogr")
+    vlayer = QgsVectorLayer("testdata/data/data.gpkg|layername=airports", "Airports layer", "ogr")
     # select only the first feature to make the output shorter
     vlayer.selectByIds([1])
     val = QgsVectorLayerUtils.getValues(vlayer, "NAME", selectedOnly=True)
@@ -718,7 +727,7 @@ you to quickly get the values of a field or expression:
 
 .. testoutput:: vectors
 
-    (['AMBLER'], True)
+    (['Sahnewal'], True)
 
 
 .. index:: Vector layers; Creating
@@ -733,13 +742,13 @@ There are several ways to generate a vector layer dataset:
   call to :meth:`writeAsVectorFormatV3()
   <qgis.core.QgsVectorFileWriter.writeAsVectorFormatV3>` which saves the whole
   vector layer or creating an instance of the class and issue calls to
-  :meth:`addFeature() <qgis.core.QgsVectorFileWriter.addFeature>`. This class
-  supports all the vector formats that OGR supports (GeoPackage, Shapefile,
+  inherited :meth:`addFeature() <qgis.core.QgsFeatureSink.addFeature>`. This class
+  supports all the vector formats that GDAL supports (GeoPackage, Shapefile,
   GeoJSON, KML and others).
 * the :class:`QgsVectorLayer <qgis.core.QgsVectorLayer>` class: instantiates
   a data provider that interprets the supplied path (url) of the data source
   to connect to and access the data. It can be used to create temporary,
-  memory-based layers (``memory``) and connect to OGR datasets (``ogr``),
+  memory-based layers (``memory``) and connect to GDAL vector datasets (``ogr``),
   databases (``postgres``, ``spatialite``, ``mysql``, ``mssql``) and
   more (``wfs``, ``gpx``, ``delimitedtext``...).
 
@@ -788,7 +797,7 @@ From an instance of :class:`QgsVectorFileWriter <qgis.core.QgsVectorFileWriter>`
 
     success again!
 
-.. Cannot CI test this snippet because OGR driver for 'FileGDB' not found
+.. Cannot CI test this snippet because GDAL driver for 'FileGDB' not found
 
 .. code-block:: python
 
@@ -839,7 +848,7 @@ you can do the following:
     def fieldDefinition(self, field):
       idx = self.layer.fields().indexFromName(field.name())
       if idx == self.list_field_idx:
-        return QgsField(LIST_FIELD_NAME, QVariant.String)
+        return QgsField(LIST_FIELD_NAME, QMetaType.Type.QString)
       else:
         return self.layer.fields()[idx]
 
@@ -867,12 +876,12 @@ Directly from features
 
 .. testcode:: vectors
 
-  from qgis.PyQt.QtCore import QVariant
+  from qgis.PyQt.QtCore import QMetaType
 
   # define fields for feature attributes. A QgsFields object is needed
   fields = QgsFields()
-  fields.append(QgsField("first", QVariant.Int))
-  fields.append(QgsField("second", QVariant.String))
+  fields.append(QgsField("first", QMetaType.Type.Int))
+  fields.append(QgsField("second", QMetaType.Type.QString))
 
   """ create an instance of vector file writer, which will create the vector file.
   Arguments:
@@ -966,22 +975,22 @@ The following example code illustrates creating and populating a memory provider
 
 .. testcode:: vectors
 
-  from qgis.PyQt.QtCore import QVariant
+  from qgis.PyQt.QtCore import QMetaType
 
   # create layer
   vl = QgsVectorLayer("Point", "temporary_points", "memory")
   pr = vl.dataProvider()
 
   # add fields
-  pr.addAttributes([QgsField("name", QVariant.String),
-                      QgsField("age",  QVariant.Int),
-                      QgsField("size", QVariant.Double)])
+  pr.addAttributes([QgsField("name", QMetaType.Type.QString),
+                      QgsField("age",  QMetaType.Type.Int),
+                      QgsField("size", QMetaType.Type.Double)])
   vl.updateFields() # tell the vector layer to fetch changes from the provider
 
   # add a feature
   fet = QgsFeature()
   fet.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(10,10)))
-  fet.setAttributes(["Johny", 2, 0.3])
+  fet.setAttributes(["Johnny", 2, 0.3])
   pr.addFeatures([fet])
 
   # update layer's extent when new features have been added
@@ -1008,7 +1017,7 @@ Finally, let's check whether everything went well
     fields: 3
     features: 1
     extent: 10.0 10.0 10.0 10.0
-    F: 1 ['Johny', 2, 0.3] <QgsPointXY: POINT(10 10)>
+    F: 1 ['Johnny', 2, 0.3] <QgsPointXY: POINT(10 10)>
 
 .. index:: Vector layers; Symbology
 
@@ -1125,7 +1134,7 @@ instance you can follow the example code:
 
 .. testoutput:: vectors
 
-    {'angle': '0', 'cap_style': 'square', 'color': '255,0,0,255', 'horizontal_anchor_point': '1', 'joinstyle': 'bevel', 'name': 'square', 'offset': '0,0', 'offset_map_unit_scale': '3x:0,0,0,0,0,0', 'offset_unit': 'MM', 'outline_color': '35,35,35,255', 'outline_style': 'solid', 'outline_width': '0', 'outline_width_map_unit_scale': '3x:0,0,0,0,0,0', 'outline_width_unit': 'MM', 'scale_method': 'diameter', 'size': '2', 'size_map_unit_scale': '3x:0,0,0,0,0,0', 'size_unit': 'MM', 'vertical_anchor_point': '1'}
+    {'angle': '0', 'cap_style': 'square', 'color': '255,0,0,255,rgb:1,0,0,1', 'horizontal_anchor_point': '1', 'joinstyle': 'bevel', 'name': 'square', 'offset': '0,0', 'offset_map_unit_scale': '3x:0,0,0,0,0,0', 'offset_unit': 'MM', 'outline_color': '35,35,35,255,rgb:0.13725490196078433,0.13725490196078433,0.13725490196078433,1', 'outline_style': 'solid', 'outline_width': '0', 'outline_width_map_unit_scale': '3x:0,0,0,0,0,0', 'outline_width_unit': 'MM', 'scale_method': 'diameter', 'size': '2', 'size_map_unit_scale': '3x:0,0,0,0,0,0', 'size_unit': 'MM', 'vertical_anchor_point': '1'}
 
 This can be useful if you want to alter some properties:
 
@@ -1228,8 +1237,8 @@ arrangement)
 
   from qgis.PyQt import QtGui
 
-  myVectorLayer = QgsVectorLayer("testdata/airports.shp", "airports", "ogr")
-  myTargetField = 'ELEV'
+  myVectorLayer = QgsVectorLayer("testdata/data/data.gpkg|layername=airports", "Airports layer", "ogr")
+  myTargetField = 'scalerank'
   myRangeList = []
   myOpacity = 1
   # Make our first symbol and range...
@@ -1328,6 +1337,7 @@ given symbol layer class with the following code:
 
 .. testoutput:: vectors
 
+    AnimatedMarker
     EllipseMarker
     FilledMarker
     FontMarker

@@ -6,6 +6,7 @@ Raster analysis
    .. contents::
       :local:
       :depth: 1
+      :class: toc-columns
 
 
 .. _gdalaspect:
@@ -110,7 +111,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -217,7 +218,7 @@ Parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -267,12 +268,12 @@ Python code
 
 .. _gdalfillnodata:
 
-Fill nodata
+Fill NoData
 -----------
-Fill raster regions with no data values by interpolation from edges.
-The values for the no-data regions are calculated by the sourrounding
+Fill raster regions with NoData values by interpolation from edges.
+The values for the NoData regions are calculated by the surrounding
 pixel values using inverse distance weighting.
-After the interpolation a smoothing of the results takes placce.
+After the interpolation a smoothing of the results takes place.
 Input can be any GDAL-supported raster layer. This algorithm is
 generally suitable for interpolating missing regions of fairly
 continuously varying rasters (such as elevation models for instance).
@@ -315,7 +316,7 @@ Basic parameters
      - [raster band]
 
        Default: 1
-     - The band to operate on. Nodata values must be
+     - The band to operate on. NoData values must be
        represented by the value 0.
    * - **Maximum distance (in pixels) to search out for values to interpolate**
      - ``DISTANCE``
@@ -331,12 +332,6 @@ Basic parameters
        Default: 0
      - The number of 3x3 filter passes to run (0 or more) to smoothen
        the results of the interpolation.
-   * - **Do not use default validity mask for the input band**
-     - ``NO_MASK``
-     - [boolean]
-
-       Default: False
-     - Activates the user-defined validity mask
    * - **Validity mask**
      - ``MASK_LAYER``
      - [raster]
@@ -377,7 +372,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -500,13 +495,13 @@ Basic parameters
      - Minimum number of data points to average.
        If less amount of points found the grid node
        considered empty and will be filled with
-       NODATA marker.
-   * - **Nodata**
+       NoData marker.
+   * - **NoData**
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - No data marker to fill empty points
+     - NoData marker to fill empty points
    * - **Interpolated (data metrics)**
      - ``OUTPUT``
      - [raster]
@@ -550,7 +545,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -568,17 +563,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
 Outputs
 .......
@@ -668,13 +655,13 @@ Parameters
      - Minimum number of data points to average.
        If less amount of points found the grid node
        considered empty and will be filled with
-       NODATA marker.
-   * - **Nodata**
+       NoData marker.
+   * - **NoData**
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - No data marker to fill empty points
+     - NoData marker to fill empty points
    * - **Interpolated (IDW with NN search)**
      - ``OUTPUT``
      - [raster]
@@ -718,7 +705,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -736,17 +723,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
 Outputs
 .......
@@ -859,13 +838,13 @@ Basic parameters
      - Minimum number of data points to average.
        If less amount of points found the grid node
        considered empty and will be filled with
-       NODATA marker.
-   * - **Nodata**
+       NoData marker.
+   * - **NoData**
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - No data marker to fill empty points
+     - NoData marker to fill empty points
    * - **Interpolated (IDW)**
      - ``OUTPUT``
      - [raster]
@@ -909,7 +888,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -927,17 +906,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
 Outputs
 .......
@@ -974,7 +945,7 @@ triangulation of the point cloud, finding in which triangle of the
 triangulation the point is, and by doing linear interpolation from its
 barycentric coordinates within the triangle.
 If the point is not in any triangle, depending on the radius, the
-algorithm will use the value of the nearest point or the NODATA value.
+algorithm will use the value of the nearest point or the NoData value.
 
 This algorithm is derived from the
 `GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
@@ -1005,16 +976,16 @@ Basic parameters
        Default: -1.0
      - In case the point to be interpolated does not fit into a 
        triangle of the Delaunay triangulation, use that maximum
-       distance to search a nearest neighbour, or use nodata
+       distance to search a nearest neighbour, or use NoData
        otherwise.
        If set to ``-1``, the search distance is infinite.
-       If set to ``0``, no data value will be used.
-   * - **Nodata**
+       If set to ``0``, NoData value will be used.
+   * - **NoData**
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - No data marker to fill empty points
+     - NoData marker to fill empty points
    * - **Interpolated (Linear)**
      - ``OUTPUT``
      - [raster]
@@ -1058,7 +1029,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1076,17 +1047,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
 Outputs
 .......
@@ -1125,7 +1088,7 @@ Search ellipse can be rotated by specified angle, the center of
 ellipse located at the grid node.
 Also the minimum number of data points to average can be set, if there
 are not enough points in window, the grid node considered empty and
-will be filled with specified NODATA value.
+will be filled with specified NoData value.
 
 This algorithm is derived from the
 `GDAL grid utility <https://gdal.org/programs/gdal_grid.html>`_.
@@ -1182,13 +1145,13 @@ Basic parameters
      - Minimum number of data points to average.
        If less amount of points found the grid node
        considered empty and will be filled with
-       NODATA marker.
-   * - **Nodata**
+       NoData marker.
+   * - **NoData**
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - No data marker to fill empty points
+     - NoData marker to fill empty points
    * - **Interpolated (moving average)**
      - ``OUTPUT``
      - [raster]
@@ -1231,7 +1194,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1249,17 +1212,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
 Outputs
 .......
@@ -1294,7 +1249,7 @@ Grid (Nearest neighbor)
 The Nearest Neighbor method doesn't perform any interpolation or
 smoothing, it just takes the value of nearest point found in grid node
 search ellipse and returns it as a result.
-If there are no points found, the specified NODATA value will be
+If there are no points found, the specified NoData value will be
 returned.
 
 This algorithm is derived from the
@@ -1344,12 +1299,12 @@ Basic parameters
        Default: 0.0
      - Angle of ellipse rotation in degrees.
        Ellipse rotated counter clockwise.
-   * - **Nodata**
+   * - **NoData**
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - No data marker to fill empty points
+     - NoData marker to fill empty points
    * - **Interpolated (Nearest neighbour)**
      - ``OUTPUT``
      - [raster]
@@ -1393,7 +1348,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1411,17 +1366,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
 Outputs
 .......
@@ -1580,7 +1527,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1704,7 +1651,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1811,11 +1758,11 @@ Basic parameters
 
        Default: 0.0
      - The maximum distance to be generated.
-       The nodata value will be used for pixels beyond
+       The NoData value will be used for pixels beyond
        this distance.
-       If a nodata value is not provided, the output
-       band will be queried for its nodata value.
-       If the output band does not have a nodata value,
+       If a NoData value is not provided, the output
+       band will be queried for its NoData value.
+       If the output band does not have a NoData value,
        then the value 65535 will be used.
        Distance is interpreted according to the value of
        *Distance units*.
@@ -1830,14 +1777,14 @@ Basic parameters
        are closer than the maximum distance from target
        pixels (including the target pixels) instead of
        a distance value.
-   * - **Nodata value to use for the destination proximity raster**
+   * - **NoData value to use for the destination proximity raster**
 
        Optional
      - ``NODATA``
      - [number]
 
        Default: 0.0
-     - Specify the nodata value to use for the output raster
+     - Specify the NoData value to use for the output raster
    * - **Proximity map**
      - ``OUTPUT``
      - [raster]
@@ -1874,7 +1821,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -1892,17 +1839,9 @@ Advanced parameters
      - Defines the data type of the output raster file.
        Options:
 
-       * 0 --- Byte
-       * 1 --- Int16
-       * 2 --- UInt16
-       * 3 --- UInt32
-       * 4 --- Int32
-       * 5 --- Float32
-       * 6 --- Float64
-       * 7 --- CInt16
-       * 8 --- CInt32
-       * 9 --- CFloat32
-       * 10 --- CFloat64
+       .. include:: ../algs_include.rst
+          :start-after: **raster_data_types**
+          :end-before: **end_raster_data_types**
 
 Outputs
 .......
@@ -2014,7 +1953,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
 
 Outputs
@@ -2032,7 +1971,7 @@ Outputs
      - ``OUTPUT``
      - [raster]
      - Single-band output roughness raster.
-       The value -9999 is used as nodata value.
+       The value -9999 is used as NoData value.
 
 Python code
 ...........
@@ -2260,7 +2199,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
    * - **Additional command-line parameters**
 
@@ -2379,7 +2318,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
 
 Outputs
@@ -2397,7 +2336,7 @@ Outputs
      - ``OUTPUT``
      - [raster]
      - Output ruggedness raster.
-       The value -9999 is used as nodata value.
+       The value -9999 is used as NoData value.
 
 Python code
 ...........
@@ -2490,7 +2429,7 @@ Advanced parameters
        For convenience, you can rely on predefined profiles (see
        :ref:`GDAL driver options section <gdal_createoptions>`).
 
-       For Batch Process: separate multiple options with a pipe
+       Batch Process and Model Designer: separate multiple options with a pipe
        character (``|``).
 
 Outputs

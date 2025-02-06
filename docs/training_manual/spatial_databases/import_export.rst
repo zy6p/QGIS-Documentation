@@ -1,4 +1,4 @@
-|LS| Import and Export
+Lesson: Import and Export
 ===============================================================================
 
 Of course, a database with no easy way to migrate data into it and out of it
@@ -32,7 +32,7 @@ You may encounter this error:
   "gist"
 
 This is a known issue regarding the creation *in situ* of a spatial index for
-the data you're importing. To avoid the error, exclude the :kbd:`-I` parameter.
+the data you're importing. To avoid the error, exclude the ``-I`` parameter.
 This will mean that no spatial index is being created directly, and you'll need
 to create it in the database after the data have been imported. (The creation
 of a spatial index will be covered in the next lesson.)
@@ -59,7 +59,7 @@ ogr2ogr
 -------------------------------------------------------------------------------
 
 ogr2ogr is a very powerful tool to convert data into and from postgis to many
-data formats. ogr2ogr is part of the GDAL/OGR Software and has to be installed
+data formats. ogr2ogr is part of the GDAL library and has to be installed
 separately. To export a table from PostGIS to GML, you can use this command:
 
 .. code-block:: bash
@@ -78,25 +78,14 @@ next module is largely devoted to using this tool, we will only briefly mention
 it here.
 
 
-|IC|
+In Conclusion
 -------------------------------------------------------------------------------
 
 Importing and exporting data to and from the database can be done in many
 various ways. Especially when using disparate data sources, you will probably
 use these functions (or others like them) on a regular basis.
 
-|WN|
+What's Next?
 -------------------------------------------------------------------------------
 
 Next we'll look at how to query the data we've created before.
-
-
-.. Substitutions definitions - AVOID EDITING PAST THIS LINE
-   This will be automatically updated by the find_set_subst.py script.
-   If you need to create a new substitution manually,
-   please add it also to the substitutions.txt file in the
-   source folder.
-
-.. |IC| replace:: In Conclusion
-.. |LS| replace:: Lesson:
-.. |WN| replace:: What's Next?

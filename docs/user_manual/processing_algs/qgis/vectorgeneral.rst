@@ -6,6 +6,7 @@ Vector general
    .. contents::
       :local:
       :depth: 1
+      :class: toc-columns
 
 
 .. _qgisassignprojection:
@@ -54,13 +55,12 @@ Parameters
      - [same as input]
 
        Default: ``[Create temporary layer]``
-     - Specify the output layer containing only the duplicates.
+     - Specify the output vector layer.
        One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
-
+          :start-after: **layer_output_types_append**
+          :end-before: **end_layer_output_types_append**
 
 Outputs
 ..........
@@ -98,6 +98,10 @@ layer string field.
 The output layer will have a point geometry reflecting the geocoded location
 as well as a number of attributes associated to the geocoded location.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point features
+
 .. note:: This algorithm is compliant with the `usage policy
  <https://operations.osmfoundation.org/policies/nominatim/>`_ of the
  Nominatim geocoding service provided by the OpenStreetMap Foundation.
@@ -129,13 +133,9 @@ Parameters
      - Specify the output layer containing only the geocoded addresses.
        One of:
 
-       * Create Temporary Layer (``TEMPORARY_OUTPUT``)
-       * Save to File...
-       * Save to Geopackage...
-       * Save to Database Table...
-       * Append to Layer...
-
-       The file encoding can also be changed here.
+       .. include:: ../algs_include.rst
+          :start-after: **layer_output_types_append**
+          :end-before: **end_layer_output_types_append**
 
 Outputs
 ..........
@@ -278,7 +278,6 @@ Parameters
        .. include:: ../algs_include.rst
           :start-after: **layer_output_types**
           :end-before: **end_layer_output_types**
-
 
 Outputs
 ..........
@@ -495,6 +494,10 @@ Finds and removes duplicated geometries.
 Attributes are not checked, so in case two features have identical
 geometries but different attributes, only one of them will be added to
 the result layer.
+
+.. note::
+
+ This algorithm does not require valid geometries as input.
 
 .. seealso:: :ref:`qgisdropgeometries`,
    :ref:`qgisremovenullgeometries`,
@@ -724,34 +727,40 @@ Parameters
          considered equal
 
    * - **Unchanged features**
+
+       Optional
      - ``UNCHANGED``
      - [vector: same as Original layer]
      - Specify the output vector layer containing the unchanged
        features. One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_skip**
+          :end-before: **end_layer_output_types_skip**
 
    * - **Added features**
+
+       Optional
      - ``ADDED``
      - [vector: same as Original layer]
      - Specify the output vector layer containing the added features.
        One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_skip**
+          :end-before: **end_layer_output_types_skip**
 
    * - **Deleted features**
+
+       Optional
      - ``DELETED``
      - [vector: same as Original layer]
      - Specify the output vector layer containing the deleted
        features. One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_skip**
+          :end-before: **end_layer_output_types_skip**
 
 Outputs
 ..........
@@ -812,6 +821,7 @@ If the file is saved in a local folder, you can choose between many
 file formats.
 
 |checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgisdeleteduplicategeometries`,
    :ref:`qgisremovenullgeometries`
@@ -837,8 +847,8 @@ Parameters
      - Specify the output geometryless layer. One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_append**
+          :end-before: **end_layer_output_types_append**
 
 Outputs
 ..........
@@ -871,8 +881,8 @@ Python code
 
 Execute SQL
 -----------
-Runs a simple or complex query with ``SQL`` syntax on the source
-layer.
+Runs a simple or complex query based only on SELECT with ``SQL`` syntax 
+on the source layer.
 
 Input datasources are identified with ``input1``, ``input2``... ``inputN`` and
 a simple query will look like ``SELECT * FROM input1``.
@@ -1010,8 +1020,28 @@ Parameters
      - Description
    * - **Input layers**
      - ``LAYERS``
-     - [vector: any][list]
-     - Input vector layers to export
+     - [vector: any] [list]
+     - List of input vector layers with options associated (filled as a
+       :class:`QgsProcessingParameterDxfLayers
+       <qgis.core.QgsProcessingParameterDxfLayers>` item ---
+       done in GUI by pressing :guilabel:`Configure Layer...` button
+       for each selected layer):
+
+       **Layer** [string] (``layer``)
+         Full path of the input layer to export
+
+       **Output layer attribute** [number] (``attributeIndex``)
+         Attribute index to split the input layer using unique values
+
+       **Output layer name** [string] (``overriddenLayerName``)
+         Overridden layer name to be used in the exported DXF file (the
+         original project layer remains untouched)
+
+       **Allow data defined symbol blocks** [boolean] (``buildDataDefinedBlocks``)
+
+       **Maximum number of symbol blocks** [number] (``dataDefinedBlocksMaximumNumberOfClasses``)
+         ``-1`` means no limitation.
+
    * - **Symbology mode**
      - ``SYMBOLOGY_MODE``
      - [enumeration]
@@ -1029,6 +1059,12 @@ Parameters
 
        Default: 1:1 000 000
      - Default scale of data export.
+   * - **Map theme**
+
+       Optional
+     - ``MAP_THEME``
+     - [map theme]
+     - Match layer styling to the provided map theme.
    * - **Encoding**
      - ``ENCODING``
      - [enumeration]
@@ -1037,13 +1073,20 @@ Parameters
      - ``CRS``
      - [crs]
      - Choose the CRS for the output layer.
+   * - **Extent**
+
+       Optional
+     - ``EXTENT``
+     - [extent]
+     - Limit exported features to those with geometries intersecting the
+       provided extent.
    * - **Use layer title as name**
      - ``USE_LAYER_TITLE``
      - [boolean]
 
        Default: False
-     - Name the output layer with the layer title (as set in QGIS) instead
-       of the layer name.
+     - Name the output layer with the layer title (as set in layer metadata
+       or QGIS Server properties) instead of the layer name.
    * - **Force 2D**
      - ``FORCE_2D``
      - [boolean]
@@ -1054,8 +1097,14 @@ Parameters
      - ``MTEXT``
      - [boolean]
 
-       Default: False
+       Default: True
      - Exports labels as MTEXT or TEXT elements
+   * - **Use only selected features**
+     - ``SELECTED_FEATURES_ONLY``
+     - [boolean]
+
+       Default: False
+     - Exports only the selected features.
    * - **DXF**
      - ``OUTPUT``
      - [file]
@@ -1454,6 +1503,8 @@ Parameters
      - Add a prefix to joined fields in order to easily identify
        them and avoid field name collision
    * - **Joined layer**
+
+       Optional
      - ``OUTPUT``
      - [same as input]
 
@@ -1462,10 +1513,12 @@ Parameters
        One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_skip**
+          :end-before: **end_layer_output_types_skip**
 
    * - **Unjoinable features from first layer**
+
+       Optional
      - ``NON_MATCHING``
      - [same as input]
 
@@ -1500,6 +1553,8 @@ Outputs
      - [same as input]
      - Vector layer with the non-matched features
    * - **Joined layer**
+
+       Optional
      - ``OUTPUT``
      - [same as input]
      - Output vector layer with added attributes from the join
@@ -1621,6 +1676,8 @@ Parameters
      - Add a prefix to joined fields in order to easily identify
        them and avoid field name collision
    * - **Joined layer**
+
+       Optional
      - ``OUTPUT``
      - [same as input]
 
@@ -1629,10 +1686,12 @@ Parameters
        One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_skip**
+          :end-before: **end_layer_output_types_skip**
 
    * - **Unjoinable features from first layer**
+
+       Optional
      - ``NON_MATCHING``
      - [same as input]
 
@@ -1898,6 +1957,8 @@ Parameters
      - [number]
      - Maximum search distance
    * - **Joined layer**
+
+       Optional
      - ``OUTPUT``
      - [same as input]
 
@@ -1906,8 +1967,8 @@ Parameters
        One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_skip**
+          :end-before: **end_layer_output_types_skip**
 
    * - **Unjoinable features from first layer**
      - ``NON_MATCHING``
@@ -2192,12 +2253,16 @@ Reprojects a vector layer in a different CRS. The reprojected layer
 will have the same features and attributes of the input layer.
 
 |checkbox| Allows :ref:`features in-place modification <processing_inplace_edit>`
+of point, line, and polygon features
 
 .. seealso:: :ref:`qgisassignprojection`,
    :ref:`qgisdefinecurrentprojection`, :ref:`qgisfindprojection`
 
 Parameters
 ..........
+
+Basic parameters
+^^^^^^^^^^^^^^^^
 
 .. list-table::
    :header-rows: 1
@@ -2217,6 +2282,35 @@ Parameters
 
        Default: ``EPSG:4326 - WGS 84``
      - Destination coordinate reference system
+   * - **Convert curved geometries to straight segments**
+     - ``CONVERT_CURVED_GEOMETRIES``
+     - [boolean]
+
+       Default: False
+     - If checked, curved geometries will be converted to straight segments in the process,
+       avoiding potential distortion issues.
+   * - **Reprojected**
+     - ``OUTPUT``
+     - [same as input]
+
+       Default: ``[Create temporary layer]``
+     - Specify the output vector layer. One of:
+
+       .. include:: ../algs_include.rst
+          :start-after: **layer_output_types_append**
+          :end-before: **end_layer_output_types_append**
+
+Advanced parameters
+^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 20 20 40
+
+   * - Label
+     - Name
+     - Type
+     - Description
    * - **Coordinate Operation**
 
        Optional
@@ -2228,16 +2322,6 @@ Parameters
        transformation pipeline is required. Requires proj version >= 6.
 
        Read more at :ref:`datum_transformation`.
-   * - **Reprojected**
-     - ``OUTPUT``
-     - [same as input]
-
-       Default: ``[Create temporary layer]``
-     - Specify the output vector layer. One of:
-
-       .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
 
 Outputs
 ..........
@@ -2322,7 +2406,7 @@ Advanced parameters
        Optional
      - ``LAYER_NAME``
      - [string]
-     - Name to use for the output layer 
+     - Name to use for the output layer
    * - **GDAL dataset options**
 
        Optional
@@ -2337,6 +2421,18 @@ Advanced parameters
      - [string]
      - GDAL layer creation options of the output format.
        Separate individual options with semicolons.
+   * - **Action to take on pre-existing file**
+
+     - ``ACTION_ON_EXISTING_FILE``
+     - [enumeration]
+
+       Default: 0
+     - How to manage existing features. Valid methods are:
+
+       0 --- Create or overwrite file
+       1 --- Create or overwrite layer
+       2 --- Append features to existing layer, but do not create new fields
+       3 --- Append features to existing layer, and create new fields if needed  
 
 Outputs
 .......
@@ -2443,6 +2539,10 @@ Geometries and other attributes remain unchanged in the output.
 Optionally, the separator string can be a regular expression
 for added flexibility.
 
+|checkbox| Allows
+:ref:`features in-place modification <processing_inplace_edit>` 
+of point, line, and polygon features
+
 Parameters
 ..........
 
@@ -2481,8 +2581,8 @@ Parameters
      - Specify output vector layer. One of:
 
        .. include:: ../algs_include.rst
-          :start-after: **layer_output_types**
-          :end-before: **end_layer_output_types**
+          :start-after: **layer_output_types_append**
+          :end-before: **end_layer_output_types_append**
 
 Outputs
 ..........
@@ -2574,9 +2674,16 @@ Advanced parameters
      - Type
      - Description
    * - **Output file type**
+
+       Optional
      - ``FILE_TYPE``
      - [enumeration]
-     - Select the extension of the output files
+
+       Default: ``gpkg`` in the dialog window
+     - Select the extension of the output files.
+       If not specified or invalid, the output files format will
+       be the one set in the "Default output vector layer extension"
+       Processing setting.
 
 Outputs
 ..........

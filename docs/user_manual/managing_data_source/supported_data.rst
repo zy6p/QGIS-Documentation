@@ -52,12 +52,11 @@ Many of the features and tools available in QGIS work the same,
 regardless the vector data source.
 However, because of the differences in format specifications
 (GeoPackage, ESRI Shapefile, MapInfo and MicroStation file formats,
-AutoCAD DXF, PostGIS, SpatiaLite, Oracle Spatial, MSSQL
-Spatial, SAP HANA Spatial databases and many more), QGIS may handle some of
-their properties differently.
-Support is provided by the
-`OGR Simple Feature Library <https://gdal.org/drivers/vector/index.html>`_.
-This section describes how to work with these specificities.
+AutoCAD DXF, PostGIS, SpatiaLite, Oracle Spatial, MS SQL Server,
+SAP HANA Spatial databases and many more), QGIS may handle some of
+their properties differently. Support is provided by the
+`GDAL vector drivers <https://gdal.org/drivers/vector/index.html>`_.
+This section describes how to work with these specifics.
 
 .. note::
 
@@ -92,7 +91,7 @@ GeoPackage layers can have JSON fields.
 
 GeoPackage is the default format for vector data in QGIS.
 
-.. index:: ESRI Shapefile format, OGR
+.. index:: ESRI Shapefile format, GDAL
 .. _vector_shapefiles:
 
 ESRI Shapefile format
@@ -113,10 +112,10 @@ An ESRI Shapefile format dataset can also include a file with a
 While it is very useful to have a projection file, it is not
 mandatory.
 A Shapefile format dataset can contain additional files.
-For further details, see the the ESRI technical specification at
-https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf.
+For further details, see the the ESRI `technical specification
+<https://www.esri.com/content/dam/esrisites/sitecore-archive/Files/Pdfs/library/whitepapers/pdfs/shapefile.pdf>`_.
 
-GDAL 3.1 has read-write support for compressed ESRI Shapefile
+GDAL has read-write support for compressed ESRI Shapefile
 format (:file:`shz` and :file:`shp.zip`).
 
 **Improving Performance for ESRI Shapefile format datasets**
@@ -184,7 +183,7 @@ First check that the file meets the following requirements:
 #. The X and Y coordinates fields (if geometry is defined by 
    coordinates) must be specified as numbers.
    The coordinate system is not important.
-#. If you have a CSV file with non-string columns, you must have an
+#. If you have a CSV file with non-string columns, you can have an
    accompanying CSVT file (see section :ref:`csvt_files`).
 
 The elevation point data file :file:`elevp.csv` in the QGIS sample
@@ -245,19 +244,25 @@ Delimited text files also support Z and M coordinates in geometries::
 Using CSVT file to control field formatting
 ...........................................
 
-When loading CSV files, the OGR driver assumes all fields are strings
+When loading CSV files, the GDAL driver assumes all fields are strings
 (i.e. text) unless it is told otherwise.
-You can create a CSVT file to tell OGR (and QGIS) the data type of the
+You can create a CSVT file to tell GDAL (and QGIS) the data type of the
 different columns:
 
 .. csv-table::
     :header: "Type", "Name", "Example"
 
     "Whole number", "Integer", 4
+    "Boolean", "Integer(Boolean)", true
     "Decimal number", "Real", 3.456
     "Date", "Date (YYYY-MM-DD)", 2016-07-28
     "Time", "Time (HH:MM:SS+nn)", 18:33:12+00
     "Date & Time", "DateTime (YYYY-MM-DD HH:MM:SS+nn)", 2016-07-28 18:33:12+00
+    "CoordX", "CoordX", 8.8249
+    "CoordY", "CoordY", 47.2274
+    "Point(X)", "Point(X)", 8.8249
+    "Point(Y)", "Point(Y)", 47.2274
+    "WKT", "WKT", POINT(15 20)
 
 The CSVT file is a **ONE line** plain text file with the data types in
 quotes and separated by commas, e.g.::
@@ -274,6 +279,14 @@ the same name, but :file:`.csvt` as the extension.
 *You can find more information at*
 `GDAL CSV Driver <https://gdal.org/drivers/vector/csv.html>`_.
 
+.. _tip_detect_field_types:
+
+.. tip:: **Detect Field Types**
+
+   Instead of using a CSVT file to tell the data types, QGIS provides the
+   possibility to automatically detect the field types and to change the
+   assumed field types.
+
 
 .. index:: PostGIS, PostgreSQL
 .. _label_postgis:
@@ -285,7 +298,7 @@ PostGIS layers are stored in a PostgreSQL database.
 The advantages of PostGIS are spatial indexing, filtering and
 querying capabilities.
 Using PostGIS, vector functions such as select and identify work more
-accurately than they do with OGR layers in QGIS.
+accurately than they do with GDAL layers in QGIS.
 
 
 .. _tip_postgis_layers:
@@ -305,6 +318,10 @@ tables that can be loaded, and it will load them on request. However, if you
 have trouble loading a PostgreSQL table into QGIS, the information below may
 help you understand QGIS messages and give you directions for modifying
 the PostgreSQL table or view definition to allow QGIS to load it.
+
+.. note::
+
+   A PostgreSQL database can also store QGIS projects.
 
 Primary key
 ...........
@@ -352,9 +369,11 @@ If you want to make a backup of your PostGIS database using the
 styles as saved by QGIS fail to restore afterwards, you need to set
 the XML option to :file:`DOCUMENT` before the restore command:
 
-.. code-block:: sql
-
-   SET XML OPTION DOCUMENT;
+#. Make a PLAIN backup of the ``layer_style`` table
+#. Open the file within a text editor
+#. Change the line ``SET xmloption = content;`` into ``SET XML OPTION DOCUMENT;``
+#. Save the file
+#. Use psql to restore the table in the new database
 
 
 Filter database side
@@ -438,7 +457,7 @@ This will import the Shapefile format dataset :file:`alaska.shp` into the
 PostGIS database *postgis* using the user *postgres* with the password
 *topsecret* on the host server *myhost.de*.
 
-Note that OGR must be built with PostgreSQL to support PostGIS.
+Note that GDAL must be built with PostgreSQL to support PostGIS.
 You can verify this by typing (in |nix|)::
 
   ogrinfo --formats | grep -i post
@@ -498,63 +517,13 @@ The following example creates a GiST index::
          \q to quit
 
   gis_data=# CREATE INDEX sidx_alaska_lakes ON alaska_lakes
-  gis_data-# USING GIST (the_geom GIST_GEOMETRY_OPS);
+  gis_data-# USING GIST (geom GIST_GEOMETRY_OPS);
   CREATE INDEX
   gis_data=# VACUUM ANALYZE alaska_lakes;
   VACUUM
   gis_data=# \q
   gsherman@madison:~/current$
 
-.. index:: PostGIS; ST_Shift_Longitude
-
-Vector layers crossing 180 |degrees| longitude
-----------------------------------------------
-
-Many GIS packages don't wrap vector maps with a geographic reference system
-(lat/lon) crossing the 180 degrees longitude line
-(http://postgis.refractions.net/documentation/manual-2.0/ST_Shift_Longitude.html).
-As result, if we open such a map in QGIS, we could see two widely
-separated locations, that should appear near each other.
-In :numref:`Figure_vector_crossing`, the tiny point on the far left of the map
-canvas (Chatham Islands) should be within the grid, to the right of
-the New Zealand main islands.
-
-.. _figure_vector_crossing:
-
-.. figure:: img/vectorNotWrapping.png
-   :align: center
-
-   Map in lat/lon crossing the 180 |degrees| longitude line
-
-A work-around is to transform the longitude values using PostGIS and the
-**ST_Shift_Longitude** function.
-This function reads every point/vertex in every component of every
-feature in a geometry, and if the longitude coordinate is < 0
-|degrees|, it adds 360 |degrees| to it.
-The result is a 0 |degrees| - 360 |degrees| version of the data to be
-plotted in a 180 |degrees|-centric map.
-
-.. _figure_vector_crossing_map:
-
-.. figure:: img/vectorWrapping.png
-   :align: center
-   :width: 25em
-
-   Crossing 180 |degrees| longitude applying the **ST_Shift_Longitude**
-   function
-
-Usage
-.....
-
-* Import data into PostGIS (:ref:`vector_import_data_in_postgis`) using,
-  for example, the DB Manager plugin.
-* Use the PostGIS command line interface to issue the following command
-  (in this example, "TABLE" is the actual name of your PostGIS table):
-  ``gis_data=# update TABLE set the_geom=ST_Shift_Longitude(the_geom);``
-* If everything went well, you should receive a confirmation about the
-  number of features that were updated.
-  Then you'll be able to load the map and see the difference
-  (Figure_vector_crossing_map_).
 
 .. index:: SpatiaLite, SQLite
 .. _spatialite_data:
@@ -654,7 +623,7 @@ it is not possible to create such a mapping, you might still view the features,
 but editing might not work.
 
 Adding tables
-^^^^^^^^^^^^^
+.............
 
 When adding a table as a layer, the SAP HANA provider uses the table's primary
 key to map it to a unique feature id. Therefore, to have full feature editing
@@ -665,10 +634,10 @@ get the best performance, your primary key should be a single column of type
 ``INTEGER``.
 
 Adding views
-^^^^^^^^^^^^
+............
 
 When adding a view as a layer, the SAP HANA provider cannot automatically
-indentify columns that unambiguously identify a feature. Furthermore, some views
+identify columns that unambiguously identify a feature. Furthermore, some views
 are read-only and cannot be edited.
 
 To have full feature editing support, the view must be updatable (check column
@@ -679,6 +648,59 @@ columns can be given by using
 selecting the columns in the :guilabel:`Feature id` column. For best
 performance, the :guilabel:`Feature id` value should be a single ``INTEGER``
 column.
+
+.. index:: PostGIS; ST_Shift_Longitude
+
+Layers crossing 180° longitude
+==============================
+
+Many GIS packages don't wrap layers with a geographic reference system
+(lat/lon) crossing the 180 degrees longitude line.
+As result, if we open such a layer in QGIS, we could see two widely
+separated locations, that should appear near each other.
+In :numref:`Figure_vector_crossing`, the tiny point on the far left of the map canvas
+(Chatham Islands) should be within the grid, to the right of
+the New Zealand main islands.
+
+.. _figure_vector_crossing:
+
+.. figure:: img/vectorNotWrapping.png
+   :align: center
+
+   Map in lat/lon crossing the 180° longitude line
+
+Solving in PostGIS
+------------------
+
+A work-around is to transform the longitude values using PostGIS and the
+`ST_ShiftLongitude <https://postgis.net/docs/ST_Shift_Longitude.html>`_ function.
+This function reads every point/vertex in every component of every feature in a geometry,
+and shifts its longitude coordinate from -180..0° to 180..360° and vice versa if between these ranges.
+This function is symmetrical so the result is a 0..360° representation of a -180..180° data
+and a -180..180° representation of a 0..360° data.
+
+.. _figure_vector_crossing_map:
+
+.. figure:: img/vectorWrapping.png
+   :align: center
+   :width: 25em
+
+   Crossing 180° longitude applying the **ST_ShiftLongitude** function
+
+
+#. Import data into PostGIS (:ref:`vector_import_data_in_postgis`) using,
+   for example, the DB Manager plugin.
+#. Use the PostGIS command line interface to issue the following command:
+
+   .. code-block:: sql
+
+      -- In this example, "TABLE" is the actual name of your PostGIS table
+      update TABLE set geom=ST_ShiftLongitude(geom);
+
+#. If everything went well, you should receive a confirmation about
+   the number of features that were updated.
+   Then you'll be able to load the map and see the difference
+   (Figure_vector_crossing_map_).
 
 
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE
@@ -691,8 +713,6 @@ column.
    :width: 1.3em
 .. |dbManager| image:: /static/common/dbmanager.png
    :width: 1.5em
-.. |degrees| unicode:: 0x00B0
-   :ltrim:
 .. |nix| image:: /static/common/nix.png
    :width: 1em
 .. |osx| image:: /static/common/osx.png

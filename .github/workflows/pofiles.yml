@@ -3,36 +3,49 @@ name: Update English PO files for translation
 on:
   push:
     branches:
-      - release_3.16
+      - release_3.34
     paths:
       - 'docs/**'
 
-  schedule: #run at 02:00 UTC on Wednesday
-    - cron:  '00 02 * * 03'
-
   workflow_dispatch:
+
+permissions:  # added using https://github.com/step-security/secure-repo
+  contents: read
 
 jobs:
   prepare_translation:
 
+    permissions:
+      contents: write  # for stefanzweifel/git-auto-commit-action to push code in repo
     if: github.repository_owner == 'qgis'
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
+    - name: Harden Runner
+      uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4
       with:
-        ref: release_3.16
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          files.pythonhosted.org:443
+          github.com:443
+          pypi.org:443
+          qgis.org:443
 
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
+    - name: checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
-        python-version: 3.7
+        ref: release_3.34
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+      with:
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
           python -m pip install --upgrade pip
-          pip install sphinx sphinx-intl sphinxext.rediraffe pyYAML
+          pip install sphinx sphinx-intl sphinxext.rediraffe pyYAML sphinx_togglebutton sphinx_copybutton
 
     - name: Generate English PO files
       id: "generate-po-files"
@@ -44,7 +57,7 @@ jobs:
 
     - name: Commit the changes in the PO files      
       id: "auto-commit-action"
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
       with:
         commit_message: Update English PO files
 

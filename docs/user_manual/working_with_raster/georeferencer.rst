@@ -10,10 +10,10 @@ Georeferencer
    .. contents::
       :local:
 
-The |georefRun| Georeferencer is a tool for generating world files for rasters.
-It allows you to reference rasters to geographic or projected coordinate systems by
+The |georefRun| Georeferencer is a tool for generating world files for layers.
+It allows you to reference rasters or vectors to geographic or projected coordinate systems by
 creating a new GeoTiff or by adding a world file to the existing image. The basic
-approach to georeferencing a raster is to locate points on the raster for which
+approach to georeferencing a layer is to locate points on it for which
 you can accurately determine coordinates.
 
 **Features**
@@ -26,13 +26,15 @@ you can accurately determine coordinates.
 +--------------------------------+------------------------------+-------------------------------+----------------------------+
 | Icon                           | Purpose                      | Icon                          | Purpose                    |
 +================================+==============================+===============================+============================+
-| |addRasterLayer|               | Open raster                  | |start|                       | Start georeferencing       |
+| |addRasterLayer|               | Open raster                  | |addOgrLayer|                 | Open vector                |
++--------------------------------+------------------------------+-------------------------------+----------------------------+
+| |start|                        | Start georeferencing         |                               |                            |
 +--------------------------------+------------------------------+-------------------------------+----------------------------+
 | |gdalScript|                   | Generate GDAL Script         | |loadGCPpoints|               | Load GCP Points            |
 +--------------------------------+------------------------------+-------------------------------+----------------------------+
 | |saveGCPPointsAs|              | Save GCP Points As           | |transformSettings|           | Transformation settings    |
 +--------------------------------+------------------------------+-------------------------------+----------------------------+
-| |addGCPPoint|                  | Add Point                    | |deleteGCPPoint|              | Delete Point               |
+| |addGCPPoint|                  | Add GCP Point                | |deleteGCPPoint|              | Delete GCP Point           |
 +--------------------------------+------------------------------+-------------------------------+----------------------------+
 | |moveGCPPoint|                 | Move GCP Point               | |pan|                         | Pan                        |
 +--------------------------------+------------------------------+-------------------------------+----------------------------+
@@ -70,7 +72,7 @@ transformation type. Based on the input parameters and data, the Georeferencer w
 compute the world file parameters. The more coordinates you provide, the better
 the result will be.
 
-The first step is to start QGIS and click on :menuselection:`Raster -->` |georefRun|
+The first step is to start QGIS and click on :menuselection:`Layer -->` |georefRun|
 :menuselection:`Georeferencer`, which appears in the QGIS menu bar. The Georeferencer
 dialog appears as shown in :numref:`figure_georeferencer_dialog`.
 
@@ -96,7 +98,7 @@ Entering ground control points (GCPs)
    |addRasterLayer| button. The raster will show up in the main working
    area of the dialog. Once the raster is loaded, we can start to enter reference
    points.
-#. Using the |addGCPPoint| :sup:`Add Point` button, add points to the
+#. Using the |addGCPPoint| :sup:`Add GCP Point` button, add points to the
    main working area and enter their coordinates (see Figure :numref:`figure_georeferencer_add_points`).
    For this procedure you have the following options:
 
@@ -106,12 +108,31 @@ Entering ground control points (GCPs)
      :sup:`From map canvas` button to add the X and Y coordinates with the help of a
      georeferenced map already loaded in the QGIS map canvas. The CRS will be set
      automatically.
-
+   - When entering GCPs from the main map canvas, you have the option to hide 
+     the georeferencer window while selecting points from the main canvas. 
+     If the |checkbox| :guilabel:`Automatically hide georeferencer window` 
+     checkbox is ticked, after clicking |pencil| :guilabel:`From Map Canvas`, 
+     the main georeferencer window will be hidden until a point is added on the 
+     map canvas. 
+     The :guilabel:`Enter Map Coordinates` dialog will remain open. 
+     If the box is unchecked, both windows will remain open while selecting a 
+     point on the map canvas. 
+     This option only takes effect when the georeferencer window is not docked 
+     in the main interface. 
 #. Continue entering points. You should have at least four points, and the more
    coordinates you can provide, the better the result will be. There are
    additional tools for zooming and panning the working area in
    order to locate a relevant set of GCP points.
 
+   .. tip::
+
+    To avoid constant switching between |pan| :sup:`Pan`, |addGCPPoint| :sup:`Add GCP point`
+    and |moveGCPPoint| :sup:`Move GCP point` buttons,
+    you may use the keyboard arrow keys for moving and the mouse wheel for scaling the georeferenced map conveniently.
+
+#. After you provide a few points, you can use the |linkQGisToGeoref| :sup:`Link QGIS to Georeferencer`
+   and/or |linkGeorefToQGis| :sup:`Link Georeferencer to QGIS` buttons that will adjust, respectively,
+   the map extent of the main QGIS window to the present view in Georeferencer and/or vice versa.
 #. With the |moveGCPPoint| tool, you can move the GCPs in both the canvas and the
    georeferencing window, if you need to correct them.
 
@@ -121,7 +142,6 @@ Entering ground control points (GCPs)
    :align: center
 
    Add points to the raster image
-
 
 The points that are added to the map will be stored in a separate text file
 (:file:`[filename].points`) usually together with the raster image. This allows
@@ -203,10 +223,10 @@ you might want to choose 'Nearest neighbour'. In contrast,
 It is possible to choose between five different resampling methods:
 
 #. Nearest neighbour
-#. Linear
-#. Cubic
-#. Cubic Spline
-#. Lanczos
+#. Bilinear (2x2 kernel)
+#. Cubic (4x4 kernel)
+#. Cubic B-Spline (4x4 kernel)
+#. Lanczos (6x6 kernel)
 
 Define the transformation settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -219,10 +239,10 @@ raster.
   raster image actually won't be transformed. In this case, the
   :guilabel:`Output raster` field is not activated, because only a new world file will
   be created.
-* For all other transformation types, you have to define an :guilabel:`Output
-  raster`. As default, a new file ([filename]_modified) will be created in the
+* For all other transformation types, you have to define an :guilabel:`Output raster`.
+  As default, a new file ([filename]_modified) will be created in the
   same folder together with the original raster image.
-* As a next step, you have to define the :guilabel:`Target SRS` (Spatial Reference
+* As a next step, you have to define the :guilabel:`Target CRS` (Coordinate Reference
   System) for the georeferenced raster (see :ref:`label_projections`).
 * If you like, you can **generate a pdf map** and also **a pdf report**.
   The report includes information about the used transformation parameters,
@@ -233,7 +253,9 @@ raster.
 * The |checkbox| :guilabel:`Use 0 for transparency when needed` can be activated,
   if pixels with the value 0 shall be visualized transparent. In our example
   toposheet, all white areas would be transparent.
-* Finally, |checkbox| :guilabel:`Load in QGIS when done` loads the output raster
+* The |checkbox| :guilabel:`Save GCP Points` will store GCP Points in a file next 
+  to the output raster.
+* Finally, |checkbox| :guilabel:`Load in project when done` loads the output raster
   automatically into the QGIS map canvas when the transformation is done.
 
 Show and adapt raster properties
@@ -248,11 +270,19 @@ raster file that you want to georeference.
 Configure the georeferencer
 ...........................
 
-* You can define whether you want to show GCP coordinates and/or IDs.
-* As residual units, pixels and map units can be chosen.
-* For the PDF report, a left and right margin can be defined and you can also
-  set the paper size for the PDF map.
-* Finally, you can activate to |checkbox| :guilabel:`Show Georeferencer window docked`.
+You can customize the behavior of the georeferencer in :menuselection:`Settings 
+--> Configure Georeferencer` (or use keyboard shortcut :kbd:`Ctrl+P`). 
+
+* Under :guilabel:`Point Tip` you can use the checkboxes to toggle displaying GCP 
+  IDs and X/Y coordinates in both the Georeferencer window and the main map canvas. 
+* :guilabel:`Residual Units` controls whether residual units are given in pixels 
+  or map units
+* :guilabel:`PDF Report` allows you to set margin size in mm for the report export
+* :guilabel:`PDF Map` allows you to choose a paper size for the map export
+* Finally, you can activate to |checkbox| :guilabel:`Show Georeferencer window 
+  docked`. 
+  This will dock the Georeferencer window in the main QGIS window rather than 
+  showing it as a separate window that can be minimized. 
 
 .. _`georeferencer_running`:
 
@@ -271,6 +301,8 @@ the new georeferenced raster.
    source folder.
 
 .. |addGCPPoint| image:: /static/common/mActionAddGCPPoint.png
+   :width: 1.5em
+.. |addOgrLayer| image:: /static/common/mActionAddOgrLayer.png
    :width: 1.5em
 .. |addRasterLayer| image:: /static/common/mActionAddRasterLayer.png
    :width: 1.5em

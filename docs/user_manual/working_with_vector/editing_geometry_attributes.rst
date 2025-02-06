@@ -10,7 +10,8 @@
       :local:
 
 QGIS has various capabilities for editing OGR, SpatiaLite, PostGIS,
-MSSQL Spatial and Oracle Spatial vector layers and tables.
+MS SQL Server and Oracle Spatial vector layers and tables.
+They can be of 2D or 3D geometry type.
 
 .. note::
    The procedure for editing GRASS layers is different - see section
@@ -20,7 +21,7 @@ MSSQL Spatial and Oracle Spatial vector layers and tables.
 
 .. attention:: **Concurrent Edits**
 
-   This version of QGIS does not track if somebody else is editing the
+   QGIS does not track if somebody else is editing the
    same feature at the same time as you are.
    The last person to save the edits wins.
 
@@ -86,7 +87,7 @@ Global :ref:`snapping and digitizing settings <digitizing_options>`
 project from the :menuselection:`Project --> Snapping Options...` menu.
 In the :guilabel:`Snapping and Digitizing Options`, you can also configure
 some other properties (snapping layers, scale limit, topology...)
-The guilabel:`Snapping Toolbar` gives access to most of these features.
+The :guilabel:`Snapping Toolbar` gives access to most of these features.
 
 By default, snapping is disabled in a project until you press the
 |snapping| :sup:`Enable snapping` button or press :kbd:`S`.
@@ -114,14 +115,24 @@ There are three options to select the layer(s) to snap to:
   Snapping will not occur to a layer that is not checked in the
   snapping options dialog.
 
-As for snapping mode, you can choose between ``Vertex``, ``Segment``,
-``Area``, ``Centroid``, ``Middle of Segments`` and ``Line Endpoints``.
+When moving or creating vertex, you can opt for the following snapping modes:
+
+* |snappingVertex| :guilabel:`Vertex`
+* |snappingSegment| :guilabel:`Segment`: snaps along a line or a polygon perimeter.
+  If topological editing is enabled, then a new vertex is added at the snapping location.
+* |snappingArea| :guilabel:`Area`: guarantees that the snap point lies anywhere on a polygon's area,
+  not necessarily on its boundary
+* |snappingCentroid| :guilabel:`Centroid`: snaps to the centroid of the geometry of a feature.
+  In case of a multipart geometry, the target point may be distinct from the existing parts.
+* |snappingMiddle| :guilabel:`Middle of Segments` on line or polygon feature
+* |snappingEndpoint| :guilabel:`Line Endpoints`: snaps to the first or last vertex of every part
+  of a line or polygon feature.
 
 .. index:: Snapping icons
 
 QGIS will show different *snap* icons depending on the kind of *snap*:
 
-.. list-table::
+.. list-table:: Snapping icons
 
    * - .. figure:: img/snap_vertex_icon.png
      - .. figure:: img/snap_segment_icon.png
@@ -262,7 +273,7 @@ topological functionalities.
 Enable topological editing
 --------------------------
 
-The |topopologicalEditing| :sup:`Topological editing` button helps
+The |topologicalEditing| :sup:`Topological editing` button helps
 when editing and maintaining features with common boundaries.
 With this option enabled, QGIS 'detects' shared boundaries.
 When you move common vertices/segments, QGIS will also move them in
@@ -271,8 +282,8 @@ the geometries of the neighboring features.
 Topological editing works with features from different layers, as long
 as the layers are visible and in editing mode.
 
-In layer with Z values, topological editing will interpolate the Z value of 
-the vertex based on the value of the edge used for the connection.
+In layer with Z or M values, topological editing will interpolate the Z or M
+value of the vertex based on the value of the edge used for the connection.
 
 .. index:: Avoid overlap
    seealso: Avoid overlap; Topology
@@ -403,39 +414,41 @@ is writable (i.e., its files are not read-only).
 In general, tools for editing vector layers are divided into a
 digitizing and an advanced digitizing toolbar, described in section
 :ref:`sec_advanced_edit`.
-You can select and unselect both under
-:menuselection:`View --> Toolbars -->`.
+You can select and unselect both under :menuselection:`View --> Toolbars -->`.
 
-Using the basic digitizing tools, you can perform the following
-functions:
+Using the basic digitizing tools, you can perform the following functions:
 
 .. _table_editing:
+.. table:: Vector layer basic editing toolbar
 
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| Icon                         | Purpose                                        | Icon                     | Purpose                                   |
-+==============================+================================================+==========================+===========================================+
-| |allEdits|                   | Access to save, rollback or cancel changes     | |toggleEditing|          | Turn on or off edit status of selected    |
-|                              | in all or selected layers simultaneously       |                          | layer(s) based on the active layer status |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |saveEdits|                  | Save edits to the active layer                 |                          |                                           |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |newTableRow|                | Add new record                                 | |capturePoint|           | Add Feature: Capture Point                |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |captureLine|                | Add Feature: Capture Line                      | |capturePolygon|         | Add Feature: Capture Polygon              |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |vertexTool|                 | Vertex Tool (All Layers)                       | |vertexToolActiveLayer|  | Vertex Tool (Current Layer)               |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |multiEdit|                  | Modify the attributes of all                   |                          |                                           |
-|                              | selected features simultaneously               |                          |                                           |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |deleteSelectedFeatures|     | Delete Selected features from the active layer | |editCut|                | Cut Features from the active layer        |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |editCopy|                   | Copy selected Features from the active layer   | |editPaste|              | Paste Features into the active layer      |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
-| |undo|                       | Undo changes in the active layer               | |redo|                   | Redo changes in active layer              |
-+------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | Tool                         | Purpose                                        | Tool                     | Purpose                                   |
+  +==============================+================================================+==========================+===========================================+
+  | |allEdits|                   | Access to save, rollback or cancel changes     | |toggleEditing|          | Turn on or off edit status of selected    |
+  |                              | in all or selected layers simultaneously       |                          | layer(s) based on the active layer status |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |saveEdits|                  | Save edits to the active layer                 |                          |                                           |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |digitizeWithSegment|        | Digitize using straight segments               | |digitizeWithCurve|      | Digitize using curve lines                |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |streamingDigitize|          | Enable freehand digitizing                     | |digitizeShape|          | Digitize polygon of regular shape         |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |newTableRow|                | Add new record                                 | |capturePoint|           | Add Feature: Capture Point                |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |captureLine|                | Add Feature: Capture Line                      | |capturePolygon|         | Add Feature: Capture Polygon              |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |vertexTool|                 | Vertex Tool (All Layers)                       | |vertexToolActiveLayer|  | Vertex Tool (Current Layer)               |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |checkbox| :guilabel:`Show   | Set whether the vertex editor panel should     |  |multiEdit|             | Modify the attributes of all              |
+  | Vertex Editor`               | auto-open                                      |                          | selected features simultaneously          |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |deleteSelectedFeatures|     | Delete Selected features from the active layer | |editCut|                | Cut Features from the active layer        |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |editCopy|                   | Copy selected Features from the active layer   | |editPaste|              | Paste Features into the active layer      |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
+  | |undo|                       | Undo changes in the active layer               | |redo|                   | Redo changes in active layer              |
+  +------------------------------+------------------------------------------------+--------------------------+-------------------------------------------+
 
-Table Editing: Vector layer basic editing toolbar
 
 Note that while using any of the digitizing tools, you can still
 :ref:`zoom or pan <zoom_pan>` in the map canvas without losing the
@@ -459,6 +472,37 @@ of all features unless
    Remember to |saveEdits| :sup:`Save Layer Edits` regularly.
    This will also check that your data source can accept all the changes.
 
+.. index::
+   single: Digitizing tools; Draw curves
+   single: Digitizing tools; Stream digitizing
+.. _drawing_methods:
+
+Geometry editing techniques
+---------------------------
+
+When a geometry drawing tool (mainly the ones that add, split, reshape features)
+is enabled for a line or polygon based layer, you can select the technique for
+adding new vertices:
+
+* The |digitizeWithSegment| :sup:`Digitize with Segment`: draws straight segment
+  whose start and end points are defined by left clicks.
+* The |digitizeWithCurve| :sup:`Digitize with Curve`: draws curve line based on
+  three consecutive nodes defined by left clicks (start, point along the arc, end).
+  If the geometry type does not support curves, then consecutive smaller segments
+  are used to approximate the curvature.
+* The |streamingDigitize| :sup:`Stream Digitizing`: draws lines in freehand mode,
+  i.e. nodes are added following cursor movement in the map canvas and
+  a :guilabel:`Streaming Tolerance`.
+  The streaming tolerance defines the spacing between consecutive vertices.
+  Currently, the only supported unit is pixels (``px``). Only the starting left
+  click and the ending right click are necessary in this mode.
+* The |digitizeShape| :sup:`Digitize Shape`: triggers tools on the
+  :ref:`Shape Digitizing Toolbar <shape_edit>` to draw a polygon of a regular shape.
+
+The selected technique remains while switching among the digitizing tools.
+You can combine any of the first three methods while drawing the same geometry.
+
+
 .. index:: Adding features, Rubber band
 .. _add_feature:
 
@@ -476,6 +520,8 @@ button and you can enter attributes in the feature form that opens.
 To create features with the spatially enabled tools, you first digitize the
 geometry then enter its attributes. To digitize the geometry:
 
+#. (Optional as it is the default) Select the |digitizeWithSegment|
+   :sup:`Digitize With Segment` geometry drawing method
 #. Left-click on the map area to create the first point of your new feature.
    For point features, this should be enough and trigger, if required,
    the feature form to fill in their attributes.
@@ -485,25 +531,26 @@ geometry then enter its attributes. To digitize the geometry:
    the :ref:`snap-to-grid <snap_to_grid>` or the :ref:`advanced digitizing
    <advanced_digitizing_panel>` panel to accurately position each vertex.
 
-   Along with placing nodes clik by click, lines and polygons can be:
+   Along with drawing straight segments between nodes you click one by one,
+   lines and polygons can be:
 
    * :ref:`traced automatically <tracing>`, accelerating the digitization.
      This will create consecutive straight lines between the vertices you
-     place.
+     place, following existing features.
    * free-hand digitized, pressing :kbd:`R` or activating |streamingDigitize|
-     :sup:`Stream digitizing` in the :guilabel:`Advanced Digitizing Toolbar`.
-
-   .. note::
-    Pressing :kbd:`Delete` or :kbd:`Backspace` key reverts the last
-    node you add.
-
-#. When you have finished adding points, right-click anywhere on the map area
-   to confirm you have finished entering the geometry of that feature.
+     :sup:`Stream Digitizing`.
+   * drawn as curve, pressing :kbd:`Ctrl+Shift+G` or activating |digitizeWithCurve|
+     :sup:`Digitize with Curve`.
 
    .. note::
     While digitizing line or polygon geometries, you can switch back and forth
-    between the linear :guilabel:`Add feature` tools and :ref:`circular string
-    tools <add_circular_string>` to create compound curved geometries.
+    between the geometry drawing methods, allowing you to create features
+    mixing straight segments, free-hand ones and curved parts.
+
+#. Press :kbd:`Delete` or :kbd:`Backspace` key to revert the last node(s) you
+   may wrongly add.
+#. When you have finished adding points, right-click anywhere on the map area
+   to confirm you have finished entering the geometry of that feature.
 
    .. tip:: **Customize the digitizing rubber band**
 
@@ -674,6 +721,20 @@ Red circles will appear when hovering vertices.
 
      Moving the top vertex snaps all the vertices to the grid
 
+* **Converting adjacent segments to/from curve**: Select the center vertex of the segment you want
+  to convert, hit the :kbd:`O` letter key.
+  If the vertex was in a curve, the curve is converted into straight lines.
+  If the vertex was between two straight lines, they are converted into a curve.
+  A first or a last vertex of a line can't be converted to a center vertex curve.
+  The layer must be compatible with curve geometry type.
+
+  .. _figure_vertex_convert_curve:
+
+  .. figure:: img/vertex_convert_curve.png
+     :align: center
+
+     Switch from curve to straight lines with :kbd:`O` letter
+
 Each change made with the vertex tool is stored as a separate entry in the
 :guilabel:`Undo` dialog. Remember that all operations support
 topological editing when this is turned on.
@@ -686,18 +747,27 @@ The Vertex Editor Panel
 .......................
 
 With enabling a vertex tool, you also open the :guilabel:`Vertex Editor` panel.
-Right-clicking over a feature fills the panel with the list of all the
-vertices of the feature with their :guilabel:`x`, :guilabel:`y`
-(:guilabel:`z`, :guilabel:`m` if applicable) coordinates and
-:guilabel:`r` (for the radius, in case of circular geometry).
-The feature is also made exclusive for editing, meaning that the edit of
-any other features is disabled: new vertices can only be added to the bound
-feature, selecting and moving of vertices and segments
-by clicking or dragging the map canvas is only possible for that feature.
-Also, select a row in the table does select the corresponding vertex
-in the map canvas, and vice versa.
-Change a coordinate in the table and the vertex position is updated.
-You can also select multiple rows and delete them altogether.
+Right-clicking over a feature fills the panel with the list of all the vertices of the feature
+with their :guilabel:`x`, :guilabel:`y` (:guilabel:`z`, :guilabel:`m` if applicable) coordinates
+and :guilabel:`r` (for the radius, in case of circular geometry).
+The feature is also made exclusive for editing, meaning that the edit of any other features is disabled:
+
+* Selecting a row in the table does select the corresponding vertex in the map canvas, and vice versa.
+* Clicking or dragging over the map canvas will only select or move vertices and segments of that feature
+* Change a coordinate in the table and the vertex position is updated.
+  This is a convenient way to edit Z coordinate or M value on vertices.
+* You can also select multiple rows and delete them altogether.
+* New vertices can only be added to the bound feature
+
+If you do not want the :guilabel:`Vertex Editor` panel to immediately show
+each time you interact with vertex tools (and potentially hide other panels
+or disturb panels placement), uncheck the :guilabel:`Auto-open table` entry
+in the |hamburgerMenu| :sup:`Options` menu at the top of the panel.
+You can then also close the panel.
+To reopen the panel, you would need to right-click over a panel or toolbar and
+select it in the list or tick the :guilabel:`Show vertex editor` entry in
+the :guilabel:`Digitizing toolbar`.
+
 
 .. _figure_edit_vertex:
 
@@ -705,6 +775,37 @@ You can also select multiple rows and delete them altogether.
    :align: center
 
    Vertex editor panel showing selected nodes
+
+.. index:: 3D
+.. _digitizing_zm:
+
+Rules of Z coordinate or M value assignment
+-------------------------------------------
+
+Digitizing 3D vector features or features with M value is not that different from (X,Y) 2D layers'.
+Tools and options described in this chapter are still available
+and help you place the vertex or point in a planar environment.
+Then you may need to handle the Z coordinate (or M value) assignment:
+
+* By default, QGIS will assign to new vertices the :guilabel:`Default Z value`
+  (respectively :guilabel:`Default M value`) set in the
+  :menuselection:`Settings --> Options --> Digitizing` tab.
+  If the :ref:`Advanced Digitizing Panel <advanced_digitizing_panel>` is in
+  use, then the value is taken from its :guilabel:`z`
+  (respectively :guilabel:`m`) widget.
+* When snapping to a vertex, the new or moved vertex takes the snapped one's Z or M value.
+* When snapping to a segment while the topological editing is on,
+  then the new vertex Z or M value is interpolated along the segment.
+* If the :guilabel:`z` (respectively :guilabel:`m`) widget of the
+  :guilabel:`Advanced Digitizing Panel` is |locked| locked, then its value is
+  applied to the vertex, taking precedence over any snapped vertex or segment
+  Z or M value.
+
+To edit Z or M values of an existing feature, you can use the
+:ref:`Vertex editor panel <vertex_editor_panel>`.
+To create features with custom Z or M values you may want to rely on the
+:guilabel:`Advanced Digitizing Panel`.
+
 
 .. _clipboard_feature:
 
@@ -781,9 +882,9 @@ make sure the schemas match.
    'string' and want to paste values from another attribute column that
    has a greater length the length of the column size will be extended
    to the same amount.
-   This is because the GDAL Shapefile driver starting with GDAL/OGR
-   1.10 knows to auto-extend string and integer fields to dynamically
-   accommodate for the length of the data to be inserted.
+   This is because the GDAL Shapefile driver knows to auto-extend string
+   and integer fields to dynamically  accommodate for the length of
+   the data to be inserted.
 
 .. _delete_feature:
 
@@ -888,65 +989,39 @@ The same functions are available for editing all layers of the project.
 Advanced digitizing
 ===================
 
-.. following provides space between header and table!!
-
-\
-
-\
-
 .. _table_advanced_editing:
+.. table:: Vector layer advanced editing toolbar
 
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| Icon                      | Purpose                                 | Icon                   | Purpose                 |
-+===========================+=========================================+========================+=========================+
-| |cad|                     | Enable Advanced Digitizing Tools        |                        |                         |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |digitizeWithCurve|       | Digitize with Curve                     | |streamingDigitize|    | Enable Stream Digitizing|
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |moveFeature|             | Move Feature(s)                         | |moveFeatureCopy|      | Copy and Move Feature(s)|
-| |moveFeatureLine|         |                                         | |moveFeatureCopyLine|  |                         |
-| |moveFeaturePoint|        |                                         | |moveFeatureCopyPoint| |                         |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |rotateFeature|           | Rotate Feature(s)                       | |simplifyFeatures|     | Simplify Feature        |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |scaleFeature|            | Scale Feature                           |                        |                         |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |addRing|                 | Add Ring                                | |addPart|              | Add Part                |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |fillRing|                | Fill Ring                               | |reverseLine|          | Swap direction          |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |deleteRing|              | Delete Ring                             | |deletePart|           | Delete Part             |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |offsetCurve|             | Offset Curve                            | |reshape|              | Reshape Features        |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |splitParts|              | Split Parts                             | |splitFeatures|        | Split Features          |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |mergeFeatAttributes|     | Merge Attributes of Selected Features   | |mergeFeatures|        | Merge Selected Features |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |rotatePointSymbols|      | Rotate Point Symbols                    | |offsetPointSymbols|   | Offset Point Symbols    |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
-| |trimExtend|              | Trim or Extend Feature                  |                        |                         |
-+---------------------------+-----------------------------------------+------------------------+-------------------------+
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | Icon                      | Purpose                                 | Icon                   | Purpose                 |
+  +===========================+=========================================+========================+=========================+
+  | |cad|                     | Enable Advanced Digitizing Tools        |                        |                         |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |moveFeature|             | Move Feature(s)                         | |moveFeatureCopy|      | Copy and Move Feature(s)|
+  | |moveFeatureLine|         |                                         | |moveFeatureCopyLine|  |                         |
+  | |moveFeaturePoint|        |                                         | |moveFeatureCopyPoint| |                         |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |rotateFeature|           | Rotate Feature(s)                       | |simplify|             | Simplify Feature        |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |scaleFeature|            | Scale Feature                           |                        |                         |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |addRing|                 | Add Ring                                | |addPart|              | Add Part                |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |fillRing|                | Fill Ring                               | |reverseLine|          | Swap direction          |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |deleteRing|              | Delete Ring                             | |deletePart|           | Delete Part             |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |offsetCurve|             | Offset Curve                            | |reshape|              | Reshape Features        |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |splitParts|              | Split Parts                             | |splitFeatures|        | Split Features          |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |mergeFeatureAttributes|  | Merge Attributes of Selected Features   | |mergeFeatures|        | Merge Selected Features |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |rotatePointSymbols|      | Rotate Point Symbols                    | |offsetPointSymbols|   | Offset Point Symbols    |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
+  | |trimExtend|              | Trim or Extend Feature                  |                        |                         |
+  +---------------------------+-----------------------------------------+------------------------+-------------------------+
 
-Table Advanced Editing: Vector layer advanced editing toolbar
-
-.. index::
-   single: Digitizing tools; Draw curves
-   single: Digitizing tools; Stream digitizing
-.. _draw_curves:
-
-Straight, curve and stream digitizing
--------------------------------------
-
-The |digitizeWithCurve| :sup:`Digitize with Curve` tool allows you to draw curves in layers with
-geometries that support curves. Digitizing a curve requires to provide three points along the curve
-(start, point along the arc, end) which define it.
-
-The |streamingDigitize| :sup:`Stream Digitizing` tool allows you to activate and deactivate stream 
-digitizing which allows to create features in freehand mode. 
-
-The streaming tolerance affects the spacing between consecutive vertices.
-Currently, the only supported unit is pixels (``px``).
 
 .. index::
    single: Digitizing tools; Move feature
@@ -1041,11 +1116,11 @@ in the widget that appears in the upper corner of the canvas.
 Simplify Feature
 ----------------
 
-The |simplifyFeatures| :sup:`Simplify Feature` tool allows you to interactively
+The |simplify| :sup:`Simplify Feature` tool allows you to interactively
 reshape a line or polygon geometry by reducing or densifying the number of
 vertices, as long as the geometry remains valid:
 
-#. Select the |simplifyFeatures| :sup:`Simplify Feature` tool.
+#. Select the |simplify| :sup:`Simplify Feature` tool.
 #. Click on the feature or drag a rectangle over the features.
 #. A dialog pops up allowing you to define the :guilabel:`Method` to apply, ie
    whether you would like to:
@@ -1083,7 +1158,7 @@ vertices, as long as the geometry remains valid:
 
 .. note:: Unlike the feature simplification option in :menuselection:`Settings -->
    Options --> Rendering` menu which simplifies the geometry just for rendering,
-   the |simplifyFeatures| :sup:`Simplify Feature` tool permanently modifies
+   the |simplify| :sup:`Simplify Feature` tool permanently modifies
    feature's geometry in data source.
 
 
@@ -1102,6 +1177,16 @@ The |addPart| :sup:`Add Part` can also be used to add a geometry to a geometryle
 feature. First, select the feature in the attribute table and digitize the new
 geometry with the |addPart| :sup:`Add Part` tool.
 
+.. note:: **Order of vertices in polygon parts**
+
+  Unlike the OGC standards, QGIS doesn't constrain vertices
+  of the exterior boundary of a polygon feature to be ordered counterclockwise.
+  Thus, you can find both directions in a layer.
+  However, every parts of the same multipolygon feature
+  will have their outer vertices ordered following the same direction.
+
+  You can however use the :ref:`qgisforcerhr` algorithm to constrain features of a layer
+  to have vertices of their outer boundaries ordered in the clockwise direction.
 
 .. index::
    single: Digitizing tools; Delete Part
@@ -1124,16 +1209,32 @@ To delete a part, simply click within the target part.
 Add Ring
 --------
 
-You can create ring polygons using the |addRing|
-:sup:`Add Ring` icon in the toolbar. This means that inside an existing area, it
-is possible to digitize further polygons that will occur as a 'hole', so
-only the area between the boundaries of the outer and inner polygons remains
-as a ring polygon.
+You can create ring polygons using the |addRing| :sup:`Add Ring` icon in the toolbar.
+This means that inside an existing area, it is possible to digitize further polygons
+that will occur as a 'hole', so only the area between the boundaries
+of the outer and inner polygons remains as a ring polygon.
 
-.. FixMe: I think this tool should behave as below
-.. Like many digitizing tools, the |addRing| :sup:`Add Ring` tool adds ring to all
-.. selected features if any, otherwise all overlapping features are pierced.
+To add a ring:
 
+#. Select the feature(s) to modify
+#. Activate the |addRing| :sup:`Add Ring` tool
+#. Draw a polygon within the selected geometries,
+   using the aforementioned :ref:`techniques <drawing_methods>`.
+   A hole appears in the selected geometries.
+#. If no geometry is selected when the ring is drawn,
+   then a hole is added to each of the polygons the ring is drawn over.
+
+.. note:: **Order of vertices in polygon rings**
+
+  Unlike the OGC standards, QGIS doesn't constrain vertices
+  of the exterior boundary of a polygon feature to be ordered counterclockwise.
+  Thus, you can find both directions in a layer.
+  However, every rings of the same (multi)polygon feature
+  will have their vertices ordered in the opposite direction to the outer boundary's.
+
+  You can however use the :ref:`qgisforcerhr` algorithm to constrain features of a layer
+  to have vertices of their outer boundaries ordered in the clockwise direction,
+  and vertices of their interior rings ordered in the counter-clockwise direction.
 
 .. index::
    single: Digitizing tools; Fill Ring
@@ -1238,20 +1339,25 @@ The tool can be applied to the edited layer (the geometries are modified)
 or also to background layers (in which case it creates copies of the lines /
 rings and adds them to the edited layer).
 It is thus ideally suited for the creation of distance line layers.
-The :guilabel:`User Input` dialog pops-up, showing the displacement distance.
+The :guilabel:`User Input` dialog pops-up, showing the displacement distance
+and other settings.
 
-To create a shift of a line layer, you must first go into editing mode
+To create a shift of a line or polygon layer, you must first go into editing mode
 and activate the |offsetCurve| :sup:`Offset Curve` tool.
 Then click on a feature to shift it.
 Move the mouse and click where wanted or enter the desired distance in
-the user input widget.
+the user input widget. Holding :kbd:`Ctrl` during the 2nd click will make an offset copy. 
 Your changes may then be saved with the |saveEdits|
 :sup:`Save Layer Edits` tool.
 
+For geometries on background layers make sure that snapping is on and hold :kbd:`Ctrl`
+to select the geometry from the background. Also hold :kbd:`Ctrl` when doing the second click.
+Geometries will be converted to the target layer geometry type. 
 
-QGIS options dialog (Digitizing tab then **Curve offset tools** section) allows
-you to configure some parameters like **Join style**, **Quadrant segments**,
-**Miter limit**.
+QGIS options dialog (Digitizing tab then **Curve offset tools** section) or
+the |settings| icon in the :guilabel:`User Input` dialog allows
+you to configure :ref:`some parameters <curve_offset_tool>` like **Join style**,
+**Quadrant segments**, **Miter limit** and **End cap style**.
 
 .. index::
    single: Digitizing tools; Reverse Line
@@ -1284,17 +1390,17 @@ To split line or polygon features:
 
 #. Select the |splitFeatures| :sup:`Split Features` tool.
 #. Draw a line across the feature(s) you want to split.
-   If a selection is active, only selected features are split. When set,
-   :ref:`default values or clauses <configure_field>` are applied to corresponding
-   fields and other attributes of the parent feature are by default copied to the
-   new features.
-#. You can then as usually modify any of the attributes of any resulting feature.
+   If a selection is active, only selected features are split.
+   The original feature is then assigned the biggest geometry resulting from the splitting,
+   and new features are created for the remaining parts.
+   Fields of the features are filled/updated according to the datasource provider rules
+   or their :ref:`splitting policy <policies>`.
+#. You can then as usual modify any of the attributes of any resulting feature.
 
 .. tip:: **Split a polyline into new features in one-click**
 
    Using the |splitFeatures| :sup:`Split Features` tool, snap and click on an
-   existing vertex of a polyline feature to split that feature into two new
-   features.
+   existing vertex of a polyline feature to split that feature into two new features.
 
 
 .. index::
@@ -1338,7 +1444,7 @@ a multipolygon/multipolyline/multipoint feature is created.
    * selecting a row in the table and pressing :guilabel:`Take attributes from
      selected feature` to use the values of this initial feature;
    * pressing the :guilabel:`Take attributes from the largest geometry`
-     to use the attributes from the longest line feature
+     to use the attributes from the longest line feature,
      the largest polygon, or the multipoints with the most parts;
    * pressing :guilabel:`Skip all fields` to use empty attributes;
    * expanding the drop down menu at the top of the table, select any of the
@@ -1361,7 +1467,7 @@ a multipolygon/multipolyline/multipoint feature is created.
 Merge attributes of selected features
 -------------------------------------
 
-The |mergeFeatAttributes| :sup:`Merge Attributes of Selected Features` tool
+The |mergeFeatureAttributes| :sup:`Merge Attributes of Selected Features` tool
 allows you to apply same attributes to features without merging their boundaries.
 The dialog is the same as the ``Merge Selected Features`` tool's except that
 unlike that tool, selected objects are kept with their geometry while some of their
@@ -1384,7 +1490,7 @@ change the rotation of point symbols in the map canvas.
 
    #. In the :menuselection:`Layer Properties --> Symbology` dialog, browse to
       the symbol editor dialog.
-   #. Click the |dataDefined| :guilabel:`Data-defined override` widget near the
+   #. Click the |dataDefine| :guilabel:`Data-defined override` widget near the
       :guilabel:`Rotation` option of the top :guilabel:`Marker` level (preferably)
       of the symbol layers.
    #. Choose a field in the :guilabel:`Field Type` combobox. Values of this
@@ -1456,52 +1562,77 @@ offset coordinates for the features whose symbol is moved in the map canvas.
 Trim/Extend Feature
 -------------------
 
-When a digitized line is too short or too long to snap to another line (missing or
-crossing the line), it is necessary to be able to extend or shorten the segment.
+The |trimExtend| :sup:`Trim/Extend` tool allows you to shorten or lengthen
+segments of a (multi)line or (multi)polygon geometry to converge with a
+selected segment (the cutting line). This results in a modified geometry
+with a vertex snapped to the target segment or in its prolongation.
+Depending on how the selected geometries are placed in relation to each
+other, the tool will either:
 
-The |trimExtend| :sup:`Trim/Extend` tool allows you to also modify
-(multi)lines AND (multi)polygons.
-Moreover, it is not necessarily the end of the lines that is
-concerned; any segment of a geometry can be modified.
+* **Trim**: removes parts of the line segment or polygon boundary,
+  beyond the cutting line
+* **Extend**: extends polygon boundaries or line segments so that they can
+  snap to the cutting line.
 
-.. note:: This can lead to invalid geometries.
+In order to trim or extend existing geometries:
 
-.. note:: You must activate segment snapping for this tool to work.
+#. Enable appropriate :ref:`snapping settings <snapping_options>` on segment
+   for the involved layer(s)
+#. Select the |trimExtend| :sup:`Trim/Extend` tool
+#. Click the target limit segment, i.e. the segment with respect to which
+   you want to extend or trim another segment. It appears highlighted.
+#. Move to the segment you want to trim or extend. It does not need to be
+   the last segment of the geometry, but has to be on the active layer.
+#. Hover over the segment, and QGIS displays a preview of what the feature's
+   geometry would be. If OK, click the segment.
+   In the case of a trim, you must select the part that should be shortened.
+#. When both segments are in 3D, the tool performs an interpolation on
+   the limit segment to get the Z value.
 
-The tool asks you to select a limit (a segment) with respect to which
-another segment will be extended or trimmed.
-Unlike the vertex tool, a check is performed to modify only the layer
-being edited.
+.. attention:: Pay attention to the modified geometry while using the |trimExtend|
+  :sup:`Trim/Extend` tool. Depending on the inputs, it can create invalid
+  geometries, potentially resulting in failure at layer saving.
 
-When both segments are in 3D, the tool performs an interpolation on
-the limit segment to get the Z value.
-
-In the case of a trim, you must select the part that will be shortened
-by clicking on it.
 
 .. _shape_edit:
 
 Shape digitizing
 ================
 
-The :guilabel:`Shape Digitizing` toolbar offers a set of tools to draw
-regular shapes and curved geometries.
+The :guilabel:`Shape Digitizing` toolbar offers a set of tools to draw lines
+or polygons features of regular shape.
+It is synchronized with the |digitizeShape| :sup:`Digitize Shape`
+:ref:`geometry drawing method <drawing_methods>` you can select on the :guilabel:`Digitizing Toolbar`.
+To use it:
+
+#. Display the toolbar: :menuselection:`View --> Toolbars --> Shape Digitizing`
+#. Select a tool that creates or modifies the shape of a geometry,
+   e.g. |captureLine| :sup:`Add line feature`, |capturePolygon| :sup:`Add polygon feature`,
+   |addPart| :sup:`Add part`, |addRing| :sup:`Add ring`, |reshape| :sup:`Reshape Features`, ...
+#. The |digitizeWithSegment| :sup:`Digitize with segment` button
+   on the :guilabel:`Digitizing Toolbar` is enabled.
+   The first time, you may need to switch it to the |digitizeShape| :sup:`Digitize Shape`
+   in order to enable tools on the :guilabel:`Shape Digitizing` toolbar.
+#. Pick a shape digitizing tool and draw.
 
 .. index:: Circular string
 .. _add_circular_string:
 
-Add Circular string
--------------------
+Circular string by radius
+-------------------------
 
-The |circularStringCurvePoint| :sup:`Add circular string` or
-|circularStringRadius| :sup:`Add circular string by radius` buttons allow users
-to add line or polygon features with a circular geometry.
+The |circularStringRadius| :sup:`Circular string by radius` button allows
+to add line or polygon features with a circular geometry, given two nodes
+on the curve and a radius:
 
-Creating features with these tools follow the same rule as of other digitizing
-tools: left-click to place vertices and right-click to finish the geometry.
-While drawing the geometry, you can switch from one tool to the other as well
-as to the :ref:`linear geometry tools <add_feature>`, creating some coumpound
-geometries.
+#. Left click twice to place the two points on the geometry.
+#. A :guilabel:`Radius` widget in the top right corner of the map canvas
+   displays current radius (corresponding to distance between the points).
+   Edit that field to the value you want.
+#. An overview of the arcs matching these constraints is displayed while
+   moving around the cursor. Right-click to validate when the expected
+   arc is shown.
+#. Add a new point to start shaping another arc.
 
 .. note:: **Curved geometries are stored as such only in compatible data provider**
 
@@ -1523,23 +1654,23 @@ Circles are converted into circular strings. Therefore, as explained in
 :ref:`add_circular_string`, if allowed by the data provider, it will be saved as a
 curved geometry, if not, QGIS will segmentize the circular arcs.
 
-- |circle2Points| :sup:`Add circle from 2 points`: The two points define the diameter
+- |circle2Points| :sup:`Circle from 2 points`: The two points define the diameter
   and the orientation of  the circle. (Left-click, right-click)
-- |circle3Points| :sup:`Add circle from 3 points`: Draws a circle from three
+- |circle3Points| :sup:`Circle from 3 points`: Draws a circle from three
   known points on the circle. (Left-click, left-click, right-click)
-- |circleCenterPoint| :sup:`Add circle from center and a point`: Draws a circle
+- |circleCenterPoint| :sup:`Circle by a center point and another point`: Draws a circle
   with a given center and a point on the circle (Left-click, right-click).
   When used with the :ref:`advanced_digitizing_panel` this tool can become a
   "Add circle from center and radius" tool by setting and locking the distance
   value after first click.
-- |circle3Tangents| :sup:`Add circle from 3 tangents`: Draws a circle that is
+- |circle3Tangents| :sup:`Circle from 3 tangents`: Draws a circle that is
   tangential to three segments. **Note that you must activate snapping to
   segments** (See :ref:`snapping_tolerance`). Click on a segment to add a
   tangent. If two tangents are parallel, the coordinates of the click on the
   first parallel tangent are used to determine the positioning of the circle.
   If three tangents are parallel, an error message appears and the input
   is cleared. (Left-click, left-click, right-click)
-- |circle2TangentsPoint| :sup:`Add circle from 2 tangents and a point`: Similar
+- |circle2TangentsPoint| :sup:`Circle from 2 tangents and a point`: Similar
   to circle from 3 tangents, except that you have to select two tangents, enter
   a radius and select the desired center.
 
@@ -1555,15 +1686,15 @@ below.
 Ellipses cannot be converted as circular strings, so they will always be
 segmented.
 
-* |ellipseCenter2Points| :sup:`Add Ellipse from center and two points`: Draws an
+* |ellipseCenter2Points| :sup:`Ellipse from center and two points`: Draws an
   ellipse with a given center, major axis and minor axis. (Left-click,
   left-click, right-click)
-* |ellipseCenterPoint| :sup:`Add Ellipse from center and a point`: Draws an
+* |ellipseCenterPoint| :sup:`Ellipse from center and a point`: Draws an
   ellipse into a bounding box with the center and a corner. (Left-click,
   right-click)
-* |ellipseExtent| :sup:`Add Ellipse from extent`: Draws an ellipse into a bounding
+* |ellipseExtent| :sup:`Ellipse from extent`: Draws an ellipse into a bounding
   box with two opposite corners. (Left-click, right-click)
-* |ellipseFoci| :sup:`Add Ellipse from foci`: Draws an ellipse by 2 points for
+* |ellipseFoci| :sup:`Ellipse from foci`: Draws an ellipse by 2 points for
   foci and a point on the ellipse. (Left-click, left-click, right-click)
 
 .. index:: Draw rectangles
@@ -1626,8 +1757,8 @@ The Advanced Digitizing panel
 When capturing, reshaping, splitting new or existing geometries you also have the
 possibility to use the Advanced Digitizing panel. You can digitize lines exactly
 parallel or perpendicular to a particular angle or lock lines to specific angles.
-Furthermore, you can enter coordinates directly so that you can make a precise
-definition of your new geometry.
+Furthermore, you can make a precise definition of your new geometry by entering
+X and Y coordinates as well as Z  for 3D features, or M values.
 
 .. _figure_advanced_digitizing:
 
@@ -1636,7 +1767,7 @@ definition of your new geometry.
 
    The Advanced Digitizing panel
 
-The :guilabel:`Advanced Digitizing` panel can be open either with a right-click
+The :guilabel:`Advanced Digitizing` panel can be opened either with a right-click
 on the toolbar, from :menuselection:`View --> Panels -->` menu or pressing
 :kbd:`Ctrl+4`. Once the panel is visible, click the |cad| :sup:`Enable advanced
 digitizing tools` button to activate the set of tools.
@@ -1663,15 +1794,66 @@ At the top of the :guilabel:`Digitizing panel`, you find the following buttons:
   (more at :ref:`parallel_or_perpendicular`)
 * |cadPerpendicular| :sup:`Perpendicular` to draw a line perpendicular to an
   existing one (more at :ref:`parallel_or_perpendicular`)
+* |extractVertices| :sup:`Construction Tools` provides a couple of options that
+  constrain the vertices placement based on extrapolated coordinates of
+  existing elements:
+
+  * |unchecked| :guilabel:`Line Extension`: hover over a segment and you get
+    a purple dotted line extending the segment across the map canvas.
+    You can snap the vertex anywhere on this virtual line.
+  * |unchecked| :guilabel:`X/Y Point`: hover over a vertex and you get
+    a purple dotted line along its X or Y coordinate, across the map canvas.
+    You can snap the vertex anywhere on this virtual line.
+    It is even possible to hover over two different vertices, generating virtual
+    coordinate lines for both, and snap to their intersection.
+* |circlesIntersection| :sup:`2-circle Point Intersection`: allows you to
+  digitize a point or vertex at the intersection of two circles.
+  (more at :ref:`circle_intersection`).
 * |settings| :sup:`Snap to common angles`: when moving the cursor,
   displays a virtual line that you can snap to to add the next vertex.
-  The snapping line is defined by the last added vertex and an (absolute or
-  relative to previous segment) angle from a preset list
-  (following steps of 5°, 10°, 15°, 18°, 22.5°, 30°, 45° or 90°).
+  The snapping line is defined by the last added vertex
+  and an (absolute or relative to previous segment) angle from a preset list
+  (following steps of 0.1°, 0.5°, 1°, 5°, 10°, 15°, 18°, 22.5°, 30°, 45° or 90°).
   Choose :guilabel:`Do not snap to common angles` to disable this feature.
-* |floater| :sup:`Floater`: displays a live preview of the coordinates
-  right next to the cursor. The values can be accessed and edited using
-  the :ref:`panel's shortcuts <digitizing_panel_shortcuts>`.
+
+  :ref:`Snapping to features <snapping_options>` can be used along with
+  snapping to common angles for accurate digitizing.
+  For a fine-grained control on how the target element to snap to is retained,
+  you can indicate whether to prioritize snapping to features over common angles,
+  and vice-versa under the :guilabel:`Snapping priority` entry.
+  You can switch from one method to the other during the digitizing operation,
+  and this avoids disabling any of the snapping options in the meantime.
+  Press :kbd:`N` (or :kbd:`Shift+N`) during a digitizing operation to cycle through the angles list.
+  
+* |floater| :sup:`Floater settings`: if the :guilabel:`Show floater` item is checked,
+  a contextual menu with digitizing information follows the cursor during digitizing.
+  The values can be accessed using the :ref:`panel's shortcuts <digitizing_panel_shortcuts>`,
+  edited and |locked| :sup:`Locked` after validation (pressing :kbd:`Enter`).
+  The type of information to display can be selected in the bottom part of the menu:
+
+  * :guilabel:`Show distance`
+  * :guilabel:`Show angle`
+  * :guilabel:`Show XY coordinates`
+  * :guilabel:`Show Z value`
+  * :guilabel:`Show M value`
+  * :guilabel:`Show bearing/azimuth`
+  * :guilabel:`Show common snapping angle`
+
+
+Below the toolbar, you will find a number of text boxes whose value reflects
+by default the position or movement of the cursor in the map canvas.
+Editing these values helps you constrain the position of the items you edit:
+
+* :guilabel:`d` for the distance from a reference position, usually the last
+  edited vertex
+* :guilabel:`a` for the angle (absolute or relative) from a reference position,
+  usually the last edited segment
+* :guilabel:`x` for the X coordinate of the pointer
+* :guilabel:`y` for the Y coordinate of the pointer
+* :guilabel:`z` for the default Z value or the Z coordinate of the vertex
+  or segment under the pointer
+* :guilabel:`m` for the default M value or the M value of the vertex or segment
+  under the pointer
 
 
 .. _digitizing_panel_shortcuts:
@@ -1682,25 +1864,27 @@ Keyboard shortcuts
 To speed up the use of Advanced Digitizing Panel, there are a couple of keyboard
 shortcuts available:
 
-+----------+-------------------+-------------------------------+---------------------------------------+
-| Key      | Simple            | :kbd:`Ctrl+` or :kbd:`Alt+`   | :kbd:`Shift+`                         |
-+==========+===================+===============================+=======================================+
-| :kbd:`D` | Set distance      | Lock distance                 | \                                     |
-+----------+-------------------+-------------------------------+---------------------------------------+
-| :kbd:`A` | Set angle         | Lock angle                    | Toggle relative angle to last segment |
-+----------+-------------------+-------------------------------+---------------------------------------+
-| :kbd:`X` | Set X coordinate  | Lock X coordinate             | Toggle relative X to last vertex      |
-+----------+-------------------+-------------------------------+---------------------------------------+
-| :kbd:`Y` | Set Y coordinate  | Lock Y coordinate             | Toggle relative Y to last vertex      |
-+----------+-------------------+-------------------------------+---------------------------------------+
-| :kbd:`Z` | Set Z coordinate  | Lock Z coordinate             | Toggle relative Z to last vertex      |
-+----------+-------------------+-------------------------------+---------------------------------------+
-| :kbd:`M` | Set M value       | Lock M value                  | Toggle relative M to last vertex      |
-+----------+-------------------+-------------------------------+---------------------------------------+
-| :kbd:`C` | Toggle construction mode                                                                  |
-+----------+-------------------------------------------------------------------------------------------+
-| :kbd:`P` | Toggle perpendicular and parallel modes                                                   |
-+----------+-------------------------------------------------------------------------------------------+
+.. table:: Keyboard shortcuts of the Advanced Digitizing Panel tools
+
+  +----------+-------------------+-------------------------------+---------------------------------------+
+  | Key      | Simple            | :kbd:`Ctrl+` or :kbd:`Alt+`   | :kbd:`Shift+`                         |
+  +==========+===================+===============================+=======================================+
+  | :kbd:`D` | Set distance      | Lock distance                 | \                                     |
+  +----------+-------------------+-------------------------------+---------------------------------------+
+  | :kbd:`A` | Set angle         | Lock angle                    | Toggle relative angle to last segment |
+  +----------+-------------------+-------------------------------+---------------------------------------+
+  | :kbd:`X` | Set X coordinate  | Lock X coordinate             | Toggle relative X to last vertex      |
+  +----------+-------------------+-------------------------------+---------------------------------------+
+  | :kbd:`Y` | Set Y coordinate  | Lock Y coordinate             | Toggle relative Y to last vertex      |
+  +----------+-------------------+-------------------------------+---------------------------------------+
+  | :kbd:`Z` | Set Z coordinate  | Lock Z coordinate             | Toggle relative Z to last vertex      |
+  +----------+-------------------+-------------------------------+---------------------------------------+
+  | :kbd:`M` | Set M value       | Lock M value                  | Toggle relative M to last vertex      |
+  +----------+-------------------+-------------------------------+---------------------------------------+
+  | :kbd:`C` | Toggle construction mode                                                                  |
+  +----------+-------------------------------------------------------------------------------------------+
+  | :kbd:`P` | Toggle perpendicular and parallel modes                                                   |
+  +----------+-------------------------------------------------------------------------------------------+
 
 .. note:: Z coordinate and M value options are available only if
   compatible with the layer geometry dimension.
@@ -1724,21 +1908,30 @@ to start editing the feature, i.e.:
 #. Type the Y coordinate value you want and press :kbd:`Enter` or click the
    |locked| button to their right to lock the mouse to the Y axis on the map
    canvas.
-#. If available and relevant, proceed as above to add the Z coordinate and
-   M value (respectively :guilabel:`z` or :guilabel:`m` text box).
+#. If the layer has Z coordinate or M values, the corresponding :guilabel:`z`
+   or :guilabel:`m` widget is enabled and displays its default value,
+   as set in :menuselection:`Settings --> Options --> Digitizing` tab.
 
-   Two blue dotted lines and a green cross identify the exact coordinates you
+   #. Click the :guilabel:`z` or :guilabel:`m` text box (or use respectively
+      the :kbd:`Z` or :kbd:`M` keyboard shortcut).
+   #. Type the coordinate value you want and press :kbd:`Enter` or click the
+      |locked| button to their right to lock the value in the widget.
+
+   .. note:: Read :ref:`digitizing_zm` for details on how Z coordinate and
+    M values are automatically determined from existing features.
+
+#. Two blue dotted lines and a green cross identify the exact coordinates you
    entered.
-#. Start digitizing by clicking on the map canvas; a vertex is added at
-   the green cross position.
+   Click on the map canvas to add a vertex at the green cross position.
 
    .. figure:: img/advanced_digitizing_coordinates.png
       :align: center
 
       Start drawing at given coordinates
 
-#. You can continue digitizing by free hand, adding a new set of coordinates,
-   or you can type the segment's **length** (distance) and **angle**.
+#. You can proceed as above, adding a new set of coordinates for the next vertex,
+   or switch to another :ref:`mode of digitizing <drawing_methods>`
+   (e.g. segment, curve or stream).
 
 #. If you want to draw a segment of a given length:
 
@@ -1797,7 +1990,7 @@ Continuous lock
 ---------------
 
 Both in absolute or relative reference digitizing, angle, distance, X, Y, Z
-and M constraints can be locked continuously by clicking the |lockedRepeat|
+and M constraints can be locked continuously by clicking the |lockRepeating|
 :guilabel:`Continuous lock` buttons. Using continuous lock allows you to
 digitize several points or vertexes using the same constraints.
 
@@ -1839,6 +2032,28 @@ click on the |cadParallel| :sup:`Parallel` icon (keyboard shortcut :kbd:`P` twic
 These two tools just find the right angle of the perpendicular and
 parallel angle and lock this parameter during your editing.
 Unlock the angle parameter to cancel their use in the middle of the process.
+
+.. _circle_intersection:
+
+2-circle point intersection
+---------------------------
+
+To add a vertex at the intersection of two circles, follow these steps:
+
+#. Click the |circlesIntersection| :sup:`2-circle Point Intersection` icon.
+#. A dialog will open where you can define the parameters for
+   :guilabel:`Circle #1` and :guilabel:`Circle #2`.
+#. Click on the map canvas, and the tool will automatically calculate the
+   :guilabel:`X` and :guilabel:`Y` coordinates for the centers of both circles.
+#. Enter the distance :guilabel:`d` for each circle.
+#. The tool will calculate and display the two intersection points of the circles.
+#. Click one of the intersection points to add the new vertex.
+
+   .. figure:: img/circles_intersection.png
+      :align: center
+
+      2-circle Point Intersection
+
 
 .. _construction_mode:
 
@@ -1995,11 +2210,11 @@ To edit features in-place:
    :width: 1.5em
 .. |circleCenterPoint| image:: /static/common/mActionCircleCenterPoint.png
    :width: 1.5em
-.. |circularStringCurvePoint| image:: /static/common/mActionCircularStringCurvePoint.png
+.. |circlesIntersection| image:: /static/common/circlesintersection.png
    :width: 1.5em
 .. |circularStringRadius| image:: /static/common/mActionCircularStringRadius.png
    :width: 1.5em
-.. |dataDefined| image:: /static/common/mIconDataDefine.png
+.. |dataDefine| image:: /static/common/mIconDataDefine.png
    :width: 1.5em
 .. |deletePart| image:: /static/common/mActionDeletePart.png
    :width: 2em
@@ -2009,7 +2224,11 @@ To edit features in-place:
    :width: 1.5em
 .. |delta| image:: /static/common/delta.png
    :width: 1.5em
+.. |digitizeShape| image:: /static/common/mActionDigitizeShape.png
+   :width: 1.5em
 .. |digitizeWithCurve| image:: /static/common/mActionDigitizeWithCurve.png
+   :width: 1.5em
+.. |digitizeWithSegment| image:: /static/common/mActionDigitizeWithSegment.png
    :width: 1.5em
 .. |editCopy| image:: /static/common/mActionEditCopy.png
    :width: 1.5em
@@ -2027,17 +2246,21 @@ To edit features in-place:
    :width: 1.5em
 .. |ellipseFoci| image:: /static/common/mActionEllipseFoci.png
    :width: 1.5em
+.. |extractVertices| image:: /static/common/mAlgorithmExtractVertices.png
+   :width: 1.5em
 .. |fileSaveAs| image:: /static/common/mActionFileSaveAs.png
    :width: 1.5em
 .. |fillRing| image:: /static/common/mActionFillRing.png
    :width: 1.5em
 .. |floater| image:: /static/common/floater.png
    :width: 1.5em
+.. |hamburgerMenu| image:: /static/common/mIconHamburgerMenu.png
+   :width: 1.5em
+.. |lockRepeating| image:: /static/common/lock_repeating.png
+   :width: 1.5em
 .. |locked| image:: /static/common/locked.png
    :width: 1.5em
-.. |lockedRepeat| image:: /static/common/lock_repeating.png
-   :width: 1.5em
-.. |mergeFeatAttributes| image:: /static/common/mActionMergeFeatureAttributes.png
+.. |mergeFeatureAttributes| image:: /static/common/mActionMergeFeatureAttributes.png
    :width: 1.5em
 .. |mergeFeatures| image:: /static/common/mActionMergeFeatures.png
    :width: 1.5em
@@ -2101,13 +2324,25 @@ To edit features in-place:
    :width: 1.5em
 .. |settings| image:: /static/common/settings.png
    :width: 1.5em
-.. |simplifyFeatures| image:: /static/common/mActionSimplify.png
+.. |simplify| image:: /static/common/mActionSimplify.png
    :width: 1.5em
 .. |snapping| image:: /static/common/mIconSnapping.png
    :width: 1.5em
+.. |snappingArea| image:: /static/common/mIconSnappingArea.png
+   :width: 1.5em
+.. |snappingCentroid| image:: /static/common/mIconSnappingCentroid.png
+   :width: 1.5em
+.. |snappingEndpoint| image:: /static/common/mIconSnappingEndpoint.png
+   :width: 1.5em
 .. |snappingIntersection| image:: /static/common/mIconSnappingIntersection.png
    :width: 1.5em
+.. |snappingMiddle| image:: /static/common/mIconSnappingMiddle.png
+   :width: 1.5em
+.. |snappingSegment| image:: /static/common/mIconSnappingSegment.png
+   :width: 1.5em
 .. |snappingSelf| image:: /static/common/mIconSnappingSelf.png
+   :width: 1.5em
+.. |snappingVertex| image:: /static/common/mIconSnappingVertex.png
    :width: 1.5em
 .. |splitFeatures| image:: /static/common/mActionSplitFeatures.png
    :width: 1.5em
@@ -2117,13 +2352,13 @@ To edit features in-place:
    :width: 1.5em
 .. |toggleEditing| image:: /static/common/mActionToggleEditing.png
    :width: 1.5em
-.. |topopologicalEditing| image:: /static/common/mIconTopologicalEditing.png
+.. |topologicalEditing| image:: /static/common/mIconTopologicalEditing.png
    :width: 1.5em
 .. |tracing| image:: /static/common/mActionTracing.png
    :width: 1.5em
 .. |trimExtend| image:: /static/common/mActionTrimExtend.png
    :width: 1.5em
-.. |unchecked| image:: /static/common/checkbox_unchecked.png
+.. |unchecked| image:: /static/common/unchecked.png
    :width: 1.3em
 .. |undo| image:: /static/common/mActionUndo.png
    :width: 1.5em

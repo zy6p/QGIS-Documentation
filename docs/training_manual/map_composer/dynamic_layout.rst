@@ -1,4 +1,4 @@
-|LS| Creating a Dynamic Print Layout
+Lesson: Creating a Dynamic Print Layout
 ======================================================================
 
 Now that you have learned to create a basic map layout we go a step
@@ -7,16 +7,16 @@ extent and to the page properties, e.g. when you change the size of
 the page.
 Also, the date of creation will adapt dynamically.
 
-|moderate| |FA| Creating the dynamic map canvas
-----------------------------------------------------------------------
+:abbr:`★★☆ (Moderate level)` Follow Along: Creating the dynamic map canvas
+----------------------------------------------------------------------------
 
 #. Load the ESRI Shapefile format datasets
    :file:`protected_areas.shp`, :file:`places.shp`, :file:`rivers.shp`
    and :file:`water.shp` into the map canvas and adapt its properties
    to suit your own convenience.
 #. After everything is rendered and symbolized to your liking,
-   click the |newLayout| :sup:`New Print Layout` icon in the toolbar
-   or choose :menuselection:`File --> New Print Layout`.
+   click the |newLayout| :sup:`New Print Layout` icon in the :guilabel:`Project` toolbar
+   or choose :menuselection:`Project -->` |newLayout| :menuselection:`New Print Layout`.
    You will be prompted to choose a title for the new print layout.
 #. We want to create a map layout consisting of a header and a map of
    the region near Swellendam, South Africa.
@@ -31,10 +31,10 @@ Also, the date of creation will adapt dynamically.
    Go to the :guilabel:`Layout` panel and scroll down to the
    :guilabel:`Variables` section.
    The first variable will define the margin.
-   Press the |signPlus| button and type in the name
+   Press the |symbologyAdd| button and type in the name
    ``sw_layout_margin``.
    Set the value to ``7.5``.
-   Press the |signPlus| button again and type in the name
+   Press the |symbologyAdd| button again and type in the name
    ``sw_layout_height_header``.
    Set the value to ``36``.
 #. Now you are ready to create the position and the size of the map
@@ -69,7 +69,7 @@ Also, the date of creation will adapt dynamically.
    canvas map extent.
    Go to :guilabel:`Item Properties` again and choose the
    :guilabel:`Grids` section.
-   Insert a grid by clicking the |signPlus| button.
+   Insert a grid by clicking the |symbologyAdd| button.
    Click on :guilabel:`Modify grid ...` and set the
    :guilabel:`Interval` for :guilabel:`X`, :guilabel:`Y` and
    :guilabel:`Offset` according to the map scale you chose in the
@@ -77,7 +77,7 @@ Also, the date of creation will adapt dynamically.
    The :guilabel:`Grid type` :guilabel:`Cross` is very well suited
    for our purposes.
 
-|moderate| |FA| Creating the dynamic header
+:abbr:`★★☆ (Moderate level)` Follow Along: Creating the dynamic header
 -------------------------------------------------------------------------------
 
 #. Insert a rectangle which will contain the header with the
@@ -139,12 +139,12 @@ Also, the date of creation will adapt dynamically.
 .. figure:: img/dynamic_layout_structure.png
    :align: center
 
-|moderate| |FA| Creating labels for the dynamic header
+:abbr:`★★☆ (Moderate level)` Follow Along: Creating labels for the dynamic header
 ---------------------------------------------------------------------------------------
 
 #. The title of your QGIS project can be included automatically.
    The title is set in the :guilabel:`Project Properties`.
-   Insert a label with the |addLabel| :sup:`Add Label` button and
+   Insert a label with the |label| :sup:`Add Label` button and
    enter the name ``project title (variable)``.
    In the :guilabel:`Main Properties` of the
    :guilabel:`Items Properties` Panel enter the expression::
@@ -193,7 +193,7 @@ Also, the date of creation will adapt dynamically.
 #. The third label will include information about your organisation.
    First we will create some variables in the :guilabel:`Variables`
    menu of the :guilabel:`Item Properties`.
-   Go to the :guilabel:`Layout` menu, click the |signPlus| button
+   Go to the :guilabel:`Layout` menu, click the |symbologyAdd| button
    each time and enter the names ``o_department``, ``o_name`` ,
    ``o_adress`` and ``o_postcode``.
    In the second row enter the information about your organisation.
@@ -224,10 +224,10 @@ Also, the date of creation will adapt dynamically.
 
 .. figure:: img/dynamic_layout_organisation.png
 
-|moderate| |FA| Adding pictures to the dynamic header
+:abbr:`★★☆ (Moderate level)` Follow Along: Adding pictures to the dynamic header
 ---------------------------------------------------------------------------------------
 
-#. Use the |addNewImage| :sup:`Add Picture` button to place a picture
+#. Use the |addImage| :sup:`Add Picture` button to place a picture
    above your label ``organisation information``.
    After entering the name ``organisation logo`` define the position
    and size of the logo:
@@ -263,11 +263,11 @@ Also, the date of creation will adapt dynamically.
    #. For :guilabel:`Width`, use ``21.027``
    #. For :guilabel:`Height`, use ``21.157``
 
-|moderate| |FA| Creating the scalebar of the dynamic header
-----------------------------------------------------------------------
+:abbr:`★★☆ (Moderate level)` Follow Along: Creating the scalebar of the dynamic header
+----------------------------------------------------------------------------------------
 
 #. To insert a scalebar in the header click on
-   |addScalebar| :sup:`Add Scale Bar` and place it in the rectangle
+   |scaleBar| :sup:`Add Scale Bar` and place it in the rectangle
    above the north arrow.
    In :guilabel:`Map` under the :guilabel:`Main Properties` choose
    your ``main map(Map 1)``.
@@ -302,7 +302,7 @@ adapted.
 .. figure:: img/dynamic_layout.png
    :align: center
 
-|WN|
+What's Next?
 -------------------------------------------------------------------------------
 
 On the next page, you will be given an assignment to complete.
@@ -316,27 +316,23 @@ far.
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |FA| replace:: Follow Along:
-.. |LS| replace:: Lesson:
-.. |WN| replace:: What's Next?
 .. |addBasicShape| image:: /static/common/mActionAddBasicShape.png
    :width: 1.5em
-.. |addLabel| image:: /static/common/mActionLabel.png
-   :width: 1.5em
-.. |addNewImage| image:: /static/common/mActionAddImage.png
+.. |addImage| image:: /static/common/mActionAddImage.png
    :width: 1.5em
 .. |addNodesShape| image:: /static/common/mActionAddNodesShape.png
    :width: 1.5em
-.. |addScalebar| image:: /static/common/mActionScaleBar.png
-   :width: 1.5em
 .. |dataDefineExpressionOn| image:: /static/common/mIconDataDefineExpressionOn.png
    :width: 1.5em
-.. |moderate| image:: /static/common/moderate.png
+.. |label| image:: /static/common/mActionLabel.png
+   :width: 1.5em
 .. |newLayout| image:: /static/common/mActionNewLayout.png
    :width: 1.5em
 .. |northArrow| image:: /static/common/north_arrow.png
    :width: 1.5em
 .. |refresh| image:: /static/common/mActionRefresh.png
    :width: 1.5em
-.. |signPlus| image:: /static/common/symbologyAdd.png
+.. |scaleBar| image:: /static/common/mActionScaleBar.png
+   :width: 1.5em
+.. |symbologyAdd| image:: /static/common/symbologyAdd.png
    :width: 1.5em

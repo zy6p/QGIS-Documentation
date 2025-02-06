@@ -71,7 +71,7 @@ Creating a unit test
 
 Creating a unit test is easy - typically you will do this by just creating a
 single :file:`.cpp` file (no :file:`.h` file is used) and implement all your
-test methods as public methods that return void. We'll use a simple test class for
+test methods as private methods that return void. We'll use a simple test class for
 ``QgsRasterLayer`` throughout the section that follows to illustrate. By convention
 we will name our test with the same name as the class they are testing but
 prefixed with 'Test'. So our test implementation goes in a file called
@@ -495,7 +495,7 @@ not interested, just do the step explained in the above section.
   # which point to directories outside the build tree to the install RPATH
   INSTALL_RPATH_USE_LINK_PATH true)
   IF (APPLE)
-  # For Mac OS X, the executable must be at the root of the bundle's executable folder
+  # For macOS, the executable must be at the root of the bundle's executable folder
   INSTALL(TARGETS qgis_${testname} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
   ADD_TEST(qgis_${testname} ${CMAKE_INSTALL_PREFIX}/qgis_${testname})
   ELSE (APPLE)
@@ -562,7 +562,7 @@ run directly from inside the source tree.
   # which point to directories outside the build tree to the install RPATH
   INSTALL_RPATH_USE_LINK_PATH true)
   IF (APPLE)
-  # For Mac OS X, the executable must be at the root of the bundle's executable folder
+  # For macOS, the executable must be at the root of the bundle's executable folder
   INSTALL(TARGETS qgis_${testname} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
   ADD_TEST(qgis_${testname} ${CMAKE_INSTALL_PREFIX}/qgis_${testname})
   ELSE (APPLE)
@@ -689,7 +689,7 @@ like any executable.
   ********* Finished testing of TestQgsDxfExport *********
 
 These tests also take `command line arguments
-<https://doc-snapshots.qt.io/qt5-5.9/qtest-overview.html#qt-test-command-line-arguments>`_.
+<https://doc.qt.io/qt-5/qtest-overview.html#qt-test-command-line-arguments>`_.
 This makes it possible to run a specific subset of tests:
 
 .. code-block:: bash
@@ -702,6 +702,23 @@ This makes it possible to run a specific subset of tests:
   PASS   : TestQgsDxfExport::cleanupTestCase()
   Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 272ms
   ********* Finished testing of TestQgsDxfExport *********
+
+Sandboxing test run
+-------------------
+
+By default all test temporary files are written to the system temp directory (for example ``/tmp/`` on Linux systems or ``C:\temp`` on Windows). 
+A lot of files can be created in this directory during the test run.
+
+If you do not want to mix up with the common system temp directory (for example on a multi user server or in case of permission issue), 
+you can create your own temp directory and specify it to ``ctest`` by setting the ``TMPDIR`` environment variable with your new directory.
+
+On Linux you could do it with:
+
+.. code-block:: bash
+
+  $ mkdir ~/my_qgis_temp
+  $ TMPDIR=~/my_qgis_temp ctest
+
 
 Debugging unit tests
 --------------------

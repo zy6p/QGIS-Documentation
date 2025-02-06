@@ -73,20 +73,31 @@ several ways to define these variables. This is fully described in
        example by using ``mod_rewrite`` Apache module).
 
        Note that you may also indicate a project stored in PostgreSQL, e.g.
-       ``postgresql://localhost:5432?sslmode=disable&dbname=mydb&schema=myschema&project=myproject``.
+       ``postgresql://localhost:5432?sslmode=disable&dbname=mydb&schema=myschema&project=myproject`` or inside a geopackage file, e.g. ``geopackage:/path/to/geopackage/file.gpkg?projectName=myProjectName``.
      - ''
      - All
+
+   * - QGIS_SERVER_ALLOWED_EXTRA_SQL_TOKENS
+     - Comma separated list of strings that represent the allowed extra SQL tokens accepted as components of a feature filter.
+     - ''
+     - WMS
 
    * - QGIS_SERVER_API_RESOURCES_DIRECTORY
      - Base directory for all OGC API (such as OAPIF/WFS3) static resources (HTML
        templates, CSS, JS, ...)
      - depends on packaging
-     - WFS
+     - OAPIF/WFS3
+
+   * - QGIS_SERVER_APPLICATION_NAME
+     - Name of the application to be used, for instance when connecting to a database to identify
+       the QGIS server instance connected
+     - QGIS3 server
+     - All
 
    * - QGIS_SERVER_API_WFS3_MAX_LIMIT
-     - Maximum value for ``limit`` in a features request.
+     - Maximum value for ``limit`` in a OAPIF/WFS3 features request.
      - 10000
-     - WFS
+     - OAPIF/WFS3
 
    * - QGIS_SERVER_CACHE_DIRECTORY
      - Specifies the network cache directory on the filesystem.
@@ -98,6 +109,11 @@ several ways to define these variables. This is fully described in
      - 50 MB
      - All
 
+   * - QGIS_SERVER_CAPABILITIES_CACHE_SIZE
+     - The maximum number of project capabilities to cache.
+     - 40
+     - All
+
    * - QGIS_SERVER_DISABLE_GETPRINT
      - This is an option at the project level to improve project read time by disabling
        loading of layouts.
@@ -107,6 +123,11 @@ several ways to define these variables. This is fully described in
      - false
      - WMS
 
+   * - QGIS_SERVER_FORCE_READONLY_LAYERS
+     - Force QGIS Server to open all layers in a read only mode
+     - false
+     - All
+
    * - QGIS_SERVER_IGNORE_BAD_LAYERS
      - "Bad" layers are layers that cannot be loaded. The default behavior of QGIS Server
        is to consider the project as not available if it contains a bad layer.
@@ -115,6 +136,11 @@ several ways to define these variables. This is fully described in
        In this case, "bad" layers will just be ignored, and the project will be considered
        valid and available.
      - false
+     - All
+
+   * - QGIS_SERVER_LANDING_PAGE_PREFIX
+     - Prefix of the path component of the landing page base URL
+     - ""
      - All
 
    * - .. _qgis_server_landing_page_projects_directories:
@@ -194,6 +220,45 @@ several ways to define these variables. This is fully described in
      - false
      - WMS
 
+   * - QGIS_SERVER_PROJECT_CACHE_CHECK_INTERVAL
+     - Controls the periodic strategy interval for cache invalidation, in milliseconds.
+       Defaults to 0 which selects the legacy File system watcher.
+     -
+     - All
+
+   * - QGIS_SERVER_PROJECT_CACHE_STRATEGY
+     - Defines method for invalidating the project cache. Available strategies are:
+
+       * ``filesystem``: uses the file system watcher strategy
+       * ``periodic``: uses the last modified value of a project for checking changes
+         on project configuration. Convenient on atypical file systems, such as NFS,
+	 or when the project file is stored in a database system like PostgreSQL.
+       * ``off``: disables internal cache invalidation completely
+     - filesystem
+     - All
+
+   * - .. _qgis_server_service_url:
+
+       QGIS_SERVER_SERVICE_URL
+     - This is an option to set the service URL if it is not present in the project.
+
+       The service URL is defined from (in order of precedence):
+
+       * Value defined in the project per service
+       * The ``QGIS_SERVER_<service>_SERVICE_URL`` environment variable
+       * The ``QGIS_SERVER_SERVICE_URL`` environment variable
+       * The ``X-Qgis-<service>-Service-Url`` header
+       * The ``X-Qgis-Service-Url`` header
+       * Build from the ``Forwarded`` header
+       * Build from the ``X-Forwarded-Host`` and ``X-Forwarded-Proto`` headers
+       * Build from the ``Host`` header and the server protocol
+       * Build from the server name and the server protocol.
+
+       In the last four cases, the resulting Service URL is based on the ``MAP`` parameter
+       provided in the query string and on the incoming path request.
+     - ''
+     - All
+
    * - QGIS_SERVER_SHOW_GROUP_SEPARATOR
      - Defines whether a group separator (e.g. thousand separator) should be used for
        numeric values (e.g. in GetFeatureInfo responses). The default value is ``0``.
@@ -217,11 +282,35 @@ several ways to define these variables. This is fully described in
      - false
      - All
 
+   * - QGIS_SERVER_WCS_SERVICE_URL
+     - This is an option to set the service URL if it is not present in the project.
+       See :ref:`QGIS_SERVER_SERVICE_URL <qgis_server_service_url>` for more information.
+     - ''
+     - WCS
+
+   * - QGIS_SERVER_WFS_SERVICE_URL
+     - This is an option to set the service URL if it is not present in the project.
+       See :ref:`QGIS_SERVER_SERVICE_URL <qgis_server_service_url>` for more information.
+     - ''
+     - WFS
+
    * - QGIS_SERVER_WMS_MAX_HEIGHT / QGIS_SERVER_WMS_MAX_WIDTH
      - Maximum height/width for a WMS request. The most conservative between this and the project one is used.
        If the value is ``-1``, it means that there is no maximum set.
      - -1
      - WMS
+
+   * - QGIS_SERVER_WMS_SERVICE_URL
+     - This is an option to set the service URL if it is not present in the project.
+       See :ref:`QGIS_SERVER_SERVICE_URL <qgis_server_service_url>` for more information.
+     - ''
+     - WMS
+
+   * - QGIS_SERVER_WMTS_SERVICE_URL
+     - This is an option to set the service URL if it is not present in the project.
+       See :ref:`QGIS_SERVER_SERVICE_URL <qgis_server_service_url>` for more information.
+     - ''
+     - WMTS
 
    * - QUERY_STRING
      - The query string, normally passed by the web server. This variable can be
@@ -286,42 +375,6 @@ In this particular case, we know that **QGIS_SERVER_MAX_THREADS** and
 **QGIS_OPTIONS_PATH** directory (which is defined through an environment variable).
 The corresponding entries in the ini file are **/qgis/max_threads** and
 **/qgis/parallel_rendering** and their values are **true** and **4** threads.
-
-
-.. _server_short_name:
-
-Short name for layers, groups and project
-=========================================
-
-A number of elements have both a ``<Name>`` and a ``<Title>``.
-The **Name** is a text string used for machine-to-machine
-communication while the **Title** is for the benefit of humans.
-
-For example, a dataset might have the descriptive Title
-“Maximum Atmospheric Temperature” and be requested using the abbreviated
-**Name** “ATMAX”. The user can set the title for layers, groups and projects.
-
-OWS name is based on the name used in the layer tree. This name is more a label
-for humans than a name for machine-to-machine communication. You can set a
-**Short name** for layers, groups or projects, to be used by QGIS Server as
-the layer identification name (in :ref:`LAYERS <wms-layers>` parameter for instance ).
-
-You can set title, short name and abstract for:
-
-* **Layers**: right-click on a layer and choose
-  :menuselection:`Properties... --> QGIS Server --> Description`.
-
-* **Groups**: right-click on a group and select :guilabel:`Set Group WMS data`
-
-  .. _figure_group_wms_data:
-
-  .. figure:: img/set_group_wms_data.png
-     :align: center
-
-     Set group WMS data dialog
-
-* **Project**: go to :menuselection:`Project --> Properties... --> QGIS Server -->
-  Service Capabilities`.
 
 
 Connection to service file

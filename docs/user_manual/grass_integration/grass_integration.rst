@@ -34,14 +34,14 @@ the QGIS 'Alaska' dataset :file:`qgis\_sample\_data.zip` from
 https://qgis.org/downloads/data/ and unzip the file into :file:`grassdata`.
 
 More sample GRASS :file:`LOCATIONs` are available at the GRASS website at
-https://grass.osgeo.org/download/sample-data/.
+https://grass.osgeo.org/download/data/.
 
 .. _sec_load_grassdata:
 
 Loading GRASS raster and vector layers
 ======================================
 
-If the provider is loaded in QGIS, the location item with GRASS |grass|
+If the provider is loaded in QGIS, the location item with GRASS |grassLogo|
 icon is added in the browser tree under each folder item which contains GRASS location.
 Go to the folder :file:`grassdata` and expand location :file:`alaska` and
 mapset :file:`demo`.
@@ -136,11 +136,11 @@ stored in subdirectories called :file:`LOCATIONs`. Each :file:`LOCATION` is defi
 by its coordinate system, map projection and geographical boundaries. Each
 :file:`LOCATION` can have several :file:`MAPSETs` (subdirectories of the
 :file:`LOCATION`) that are used to subdivide the project into different topics or
-subregions, or as workspaces for individual team members (see Neteler & Mitasova
-2008 in :ref:`literature_and_web`). In order to analyse vector and raster layers
+sub-regions, or as workspaces for individual team members (see Neteler & Mitasova
+2008 in :ref:`literature_and_web`). In order to analyze vector and raster layers
 with GRASS modules, you generally have to import them into a GRASS :file:`LOCATION`.
 (This is not strictly true -- with the GRASS modules :file:`r.external` and :file:`v.external`
-you can create read-only links to external GDAL/OGR-supported datasets without
+you can create read-only links to external GDAL-supported datasets without
 importing them. This is not the usual way for beginners to work with GRASS, therefore
 this functionality will not be described here.)
 
@@ -348,7 +348,7 @@ used as the link to one key column in the database table.
 
    The best way to learn the GRASS vector model and its capabilities is to
    download one of the many GRASS tutorials where the vector model is described
-   more deeply. See https://grass.osgeo.org/documentation/manuals/ for more information,
+   more deeply. See https://grass.osgeo.org/learn/manuals/ for more information,
    books and tutorials in several languages.
 
 .. index::
@@ -879,9 +879,7 @@ like this:
 
 
 The parser reads this definition and creates a new tab inside the Toolbox when
-you select the module. A more detailed description for adding new modules, changing
-a module's group, etc., can be found at 
-https://qgis.org/en/site/getinvolved/development/addinggrasstools.html.
+you select the module.
 
 
 .. Substitutions definitions - AVOID EDITING PAST THIS LINE
@@ -890,7 +888,7 @@ https://qgis.org/en/site/getinvolved/development/addinggrasstools.html.
    please add it also to the substitutions.txt file in the
    source folder.
 
-.. |CURRENT| replace:: 3.16
+.. |CURRENT| replace:: 3.40
 .. |captureBoundary| image:: /static/common/mActionCaptureBoundary.png
    :width: 1.5em
 .. |captureCentroid| image:: /static/common/mActionCaptureCentroid.png
@@ -905,9 +903,9 @@ https://qgis.org/en/site/getinvolved/development/addinggrasstools.html.
    :width: 1.3em
 .. |general| image:: /static/common/general.png
    :width: 1.5em
-.. |grass| image:: /static/common/grasslogo.png
-   :width: 1.5em
 .. |grassCloseMapset| image:: /static/common/grass_close_mapset.png
+   :width: 1.5em
+.. |grassLogo| image:: /static/common/grasslogo.png
    :width: 1.5em
 .. |grassNewMapset| image:: /static/common/grass_new_mapset.png
    :width: 1.5em

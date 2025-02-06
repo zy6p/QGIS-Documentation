@@ -19,7 +19,7 @@ Returns the base name of the file without the directory or file suffix.
    * - Syntax
      - base_file_name(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
      - * ``base_file_name('/home/qgis/data/country_boundaries.shp')`` → 'country_boundaries'
 
@@ -41,7 +41,7 @@ Retrieves exif tag values from an image file.
 
        [] marks optional arguments
    * - Arguments
-     - * **path** - An image file path.
+     - * **path** - An image file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
        * **tag** - The tag to return. If empty, a map with all exif tag values will be returned.
    * - Examples
      - * ``exif('/my/photo.jpg','Exif.Image.Orientation')`` → 0
@@ -54,7 +54,7 @@ Retrieves exif tag values from an image file.
 file_exists
 ...........
 
-Returns true if a file path exists.
+Returns TRUE if a file path exists.
 
 .. list-table::
    :widths: 15 85
@@ -62,9 +62,9 @@ Returns true if a file path exists.
    * - Syntax
      - file_exists(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
-     - * ``file_exists('/home/qgis/data/country_boundaries.shp')`` → true
+     - * ``file_exists('/home/qgis/data/country_boundaries.shp')`` → TRUE
 
 
 .. end_file_exists_section
@@ -82,7 +82,7 @@ Returns the name of a file (including the file extension), excluding the directo
    * - Syntax
      - file_name(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
      - * ``file_name('/home/qgis/data/country_boundaries.shp')`` → 'country_boundaries.shp'
 
@@ -102,7 +102,7 @@ Returns the directory component of a file path. This does not include the file n
    * - Syntax
      - file_path(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
      - * ``file_path('/home/qgis/data/country_boundaries.shp')`` → '/home/qgis/data'
 
@@ -122,7 +122,7 @@ Returns the size (in bytes) of a file.
    * - Syntax
      - file_size(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
      - * ``file_size('/home/qgis/data/country_boundaries.geojson')`` → 5674
 
@@ -142,7 +142,7 @@ Returns the file suffix (extension) from a file path.
    * - Syntax
      - file_suffix(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
      - * ``file_suffix('/home/qgis/data/country_boundaries.shp')`` → 'shp'
 
@@ -154,7 +154,7 @@ Returns the file suffix (extension) from a file path.
 is_directory
 ............
 
-Returns true if a path corresponds to a directory.
+Returns TRUE if a path corresponds to a directory.
 
 .. list-table::
    :widths: 15 85
@@ -162,10 +162,10 @@ Returns true if a path corresponds to a directory.
    * - Syntax
      - is_directory(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
-     - * ``is_directory('/home/qgis/data/country_boundaries.shp')`` → false
-       * ``is_directory('/home/qgis/data/')`` → true
+     - * ``is_directory('/home/qgis/data/country_boundaries.shp')`` → FALSE
+       * ``is_directory('/home/qgis/data/')`` → TRUE
 
 
 .. end_is_directory_section
@@ -175,7 +175,7 @@ Returns true if a path corresponds to a directory.
 is_file
 .......
 
-Returns true if a path corresponds to a file.
+Returns TRUE if a path corresponds to a file.
 
 .. list-table::
    :widths: 15 85
@@ -183,10 +183,10 @@ Returns true if a path corresponds to a file.
    * - Syntax
      - is_file(path)
    * - Arguments
-     - * **path** - a file path
+     - * **path** - a file path or a map layer value. If a map layer value is specified then the file source of the layer will be used.
    * - Examples
-     - * ``is_file('/home/qgis/data/country_boundaries.shp')`` → true
-       * ``is_file('/home/qgis/data/')`` → false
+     - * ``is_file('/home/qgis/data/country_boundaries.shp')`` → TRUE
+       * ``is_file('/home/qgis/data/')`` → FALSE
 
 
 .. end_is_file_section
